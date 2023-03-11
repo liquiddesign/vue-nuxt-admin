@@ -1,0 +1,3 @@
+<template>
+  MUJ PROFIL
+</template>
