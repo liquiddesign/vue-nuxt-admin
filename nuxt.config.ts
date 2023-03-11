@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     typescript: {
         strict: true
     },
-    css: ["bootstrap/dist/css/bootstrap.min.css", "@/assets/css/base.css", "@/assets/css/adds.css"],
+    css: ["bootstrap/dist/css/bootstrap.min.css", "@/assets/css/base.css", "@/assets/css/adds.css", "@/assets/css/toaster.css"],
     app: {
         head: {
             charset: 'utf-8',
