@@ -1,0 +1,4 @@
+- double click poresit
+- silent prihlaseni
+- jakokaliv hrodna oprava 
+- settings na tags

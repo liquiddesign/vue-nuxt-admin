@@ -1,7 +1,14 @@
 <template>
   <div class="mb-3 card" v-bind="$attrs">
-    <div v-if="$slots.header" class="card-header">
-      <slot name="header" />
+    <div v-if="$slots.headerLeft || $slots.headerRight || $slots.header" class="card-header">
+      <slot name="header">
+        <div class="btn-actions-pane-left">
+          <slot name="headerLeft" />
+        </div>
+        <div class="btn-actions-pane-right">
+          <slot name="headerRight" />
+        </div>
+      </slot>
     </div>
     <div v-if="$slots.body || $slots.default" class="card-body">
       <slot name="body" />
@@ -12,3 +19,5 @@
     </div>
   </div>
 </template>
+<script setup lang="ts">
+</script>

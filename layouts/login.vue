@@ -7,7 +7,7 @@
               <img class="d-block mx-auto mb-3" src="/logo-white.svg" alt="" loading="lazy" height="50">
               <div class="modal-dialog w-100 mx-auto">
                 <div class="modal-content">
-                  LOGIN
+                  <slot />
                 </div>
               </div>
               <div class="text-center text-white opacity-8 mt-3">Copyright © Liquid Design {{ (new Date()).getFullYear() }}</div>
@@ -19,6 +19,6 @@
 </template>
 
 <script setup>
-useHead({title: 'My Appaa',});
+useHead({title: 'Roiwell - administrace',});
 
 </script>

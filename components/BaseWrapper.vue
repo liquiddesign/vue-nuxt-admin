@@ -7,8 +7,6 @@
 
 <script setup lang="ts">
 
-import {defineProps} from "vue";
-
 const props = defineProps<{
   wrap?: string|object
 }>();

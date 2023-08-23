@@ -91,17 +91,22 @@ label {
     background-image: linear-gradient(120deg, #ebffd3 0%, #89c53f 100%) !important;
 }
 
-.text-dn {
-    color: #89c53f !important;
+.text-lqd {
+    color: #ff6464 !important;
 }
 
-.bg-dn-dark
-{
-    background-image: linear-gradient(120deg, #3e7100 0%, #89c53f 100%) !important;
+.tabs-animated .nav-link::before {
+    background-color: #ff6464 !important;
 }
 
 .form-control-sm, .form-select-sm {
     font-size: 0.8085rem !important;
+
+}
+
+.form-control-xs, .form-select-xs {
+    font-size: 0.7rem !important;
+    padding: 0.05rem 0.4rem;
 }
 
 .dropdown-item,.dropdown-item-text {
@@ -160,4 +165,8 @@ div.form-wrapper-light-thin {
 
 .metismenu li a.disabled {
     color: silver !important;;
+}
+
+.tabs-animated-shadow .nav-link::before {
+    box-shadow: none;
 }

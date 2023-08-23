@@ -178,12 +178,55 @@
           <div class="header-btn-lg pe-0">
             <div class="widget-content p-0">
               <div class="widget-content-wrapper">
-                <div class="widget-content-left  ms-3 header-user-info">
-                  <div class="widget-heading">
+                <div class="widget-content-left">
+                  <div class="btn-group">
+                    <a data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                      <img width="42" class="rounded-circle" src="https://demo.dashboardpack.com/architectui-html-pro/assets/images/avatars/1.jpg" alt>
+                      <i class="fa fa-angle-down ms-2 opacity-8"></i>
+                    </a>
+                    <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
+                      <div class="dropdown-menu-header">
+                        <div class="dropdown-menu-header-inner bg-amy-crisp">
+                          <div class="menu-header-image" />
+                          <div class="menu-header-content text-start">
+                            <div class="widget-content p-0">
+                              <div class="widget-content-wrapper">
+                                <div class="widget-content-left me-3">
+                                  <img width="42" class="rounded-circle" src="https://demo.dashboardpack.com/architectui-html-pro/assets/images/avatars/1.jpg" alt>
+                                </div>
+                                <div class="widget-content-left">
+                                  <div class="widget-heading">asdasd asd as das</div>
+                                  <div class="widget-subheading opacity-8">sadasd</div>
+                                </div>
+                                <div class="widget-content-right me-2" >
+                                  <button class="btn-pill btn-shadow btn-shine btn btn-focus" @click="logout">Odhlásit</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="ps-2 mb-0">
+                        <span>Přezdívka:</span> <br>
+                        <span>Role:</span>
+                      </p>
+                      <ul class="nav flex-column">
+                        <li class="nav-item-divider nav-item" />
+                        <li class="nav-item-btn text-center nav-item">
+                          <button class="btn-wide btn btn-success btn-sm"><i class="fa fa-edit" /> Editovat profil </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
 
+                </div>
+                <div class="widget-content-left  ms-3 header-user-info">
+
+                  <div class="widget-heading">
+                    {{ $user.identity?.fullname || 'Neznámé jméno' }}
                   </div>
                   <div class="widget-subheading">
-
+                        {{ $user.identity?.account?.login }}
                   </div>
                 </div>
               </div>
@@ -226,15 +269,32 @@
         </div>
         <div class="scrollbar-sidebar ps ps--active-y">
           <div class="app-sidebar__inner">
+            <TheMenu />
           </div>
           <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;" /></div><div class="ps__rail-y" style="top: 0px; height: 750px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 397px;" /></div>
         </div>
       </div>
       <div class="app-main__outer">
         <div class="app-main__inner">
-          <slot />
+          <NuxtErrorBoundary>
+            <slot />
+            <template #error="{ error }">
+              <p>An error occurred: {{ error }}</p>
+            </template>
+          </NuxtErrorBoundary>
+
         </div>
       </div>
     </div>
   </div>
 </template>
+<script setup lang="ts">
+import nuxtStorage from "nuxt-storage";
+
+const { $user } = useNuxtApp();
+
+function logout() {
+  $user.logout() ;
+  navigateTo('/');
+}
+</script>
