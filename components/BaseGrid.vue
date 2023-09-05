@@ -43,51 +43,46 @@ const props = withDefaults(defineProps<{
   filters?: any
 }>(), {page: 1, onPage: 15, filters: {}});
 
-const selected: any = reactive({});
+const selected: any = ref({});
 const decorator: any = reactive({});
 const selectedAllChecked: Ref<boolean> = ref(false);
 const orderByValue: Ref<string|null> = ref(null);
 const orderByAsc: Ref<boolean|null> = ref(true);
-
+const filters: any = ref({});
 const config = useRuntimeConfig();
 
 const { page, onPage } = toRefs(props);
 
-const filters: any = reactive({
+const paging: any = reactive({
   page : page,
   onpage : onPage,
 });
 
-
 const params = computed(function () {
-  const params = Object.assign({}, filters);
-  if (orderByValue.value) {
-    params['order'] =  orderByValue.value + '-' + (orderByAsc.value ? 'ASC' : 'DESC');
-  } else {
-    delete params['order'];
-  }
+  const params = Object.assign({}, paging, filters.value);
+  orderByValue.value ? params['order'] =  orderByValue.value + '-' + (orderByAsc.value ? 'ASC' : 'DESC') : delete params['order'];
 
   return params;
 })
 
 
-const debouncing = _debounce(function (value) {
-  Object.assign(filters, value);
+const assignFiltersDebounced = _debounce(function (value) {
+  filters.value = value;
 }, 150);
 
-watch(props.filters, (value) => {
-  debouncing(value);
-  Object.keys(items.value).forEach((key:string) => delete selected[key]);
+watch(() => props.filters, (value) => {
+  assignFiltersDebounced(value);
+  selected.value = {};
   selectedAllChecked.value = false;
-})
+}, { deep: true })
 
 watch(page, (value) => {
-  Object.keys(items.value).forEach((key:string) => delete selected[key]);
+  selected.value = {};
   selectedAllChecked.value = false;
 });
 
 watch(onPage, (value) => {
-  Object.keys(items.value).forEach((key:string) => delete selected[key]);
+  selected.value = {};
   selectedAllChecked.value = false;
 });
 
@@ -101,25 +96,25 @@ const selectedNumber = computed( () => selectedIds().length);
 
 const selectPage = computed({
   get: function () {
-    return items.value ? (Object.values(selected).filter( w => w === true).length === Object.values(items.value).length && Object.values(items.value).length > 0) : false;
+    return items.value ? (Object.values(selected.value).filter( w => w === true).length === Object.values(items.value).length && Object.values(items.value).length > 0) : false;
   },
   set: function (value) {
-    Object.keys(items.value).forEach((key:string) => selected[key] = value);
+    Object.keys(items.value).forEach((key:string) => selected.value[key] = value);
     selectedAllChecked.value = false;
   }}
 );
 
 const selectAll = computed({
   get: function () {
-    return items.value ? selectedAllChecked.value && (Object.values(selected).filter( w => w === true).length === Object.values(items.value).length && Object.values(items.value).length > 0) : false;
+    return items.value ? selectedAllChecked.value && (Object.values(selected.value).filter( w => w === true).length === Object.values(items.value).length && Object.values(items.value).length > 0) : false;
   },
   set: function (value) {
-    Object.keys(items.value).forEach((key:string) => selected[key] = value);
+    Object.keys(items.value).forEach((key:string) => selected.value[key] = value);
     selectedAllChecked.value = value;
   }}
 );
 
-defineExpose({ selected, selectedIds, decorator, pending, refresh, selectPage, selectAll});
+defineExpose({ selected, selectedIds, decorator, pending, refresh, selectPage, selectAll, orderBy, orderByValue, orderByAsc});
 
 function applyDecorator(item: any) {
   if (!decorator[item.uuid]) {
@@ -146,7 +141,8 @@ function orderBy(value: string) {
   orderByAsc.value = orderByValue.value === value && !orderByAsc.value ? true : orderByValue.value !== value;
   orderByValue.value = orderByValue.value === value && !aux ? null : value;
 
-  Object.keys(items.value).forEach((key:string) => delete selected[key]);
+  //Object.keys(items.value).forEach((key:string) => delete selected[key]);
+  selected.value = {};
   selectedAllChecked.value = false;
 }
 
@@ -157,7 +153,7 @@ onActivated(() => {
 });
 
 function selectedIds() {
-  return Object.keys(Object.fromEntries(Object.entries(selected).filter(([key, value]) => value) ));
+  return Object.keys(Object.fromEntries(Object.entries(selected.value).filter(([key, value]) => value) ));
 }
 
 </script>

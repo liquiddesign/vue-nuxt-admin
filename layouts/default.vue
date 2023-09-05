@@ -276,13 +276,7 @@
       </div>
       <div class="app-main__outer">
         <div class="app-main__inner">
-          <NuxtErrorBoundary>
             <slot />
-            <template #error="{ error }">
-              <p>An error occurred: {{ error }}</p>
-            </template>
-          </NuxtErrorBoundary>
-
         </div>
       </div>
     </div>

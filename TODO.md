@@ -1,4 +1,7 @@
-- double click poresit
-- silent prihlaseni
-- jakokaliv hrodna oprava 
-- settings na tags
+
+
+
+filter[]=ic,company;LK;ttttt&
+ic+company
+icEQ10
+icGTE10

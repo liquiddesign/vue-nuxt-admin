@@ -2,7 +2,7 @@
   <BaseWrapper :wrap="wrap">
     <BaseWrapper :wrap="{'form-group': true, 'input-required': _get(form.validation.value, name)?.required}">
       <label v-if="label !== null" :for="form.name + '-' + name" class="form-check-label"><!-- flag -->
-        <BaseCheckbox :id="form.name + '-' + name" :class="classes" v-bind="$attrs" :checked="_get(form.input, name)" @input="form.updateInput(name, $event.target.checked)" />
+        <input :id="form.name + '-' + name" type="checkbox" class="form-check-input" v-bind="$attrs" :checked="_get(form.input, name)" @input="form.updateInput(name, $event.target.checked)" />
         {{ label }}
       </label>
       <div v-if="_get(form.validation.value, name)?.$errors" class="text-danger" v-for="(error, index) in _get(form.validation.value, name)?.$errors" :key="index">

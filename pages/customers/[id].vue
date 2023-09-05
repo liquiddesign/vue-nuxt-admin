@@ -45,6 +45,7 @@ const {data, pending} = useFetch(config.public.baseURL + 'customer/' + route.par
 
 
 watch(data, (value) => {
+
   Object.assign(input, value)
 })
 

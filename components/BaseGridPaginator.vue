@@ -1,30 +1,32 @@
 <template>
-  <div class="">
-    <nav class="pt-3 ms-auto">
-      <ul class="pagination pagination-sm">
-        <li class="page-item" :class="{disabled: page === 1}">
-          <a class="page-link" aria-label="Previous" @click.prevent="emit('changePage', page > 1 ? page - 1 : 1)">
-            <span aria-hidden="true"><i class="fa fa-caret-left"></i></span>
-            <span class="sr-only">Předchozí</span>
-          </a>
-        </li>
-        <li  v-for="index in pageNumber" :key="index" class="page-item" :class="{active: index === page}">
-          <a v-if="index === 1 || index === pageNumber || (page <= index + 2 && page >= index - 2)" class="page-link" @click.prevent.stop="emit('changePage', index)">{{ index }}</a>
-          <span v-else-if="index === page - 3 || index === page + 3 " class="page-link" style="pointer-events: none;"> .. </span>
-        </li>
-        <li class="page-item" :class="{disabled: page === pageNumber}">
-          <a class="page-link" aria-label="Next" @click.prevent="emit('changePage', page < pageNumber ? page + 1 : pageNumber)">
-            <span aria-hidden="true"><i class="fa fa-caret-right"></i></span>
-            <span class="sr-only">Další</span>
-          </a>
-        </li>
-        <li class="px-2"><span class="page-link text-black " style="border: 0;pointer-events: none;">&sum; {{ data?.result }}</span></li>
-        <li class="page-item" style=""><a class="page-link text-black" :class="{'bg-light' : onPage === 20, 'bg-white' : onPage !== 20}" @click.prevent.stop="emit('changeOnPage', 20)">20</a></li>
-        <li class="page-item" style=""><a class="page-link text-black" :class="{'bg-light' : onPage === 40, 'bg-white' : onPage !== 40}" @click.prevent.stop="emit('changeOnPage', 40)">40</a></li>
-        <li class="page-item" style=""><a class="page-link text-black" :class="{'bg-light' : onPage === 80, 'bg-white' : onPage !== 80}" @click.prevent.stop="emit('changeOnPage', 80)">80</a></li>
-      </ul>
-    </nav>
-  </div>
+  <BaseWrapper :wrap="wrap">
+    <div class="">
+      <nav class="pt-3 ms-auto">
+        <ul class="pagination pagination-sm">
+          <li class="page-item" :class="{disabled: page === 1}">
+            <a class="page-link" aria-label="Previous" @click.prevent="emit('changePage', page > 1 ? page - 1 : 1)">
+              <span aria-hidden="true"><i class="fa fa-caret-left"></i></span>
+              <span class="sr-only">Předchozí</span>
+            </a>
+          </li>
+          <li  v-for="index in pageNumber" :key="index" class="page-item" :class="{active: index === page}">
+            <a v-if="index === 1 || index === pageNumber || (page <= index + 2 && page >= index - 2)" class="page-link" @click.prevent.stop="emit('changePage', index)">{{ index }}</a>
+            <span v-else-if="index === page - 3 || index === page + 3 " class="page-link" style="pointer-events: none;"> .. </span>
+          </li>
+          <li class="page-item" :class="{disabled: page === pageNumber}">
+            <a class="page-link" aria-label="Next" @click.prevent="emit('changePage', page < pageNumber ? page + 1 : pageNumber)">
+              <span aria-hidden="true"><i class="fa fa-caret-right"></i></span>
+              <span class="sr-only">Další</span>
+            </a>
+          </li>
+          <li class="px-2"><span class="page-link text-black " style="border: 0;pointer-events: none;">&sum; {{ data?.result }}</span></li>
+          <li class="page-item" style=""><a class="page-link text-black" :class="{'bg-light' : onPage === 20, 'bg-white' : onPage !== 20}" @click.prevent.stop="emit('changeOnPage', 20)">20</a></li>
+          <li class="page-item" style=""><a class="page-link text-black" :class="{'bg-light' : onPage === 40, 'bg-white' : onPage !== 40}" @click.prevent.stop="emit('changeOnPage', 40)">40</a></li>
+          <li class="page-item" style=""><a class="page-link text-black" :class="{'bg-light' : onPage === 80, 'bg-white' : onPage !== 80}" @click.prevent.stop="emit('changeOnPage', 80)">80</a></li>
+        </ul>
+      </nav>
+    </div>
+  </BaseWrapper>
 </template>
 
 <script setup lang="ts">
@@ -33,8 +35,9 @@ import {computed, onActivated} from "vue";
 const props = defineProps<{
   url: string,
   page: number,
-  onPage: number
-  filters?: any
+  onPage: number,
+  filters?: any,
+  wrap?: string,
 }>();
 
 const config = useRuntimeConfig();

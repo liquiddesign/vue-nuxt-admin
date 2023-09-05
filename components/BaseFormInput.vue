@@ -2,7 +2,7 @@
   <BaseWrapper :wrap="wrap">
     <BaseWrapper :wrap="{'form-group': true, 'input-required': _get(form.validation.value, name)?.required}">
       <label v-if="label !== null" :for="form.name + '-' + name"><!-- flag -->{{ label }}</label>
-      <BaseInput :id="form.name + '-' + name" :class="classes" v-bind="$attrs" :type="type === 'float' ? 'number' : type" :disabled="form.disabled.value" :value="_get(form.input, name)" @input="form.updateInput(name, $event.target.value, type, nullable)" />
+      <input :id="form.name + '-' + name" class="form-control-sm form-control" v-bind="$attrs" :type="type === 'float' ? 'number' : type" :disabled="form.disabled.value" :value="_get(form.input, name)" @input="form.updateInput(name, $event.target.value, type, nullable)" />
       <div v-if="_get(form.validation.value, name)?.$errors" class="text-danger" v-for="(error, index) in _get(form.validation.value, name)?.$errors" :key="index">
         {{ error.$message }}
       </div>

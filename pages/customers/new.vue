@@ -11,7 +11,7 @@
         <div class="row">
           <div class="col-lg-6">
             <h5 class="card-title">Zákazník</h5>
-
+          {{ input }}
           <BaseCheckbox label="Označit zákazníka jako firmu" v-model="isCompany" />
 
           <div class="row mt-2">
@@ -28,23 +28,26 @@
           </div>
           <div class="row mt-2">
             <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+            <BaseFormSelect wrap="col-lg-6" name="ssssasd" label="Nadřazený zákazník / centrála" :multiple="true" fetch-url="customer" />
           </div>
-          <div class="row mt-2">
+          <div v-if="0" class="row mt-2">
             <!--<BaseFormInput name="parentCustomer" wrap="col-lg-6" label="Nadřazený zákazník / centrála" type="text" />-->
             <div class="col-lg-6">
               <label>Nadřazený zákazník / centrála</label>
               <div style="max-height:29.4px;">
-              <VueMultiselect v-model="input.parent" :options-limit="50" :options="options" placeholder="Zvolte položku ..."  selectLabel="" deselectLabel="odstranit" selectedLabel="Zvolena">
-                <template #option="{option}">Zákazník ič|{{ option }}|aaaa</template>
-              </VueMultiselect>
+              <!--<VueMultiselect v-model="input.parent" :options-limit="200" :customLabel="(value) => $currencies.currencies[value]?.company" :searchable="true" :options="options2" placeholder="Zvolte položku ..."  selectLabel="" deselectLabel="odstranit" selectedLabel="Zvolena">
+                <template #option="{option}">Zákazník ič|{{ $currencies.currencies[option]?.company }}|aaaa</template>
+              </VueMultiselect>-->
+
               </div>
             </div>
             <div class="col-lg-6">
               <label>Přiřazení obchodníci</label>
               <div style="max-height:29.4px;">
-              <VueMultiselect v-model="input.parent3" :options-limit="50" :options="options" :multiple="true" placeholder="Zvolte položku ..." selectLabel="" deselectLabel="odstranit" selectedLabel="Zvolena">
+
+              <!--<VueMultiselect id="test" :options-limit="50" :model-value="'pse'" :options="['pse']" :multiple="false" placeholder="Zvolte položku ..." selectLabel="" deselectLabel="odstranit" selectedLabel="Zvolena">
                 <template #option="{option}">Zákazník ič|{{ option }}|aaaa</template>
-              </VueMultiselect>
+              </VueMultiselect>-->
               </div>
             </div>
           </div>
@@ -76,12 +79,24 @@
               <BaseFormInput name="deliveryAddress.note" wrap="col-lg-6" label="Poznámka" type="text" />
             </div>
           </div>
-
-            <h5 class="card-title">Ceny a slevy</h5>
-            <div class="row">
-              <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-              <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+          <h5 class="card-title mt-2">Ceny a slevy</h5>
+          <div class="row">
+            <div class="col-lg-6">
+              <label>Ceníky ss</label>
+              <!--<VueMultiselect v-model="input.parent" :options-limit="50" :options="options" placeholder="Zvolte položku ..."  selectLabel="" deselectLabel="odstranit" selectedLabel="Zvolena" :loading="isLoading" @search-change="asyncFind">
+                <template #option="{option}">Zákazník ič|{{ option }}|aaaa</template>
+              </VueMultiselect>-->
             </div>
+            <div class="col-lg-6">
+              <label>Měna</label>
+              <!--<VueMultiselect v-model="input.parent" :options-limit="50" :options="Object.keys($currencies.currencies)" placeholder="Zvolte položku ..." selectLabel="" deselectLabel="odstranit" selectedLabel="Zvolena">
+                <template #option="{option}">{{ $currencies.currencies[option].uuid }}</template>
+              </VueMultiselect>-->
+            </div>
+          </div>
+          <div class="row mt-2">
+            <BaseFormInput name="phone" wrap="col-lg-6" label="Procentuální sleva" type="text" />
+          </div>
 
       <div class="form-wrapper-blue mt-3">
           <h5 class="card-title mt-3">Nákup</h5>
@@ -109,96 +124,20 @@
           </div>
         <div class="col-lg-6 ps-5">
 
-          <div class="row">
-            <div class="col-md-6 col-xl-4">
-              <div class="mb-3 widget-content bg-secondary">
-                <div class="widget-content-wrapper text-white">
-                  <div class="widget-content-left">
-                    <div class="widget-heading">Total Orders</div>
-                    <div class="widget-subheading">Last year expenses</div>
-                  </div>
-                  <div class="widget-content-right">
-                    <div class="widget-numbers text-white"><span>1896</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-xl-4">
-              <div class="mb-3 widget-content bg-night-sky">
-                <div class="widget-content-wrapper text-white">
-                  <div class="widget-content-left">
-                    <div class="widget-heading">Clients</div>
-                    <div class="widget-subheading">Total Clients Profit</div>
-                  </div>
-                  <div class="widget-content-right">
-                    <div class="widget-numbers text-white"><span>$ 568</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-xl-4">
-              <div class="mb-3 widget-content bg-light">
-                <div class="widget-content-wrapper text-black">
-                  <div class="widget-content-left">
-                    <div class="widget-heading">Followers</div>
-                    <div class="widget-subheading">People Interested</div>
-                  </div>
-                  <div class="widget-content-right">
-                    <div class="widget-numbers text-black"><span>46%</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="d-xl-none d-lg-block col-md-6 col-xl-4">
-              <div class="mb-3 widget-content bg-premium-dark">
-                <div class="widget-content-wrapper text-black">
-                  <div class="widget-content-left">
-                    <div class="widget-heading">Products Sold</div>
-                    <div class="widget-subheading">Revenue streams</div>
-                  </div>
-                  <div class="widget-content-right">
-                    <div class="widget-numbers text-warning"><span>$14M</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <h5 class="card-title">Poslední objednávky</h5>
-          <table class="mb-2 table table-sm table-striped">
-            <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Petr Marek</td>
-              <td>marek@lqd.cz</td>
-              <td>   <button class="btn btn-xs btn-outline-success me-1"><i class="fa fa-pencil"></i></button><button class="btn btn-xs btn-outline-primary"><i class="fa fa-sign-in"></i></button></td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Petr Marek</td>
-              <td>marek@lqd.cz</td>
-              <td>   <button class="btn btn-xs btn-outline-success me-1"><i class="fa fa-pencil"></i></button><button class="btn btn-xs btn-outline-primary"><i class="fa fa-sign-in"></i></button></td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Petr Marek</td>
-              <td>marek@lqd.cz</td>
-              <td>   <button class="btn btn-xs btn-outline-success me-1"><i class="fa fa-pencil"></i></button><button class="btn btn-xs btn-outline-primary"><i class="fa fa-sign-in"></i></button></td>
-            </tr>
-            </tbody>
-          </table>
-          <br />
+
           <h5 class="card-title">Účty</h5>
           <div class="form-wrapper-light mt-3">
-            <h5 class=" card-title-lower">1) petr@lqd.cz    <button class="btn btn-xs btn-outline-secondary me-2"><i class="fa fa-trash-o"></i></button></h5>
+            <h5 class=" card-title-lower">1) petr@lqd.cz    <div class="float-end"><button class="btn btn-xs btn-outline-secondary me-2"><i class="fa fa-trash-o"></i></button></div></h5>
             <div class="row">
               <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
               <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
             </div>
-            <div class="row">
+            <div class="row mt-2">
               <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
               <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
             </div>
             <hr class="pt-1" style="color: white">
+            <h5 class=" card-title-lower">2) petr@lqd.cz    <div class="float-end"><button class="btn btn-xs btn-outline-secondary me-2"><i class="fa fa-trash-o"></i></button></div></h5>
             <div class="row">
               <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
               <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
@@ -207,17 +146,10 @@
               <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
               <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
             </div>
-
+            <div class="mt-3">
+              <button class="btn btn-sm btn-outline-secondary me-2"><i class="fa fa-plus"></i></button>
+            </div>
           </div>
-          <div class="mt-2">
-
-            <button class="btn btn-sm btn-outline-secondary me-2"><i class="fa fa-plus"></i></button>
-            <button class="btn btn-sm btn-outline-secondary"><i class="fa fa-minus"></i></button>
-
-
-          </div>
-
-
         </div>
        </div>
         </BaseForm>
@@ -227,24 +159,30 @@
 <script setup lang="ts">
 import {required} from "@vuelidate/validators";
 import VueMultiselect from 'vue-multiselect'
+import { reactive } from "vue";
+import {DataProvider} from "~/utils/DataProvider";
 
 const input:any = reactive({});
 const goBack:Ref<boolean> = ref(false);
 const isCompany:Ref<boolean> = ref(false);
-const value:Ref<string[]> = ref(['pes']);
-const options:Ref<string[]> = ref(['pes','ves','kes']);
+
+
+
+/*
+$fetch(config.public.baseURL + 'customer', {method: "POST", body: {'_op': 'optionsList'}}).then((response: any) => {
+
+  options2.value = Object.values(response.result);
+  optionsValues.value = response.result;
+
+});*/
+
+
 
 const rules = {
   company: { required },
 };
 
-function onSelect() {
-  alert('aaa');
-}
 
-function addItem() {
-  return options.value.push('tru');
-}
 
 function success(result:any) {
   Object.keys(input).forEach((key:string) => delete input[key]);
