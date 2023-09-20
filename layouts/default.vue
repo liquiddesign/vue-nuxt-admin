@@ -57,6 +57,11 @@
                 <i class="nav-link-icon pe-7s-settings" /> Nastavení
               </a>
             </li>
+            <li class="dropdown nav-item show">
+              <a aria-haspopup="true" data-toggle="dropdown" class="nav-link" aria-expanded="true" @click="$router.push({name: 'developer'})">
+                <i class="nav-link-icon pe-7s-plugin" /> Stavební bloky
+              </a>
+            </li>
           </ul>
         </div>
         <div class="app-header-right">

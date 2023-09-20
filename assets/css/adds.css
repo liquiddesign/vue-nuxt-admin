@@ -39,6 +39,7 @@ table tr.inactive td { color: silver;}
 table tr.inactive td a { color: silver;}
 table tr.deleted td { color: silver; text-decoration: line-through; }
 table tr.deleted td a { color: silver; text-decoration: line-through; }
+table tr:hover {background-color: #e0f3ff}
 
 th.minimal, td.minimal {
     width: 1%;

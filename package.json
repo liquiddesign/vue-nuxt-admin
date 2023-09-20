@@ -5,9 +5,11 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint": "eslint --ext \".ts,.vue,.js\" --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@nuxt/eslint-config": "^0.2.0",
     "@popperjs/core": "^2.11.8",
     "@types/vuelidate": "^0.7.15",
     "@vuelidate/core": "^2.0.0",
@@ -15,13 +17,23 @@
     "bootstrap": "^5.2.3",
     "font-awesome": "^4.7.0",
     "pe7-icon": "^1.0.4",
+    "qs": "^6.11.2",
     "vue-flag-icon": "^2.1.0",
     "vue-multiselect": "^3.0.0-beta.2",
-    "vue-toast-notification": "3.0"
+    "vue-toast-notification": "3.0",
+    "vue3-popper": "^1.5.0"
   },
   "devDependencies": {
     "@nuxtjs/apollo": "^5.0.0-alpha.5",
+    "@nuxtjs/eslint-module": "^4.1.0",
     "@types/bootstrap": "^5.2.6",
+    "@types/qs": "^6.9.8",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "eslint": "^8.49.0",
+    "eslint-plugin-auto-import": "^0.1.1",
+    "eslint-plugin-nuxt": "^4.0.0",
+    "eslint-plugin-vue": "^9.17.0",
     "nuxt": "^3.2.3",
     "nuxt-lodash": "^2.5.0"
   }

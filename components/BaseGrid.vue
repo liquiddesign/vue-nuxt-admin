@@ -7,7 +7,7 @@
         </thead>
         <tbody>
         <template v-for="(item,i) in items" :key="i">
-          <slot name="body" :item="applyDecorator(item)" :index="i" :selected="selected[i]" :delete-row="() => deleteRow(item, i)" :update-row="(value) => updateRow(item, value)" />
+          <slot name="body" :item="applyDecorator(item)" :index="i" :selected="selected[i]" :delete-row="() => deleteRow(item, i)" :processing="processing" :update-row="(value) => updateRow(item, value)" />
         </template>
         <tr v-if="!pending && !error && Object.values(items).length === 0">
           <td colspan="100%" style="text-align: center; font-style: italic">
@@ -28,22 +28,25 @@
       </table>
     </div>
     <div class="d-flex align-items-center flex-wrap gap-1">
-      <slot name="footer" :selected-number="selectedNumber" :select-all="selectAll" />
+      <slot name="footer" :selected-number="selectedNumber" :select-all="selectAll" :selected="selected" :delete-rows="deleteRows" :processing="processing" />
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import {reactive, withDefaults, computed, onActivated, Ref} from "vue";
-
+import {ToastPluginApi, useToast} from "vue-toast-notification";
+import qs from 'qs'
 
 const props = withDefaults(defineProps<{
   url: string,
-  page?: number
-  onPage?: number
-  filters?: any
-}>(), {page: 1, onPage: 15, filters: {}});
+  page?: number,
+  onPage?: number,
+  filters?: any,
+  silent?: boolean
+}>(), {page: 1, onPage: 15, filters: {}, silent: false});
 
 const selected: any = ref({});
+const processing: any = ref(false);
 const decorator: any = reactive({});
 const selectedAllChecked: Ref<boolean> = ref(false);
 const orderByValue: Ref<string|null> = ref(null);
@@ -65,6 +68,7 @@ const params = computed(function () {
   return params;
 })
 
+const toast: ToastPluginApi = inject('toast', useToast());
 
 const assignFiltersDebounced = _debounce(function (value) {
   filters.value = value;
@@ -114,7 +118,7 @@ const selectAll = computed({
   }}
 );
 
-defineExpose({ selected, selectedIds, decorator, pending, refresh, selectPage, selectAll, orderBy, orderByValue, orderByAsc});
+defineExpose({ selected, selectedIds, decorator, pending, refresh, selectPage, selectAll, orderBy, orderByValue, orderByAsc, processing});
 
 function applyDecorator(item: any) {
   if (!decorator[item.uuid]) {
@@ -124,11 +128,34 @@ function applyDecorator(item: any) {
   return Object.assign(Object.assign({}, item), decorator[item.uuid]);
 }
 
-function deleteRow(item: any, index) {
-  if (props.delete) {
-    deleteItem({'uuid': item.uuid});
+function deleteRow(item: any, index: string) {
+  processing.value = true;
+  $fetch(config.public.baseURL + props.url + '/' + item.uuid, { method: 'DELETE'}).then((response) => {
     refresh();
-  }
+    console.log(response);
+    selected.value = {};
+    props.silent || toast.success('Smazáno');
+  }).catch(() => {
+    props.silent || toast.error('Smazání se nezdrařilo');
+  }).finally(() => {
+    processing.value = false;
+  })
+}
+
+function deleteRows() {
+  processing.value = true;
+  let ids = qs.stringify({ids: Object.keys(selected.value)}, { arrayFormat: 'indices', encode: false });
+  props.silent || toast.info('Hromadná akce může chvíli trvat ...');
+  $fetch(config.public.baseURL + props.url + '?' + ids + '&selectedAll=' + (selectAll.value ? 1 : 0), { method: 'DELETE', params: props.filters}).then((response) => {
+    refresh();
+    selected.value = {};
+    selectAll.value = false;
+    props.silent || toast.success('Smazáno');
+  }).catch(() => {
+    props.silent || toast.error('Smazání se nezdrařilo');
+  }).finally(() => {
+    processing.value = false;
+  })
 }
 
 function updateRow(item, value) {

@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn-light btn-sm"><i class="fa fa-save"></i></button>
+  <BaseButton class="btn btn-light"><i class="fa fa-save"></i></BaseButton>
 </template>
 
 <script setup lang="ts">

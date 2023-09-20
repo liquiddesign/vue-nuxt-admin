@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    modules: ['@nuxtjs/apollo', "nuxt-lodash"],
+    modules: ['@nuxtjs/apollo', "nuxt-lodash", "@nuxtjs/eslint-module"],
     typescript: {
         strict: true
     },
@@ -33,5 +33,7 @@ export default defineNuxtConfig({
     lodash: {
         prefix: "_",
         upperAfterPrefix: false,
+    },
+    eslint: {
     }
 })

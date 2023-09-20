@@ -1,15 +1,12 @@
 <template>
   <BaseCardHeader title="Zákazníci" icon="pe-7s-users" description="Přehled zákazníků">
     <BaseButtonNew @click="navigateTo({ name: 'customers-new'})">Přidat zákazníka</BaseButtonNew>
+
   </BaseCardHeader>
   <BaseCard>
     <template #header>
       <BaseFilter @cancel="resetFilter">
         <BaseInput wrap="flex-shrink-0" placeholder="Název, kód, #id" v-model="filters.q" type="text" />
-        <BaseInput wrap="flex-shrink-0" placeholder="Název, kód, #id" v-model="filters.q" type="text" />
-        <BaseSelect wrap="flex-shrink-0" placeholder="Název, kód, #id" v-model="filters.q" fetch-url="customer" type="text" />
-        <BaseSelect wrap="flex-shrink-0" placeholder="Název, kód, #id" v-model="filters.q" fetch-url="merchant" type="text" />
-        <BaseSelect wrap="flex-shrink-0" placeholder="Název, kód, #id" v-model="filters.q" fetch-url="pricelist" type="text" />
       </BaseFilter>
     </template>
     <template #body>
@@ -26,7 +23,7 @@
             <BaseGridThSettings>Pořadí</BaseGridThSettings>
           </tr>
         </template>
-        <template #body="{item, selected}">
+        <template #body="{item, selected, deleteRow}">
           <tr :class="{'inactive': item.id === 5, 'active': selected}">
             <BaseGridTdSelect :id="item.uuid" />
             <th class="minimal"><button class="btn btn-outline-secondary btn-xs text-center" style="min-width: 20px;"  @click="expanded = expanded ? null : item.ic;"><i :class="{'fa fa-caret-down': expanded === item.ic, 'fa fa-caret-right': expanded !== item.ic}"></i></button></th>
@@ -42,15 +39,26 @@
             <td>{{ item.company }} <i v-if="item.id === 3" class="fa fa-lock"></i></td>
 
             <td class="text-right">
-              <button class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash-o" /></button>
+              <Popper arrow placement="left">
+                <button class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash-o" /></button>
+                <template #content="{close}">
+                  Opravdu smazat?<br>
+                  <div class="text-center">
+                  <button class="btn btn-success btn-xs" @click="close();deleteRow()">Ano</button>
+                  <button class="btn btn-light btn-xs ms-2" @click="close">Ne</button>
+                  </div>
+                </template>
+              </Popper>
+
             </td>
           </tr>
           <tr v-if="expanded === item.ic">
 
           </tr>
         </template>
-        <template #footer="{selectedNumber, selectAll}">
+        <template #footer="{selectedNumber, selectAll, deleteRows, processing}">
           <div class="flex-shrink-0 me-1 ms-1">
+            {{ processing }}
             <BaseGridSelectAll />
           </div>
           <div class="flex-shrink-0">
@@ -64,7 +72,7 @@
             </button>
           </div>
           <div class="flex-shrink-0">
-            <button @click="delete filters.q" type="button" title="" style="padding: 4px 4px;" class="btn btn-xs btn-outline-danger me-1" :disabled="!getSelectCount(selectAll, selectedNumber)">
+            <button @click="deleteRows();" type="button" title="" style="padding: 4px 4px;" class="btn btn-xs btn-outline-danger me-1" :disabled="!getSelectCount(selectAll, selectedNumber)">
               <i class="fa fa-trash-o"></i> ({{ getSelectCount(selectAll, selectedNumber) }})
             </button>
           </div>
@@ -76,6 +84,8 @@
 </template>
 
 <script setup lang="ts">
+import Popper from "vue3-popper";
+
 const expanded: Ref<string|null> = ref(null);
 const page = ref(1);
 const onPage = ref(20);
@@ -98,3 +108,19 @@ function resetFilter()
 
 
 </script>
+
+<style>
+:root {
+  --popper-theme-background-color: #ffffff;
+  --popper-theme-background-color-hover: #ffffff;
+  --popper-theme-text-color: #333333;
+  --popper-theme-border-width: 1px;
+  --popper-theme-border-style: solid;
+  --popper-theme-border-color: #eeeeee;
+  --popper-theme-border-radius: 6px;
+  --popper-theme-padding: 12px;
+  --popper-theme-box-shadow: 0 6px 30px -6px rgba(0, 0, 0, 0.25);
+}
+
+
+</style>
