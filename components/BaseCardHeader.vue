@@ -3,7 +3,7 @@
     <div class="page-title-wrapper">
       <div class="page-title-heading">
         <div class="page-title-icon">
-          <i class="icon-gradient bg-ripe-malin" :class="icon"></i>
+          <i class="icon-gradient bg-ripe-malin" :class="icon" />
         </div>
         <div>
           {{ title }}

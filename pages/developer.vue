@@ -69,6 +69,13 @@
     </Popper>
   </BaseCard>
   <BaseCard>
+    <template #header>Uživatel</template>
+    {{ $user }}
+  </BaseCard>
+  <BaseCard>
+    <template #header>Vlajky a ikony</template>
+  </BaseCard>
+  <BaseCard>
     <template #header>Formulářové prvky</template>
   </BaseCard>
   <BaseCard>
@@ -88,5 +95,7 @@
 import {ToastPluginApi, useToast} from "vue-toast-notification";
 
 const toast: ToastPluginApi = inject('toast', useToast());
+
+const { $user } = useNuxtApp();
 
 </script>

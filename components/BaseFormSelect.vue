@@ -2,9 +2,24 @@
   <BaseWrapper :wrap="wrap">
     <label v-if="label" :for="form.name + '-' + name">{{ label }}</label>
     <div style="height: 29.5px;">
-      <VueMultiselect :id="form.name + '-' + name" v-bind="$attrs" :options="options" :options-limit="20" :loading="isLoading" :customLabel="customLabel" placeholder="Zvolte položku ..."  selectLabel="" value="pse" deselectLabel="odstranit" selectedLabel="Zvolena" :model-value="_get(form.input, name)"  @update:model-value="updateValue" @search-change="asyncSearch">
-       <template #option="{option}">
-          <slot name="option" :option="option" :object="objects[option]"></slot>
+      <VueMultiselect
+        :id="form.name + '-' + name"
+        v-bind="$attrs"
+        :options="options"
+        :options-limit="20"
+        :loading="isLoading"
+        :custom-label="customLabel"
+        placeholder="Zvolte položku ..."
+        select-label=""
+        value="pse"
+        deselect-label="odstranit"
+        selected-label="Zvolena"
+        :model-value="_get(form.input, name)"
+        @update:model-value="updateValue"
+        @search-change="asyncSearch"
+      >
+        <template #option="{option}">
+          <slot name="option" :option="option" :object="objects[option]" />
           <template v-if="!$slots.option && objectLabel">
             {{ objects?.[option]?.[objectLabel] ?? option }}
           </template>
@@ -16,7 +31,6 @@
 <script setup lang="ts">
 import VueMultiselect from "vue-multiselect";
 import BaseWrapper from "~/components/BaseWrapper.vue";
-import {OkResponse} from "~/utils/OkResponse";
 
 const config = useRuntimeConfig();
 
@@ -29,7 +43,7 @@ const props = withDefaults(defineProps<{
   label?: string|null,
   options?: string[],
   async?: boolean,
-}>(), { label: null, async: false, objectLabel: 'displayName', options: () => [],  });
+}>(), { label: null, async: false, objectLabel: 'displayName', options: () => [], lang: undefined, wrap: undefined, fetchUrl: undefined });
 
 defineOptions({
   inheritAttrs: false
@@ -37,7 +51,7 @@ defineOptions({
 
 const isLoading:Ref<boolean> = ref(false);
 
-const data = reactive({keys :[], objects: ref({})  })
+//const data = reactive({keys :[], objects: ref({})  })
 
 const options:Ref<string[]> = ref(props.options ?? []);
 const objects:Ref<object> = ref({});

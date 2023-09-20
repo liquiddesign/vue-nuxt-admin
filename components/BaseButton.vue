@@ -10,10 +10,10 @@
 <script setup lang="ts">
 import {withDefaults} from "vue/dist/vue";
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   wrap?: string
   loading?: boolean
-}>(), { loading: false });
+}>(), { loading: false, wrap: undefined });
 
 defineOptions({
   inheritAttrs: false

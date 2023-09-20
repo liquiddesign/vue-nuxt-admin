@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import {withDefaults, defineEmits, inject, Ref} from "vue";
+import {withDefaults, inject, Ref} from "vue";
 import useVuelidate from "@vuelidate/core";
 import {ToastPluginApi, useToast} from "vue-toast-notification";
 import {RouteParamValue} from "vue-router";
@@ -29,6 +29,7 @@ import {RouteParamValue} from "vue-router";
     rules: {},
     omit: () => [],
     silent: false,
+    wrap: undefined,
   });
 
 

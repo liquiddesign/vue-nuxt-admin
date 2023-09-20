@@ -1,10 +1,10 @@
 <template>
   <BaseCard>
     <template #headerLeft>
-      <button class="btn btn-light btn-sm" @click="navigateTo({name: 'customers'})"><i class="fa fa-long-arrow-left"></i> Zpět</button>
+      <button class="btn btn-light btn-sm" @click="navigateTo({name: 'customers'})"><i class="fa fa-long-arrow-left" /> Zpět</button>
     </template>
     <template #headerRight>
-      <BaseButtonSave :disabled="$refs.form?.disabled || $refs.form?.pending" @click="goBack=false; $refs.form.submit();"/>
+      <BaseButtonSave :disabled="$refs.form?.disabled || $refs.form?.pending" @click="goBack=false; $refs.form.submit();" />
     </template>
     <template #body>
       <div class="row">

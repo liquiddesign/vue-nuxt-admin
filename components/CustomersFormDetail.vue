@@ -56,25 +56,25 @@
   <h5 class="card-title">Poslední objednávky</h5>
   <table class="mb-2 table table-sm table-striped">
     <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Petr Marek</td>
-      <td>marek@lqd.cz</td>
-      <td>   <button class="btn btn-xs btn-outline-success me-1"><i class="fa fa-pencil"></i></button><button class="btn btn-xs btn-outline-primary"><i class="fa fa-sign-in"></i></button></td>
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Petr Marek</td>
-      <td>marek@lqd.cz</td>
-      <td>   <button class="btn btn-xs btn-outline-success me-1"><i class="fa fa-pencil"></i></button><button class="btn btn-xs btn-outline-primary"><i class="fa fa-sign-in"></i></button></td>
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Petr Marek</td>
-      <td>marek@lqd.cz</td>
-      <td>   <button class="btn btn-xs btn-outline-success me-1"><i class="fa fa-pencil"></i></button><button class="btn btn-xs btn-outline-primary"><i class="fa fa-sign-in"></i></button></td>
-    </tr>
+      <tr>
+        <th scope="row">1</th>
+        <td>Petr Marek</td>
+        <td>marek@lqd.cz</td>
+        <td>   <button class="btn btn-xs btn-outline-success me-1"><i class="fa fa-pencil" /></button><button class="btn btn-xs btn-outline-primary"><i class="fa fa-sign-in" /></button></td>
+      </tr>
+      <tr>
+        <th scope="row">1</th>
+        <td>Petr Marek</td>
+        <td>marek@lqd.cz</td>
+        <td>   <button class="btn btn-xs btn-outline-success me-1"><i class="fa fa-pencil" /></button><button class="btn btn-xs btn-outline-primary"><i class="fa fa-sign-in" /></button></td>
+      </tr>
+      <tr>
+        <th scope="row">1</th>
+        <td>Petr Marek</td>
+        <td>marek@lqd.cz</td>
+        <td>   <button class="btn btn-xs btn-outline-success me-1"><i class="fa fa-pencil" /></button><button class="btn btn-xs btn-outline-primary"><i class="fa fa-sign-in" /></button></td>
+      </tr>
     </tbody>
   </table>
-  <br />
+  <br>
 </template>

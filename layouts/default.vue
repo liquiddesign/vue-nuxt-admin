@@ -187,7 +187,7 @@
                   <div class="btn-group">
                     <a data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
                       <img width="42" class="rounded-circle" src="https://demo.dashboardpack.com/architectui-html-pro/assets/images/avatars/1.jpg" alt>
-                      <i class="fa fa-angle-down ms-2 opacity-8"></i>
+                      <i class="fa fa-angle-down ms-2 opacity-8" />
                     </a>
                     <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
                       <div class="dropdown-menu-header">
@@ -203,7 +203,7 @@
                                   <div class="widget-heading">asdasd asd as das</div>
                                   <div class="widget-subheading opacity-8">sadasd</div>
                                 </div>
-                                <div class="widget-content-right me-2" >
+                                <div class="widget-content-right me-2">
                                   <button class="btn-pill btn-shadow btn-shine btn btn-focus" @click="logout">Odhlásit</button>
                                 </div>
                               </div>
@@ -223,15 +223,13 @@
                       </ul>
                     </div>
                   </div>
-
                 </div>
                 <div class="widget-content-left  ms-3 header-user-info">
-
                   <div class="widget-heading">
                     {{ $user.identity?.fullname || 'Neznámé jméno' }}
                   </div>
                   <div class="widget-subheading">
-                        {{ $user.identity?.account?.login }}
+                    {{ $user.identity?.account?.login }}
                   </div>
                 </div>
               </div>
@@ -281,14 +279,13 @@
       </div>
       <div class="app-main__outer">
         <div class="app-main__inner">
-            <slot />
+          <slot />
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import nuxtStorage from "nuxt-storage";
 
 const { $user } = useNuxtApp();
 

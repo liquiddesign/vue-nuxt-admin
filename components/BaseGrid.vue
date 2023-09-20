@@ -3,27 +3,27 @@
     <div class="table-responsive" style="overflow: initial;" v-bind="$attrs">
       <table class="mb-0 table table-sm table-striped">
         <thead>
-        <slot name="header" :select-page="selectPage" :order-by="(value) => orderBy(value)" :order-by-value="orderByValue" :order-by-asc="orderByAsc"  />
+          <slot name="header" :select-page="selectPage" :order-by="(value) => orderBy(value)" :order-by-value="orderByValue" :order-by-asc="orderByAsc" />
         </thead>
         <tbody>
-        <template v-for="(item,i) in items" :key="i">
-          <slot name="body" :item="applyDecorator(item)" :index="i" :selected="selected[i]" :delete-row="() => deleteRow(item, i)" :processing="processing" :update-row="(value) => updateRow(item, value)" />
-        </template>
-        <tr v-if="!pending && !error && Object.values(items).length === 0">
-          <td colspan="100%" style="text-align: center; font-style: italic">
-            K zobrazení nejsou žádné záznamy. Přidejte záznam nebo změňte nastavení filtru.
-          </td>
-        </tr>
-        <tr v-if="error">
-          <td colspan="100%" style="text-align: center; font-style: italic">
-            <span class="text-danger">{{ error.message }}</span>
-          </td>
-        </tr>
-        <tr v-if="pending && Object.values(items).length === 0 ">
-          <td colspan="100%" style="text-align: center; font-style: italic">
-            <i class="fa fa-circle-notch fa-spin" /> Načítám data ...
-          </td>
-        </tr>
+          <template v-for="(item,i) in items" :key="i">
+            <slot name="body" :item="applyDecorator(item)" :index="i" :selected="selected[i]" :delete-row="() => deleteRow(item, i)" :processing="processing" :update-row="(value) => updateRow(item, value)" />
+          </template>
+          <tr v-if="!pending && !error && Object.values(items).length === 0">
+            <td colspan="100%" style="text-align: center; font-style: italic">
+              K zobrazení nejsou žádné záznamy. Přidejte záznam nebo změňte nastavení filtru.
+            </td>
+          </tr>
+          <tr v-if="error">
+            <td colspan="100%" style="text-align: center; font-style: italic">
+              <span class="text-danger">{{ error.message }}</span>
+            </td>
+          </tr>
+          <tr v-if="pending && Object.values(items).length === 0 ">
+            <td colspan="100%" style="text-align: center; font-style: italic">
+              <i class="fa fa-circle-notch fa-spin" /> Načítám data ...
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -51,7 +51,7 @@ const decorator: any = reactive({});
 const selectedAllChecked: Ref<boolean> = ref(false);
 const orderByValue: Ref<string|null> = ref(null);
 const orderByAsc: Ref<boolean|null> = ref(true);
-const filters: any = ref({});
+const filterValues: any = ref({});
 const config = useRuntimeConfig();
 
 const { page, onPage } = toRefs(props);
@@ -62,7 +62,7 @@ const paging: any = reactive({
 });
 
 const params = computed(function () {
-  const params = Object.assign({}, paging, filters.value);
+  const params = Object.assign({}, paging, filterValues.value);
   orderByValue.value ? params['order'] =  orderByValue.value + '-' + (orderByAsc.value ? 'ASC' : 'DESC') : delete params['order'];
 
   return params;
@@ -71,7 +71,7 @@ const params = computed(function () {
 const toast: ToastPluginApi = inject('toast', useToast());
 
 const assignFiltersDebounced = _debounce(function (value) {
-  filters.value = value;
+  filterValues.value = value;
 }, 150);
 
 watch(() => props.filters, (value) => {
@@ -80,12 +80,12 @@ watch(() => props.filters, (value) => {
   selectedAllChecked.value = false;
 }, { deep: true })
 
-watch(page, (value) => {
+watch(page, () => {
   selected.value = {};
   selectedAllChecked.value = false;
 });
 
-watch(onPage, (value) => {
+watch(onPage, () => {
   selected.value = {};
   selectedAllChecked.value = false;
 });
@@ -128,7 +128,7 @@ function applyDecorator(item: any) {
   return Object.assign(Object.assign({}, item), decorator[item.uuid]);
 }
 
-function deleteRow(item: any, index: string) {
+function deleteRow(item: any) {
   processing.value = true;
   $fetch(config.public.baseURL + props.url + '/' + item.uuid, { method: 'DELETE'}).then((response) => {
     refresh();
@@ -144,9 +144,9 @@ function deleteRow(item: any, index: string) {
 
 function deleteRows() {
   processing.value = true;
-  let ids = qs.stringify({ids: Object.keys(selected.value)}, { arrayFormat: 'indices', encode: false });
+  const ids = qs.stringify({ids: Object.keys(selected.value)}, { arrayFormat: 'indices', encode: false });
   props.silent || toast.info('Hromadná akce může chvíli trvat ...');
-  $fetch(config.public.baseURL + props.url + '?' + ids + '&selectedAll=' + (selectAll.value ? 1 : 0), { method: 'DELETE', params: props.filters}).then((response) => {
+  $fetch(config.public.baseURL + props.url + '?' + ids + '&selectedAll=' + (selectAll.value ? 1 : 0), { method: 'DELETE', params: props.filters}).then(() => {
     refresh();
     selected.value = {};
     selectAll.value = false;
@@ -158,7 +158,7 @@ function deleteRows() {
   })
 }
 
-function updateRow(item, value) {
+function updateRow() {
 
 }
 
@@ -180,7 +180,7 @@ onActivated(() => {
 });
 
 function selectedIds() {
-  return Object.keys(Object.fromEntries(Object.entries(selected.value).filter(([key, value]) => value) ));
+  return Object.keys(Object.fromEntries(Object.entries(selected.value).filter(([, value]) => value) ));
 }
 
 </script>

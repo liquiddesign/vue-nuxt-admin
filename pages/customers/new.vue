@@ -4,163 +4,157 @@
       <BaseButtonBack @click="navigateTo({name: 'customers'})" />
     </template>
     <template #headerRight>
-      <BaseButtonSave :disabled="$refs.form?.disabled || $refs.form?.pending" @click="goBack=false; $refs.form.submit();"/>
+      <BaseButtonSave :disabled="$refs.form?.disabled || $refs.form?.pending" @click="goBack=false; $refs.form.submit();" />
     </template>
     <template #body>
       <BaseForm ref="form" url="customer" :input="input" :rules="rules" @success="success">
         <div class="row">
           <div class="col-lg-6">
             <h5 class="card-title">Zákazník</h5>
-          {{ input }}
-          <BaseCheckbox label="Označit zákazníka jako firmu" v-model="isCompany" />
+            {{ input }}
+            <BaseCheckbox v-model="isCompany" label="Označit zákazníka jako firmu" />
 
-          <div class="row mt-2">
-            <BaseFormInput v-if="!isCompany" name="fullname" wrap="col-lg-6" label="Jméno a příjmení" type="text" />
-            <BaseFormInput v-if="isCompany" name="company" wrap="col-lg-6" label="Společnost" type="text" />
-          </div>
-          <div v-if="isCompany" class="row mt-2">
-            <BaseFormInput name="ic" wrap="col-lg-6" label="IC" type="text" />
-            <BaseFormInput name="dic" wrap="col-lg-6" label="DIČ" type="text" />
-          </div>
-          <div class="row mt-2">
-            <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
-            <BaseFormInput name="ccEmails" wrap="col-lg-6" label="E-mail (kopie)" type="text" />
-          </div>
-          <div class="row mt-2">
-            <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-            <BaseFormSelect wrap="col-lg-6" name="ssssasd" label="Nadřazený zákazník / centrála" :multiple="true" fetch-url="customer" />
-          </div>
-          <div v-if="0" class="row mt-2">
-            <!--<BaseFormInput name="parentCustomer" wrap="col-lg-6" label="Nadřazený zákazník / centrála" type="text" />-->
-            <div class="col-lg-6">
-              <label>Nadřazený zákazník / centrála</label>
-              <div style="max-height:29.4px;">
-              <!--<VueMultiselect v-model="input.parent" :options-limit="200" :customLabel="(value) => $currencies.currencies[value]?.company" :searchable="true" :options="options2" placeholder="Zvolte položku ..."  selectLabel="" deselectLabel="odstranit" selectedLabel="Zvolena">
+            <div class="row mt-2">
+              <BaseFormInput v-if="!isCompany" name="fullname" wrap="col-lg-6" label="Jméno a příjmení" type="text" />
+              <BaseFormInput v-if="isCompany" name="company" wrap="col-lg-6" label="Společnost" type="text" />
+            </div>
+            <div v-if="isCompany" class="row mt-2">
+              <BaseFormInput name="ic" wrap="col-lg-6" label="IC" type="text" />
+              <BaseFormInput name="dic" wrap="col-lg-6" label="DIČ" type="text" />
+            </div>
+            <div class="row mt-2">
+              <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+              <BaseFormInput name="ccEmails" wrap="col-lg-6" label="E-mail (kopie)" type="text" />
+            </div>
+            <div class="row mt-2">
+              <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+              <BaseFormSelect wrap="col-lg-6" name="ssssasd" label="Nadřazený zákazník / centrála" :multiple="true" fetch-url="customer" />
+            </div>
+            <div v-if="0" class="row mt-2">
+              <!--<BaseFormInput name="parentCustomer" wrap="col-lg-6" label="Nadřazený zákazník / centrála" type="text" />-->
+              <div class="col-lg-6">
+                <label>Nadřazený zákazník / centrála</label>
+                <div style="max-height:29.4px;">
+                  <!--<VueMultiselect v-model="input.parent" :options-limit="200" :customLabel="(value) => $currencies.currencies[value]?.company" :searchable="true" :options="options2" placeholder="Zvolte položku ..."  selectLabel="" deselectLabel="odstranit" selectedLabel="Zvolena">
                 <template #option="{option}">Zákazník ič|{{ $currencies.currencies[option]?.company }}|aaaa</template>
               </VueMultiselect>-->
-
+                </div>
               </div>
-            </div>
-            <div class="col-lg-6">
-              <label>Přiřazení obchodníci</label>
-              <div style="max-height:29.4px;">
-
-              <!--<VueMultiselect id="test" :options-limit="50" :model-value="'pse'" :options="['pse']" :multiple="false" placeholder="Zvolte položku ..." selectLabel="" deselectLabel="odstranit" selectedLabel="Zvolena">
+              <div class="col-lg-6">
+                <label>Přiřazení obchodníci</label>
+                <div style="max-height:29.4px;">
+                  <!--<VueMultiselect id="test" :options-limit="50" :model-value="'pse'" :options="['pse']" :multiple="false" placeholder="Zvolte položku ..." selectLabel="" deselectLabel="odstranit" selectedLabel="Zvolena">
                 <template #option="{option}">Zákazník ič|{{ option }}|aaaa</template>
               </VueMultiselect>-->
+                </div>
               </div>
             </div>
-          </div>
-          <div class="form-wrapper-blue mt-3">
+            <div class="form-wrapper-blue mt-3">
+              <div class="row">
+                <div class="col-lg-6">
+                  <h5 class="card-title">Fakturační adresa</h5>
+                </div>
+                <div class="col-lg-6">
+                  <h5 class="card-title">Doručovací adresa</h5>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <BaseFormInput name="billAddress.street" wrap="col-lg-6" label="Ulice" type="text" />
+                <BaseFormInput name="deliveryAddress.street" wrap="col-lg-6" label="Ulice" type="text" />
+              </div>
+              <div class="row mt-2">
+                <BaseFormInput name="billAddress.city" wrap="col-lg-4" label="Město" type="text" />
+                <BaseFormInput name="billAddress.zipcode" wrap="col-lg-2" label="PSČ" type="text" />
+                <BaseFormInput name="deliveryAddress.street" wrap="col-lg-4" label="Město" type="text" />
+                <BaseFormInput name="deliveryAddress.zipcode" wrap="col-lg-2" label="PSČ" type="text" />
+              </div>
+              <div class="row mt-2">
+                <BaseFormInput name="billAddress.state" wrap="col-lg-6" label="Stát" type="text" />
+                <BaseFormInput name="deliveryAddress.state" wrap="col-lg-6" label="Stát" type="text" />
+              </div>
+              <div class="row mt-2">
+                <BaseFormInput name="billAddress.note" wrap="col-lg-6" label="Poznámka" type="text" />
+                <BaseFormInput name="deliveryAddress.note" wrap="col-lg-6" label="Poznámka" type="text" />
+              </div>
+            </div>
+            <h5 class="card-title mt-2">Ceny a slevy</h5>
             <div class="row">
               <div class="col-lg-6">
-                <h5 class="card-title">Fakturační adresa</h5>
-              </div>
-              <div class="col-lg-6">
-                <h5 class="card-title">Doručovací adresa</h5>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <BaseFormInput name="billAddress.street" wrap="col-lg-6" label="Ulice" type="text" />
-              <BaseFormInput name="deliveryAddress.street" wrap="col-lg-6" label="Ulice" type="text" />
-            </div>
-            <div class="row mt-2">
-              <BaseFormInput name="billAddress.city" wrap="col-lg-4" label="Město" type="text" />
-              <BaseFormInput name="billAddress.zipcode" wrap="col-lg-2" label="PSČ" type="text" />
-              <BaseFormInput name="deliveryAddress.street" wrap="col-lg-4" label="Město" type="text" />
-              <BaseFormInput name="deliveryAddress.zipcode" wrap="col-lg-2" label="PSČ" type="text" />
-            </div>
-            <div class="row mt-2">
-              <BaseFormInput name="billAddress.state" wrap="col-lg-6" label="Stát" type="text" />
-              <BaseFormInput name="deliveryAddress.state" wrap="col-lg-6" label="Stát" type="text" />
-            </div>
-            <div class="row mt-2">
-              <BaseFormInput name="billAddress.note" wrap="col-lg-6" label="Poznámka" type="text" />
-              <BaseFormInput name="deliveryAddress.note" wrap="col-lg-6" label="Poznámka" type="text" />
-            </div>
-          </div>
-          <h5 class="card-title mt-2">Ceny a slevy</h5>
-          <div class="row">
-            <div class="col-lg-6">
-              <label>Ceníky ss</label>
+                <label>Ceníky ss</label>
               <!--<VueMultiselect v-model="input.parent" :options-limit="50" :options="options" placeholder="Zvolte položku ..."  selectLabel="" deselectLabel="odstranit" selectedLabel="Zvolena" :loading="isLoading" @search-change="asyncFind">
                 <template #option="{option}">Zákazník ič|{{ option }}|aaaa</template>
               </VueMultiselect>-->
-            </div>
-            <div class="col-lg-6">
-              <label>Měna</label>
+              </div>
+              <div class="col-lg-6">
+                <label>Měna</label>
               <!--<VueMultiselect v-model="input.parent" :options-limit="50" :options="Object.keys($currencies.currencies)" placeholder="Zvolte položku ..." selectLabel="" deselectLabel="odstranit" selectedLabel="Zvolena">
                 <template #option="{option}">{{ $currencies.currencies[option].uuid }}</template>
               </VueMultiselect>-->
+              </div>
             </div>
-          </div>
-          <div class="row mt-2">
-            <BaseFormInput name="phone" wrap="col-lg-6" label="Procentuální sleva" type="text" />
-          </div>
+            <div class="row mt-2">
+              <BaseFormInput name="phone" wrap="col-lg-6" label="Procentuální sleva" type="text" />
+            </div>
 
-      <div class="form-wrapper-blue mt-3">
-          <h5 class="card-title mt-3">Nákup</h5>
-          <div class="row">
-            <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-            <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
-          </div>
+            <div class="form-wrapper-blue mt-3">
+              <h5 class="card-title mt-3">Nákup</h5>
+              <div class="row">
+                <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+                <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+              </div>
 
-          <div class="row">
-            <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-            <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
-          </div>
-      </div>
+              <div class="row">
+                <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+                <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+              </div>
+            </div>
             <h5 class="card-title">Exporty</h5>
             <div class="row">
               <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
               <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
             </div>
-          <div class="row mt-3">
-            <div class="col-lg-6">
-              <BaseFormButton class="btn-success me-1" @click="goBack=true;">Uložit</BaseFormButton>
-              <BaseFormButton class="btn-outline-primary" @click="goBack=false;">Uložit a pokračovat</BaseFormButton>
+            <div class="row mt-3">
+              <div class="col-lg-6">
+                <BaseFormButton class="btn-success me-1" @click="goBack=true;">Uložit</BaseFormButton>
+                <BaseFormButton class="btn-outline-primary" @click="goBack=false;">Uložit a pokračovat</BaseFormButton>
+              </div>
             </div>
           </div>
-          </div>
-        <div class="col-lg-6 ps-5">
-
-
-          <h5 class="card-title">Účty</h5>
-          <div class="form-wrapper-light mt-3">
-            <h5 class=" card-title-lower">1) petr@lqd.cz    <div class="float-end"><button class="btn btn-xs btn-outline-secondary me-2"><i class="fa fa-trash-o"></i></button></div></h5>
-            <div class="row">
-              <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-              <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
-            </div>
-            <div class="row mt-2">
-              <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-              <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
-            </div>
-            <hr class="pt-1" style="color: white">
-            <h5 class=" card-title-lower">2) petr@lqd.cz    <div class="float-end"><button class="btn btn-xs btn-outline-secondary me-2"><i class="fa fa-trash-o"></i></button></div></h5>
-            <div class="row">
-              <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-              <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
-            </div>
-            <div class="row">
-              <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-              <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
-            </div>
-            <div class="mt-3">
-              <button class="btn btn-sm btn-outline-secondary me-2"><i class="fa fa-plus"></i></button>
+          <div class="col-lg-6 ps-5">
+            <h5 class="card-title">Účty</h5>
+            <div class="form-wrapper-light mt-3">
+              <h5 class=" card-title-lower">1) petr@lqd.cz    <div class="float-end"><button class="btn btn-xs btn-outline-secondary me-2"><i class="fa fa-trash-o" /></button></div></h5>
+              <div class="row">
+                <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+                <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+              </div>
+              <div class="row mt-2">
+                <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+                <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+              </div>
+              <hr class="pt-1" style="color: white">
+              <h5 class=" card-title-lower">2) petr@lqd.cz    <div class="float-end"><button class="btn btn-xs btn-outline-secondary me-2"><i class="fa fa-trash-o" /></button></div></h5>
+              <div class="row">
+                <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+                <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+              </div>
+              <div class="row">
+                <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+                <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+              </div>
+              <div class="mt-3">
+                <button class="btn btn-sm btn-outline-secondary me-2"><i class="fa fa-plus" /></button>
+              </div>
             </div>
           </div>
         </div>
-       </div>
-        </BaseForm>
+      </BaseForm>
     </template>
   </BaseCard>
 </template>
 <script setup lang="ts">
 import {required} from "@vuelidate/validators";
-import VueMultiselect from 'vue-multiselect'
 import { reactive } from "vue";
-import {DataProvider} from "~/utils/DataProvider";
 
 const input:any = reactive({});
 const goBack:Ref<boolean> = ref(false);

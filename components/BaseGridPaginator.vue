@@ -5,17 +5,17 @@
         <ul class="pagination pagination-sm">
           <li class="page-item" :class="{disabled: page === 1}">
             <a class="page-link" aria-label="Previous" @click.prevent="emit('changePage', page > 1 ? page - 1 : 1)">
-              <span aria-hidden="true"><i class="fa fa-caret-left"></i></span>
+              <span aria-hidden="true"><i class="fa fa-caret-left" /></span>
               <span class="sr-only">Předchozí</span>
             </a>
           </li>
-          <li  v-for="index in pageNumber" :key="index" class="page-item" :class="{active: index === page}">
+          <li v-for="index in pageNumber" :key="index" class="page-item" :class="{active: index === page}">
             <a v-if="index === 1 || index === pageNumber || (page <= index + 2 && page >= index - 2)" class="page-link" @click.prevent.stop="emit('changePage', index)">{{ index }}</a>
             <span v-else-if="index === page - 3 || index === page + 3 " class="page-link" style="pointer-events: none;"> .. </span>
           </li>
           <li class="page-item" :class="{disabled: page === pageNumber}">
             <a class="page-link" aria-label="Next" @click.prevent="emit('changePage', page < pageNumber ? page + 1 : pageNumber)">
-              <span aria-hidden="true"><i class="fa fa-caret-right"></i></span>
+              <span aria-hidden="true"><i class="fa fa-caret-right" /></span>
               <span class="sr-only">Další</span>
             </a>
           </li>
@@ -42,10 +42,10 @@ const props = defineProps<{
 
 const config = useRuntimeConfig();
 
-const filters: any = reactive({});
+const filterValues: any = reactive({});
 
 const debouncing = _debounce(function (value) {
-  Object.assign(filters, value);
+  Object.assign(filterValues, value);
 }, 150);
 
 watch(props.filters, (value) => {
@@ -55,7 +55,7 @@ watch(props.filters, (value) => {
 
 const {data ,refresh} = useFetch(config.public.baseURL + props.url, {
   method: 'POST',
-  query: filters,
+  query: filterValues,
   body: {'_op': 'itemsCount'},
 });
 

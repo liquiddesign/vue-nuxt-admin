@@ -8,7 +8,6 @@
     "extends": [
         "eslint:recommended",
         "@nuxt/eslint-config",
-        "plugin:nuxt/recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:vue/vue3-essential"
     ],
@@ -19,10 +18,11 @@
     },
     "plugins": [
         "@typescript-eslint",
-        "vue",
-        "nuxt"
+        "vue"
     ],
     "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "vue/no-multiple-template-root": "off",
         "vue/multi-word-component-names": "off",
         "vue/no-arrow-functions-in-watch": "off",
         "vue/no-mutating-props": "off",
@@ -40,5 +40,6 @@
         ]
     },
     "globals": {
+        "defineNuxtPlugin": false
     }
 }

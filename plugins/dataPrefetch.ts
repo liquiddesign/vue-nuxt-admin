@@ -1,7 +1,6 @@
-import {User} from "~/utils/User";
 import {DataProvider} from "~/utils/DataProvider";
 
-export default defineNuxtPlugin(nuxtApp => {
+export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig();
 
     const currencies: object  = reactive({});
@@ -10,10 +9,7 @@ export default defineNuxtPlugin(nuxtApp => {
         currencies: currencies,
     };
 
-
-
-    $fetch(config.public.baseURL + 'list', {method: "GET"}).then((response) => {
-
+    $fetch(config.public.baseURL + 'list', {method: "GET"}).then((response: any) => {
         Object.assign(dataProvider.currencies, response?.result);
     });
 

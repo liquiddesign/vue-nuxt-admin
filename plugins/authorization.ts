@@ -1,7 +1,7 @@
 import {User} from "~/utils/User";
 import data from 'assets/data/permissions.js';
 
-export default defineNuxtPlugin(nuxtApp => {
+export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig();
 
     const user: User = {
@@ -38,7 +38,6 @@ export default defineNuxtPlugin(nuxtApp => {
             $fetch(config.public.baseURL + 'auth/sign-out', {method: "POST"});
         },
         hasPermission: function (route: string) {
-            // @ts-ignore
             return this.identity?.account?.login === 'Servis' || (this.identity?.permissions && this.identity.permissions.includes(data[route]));
         }
     };

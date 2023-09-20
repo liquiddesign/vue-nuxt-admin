@@ -1,5 +1,4 @@
-export default defineNuxtRouteMiddleware((to, from) => {
-
+export default defineNuxtRouteMiddleware((to) => {
     const { $user } = useNuxtApp();
 
     if (to.path !== '/' && !$user.isLoggedIn) {

@@ -1,11 +1,10 @@
 <template>
   <BaseCardHeader title="Přijaté objednávky" icon="pe-7s-box1" description="Objednávky předfiltrované dle stavů">
-
     <button type="button" class="me-2 btn btn-sm btn-outline-alternate">
-      <i class="fa fa-ban"></i> Blokováno (0)
+      <i class="fa fa-ban" /> Blokováno (0)
     </button>
     <button type="button" class="me-2 btn btn-sm btn-outline-secondary">
-      <i class="fa fa-cogs"></i>
+      <i class="fa fa-cogs" />
     </button>
   </BaseCardHeader>
   <div class="row">
@@ -30,7 +29,6 @@
     </div>
   </div>
   <BaseCard>
-
     Tabulka
   </BaseCard>
 </template>

@@ -17,10 +17,10 @@ defineOptions({
 
 const clicked: Ref<boolean> = ref(false);
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   wrap?: string,
   large?: boolean,
-}>(), {large: false});
+}>(), {large: false, wrap: undefined,});
 
 const form: any = inject('form') as any;
 

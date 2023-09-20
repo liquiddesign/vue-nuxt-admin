@@ -1,5 +1,4 @@
 <template>
-
   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="open=true">
     Launch demo modal {{ open }}
   </button>
@@ -11,12 +10,12 @@
 
   <!-- Modal -->
   <Teleport to="body">
-    <div class="modal fade" ref="testujeme" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="exampleModal" ref="testujeme" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 id="exampleModalLabel" class="modal-title">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
           </div>
           <div class="modal-body">
             ...
@@ -29,7 +28,6 @@
       </div>
     </div>
   </Teleport>
-
 </template>
 
 <script setup lang="ts">
@@ -46,7 +44,7 @@ const testa = ref(null);
 
 
 function test() {
-  let myModal = new $bootstrap.Modal(testujeme.value ?? '', {});
+  const myModal = new $bootstrap.Modal(testujeme.value ?? '', {});
   myModal.show();
   console.log(testa);
   testa.value?.focus();

@@ -8,7 +8,7 @@
           </div>
           <div v-else class="modal-header">
             <h5 class="modal-title">{{ title }}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zavřít"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zavřít" />
           </div>
           <div v-if="$slots.body || $slots.default" class="modal-body">
             <slot name="body" />
@@ -26,9 +26,9 @@
 <script setup lang="ts">
   import {withDefaults} from "vue/dist/vue";
 
-  const props = withDefaults(defineProps<{
+  withDefaults(defineProps<{
     title?: string,
-  }>(), {});
+  }>(), {title: undefined});
 
 
   const { $bootstrap } = useNuxtApp();

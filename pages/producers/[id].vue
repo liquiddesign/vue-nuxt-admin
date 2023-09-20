@@ -11,7 +11,7 @@ import {onActivated, onMounted} from "vue";
 
 const route = useRoute();
 
-const { data, status, execute } = useLazyFetch('http://localhost/levior-b2b/api/producer/' + route.params.id,
+const { data, execute } = useLazyFetch('http://localhost/levior-b2b/api/producer/' + route.params.id,
   { immediate: false}
 );
 

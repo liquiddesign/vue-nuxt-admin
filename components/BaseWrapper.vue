@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 
-const props = defineProps<{
+defineProps<{
   wrap?: string|object
 }>();
 
