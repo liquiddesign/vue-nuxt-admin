@@ -1,10 +1,7 @@
 <template>
   <BaseWrapper :wrap="wrap">
     <label v-if="label !== null" :for="$attrs['id']">{{ label }}</label>
-    <select v-bind="$attrs" class="form-select form-select-sm" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange">
-      <option v-if="prompt" value="" :selected="!(form && name ? _get(form.input, name) : modelValue)">{{ prompt }}</option>
-      <option v-for="(value, key) in options" :key="key" :value="key" :selected="key === (form && name ? _get(form.input, name) : modelValue)">{{ value }}</option>
-    </select>
+    <textarea v-bind="$attrs" class="form-control form-control-sm" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange">{{ modelValue }}</textarea>
   </BaseWrapper>
 </template>
 
@@ -16,12 +13,11 @@ const form: any = inject('form', null) as any;
 
 const props = withDefaults(defineProps<{
   label?: string|null
-  prompt?: string
   wrap?: string
-  options: object
+  nullable?: boolean
   name?: string
-  modelValue?: string|null
-}>(), { wrap: undefined, label: null, prompt: undefined, name: undefined, modelValue: undefined });
+  modelValue?: string|null,
+}>(), { wrap: undefined, label: null, nullable: false, name: undefined, modelValue: undefined });
 
 defineOptions({
   inheritAttrs: false
@@ -32,7 +28,7 @@ const $emit = defineEmits(['update:modelValue'])
 function onChange($event: any) {
   let value: string|number|null = $event.target.value;
 
-  if ($event.target.value === '') {
+  if (props.nullable && $event.target.value === '') {
     value = null;
   }
 
@@ -42,5 +38,7 @@ function onChange($event: any) {
 
   $emit('update:modelValue', value);
 }
+
+
 
 </script>

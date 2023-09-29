@@ -100,6 +100,11 @@ label {
     background-color: #ff6464 !important;
 }
 
+.form-control-file, .form-control-range {
+    display: block;
+    width: 100%;
+}
+
 .form-control-sm, .form-select-sm {
     font-size: 0.8085rem !important;
 

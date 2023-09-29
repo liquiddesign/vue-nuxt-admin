@@ -14,7 +14,7 @@ import {RouteParamValue} from "vue-router";
 
   const props = withDefaults(defineProps<{
     name?: string,
-    url: string,
+    url?: string|null,
     slug?: string|RouteParamValue[]|null,
     input: any | null,
     disabled?: boolean,
@@ -24,6 +24,7 @@ import {RouteParamValue} from "vue-router";
     silent?: boolean,
   }>(), {
     name: 'frm',
+    url: null,
     slug: null,
     disabled: false,
     rules: {},
@@ -38,19 +39,7 @@ import {RouteParamValue} from "vue-router";
   const toast: ToastPluginApi = inject('toast', useToast());
   const pending: Ref<boolean> = ref(false);
 
-  function updateInput(path: string, value: any, convert: string|null = null, nullable: boolean = false) {
-    if (nullable && value === '') {
-      value = null;
-    }
-
-    if (convert === 'number') {
-      value = parseInt(value);
-    }
-
-    if (convert === 'float') {
-      value = parseFloat(value);
-    }
-
+  function updateInput(path: string, value: any) {
     _set(props.input, path, value);
     _get(v$.value, path)?.$touch();
   }
@@ -79,7 +68,7 @@ import {RouteParamValue} from "vue-router";
       delete inputs[val];
     })
 
-    if (!v$.value.$invalid && !props.disabled) {
+    if (!v$.value.$invalid && !props.disabled && props.url) {
       pending.value = true;
       $fetch(config.public.baseURL + (props.slug !== null ?  props.url + '/' + props.slug : props.url), {body: inputs, method: props.slug !== null ? 'PATCH' : 'POST'})
         .then((result) => {

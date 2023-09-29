@@ -1,11 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    modules: ['@nuxtjs/apollo', "nuxt-lodash", "@nuxtjs/eslint-module"],
+    modules: ['@nuxtjs/apollo', "nuxt-lodash"],
     typescript: {
         strict: true
     },
     ssr: false,
-    css: ["bootstrap/dist/css/bootstrap.min.css", "@/assets/css/base.css", "@/assets/css/adds.css", "@/assets/css/toaster.css", "@/assets/css/multiselect.css", "pe7-icon/dist/dist/pe-icon-7-stroke.css", "font-awesome/css/font-awesome.css"],
+    css: ["bootstrap/dist/css/bootstrap.min.css", "@/assets/css/base.css", "@/assets/css/adds.css", "@/assets/css/toaster.css", "@/assets/css/popper.css", "@/assets/css/multiselect.css", "pe7-icon/dist/dist/pe-icon-7-stroke.css", "font-awesome/css/font-awesome.css"],
     app: {
         head: {
             charset: 'utf-8',
@@ -33,7 +33,5 @@ export default defineNuxtConfig({
     lodash: {
         prefix: "_",
         upperAfterPrefix: false,
-    },
-    eslint: {
     }
 })
