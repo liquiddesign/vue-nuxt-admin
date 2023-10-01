@@ -159,6 +159,12 @@ div.form-wrapper-light-thin {
     border-left-width: 2px;
 }
 
+input.input-required, select.input-required,
+textareainput-required {
+    border-left-color: red;
+    border-left-width: 2px;
+}
+
 .border-left-danger {
     border-left-color: red !important;
     border-left-width: 2px !important;

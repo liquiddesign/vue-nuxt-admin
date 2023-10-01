@@ -35,7 +35,7 @@ import {RouteParamValue} from "vue-router";
 
 
   const config = useRuntimeConfig();
-  const v$:any = useVuelidate(props.rules, props.input ?? {});
+  const v$:any = useVuelidate(props.rules, props.input);
   const toast: ToastPluginApi = inject('toast', useToast());
   const pending: Ref<boolean> = ref(false);
 
@@ -68,6 +68,7 @@ import {RouteParamValue} from "vue-router";
       delete inputs[val];
     })
 
+    // wait validate -> or valid by rules
     if (!v$.value.$invalid && !props.disabled && props.url) {
       pending.value = true;
       $fetch(config.public.baseURL + (props.slug !== null ?  props.url + '/' + props.slug : props.url), {body: inputs, method: props.slug !== null ? 'PATCH' : 'POST'})

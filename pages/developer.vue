@@ -92,29 +92,31 @@
       <i class="fa fa-bookmark-o"></i>
     </BaseCard>
   </div>
-  <BaseCard cl>
+  <BaseCard>
     <template #header>Formulářové prvky</template>
     <div class="d-flex gap-1">
       <BaseTextBox id="test" label="BaseTextBox" v-model="formData.name" wrap="flex-shrink-0" style="width: 100px" placeholder="Standartní" />
       <BaseTextBox label="BaseTextBox" v-model="formData.name" wrap="flex-shrink-0" class="form-control-xs" style="width: 100px" placeholder="Malý" />
-      <BaseTextBox label="BaseTextBox" v-model="formData.name" type="number" wrap="flex-shrink-0" style="width: 100px" placeholder="Číslo" />
-      <BaseTextBox label="BaseTextBox" v-model="formData.name" type="float" wrap="flex-shrink-0" style="width: 100px" placeholder="Float" />
+      <BaseTextBox label="BaseTextBox" v-model="formData.numeric" type="number" wrap="flex-shrink-0" style="width: 100px" placeholder="Číslo" />
+      <BaseTextBox label="BaseTextBox" v-model="formData.numeric" type="float" wrap="flex-shrink-0" style="width: 100px" placeholder="Float" />
       <BaseTextBox label="BaseTextBox" v-model="formData.name" :nullable="true" wrap="flex-shrink-0" style="width: 100px" placeholder="Nullable" />
       <BaseTextBox label="BaseTextBox" v-model="formData.name" :disabled="true" wrap="flex-shrink-0" style="width: 100px" placeholder="Disable" />
-      <BaseTextBox label="BaseTextBox" v-model="formData.name" wrap="flex-shrink-0" style="width: 100px" placeholder="S formulářem" />
+      <BaseTextBox label="BaseTextBox" v-model="formData.test" wrap="flex-shrink-0" style="width: 100px" placeholder="predvyplnene" />
       <BaseTextBox label="" v-model="formData.name" wrap="flex-shrink-0" style="width: 200px" placeholder="S prázdným popiskem" />
+      <BaseTextBox v-model="formData.name" wrap="flex-shrink-0" style="width: 200px" placeholder="Bez popisku" />
       <BaseForm :input="formData">
-        <BaseTextBox name="name" wrap="flex-shrink-0" style="width: 100px" placeholder="Bez popisku" />
-      </BaseForm>
+        <BaseTextBox name="test2" wrap="flex-shrink-0" style="width: 100px" placeholder="S formulářem" />
+        <BaseTextBox name="test2" wrap="flex-shrink-0" style="width: 100px" placeholder="S formulářem" />
+      </BaseForm>-->
       <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.name }} (null: {{ formData.name === null ? 'ano' : 'ne'}})</div>
     </div>
     <div class="d-flex gap-1">
       <BaseTextArea label="BaseTextArea" wrap="flex-shrink-0" v-model="formData.name" placeholder="Standartní" />
       <BaseTextArea label="BaseTextArea" wrap="flex-shrink-0" :nullable="true" v-model="formData.name" placeholder="Nullable" />
       <BaseForm :input="formData">
-        <BaseTextArea label="BaseTextArea" name="name" placeholder="S formulářem" />
+        <BaseTextArea label="BaseTextArea" name="test2" placeholder="S formulářem" />
       </BaseForm>
-      <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.name }} (null: {{ formData.name === null ? 'ano' : 'ne'}})</div>
+      <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.name }} (null: {{ formData.name === null ? 'ano' : 'ne'}}) | Test2: {{ formData.test2 }}</div>
     </div>
     <div class="d-flex gap-1">
       <BaseSelect label="BaseSelect" v-model="formData.gender" prompt="Choose" wrap="flex-shrink-0" :options="{'male': 'muz', 'female' : 'zena'}" />
@@ -158,11 +160,22 @@
       <BaseFileBox />
     </div>
     <div class="d-flex gap-1">
-      <BaseImageBox />
+      <BaseImageBox :maxUploadSize="2" :max-files="3" />
     </div>
   </BaseCard>
   <BaseCard>
     <template #header>Validace</template>
+    <div class="d-flex gap-1">
+
+      <BaseTextBox label="BaseTextBox" v-model="formData.validation1" :validation="v$.validation1" wrap="flex-shrink-0" style="width: 100px" placeholder="Standartní" />
+      <BaseTextArea label="BaseTextArea" wrap="flex-shrink-0" v-model="formData.validation1" :validation="v$.validation1" placeholder="Standartní" />
+      <BaseButton @click="v$.$validate()" class="btn-success">Zvalidovat</BaseButton> Valid: {{ !v$.$invalid }}
+      <BaseForm :input="formData" :rules="rules">
+        <BaseTextBox label="BaseTextBox" name="validation2" wrap="flex-shrink-0" style="width: 100px" placeholder="Standartní" />
+      </BaseForm>
+
+      <div class="flex-shrink-0" style="line-height: 29px;">Value1: {{ formData.validation1 }}, Value2: {{ formData.validation2 }}</div>
+    </div>
   </BaseCard>
   <BaseCard>
     <template #header>Jazyky</template>
@@ -188,11 +201,20 @@
 </template>
 <script setup lang="ts">
 import {ToastPluginApi, useToast} from "vue-toast-notification";
+import {required} from "@vuelidate/validators";
+import useVuelidate, {BaseValidation} from "@vuelidate/core";
 
 const toast: ToastPluginApi = inject('toast', useToast());
 
 const { $user } = useNuxtApp();
 
-const formData: Ref<object> = ref({gender: 'female', hidden: true, colors: ['green'], company: null});
+const formData: Ref<any> = ref({gender: 'female', hidden: true, colors: ['green'], company: null, test: 'test'});
+
+const rules = {
+  validation1: { required },
+  validation2: { required },
+};
+
+const v$: Ref<BaseValidation> = useVuelidate(rules, formData, {$autoDirty: true});
 
 </script>

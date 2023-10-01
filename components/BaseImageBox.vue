@@ -1,13 +1,16 @@
 <template>
   <BaseWrapper :wrap="wrap">
     <div class="">
-      <BaseButtonSave class="btn-xs" style="border: 1px solid rgb(128,128,128);" />
-      <input v-bind="$attrs" type="file" class="form-control-file" accept="image/*" @change="onFileChanged" />
+      <BaseButtonSave class="btn-xs" style="border: 1px solid rgb(128,128,128);" :disabled="!canUpload" />
+      <input v-bind="$attrs" type="file" class="form-control-file" :accept="accept" @change="onFileChanged" :disabled="totalUploadAmount >= maxFiles || $attrs['disabled']" :multiple="maxFiles > 1" />
       <small class="form-text text-muted">
-        min. š/v: 400/400px. | max. š/v: 400/400px. | upload: <span class="text-danger">0/2MB</span> | souborů: 0/1
+        <template v-if="minHeight || minWidth">min. š/v: <span :class="{'text-danger': errorMinSize}">{{ minWidth ?? '-' }}/{{ minHeight ?? '-' }}px</span> | </template>
+        <template v-if="maxHeight || maxWidth">max. š/v: <span :class="{'text-danger': errorMaxSize}">{{ maxWidth ?? '-' }}/{{ maxHeight ?? '-' }}px</span> | </template>
+        upload: <span :class="{'text-danger': errorUploadSize}">{{ totalUploadSize }}/{{ maxUploadSize }}MB</span> |
+        souborů: {{ totalUploadAmount }}/{{ maxFiles }}
       </small>
-      <small></small>
     </div>
+    <slot />
     <template v-if="files" v-for="(file, i) in files" :key="file.name">
       <div class="text-center bg-light p-2">
       <img :src="file.src" alt="" class="img-thumbnail" style=" max-height: 100px; max-width: 100px; opacity: 0.3;filter: alpha(opacity=40);">
@@ -18,10 +21,11 @@
         <BaseButtonDeleteLight class="btn-xs" @click.prevent="removeUpload(i)"/>
       </div>
     </template>
-
   </BaseWrapper>
 </template>
 <script setup lang="ts">
+
+import {ComputedRef} from "vue";
 
 const files: Ref<any[]> = ref([]);
 
@@ -36,38 +40,66 @@ const props = withDefaults(defineProps< {
   maxHeight?: number,
   minWidth?: number,
   maxWidth?: number,
-}>(), { label: undefined, wrap : undefined, uploading: false, validExtensions: () => ['jpg','jpeg','png'] });
+}>(), { label: undefined, wrap : undefined, uploading: false, maxFiles: 1, maxUploadSize: 10, minHeight: 0, minWidth: 0, validExtensions: () => ['jpg','jpeg','png'] });
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
-const canUpload = computed(() => {
-  return props.disabled;
+const canUpload: ComputedRef<boolean> = computed(() => {
+  return totalUploadAmount.value > 0 && !errorMinSize.value && !errorMaxSize.value && !errorUploadSize.value;
+});
+
+const accept: ComputedRef<string> = computed(() => {
+  let accept = '';
+  let i = 0;
+
+  props.validExtensions.forEach((extension) => {
+    if (i++ !== 0) {
+      accept += ',';
+    }
+    accept += 'image/' + extension;
+  });
+  accept.substring(0, -1);
+
+  return accept;
 });
 
 const totalUploadSize = computed(() => {
-  return props.disabled;
+  let sum: number = 0;
+  files.value.forEach((file) => {
+    sum += file.size
+  });
+
+  return Math.round(sum / 1024 / 1024);
 });
 
-const totalUploadAmount = computed(() => {
-  return props.disabled;
+const totalUploadAmount:ComputedRef<number> = computed(() => {
+  return files.value.length;
 });
 
 const errorMinSize = computed(() => {
-  return props.disabled;
+  files.value.forEach((file) => {
+    if (file.height < props.minHeight || file.width < props.minWidth) {
+      return true;
+    }
+  });
+
+  return false;
 });
 
 const errorMaxSize = computed(() => {
-  return props.disabled;
+  files.value.forEach((file) => {
+    if ((props.maxHeight !== undefined && file.height > props.maxHeight) || (props.maxWidth !== undefined && file.width > props.maxWidth)) {
+      return true;
+    }
+  });
+
+  return false;
 });
 
-const errorUploadSize = computed(() => {
-  return props.disabled;
-});
-
-const errorUploadAmount = computed(() => {
-  return props.disabled;
+const errorUploadSize: ComputedRef<boolean> = computed(() => {
+  return props.maxUploadSize !== undefined && totalUploadSize.value > props.maxUploadSize;
 });
 
 function onFileChanged($event: Event){
@@ -95,12 +127,14 @@ function onFileChanged($event: Event){
 
 function removeUpload(index: number)
 {
-  delete files.value[index];
+  files.value.splice(index, 1);
 }
 
 function isValidExtension(fileName: string)
 {
   return props.validExtensions.includes(fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length).toLowerCase());
 }
+
+defineExpose({ canUpload, files });
 
 </script>

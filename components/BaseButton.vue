@@ -1,6 +1,6 @@
 <template>
   <BaseWrapper :wrap="wrap">
-    <button v-bind="$attrs" class="btn" :disabled="loading">
+    <button v-bind="$attrs" class="btn" :disabled="loading || $attrs['disabled']">
       <span v-if="loading" class="spinner-grow spinner-grow-xs me-1" role="status" aria-hidden="true" />
       <slot />
     </button>

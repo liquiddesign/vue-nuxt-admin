@@ -1,15 +1,23 @@
 <template>
   <BaseWrapper :wrap="wrap">
     <label v-if="label !== null" :for="$attrs['id']">{{ label }}</label>
-    <input v-bind="$attrs" class="form-control form-control-sm" :type="type === 'float' ? 'number' : type" :value="modelValue" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" />
+    <input v-bind="$attrs" class="form-control form-control-sm" :class="classes" :type="type === 'float' ? 'number' : type" :value="form && name ? _get(form.input, name) : modelValue" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" />
+    <template v-if="validationObject?.$errors">
+      <div v-for="(error, index) in validationObject?.$errors" :key="index" class="text-danger">
+        {{ error.$message }}
+      </div>
+    </template>
   </BaseWrapper>
 </template>
 
 <script setup lang="ts">
 import {withDefaults} from "vue/dist/vue";
-import {inject} from "vue";
+import {computed, inject} from "vue";
+import {BaseValidation} from "@vuelidate/core";
 
 const form: any = inject('form', null) as any;
+
+
 
 const props = withDefaults(defineProps<{
   label?: string|null
@@ -17,8 +25,9 @@ const props = withDefaults(defineProps<{
   type?: string
   nullable?: boolean
   name?: string,
-  modelValue?: string|null,
-}>(), { type: 'text', wrap: undefined, label: null, nullable: false, name: undefined, modelValue: undefined });
+  modelValue?: string|number|null,
+  validation?: BaseValidation,
+}>(), { type: 'text', wrap: undefined, label: null, nullable: false, name: undefined, modelValue: undefined, validation: undefined });
 
 defineOptions({
   inheritAttrs: false
@@ -48,6 +57,20 @@ function onChange($event: any) {
   $emit('update:modelValue', value);
 }
 
+const {validationObject, classes} = useFormValidation(form, props);
+
+/*const validationObject = computed( function () {
+  return props.name && form?.validation.value ? form.validation.value[props.name] : props.validation;
+});
+
+
+const classes = computed( function () {
+  return {
+    'is-invalid' : validationObject.value?.$invalid && validationObject.value?.$dirty,
+    'is-empty' : !props.modelValue,
+    'input-required' : validationObject.value?.required,
+  };
+});*/
 
 
 </script>
