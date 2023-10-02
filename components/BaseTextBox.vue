@@ -1,6 +1,8 @@
 <template>
   <BaseWrapper :wrap="wrap">
-    <label v-if="label !== null" :for="$attrs['id']">{{ label }}</label>
+    <label v-if="label !== null" :for="$attrs['id']">
+      <span v-if="(form && form.lang) || lang" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>{{ label }}
+    </label>
     <input v-bind="$attrs" class="form-control form-control-sm" :class="classes" :type="type === 'float' ? 'number' : type" :value="form && name ? _get(form.input, name) : modelValue" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" />
     <template v-if="validationObject?.$errors">
       <div v-for="(error, index) in validationObject?.$errors" :key="index" class="text-danger">
@@ -17,17 +19,16 @@ import {BaseValidation} from "@vuelidate/core";
 
 const form: any = inject('form', null) as any;
 
-
-
 const props = withDefaults(defineProps<{
   label?: string|null
+  lang?: string
   wrap?: string
   type?: string
   nullable?: boolean
   name?: string,
   modelValue?: string|number|null,
   validation?: BaseValidation,
-}>(), { type: 'text', wrap: undefined, label: null, nullable: false, name: undefined, modelValue: undefined, validation: undefined });
+}>(), { type: 'text', wrap: undefined, label: null, lang: undefined, nullable: false, name: undefined, modelValue: undefined, validation: undefined });
 
 defineOptions({
   inheritAttrs: false
@@ -58,19 +59,6 @@ function onChange($event: any) {
 }
 
 const {validationObject, classes} = useFormValidation(form, props);
-
-/*const validationObject = computed( function () {
-  return props.name && form?.validation.value ? form.validation.value[props.name] : props.validation;
-});
-
-
-const classes = computed( function () {
-  return {
-    'is-invalid' : validationObject.value?.$invalid && validationObject.value?.$dirty,
-    'is-empty' : !props.modelValue,
-    'input-required' : validationObject.value?.required,
-  };
-});*/
 
 
 </script>

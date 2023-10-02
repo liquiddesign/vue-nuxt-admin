@@ -1,7 +1,9 @@
 <template>
   <BaseWrapper :wrap="wrap">
-    <label v-if="label" :for="$attrs['id']">{{ label }}</label>
-    <div style="height: 29.5px;">
+    <label v-if="label" :for="$attrs['id']">
+      <span v-if="(form && form.lang) || lang" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>{{ label }}
+    </label>
+    <div style="height: 29.5px;" :class="classes">
       <VueMultiselect
         v-bind="$attrs"
         :options="optionArray"
@@ -36,10 +38,16 @@
         </template>
       </VueMultiselect>
     </div>
+    <template v-if="validationObject?.$errors">
+      <div v-for="(error, index) in validationObject?.$errors" :key="index" class="text-danger">
+        {{ error.$message }}
+      </div>
+    </template>
   </BaseWrapper>
 </template>
 <script setup lang="ts">
 import VueMultiselect from "vue-multiselect";
+import {BaseValidation} from "@vuelidate/core";
 import BaseWrapper from "~/components/BaseWrapper.vue";
 import {computed} from "vue";
 
@@ -47,6 +55,7 @@ const config = useRuntimeConfig();
 
 const props = withDefaults(defineProps<{
   name?: string,
+  lang?: string,
   wrap?: string,
   fetchUrl?: string,
   label?: string|null,
@@ -57,7 +66,8 @@ const props = withDefaults(defineProps<{
   optionsUrl?: string,
   optionsUrlParams?: any,
   optionsUrlQueryName?: any,
-}>(), { label: null, name: undefined, async: false, asyncStartLength: 1, optionsUrl: undefined, optionsUrlParams: {}, optionsUrlQueryName: 'q', options: {}, wrap: undefined, modelValue: undefined });
+  validation?: BaseValidation,
+}>(), { label: null, name: undefined, lang: undefined, async: false, asyncStartLength: 1, optionsUrl: undefined, optionsUrlParams: {}, optionsUrlQueryName: 'q', options: {}, wrap: undefined, modelValue: undefined, validation: undefined });
 
 defineOptions({
   inheritAttrs: false
@@ -113,5 +123,7 @@ function customLabel(key: string)
 {
     return options.value[key] ?? (!props.optionsUrl ? key : null);
 }
+
+const {validationObject, classes} = useFormValidation(form, props);
 
 </script>

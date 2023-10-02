@@ -14,6 +14,7 @@ import {RouteParamValue} from "vue-router";
 
   const props = withDefaults(defineProps<{
     name?: string,
+    lang?: string,
     url?: string|null,
     slug?: string|RouteParamValue[]|null,
     input: any | null,
@@ -24,6 +25,7 @@ import {RouteParamValue} from "vue-router";
     silent?: boolean,
   }>(), {
     name: 'frm',
+    lang: undefined,
     url: null,
     slug: null,
     disabled: false,
@@ -50,6 +52,7 @@ import {RouteParamValue} from "vue-router";
 
   provide('form', {
     name: props.name,
+    lang: props.lang,
     disabled: disabled,
     pending: pending,
     input: props.input,
@@ -61,6 +64,7 @@ import {RouteParamValue} from "vue-router";
   const emit = defineEmits(['success', 'error']);
 
   function submit() {
+    console.log('submiting');
     v$.value.$touch();
 
     const inputs = Object.assign({}, props.input);

@@ -2,7 +2,7 @@
   <BaseWrapper :wrap="wrap">
     <label v-if="label !== null" :for="$attrs['id']" class="form-check-label">
       <input v-bind="$attrs" class="form-check-input" type="checkbox" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" :checked="form && name ? _get(form.input, name) : modelValue" />
-      {{ label }}
+      <span v-if="(form && form.lang) || lang" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>{{ label }}
     </label>
     <input v-else v-bind="$attrs" class="form-check-input" type="checkbox" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" :checked="form && name ? _get(form.input, name) : modelValue" />
   </BaseWrapper>
@@ -16,11 +16,12 @@ const form: any = inject('form', null) as any;
 
 const props = withDefaults(defineProps<{
   label?: string|null
+  lang?: string
   wrap?: string
   type?: string
   name?: string,
   modelValue?: boolean|null,
-}>(), { type: 'text', wrap: undefined, label: null, name: undefined, modelValue: undefined });
+}>(), { type: 'text', wrap: undefined, lang: undefined, label: null, name: undefined, modelValue: undefined });
 
 defineOptions({
   inheritAttrs: false

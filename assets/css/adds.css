@@ -39,7 +39,7 @@ table tr.inactive td { color: silver;}
 table tr.inactive td a { color: silver;}
 table tr.deleted td { color: silver; text-decoration: line-through; }
 table tr.deleted td a { color: silver; text-decoration: line-through; }
-table tr:hover {background-color: #e0f3ff}
+table tbody tr:hover {background-color: #e0f3ff}
 
 th.minimal, td.minimal {
     width: 1%;
@@ -158,11 +158,19 @@ div.form-wrapper-light-thin {
     border-left-color: red;
     border-left-width: 2px;
 }
-
-input.input-required, select.input-required,
-textareainput-required {
+.input-required .multiselect__tags {
     border-left-color: red;
     border-left-width: 2px;
+}
+
+input.input-required, select.input-required,
+textarea.input-required {
+    border-left-color: red;
+    border-left-width: 2px;
+}
+
+.is-invalid .multiselect__tags {
+    border-color: red;
 }
 
 .border-left-danger {

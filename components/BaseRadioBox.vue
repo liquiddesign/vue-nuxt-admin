@@ -1,8 +1,16 @@
 <template>
   <BaseWrapper :wrap="wrap">
-    <template v-for="(value, key) in options" :key="key">
-      <input v-bind="$attrs" class="form-check-input" type="radio" :value="key" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" :checked="(form && name ? _get(form.input, name) : modelValue) === key" />
-      <label :for="$attrs['id']" class="form-check-label">{{ value }}</label>
+    <div :class="classes">
+      <span v-if="(form && form.lang) || lang" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>
+      <template v-for="(value, key) in options" :key="key">
+        <input v-bind="$attrs" class="form-check-input" type="radio" :value="key" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" :checked="(form && name ? _get(form.input, name) : modelValue) === key" />
+        <label :for="$attrs['id']" class="form-check-label">{{ value }}</label>
+      </template>
+    </div>
+    <template v-if="validationObject?.$errors">
+      <div v-for="(error, index) in validationObject?.$errors" :key="index" class="text-danger">
+        {{ error.$message }}
+      </div>
     </template>
   </BaseWrapper>
 </template>
@@ -10,15 +18,18 @@
 <script setup lang="ts">
 import {withDefaults} from "vue/dist/vue";
 import {inject} from "vue";
+import {BaseValidation} from "@vuelidate/core";
 
 const form: any = inject('form', null) as any;
 
 const props = withDefaults(defineProps<{
   wrap?: string
+  lang?: string
   options: object
   name?: string,
   modelValue?: string|null,
-}>(), { type: 'text', wrap: undefined, name: undefined, modelValue: undefined });
+  validation?: BaseValidation,
+}>(), { type: 'text', wrap: undefined, lang: undefined, name: undefined, modelValue: undefined, validation: undefined });
 
 defineOptions({
   inheritAttrs: false
@@ -41,6 +52,6 @@ function onChange($event: any) {
   $emit('update:modelValue', value);
 }
 
-
+const {validationObject, classes} = useFormValidation(form, props);
 
 </script>
