@@ -224,48 +224,88 @@
       </div>
     </BaseCard>
   </div>
-  <BaseCard>
-    <template #header>Taby</template>
-    <BaseTabs :active="activeTab" :tabs="{'accepted': 'Přijaté', 'sent': 'Odeslané', 'canceled': 'Stornované'}" @select="activeTab=$event">
-      <i>|{{ activeTab }}| Tohle se zobrazi nad obsahem, dokumentace k dynamickym slotum: https://vuejs.org/guide/components/slots.html#dynamic-slot-names</i><br>
-      <template #accepted>Obsah tabu Přijaté</template>
-      <template #sent>Obsah tabu Odeslané</template>
-      <template #canceled>Obsah tabu Stornované</template>
-    </BaseTabs>
-    <BaseTabs :active="activeTab" :tabs="{'accepted': 'Přijaté', 'sent': 'Odeslané', 'canceled': 'Stornované'}" @select="activeTab=$event">
-      <i>Dynamicky tabs</i><br>
-      <template #[activeTab]>Obsah tabu {{ activeTab }}</template>
-    </BaseTabs>
-  </BaseCard>
-  <BaseCard>
-    <template #header>Highlights</template>
-    <div class="row">
-      <BaseHighlight wrap="col-xl-4" heading="Total Orders" subheading="Last year expenses" class="bg-secondary text-white">1896</BaseHighlight>
-      <BaseHighlight wrap="col-xl-4" icon="metismenu-icon pe-7s-users" heading="Followers" subheading="People Interested" class="bg-night-sky text-white">$ 568</BaseHighlight>
-      <BaseHighlight wrap="col-xl-4" heading="Followers" subheading="People Interested" class="bg-light">46%</BaseHighlight>
-    </div>
-  </BaseCard>
-  <BaseCard>
-    <template #header>Tabulky</template>
-    <BaseGrid url="customer">
-      <template #header>
-        <tr>
-          <BaseGridThSelect />
-          <th />
-          <BaseGridTh>#</BaseGridTh>
-          <th />
-          <BaseGridTh order-by="company">Název</BaseGridTh>
-        </tr>
-      </template>
-      <template #body="{item, selected, deleteRow}">
-        <tr :class="{'inactive': item.id === 5, 'active': selected}">
-          <BaseGridTdSelect :id="item.uuid" />
-        </tr>
-        <td class="minimal">{{ item.ic ?? '-' }}</td>
-        <td class="minimal">{{ item.ic ?? '-' }}</td>
-      </template>
-    </BaseGrid>
-  </BaseCard>
+  <div class="row">
+    <BaseCard wrap="col-lg-6">
+      <template #header>Taby</template>
+      <BaseTabs :active="activeTab" :tabs="{'accepted': 'Přijaté', 'sent': 'Odeslané', 'canceled': 'Stornované'}" @select="activeTab=$event">
+        <i>|{{ activeTab }}| Tohle se zobrazi nad obsahem, dokumentace k dynamickym slotum: https://vuejs.org/guide/components/slots.html#dynamic-slot-names</i><br>
+        <template #accepted>Obsah tabu Přijaté</template>
+        <template #sent>Obsah tabu Odeslané</template>
+        <template #canceled>Obsah tabu Stornované</template>
+      </BaseTabs>
+      <BaseTabs :active="activeTab" :tabs="{'accepted': 'Přijaté', 'sent': 'Odeslané', 'canceled': 'Stornované'}" @select="activeTab=$event">
+        <i>Dynamicky tabs</i><br>
+        <template #[activeTab]>Obsah tabu {{ activeTab }}</template>
+      </BaseTabs>
+    </BaseCard>
+    <BaseCard wrap="col-lg-6">
+      <template #header>Highlights</template>
+      <div class="row">
+        <BaseHighlight wrap="col-xl-4" heading="Total Orders" subheading="Last year expenses" class="bg-secondary text-white">1896</BaseHighlight>
+        <BaseHighlight wrap="col-xl-4" icon="metismenu-icon pe-7s-users" heading="Followers" subheading="People Interested" class="bg-night-sky text-white">$ 568</BaseHighlight>
+        <BaseHighlight wrap="col-xl-4" heading="Followers" subheading="People Interested" class="bg-light">46%</BaseHighlight>
+      </div>
+    </BaseCard>
+  </div>
+  <div class="row">
+    <BaseCard wrap="col-lg-6">
+      <template #header>Tabulky</template>
+      <BaseGrid url="customer" on-page="5">
+        <template #header>
+          <tr>
+            <BaseGridThSelect />
+            <BaseGridTh>#</BaseGridTh>
+            <BaseGridTh order-by="company">Název</BaseGridTh>
+          </tr>
+        </template>
+        <template #body="{item, selected, deleteRow}">
+          <tr :class="{'inactive': item.id === 5, 'active': selected}">
+            <BaseGridTdSelect :id="item.uuid" />
+            <td class="minimal">test</td>
+            <td>{{ item.company }}</td>
+          </tr>
+        </template>
+      </BaseGrid>
+    </BaseCard>
+    <BaseCard wrap="col-lg-6">
+      <template #header>Tabulky</template>
+      <BaseFilter @cancel="filters={}">
+        <BaseInput v-model="filters.q" wrap="flex-shrink-0" placeholder="Název, kód, #id" type="text" />
+      </BaseFilter>
+      <BaseGrid url="customer" :page="page" :on-page="onPage" :filters="filters">
+        <template #header>
+          <tr>
+            <BaseGridThSelect />
+            <BaseGridTh>#</BaseGridTh>
+            <BaseGridTh order-by="company">Název</BaseGridTh>
+            <BaseGridTh></BaseGridTh>
+          </tr>
+        </template>
+        <template #body="{item, selected, deleteRow}">
+          <tr :class="{'inactive': item.id === 5, 'active': selected}">
+            <BaseGridTdSelect :id="item.uuid" />
+            <td class="minimal"><BaseButtonEdit class="btn-xs" /></td>
+            <td>{{ item.company }}</td>
+            <td class="minimal"><BaseButtonDelete class="btn-xs" :confirmation="true" @confirmed="deleteRow();" /></td>
+          </tr>
+        </template>
+        <template #footer="deleteSelectedRows">
+          <BaseGridSelectAll wrap="flex-shrink-0 me-1 ms-1" />
+          <BaseGridEditSelected>
+            <BaseModal ref="modal1" title="Modal 1">
+              <BaseForm>
+                <BaseSelect :options="{'1': 'puvodni', '2': 'nahradit', '3': 'pridat', '4': 'odebrat'}" /><BaseTextBox label="BaseTextBox" name="name" wrap="flex-shrink-0" style="width: 150px" placeholder="uprava" />
+                <BaseFormButton class="btn-primary" wrap="flex-shrink-0">Uložit</BaseFormButton>
+              </BaseForm>
+            </BaseModal>
+          </BaseGridEditSelected>
+          <BaseGridExportSelected />
+          <BaseGridDeleteSelected @confirmed="deleteSelectedRows();" />
+          <BaseGridPaginator ref="paginator" wrap="flex-shrink-0" url="customer" :page="page" :on-page="onPage" :filters="filters" @change-page="page = $event" @change-on-page="onPage = $event; page = 1;" />
+        </template>
+      </BaseGrid>
+    </BaseCard>
+  </div>
   <BaseCard>
     <template #header>Image preview</template>
   </BaseCard>
@@ -293,6 +333,10 @@ const rules = {
   validation2: { required },
   gender2: { required },
 };
+
+const filters: any = ref({});
+const page = ref(1);
+const onPage = ref(5);
 
 const v$: Ref<BaseValidation> = useVuelidate(rules, formData, {$autoDirty: true});
 
