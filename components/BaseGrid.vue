@@ -28,7 +28,7 @@
       </table>
     </div>
     <div class="d-flex align-items-center flex-wrap gap-1">
-      <slot name="footer" :selected-number="selectedNumber" :select-all="selectAll" :selected="selected" :delete-rows="deleteRows" :processing="processing" />
+      <slot name="footer" :selected-number="selectedNumber" :action="(i) => action(i)" :async-action="(i) => asyncAction(i)" :selected-count="(i) => selectedCount(i)" :select-all="selectAll" :selected="selected" :delete-rows="deleteRows" :disabledControls="processing || (!selectedAllChecked && !selectedNumber)" />
     </div>
   </div>
 </template>
@@ -156,6 +156,26 @@ function deleteRows() {
   }).finally(() => {
     processing.value = false;
   })
+}
+
+function asyncAction(promise: Promise<void>)
+{
+  processing.value = true;
+  promise.finally(() => {
+    processing.value = false;
+  });
+}
+
+async function action(callback: () => void)
+{
+  processing.value = true;
+  callback();
+  processing.value = false;
+}
+
+function selectedCount(totalCount: number)
+{
+  return selectedAllChecked.value ? (totalCount || 0) : selectedNumber.value;
 }
 
 function updateRow() {

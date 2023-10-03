@@ -1,4 +1,6 @@
 
+- tlačítka u tabulky
+- 
 
 // --------------------
 filter[]=ic,company;LK;ttttt&

@@ -6,7 +6,7 @@
 <script setup lang="ts">
 defineProps<{
   wrap?: string
-  modelValue: string
+  modelValue: string|undefined
 }>();
 
 defineEmits(['update:modelValue'])

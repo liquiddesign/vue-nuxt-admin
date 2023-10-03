@@ -13,7 +13,7 @@ import {withDefaults} from "vue/dist/vue";
 withDefaults(defineProps<{
   wrap?: string
   loading?: boolean
-}>(), { loading: false, wrap: undefined });
+}>(), { loading: false, wrap: undefined});
 
 defineOptions({
   inheritAttrs: false

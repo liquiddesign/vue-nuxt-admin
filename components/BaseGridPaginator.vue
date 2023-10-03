@@ -1,4 +1,5 @@
 <template>
+  <slot :totalCount="totalItems" />
   <BaseWrapper :wrap="wrap">
     <div class="">
       <nav class="pt-3 ms-auto">

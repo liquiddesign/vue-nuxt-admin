@@ -1,4 +1,7 @@
 <template>
+  <BasePageHeader title="Hlavička" icon="pe-7s-users" description="Cokoliv si zamantene">
+    <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'customers-new'})">Přidat cokoliv</BaseButtonNew>
+  </BasePageHeader>
   <div class="row">
     <BaseCard wrap="col-lg-6">
       Karta jen s tělem
@@ -34,6 +37,15 @@
             <BaseButtonEdit class="ms-2" />
             <BaseButtonEdit class="btn-sm ms-2" />
             <BaseButtonEdit class="btn-xs ms-2" />
+            <BaseDropdown icon="fa-trash-o" class="btn-outline-danger">
+              <BaseDropdownItem>asdasd</BaseDropdownItem>
+              <BaseDropdownItem :disabled="true">asdasd</BaseDropdownItem>
+              <BaseDropdownDivider />
+              <BaseDropdownItem>asdasd</BaseDropdownItem>
+            </BaseDropdown>
+            <BaseDropdown icon="fa fa-bolt" class="btn-outline-primary btn-xs" />
+            <BaseDropdown icon="fa fa-bolt" :loading="true" class="btn-outline-primary btn-xs" />
+            <BaseDropdown icon="fa fa-bolt" :label="'cokoliv <strong>html</strong>'" class="btn-outline-secondary" />
           </div>
           <BaseButton wrap="col-lg-2" class="btn-primary">Wrapované tlačítko</BaseButton>
         </div>
@@ -195,6 +207,12 @@
           <BaseTextBox label="BaseTextBox" name="validation2" wrap="flex-shrink-0" style="width: 100px" placeholder="Ve formu" />
         </BaseForm>
       </div>
+      <div class="d-flex align-items-center flex-wrap gap-1 grid-filter">
+        <div class="flex-shrink-0">
+          <BaseLanguageDropdown :lang="lang" :langs="['it', 'cz', 'gb']" @select="lang = $event" />
+          <BaseLanguageDropdown class="btn-xs" :lang="lang" :langs="['it', 'cz', 'gb']" @select="lang = $event">Zvolte jazyk: </BaseLanguageDropdown>
+        </div>
+      </div>
     </BaseCard>
     <BaseCard wrap="col-lg-6">
       <template #header>Formuláře</template>
@@ -237,12 +255,15 @@
         <i>Dynamicky tabs</i><br>
         <template #[activeTab]>Obsah tabu {{ activeTab }}</template>
       </BaseTabs>
+
+      <BaseTabs :active="$route.name" :tabs="{'customers': 'Zakaznici', 'producers': 'Výrobci', 'developer': 'Developer'}" @select="navigateTo($event)" />
+      Taby jako navigace
     </BaseCard>
     <BaseCard wrap="col-lg-6">
       <template #header>Highlights</template>
       <div class="row">
         <BaseHighlight wrap="col-xl-4" heading="Total Orders" subheading="Last year expenses" class="bg-secondary text-white">1896</BaseHighlight>
-        <BaseHighlight wrap="col-xl-4" icon="metismenu-icon pe-7s-users" heading="Followers" subheading="People Interested" class="bg-night-sky text-white">$ 568</BaseHighlight>
+        <BaseHighlight wrap="col-xl-4" icon="metismenu-icon pe-7s-users" heading="Followers" subheading="People Hub" class="bg-night-sky text-white">56 Kč</BaseHighlight>
         <BaseHighlight wrap="col-xl-4" heading="Followers" subheading="People Interested" class="bg-light">46%</BaseHighlight>
       </div>
     </BaseCard>
@@ -250,7 +271,7 @@
   <div class="row">
     <BaseCard wrap="col-lg-6">
       <template #header>Tabulky</template>
-      <BaseGrid url="customer" on-page="5">
+      <BaseGrid url="customer" :on-page="5">
         <template #header>
           <tr>
             <BaseGridThSelect />
@@ -270,7 +291,7 @@
     <BaseCard wrap="col-lg-6">
       <template #header>Tabulky</template>
       <BaseFilter @cancel="filters={}">
-        <BaseInput v-model="filters.q" wrap="flex-shrink-0" placeholder="Název, kód, #id" type="text" />
+        <BaseTextBox v-model="filters.q" wrap="flex-shrink-0" placeholder="Název, kód, #id" type="text" />
       </BaseFilter>
       <BaseGrid url="customer" :page="page" :on-page="onPage" :filters="filters">
         <template #header>
@@ -286,24 +307,26 @@
             <BaseGridTdSelect :id="item.uuid" />
             <td class="minimal"><BaseButtonEdit class="btn-xs" /></td>
             <td>{{ item.company }}</td>
-            <td class="minimal"><BaseButtonDelete class="btn-xs" :confirmation="true" @confirmed="deleteRow();" /></td>
+            <td class="minimal"><BaseButtonDelete class="btn-xs" :confirmation="true" @confirm="deleteRow();" /></td>
           </tr>
         </template>
-        <template #footer="deleteSelectedRows">
+        <template #footer="{deleteRows, exportRows, selectedCount, disabledControls, action, asyncAction}">
           <BaseGridSelectAll wrap="flex-shrink-0 me-1 ms-1" />
-          <BaseGridEditSelected>
-            <BaseModal ref="modal1" title="Modal 1">
-              <BaseForm>
-                <BaseSelect :options="{'1': 'puvodni', '2': 'nahradit', '3': 'pridat', '4': 'odebrat'}" /><BaseTextBox label="BaseTextBox" name="name" wrap="flex-shrink-0" style="width: 150px" placeholder="uprava" />
-                <BaseFormButton class="btn-primary" wrap="flex-shrink-0">Uložit</BaseFormButton>
-              </BaseForm>
-            </BaseModal>
-          </BaseGridEditSelected>
-          <BaseGridExportSelected />
-          <BaseGridDeleteSelected @confirmed="deleteSelectedRows();" />
-          <BaseGridPaginator ref="paginator" wrap="flex-shrink-0" url="customer" :page="page" :on-page="onPage" :filters="filters" @change-page="page = $event" @change-on-page="onPage = $event; page = 1;" />
+          <BaseGridPaginator wrap="flex-shrink-0" url="customer" :page="page" :on-page="onPage" :filters="filters" @change-page="page = $event" @change-on-page="onPage = $event; page = 1;" v-slot="{ totalCount }">
+            <BaseButton class="btn-outline-primary btn-paging" :disabled="disabledControls" @click="action(() => toast.info('aaa'));"><i class="fa fa-plus" /> custom ({{ selectedCount(totalCount) }})</BaseButton>
+            <BaseButton class="btn-outline-primary btn-paging" :disabled="disabledControls" @click="asyncAction(test())"><i class="fa fa-plus" /> custom ({{ selectedCount(totalCount) }})</BaseButton>
+            <BaseButtonEdit class="btn-paging" :outline="true" :disabled="disabledControls" @click="$refs.modal3.open();">({{ selectedCount(totalCount) }})</BaseButtonEdit>
+            <BaseButtonExport class="btn-paging" :outline="true" :disabled="disabledControls" @click="exportRows();">({{ selectedCount(totalCount) }})</BaseButtonExport>
+            <BaseButtonDelete class="btn-paging" :outline="true" :disabled="disabledControls" :confirmation="true" @confirm="deleteRows();">({{ selectedCount(totalCount) }})</BaseButtonDelete>
+          </BaseGridPaginator>
         </template>
       </BaseGrid>
+      <BaseModal ref="modal3" title="Modal 3">
+        <BaseForm :input="formData">
+          <BaseSelect :options="{'1': 'puvodni', '2': 'nahradit', '3': 'pridat', '4': 'odebrat'}" /><BaseTextBox label="BaseTextBox" name="name" wrap="flex-shrink-0" style="width: 150px" placeholder="uprava" />
+          <BaseFormButton class="btn-primary" wrap="flex-shrink-0">Uložit</BaseFormButton>
+        </BaseForm>
+      </BaseModal>
     </BaseCard>
   </div>
   <BaseCard>
@@ -321,6 +344,8 @@ import {ToastPluginApi, useToast} from "vue-toast-notification";
 import {required} from "@vuelidate/validators";
 import useVuelidate, {BaseValidation} from "@vuelidate/core";
 
+const config = useRuntimeConfig();
+
 const toast: ToastPluginApi = inject('toast', useToast());
 
 const { $user } = useNuxtApp();
@@ -337,7 +362,12 @@ const rules = {
 const filters: any = ref({});
 const page = ref(1);
 const onPage = ref(5);
+const lang = ref('cz');
 
 const v$: Ref<BaseValidation> = useVuelidate(rules, formData, {$autoDirty: true});
+
+function test() {
+  return $fetch(config.public.baseURL + 'customer');
+}
 
 </script>

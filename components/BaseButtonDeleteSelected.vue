@@ -1,6 +1,6 @@
 <template>
   <Popper v-if="confirmation" arrow placement="left">
-    <BaseButton v-bind="$attrs" class="btn" :class="classes"><i class="fa fa-trash-o" /> <slot /></BaseButton>
+    <BaseButton v-bind="$attrs" class="btn btn-outline-danger"><i class="fa fa-trash-o" /> <slot /></BaseButton>
     <template #content="{close}">
       Opravdu smazat?<br>
       <div class="text-center">
@@ -18,20 +18,13 @@ import {withDefaults} from "vue";
 
 const props = withDefaults(defineProps<{
   confirmation?: boolean
-  outline?: boolean
-}>(), { confirmation: false, outline: false });
+}>(), { confirmation: false });
 
 defineOptions({
   inheritAttrs: false
 });
 
 const $emit = defineEmits(['confirm']);
-
-const classes = computed(() => {
-  return !props.outline ? 'btn-danger' : 'btn-outline-danger';
-});
-
-
 
 
 </script>
