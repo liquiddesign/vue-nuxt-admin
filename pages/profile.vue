@@ -4,8 +4,8 @@
       <div class="btn-actions-pane-left">
         <BaseButtonBack class="me-2" @click.prevent="success" />
 
-        <a class="btn btn-sm bg-primary btn-outline-dark ms-1" @click.prevent="toast.info('Editujete českou mutaci')"><img class="mutation-flag" style="top: -2px; position: relative;" height="15" alt="cs" title="cs" src="http://localhost/levior-b2b/public/node_modules/flag-icon-css/flags/4x3/cz.svg"></a>
-        <a class="btn btn-sm btn-outline-dark ms-1"><img class="mutation-flag" style="top: -2px; position: relative; -webkit-filter: grayscale(100%);" height="15" alt="cs" title="cs" src="http://localhost/levior-b2b/public/node_modules/flag-icon-css/flags/4x3/gb.svg"></a>
+        <a class="btn btn-sm bg-primary btn-outline-dark ms-1" @click.prevent="toast.info('Editujete českou mutaci')"><flag iso="cz" class="px-2" /></a>
+        <a class="btn btn-sm btn-outline-dark ms-1"><flag iso="gb" class="px-2"/></a>
       </div>
       <div class="btn-actions-pane-right">
         <button v-bind="$attrs" class="btn btn-outline-alternate btn-sm me-1"><i class="fa fa-external-link px-1" /></button>
@@ -25,7 +25,20 @@
       <button v-bind="$attrs" class="btn btn-outline-danger btn-sm me-1"><i class="fa fa-trash-o px-1" /></button>
     </template>
 
-    <template #body />
+    <template #body>
+      <BaseForm ref="form" wrap="col-lg-6" url="customer" :slug="'100'" lang="cz" :input="input" :rules="rules" @success="success">
+        <div class="row">
+          <BaseTextBox name="ic" wrap="col-lg-6" label="IC" type="text" />
+          <BaseTextBox name="company" wrap="col-lg-6" label="Company" type="text" />
+        </div>
+        <div class="row mt-3">
+          <div class="col-lg-6">
+            <BaseFormButton class="btn-success btn-sm me-1" @click="goBack=true;">Uložit</BaseFormButton>
+            <BaseFormButton class="btn-outline-primary btn-sm" @click="goBack=false;">Uložit a pokračovat</BaseFormButton>
+          </div>
+        </div>
+      </BaseForm>
+    </template>
   </BaseCard>
 </template>
 
@@ -33,29 +46,18 @@
 
 import { inject } from 'vue';
 import {ToastPluginApi, useToast} from 'vue-toast-notification';
+import {required} from "@vuelidate/validators";
 
 const toast: ToastPluginApi = inject('toast', useToast());
 
 
-/*const input = reactive({
-});
+const input:any = ref({ });
+const { $user } = useNuxtApp();
 
 const rules = {
-  systemicLock: {
-    required
-  },
-  content: {
-    cs: {
-      required,
-    }
-  }
-};*/
-
-
-
-//const mouse = reactive(useFetch('http://localhost/levior-b2b/api/producer/astra'));
-
-//Object.assign(input, mouse.data);
+  login: { required },
+  password: { required }
+};
 
 
 function success() {

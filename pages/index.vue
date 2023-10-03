@@ -6,13 +6,13 @@
           <h4 class="mt-2">Roiwell 2.0 - B2B Eshop<br><span>Přihlášení do administrace:</span></h4>
         </div>
         <div class="row g-3">
-          <BaseFormInput name="login" placeholder="Login" type="text" autocomplete="username" />
-          <BaseFormInput name="password" placeholder="Heslo" type="password" autocomplete="current-password" />
-          <BaseFormCheckbox name="remember" label="Zapamatovat si přihlášení" />
+          <BaseTextBox name="login" wrap="foo" placeholder="Login" autocomplete="username" />
+          <BaseTextBox name="password" wrap="foo" placeholder="Heslo" type="password" autocomplete="current-password" />
+          <BaseCheckBox name="remember" label="Zapamatovat si přihlášení" />
         </div>
       </div>
       <div class="modal-footer clearfix">
-        <BaseFormButton wrap="float-end" class="btn-primary" :large="true">Přihlásit se</BaseFormButton>
+        <BaseFormButton wrap="float-end" class="btn-primary">Přihlásit se</BaseFormButton>
       </div>
     </BaseForm>
   </NuxtLayout>

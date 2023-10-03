@@ -2,7 +2,7 @@
   <BaseWrapper :wrap="wrap">
     <label v-if="label !== null" :for="$attrs['id']" class="form-check-label">
       <input v-bind="$attrs" class="form-check-input" type="checkbox" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" :checked="form && name ? _get(form.input, name) : modelValue" />
-      <span v-if="(form && form.lang) || lang" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>{{ label }}
+      <span v-if="(form && form.lang) || lang" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span> {{ label }}
     </label>
     <input v-else v-bind="$attrs" class="form-check-input" type="checkbox" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" :checked="form && name ? _get(form.input, name) : modelValue" />
   </BaseWrapper>
