@@ -1,5 +1,5 @@
 
-- tlačítka u tabulky
+- smazani starych kodu
 - 
 
 // --------------------

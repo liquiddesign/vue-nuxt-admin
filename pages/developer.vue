@@ -331,16 +331,43 @@
   </div>
   <BaseCard>
     <template #header>Image preview</template>
+    <button @click="show(0)">show</button>
+    <div class="">
+      <div
+        v-for="(src, index) in imgs"
+        :key="index"
+        class="pic"
+        @click="() => show(index)"
+      >
+        <img :src="src">
+      </div>
+    </div>
+    <vue-easy-lightbox
+      teleport="body"
+      :visible="visibleRef"
+      :moveDisabled="true"
+      :rotateDisabled="true"
+      :pinchDisabled="true"
+      :zoomDisabled="true"
+      :maskClosable="true"
+      :loop="true"
+      :imgs="imgsRef"
+      :index="indexRef"
+      @hide="onHide"
+    />
+
   </BaseCard>
   <BaseCard>
     <template #header>Strom</template>
-  </BaseCard>
-  <BaseCard>
-    <template #header>Dragable</template>
+
+    <Tree :nodes="nodes" :config="treeConfig"></Tree>
   </BaseCard>
 </template>
 <script setup lang="ts">
 import {ToastPluginApi, useToast} from "vue-toast-notification";
+import VueEasyLightbox, { useEasyLightbox } from 'vue-easy-lightbox'
+import Tree from "vue3-treeview";
+import "vue3-treeview/dist/style.css";
 import {required} from "@vuelidate/validators";
 import useVuelidate, {BaseValidation} from "@vuelidate/core";
 
@@ -369,5 +396,44 @@ const v$: Ref<BaseValidation> = useVuelidate(rules, formData, {$autoDirty: true}
 function test() {
   return $fetch(config.public.baseURL + 'customer');
 }
+
+const imgs = [
+  'http://via.placeholder.com/250x150',
+  'http://via.placeholder.com/300x150',
+  'http://via.placeholder.com/350x150'
+];
+
+const {
+  // methods
+  show, onHide, changeIndex,
+  // refs
+  visibleRef, indexRef, imgsRef
+} = useEasyLightbox({
+  // src / src[]
+  imgs: imgs,
+  // initial index
+  initIndex: 0
+})
+
+const treeConfig = ref({
+  roots: ["id1", "id2"],
+  checkboxes: true,
+  checkMode: 1,
+});
+const nodes = ref({
+  id1: {
+    text: "text1",
+      children: ["id11", "id12"],
+  },
+  id11: {
+    text: "text11",
+  },
+  id12: {
+    text: "text12",
+  },
+  id2: {
+    text: "text2",
+  },
+});
 
 </script>
