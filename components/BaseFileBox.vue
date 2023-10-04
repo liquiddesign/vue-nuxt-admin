@@ -2,19 +2,19 @@
   <BaseWrapper :wrap="wrap">
     <div class="">
       <BaseButtonSave class="btn-xs" style="border: 1px solid rgb(128,128,128);" :disabled="!canUpload" />
-      <input v-bind="$attrs" type="file" class="form-control-file" @change="onFileChanged" :disabled="totalUploadAmount >= maxFiles || $attrs['disabled']" :multiple="maxFiles > 1" />
+      <input v-bind="$attrs" type="file" class="form-control-file" :disabled="totalUploadAmount >= maxFiles || $attrs['disabled']" :multiple="maxFiles > 1" @change="onFileChanged">
       <small class="form-text text-muted">
         upload: <span :class="{'text-danger': errorUploadSize}">{{ totalUploadSize }}/{{ maxUploadSize }}MB</span> |
         souborů: {{ totalUploadAmount }}/{{ maxFiles }}
       </small>
     </div>
     <slot />
-    <template v-if="files" v-for="(file, i) in files" :key="file.name">
-      <div class="">
+    <template v-if="files">
+      <div v-for="(file, i) in files" :key="file.name">
         <small><i class="fa fa-file-pdf-o" /> {{ file.name }}</small>
         <button v-if="uploading" class="btn btn-xs btn-light disabled"><i class="fa fa-circle-o-notch fa-spin" /></button>
-        <button v-if="!uploading" :title="Math.round(file.size / 1024 / 1024)  + 'MB'" class="btn btn-xs btn-light"><i class="fa fa-info-circle" /></button>
-        <BaseButtonDeleteLight class="btn-xs" @click.prevent="removeUpload(i)"/>
+        <button v-if="!uploading" :title="Math.round(file.size / 1024 / 1024) + 'MB'" class="btn btn-xs btn-light"><i class="fa fa-info-circle" /></button>
+        <BaseButtonDeleteLight class="btn-xs" @click.prevent="removeUpload(i)" />
       </div>
     </template>
   </BaseWrapper>
@@ -35,32 +35,17 @@ const props = withDefaults(defineProps< {
 }>(), { label: undefined, wrap : undefined, uploading: false, maxFiles: 1, maxUploadSize: 10, validExtensions: undefined });
 
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
 const canUpload: ComputedRef<boolean> = computed(() => {
   return totalUploadAmount.value > 0 && !errorUploadSize.value;
 });
 
-const accept: ComputedRef<string> = computed(() => {
-  let accept = '';
-  let i = 0;
-
-  props.validExtensions.forEach((extension) => {
-    if (i++ !== 0) {
-      accept += ',';
-    }
-    accept += 'application/' + extension;
-  });
-  accept.substring(0, -1);
-
-  return accept;
-});
-
 const totalUploadSize = computed(() => {
   let sum: number = 0;
   files.value.forEach((file) => {
-    sum += file.size
+    sum += file.size;
   });
 
   return Math.round(sum / 1024 / 1024);

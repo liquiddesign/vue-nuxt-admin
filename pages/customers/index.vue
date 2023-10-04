@@ -92,7 +92,7 @@ const paginator = ref(null);
 
 watch(filters, () => {
   page.value = 1;
-})
+});
 
 function getSelectCount(selectAll: boolean, selectedNumber: number): number {
   return selectAll ? paginator.value?.totalItems || 0 : selectedNumber;

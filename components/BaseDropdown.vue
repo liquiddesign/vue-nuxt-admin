@@ -27,7 +27,7 @@ const htmlLabel = computed(function () {
 });
 
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
 

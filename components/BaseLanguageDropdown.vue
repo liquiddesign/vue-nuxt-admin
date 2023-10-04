@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   lang: string,
   langs: string[],
 }>(), {});
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<{
 import {withDefaults} from "vue";
 
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
 const emit = defineEmits(['select']);

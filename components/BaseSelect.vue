@@ -34,10 +34,10 @@ const props = withDefaults(defineProps<{
 }>(), { wrap: undefined, label: null,  lang: undefined, prompt: undefined, name: undefined, modelValue: undefined, validation: undefined });
 
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
-const $emit = defineEmits(['update:modelValue'])
+const $emit = defineEmits(['update:modelValue']);
 
 function onChange($event: any) {
   let value: string|number|null = $event.target.value;

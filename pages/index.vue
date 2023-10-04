@@ -34,7 +34,7 @@ const toast: ToastPluginApi = inject('toast', useToast());
 
 const rules = {
   login: { required },
-  password: { required }
+  password: { required },
 };
 
 function error() {

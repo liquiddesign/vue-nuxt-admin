@@ -67,11 +67,11 @@ const props = withDefaults(defineProps<{
   optionsUrlParams?: any,
   optionsUrlQueryName?: any,
   validation?: BaseValidation,
-}>(), { label: null, name: undefined, lang: undefined, async: false, asyncStartLength: 1, optionsUrl: undefined, optionsUrlParams: {}, optionsUrlQueryName: 'q', options: {}, wrap: undefined, modelValue: undefined, validation: undefined });
+}>(), { label: null, name: undefined, lang: undefined, async: false, fetchUrl: undefined, asyncStartLength: 1, optionsUrl: undefined, optionsUrlParams: {}, optionsUrlQueryName: 'q', options: {}, wrap: undefined, modelValue: undefined, validation: undefined });
 
 defineOptions({
-  inheritAttrs: false
-})
+  inheritAttrs: false,
+});
 
 const isLoading:Ref<boolean> = ref(false);
 const options:Ref<any> = ref(props.options ?? {});
@@ -109,7 +109,7 @@ function asyncSearch(query: string) {
   }
 }
 
-const $emit = defineEmits(['update:modelValue'])
+const $emit = defineEmits(['update:modelValue']);
 
 function updateValue(value: string[]) {
   if (form) {

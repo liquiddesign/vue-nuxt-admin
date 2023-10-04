@@ -3,7 +3,7 @@
     <div class="mb-3 widget-content" v-bind="$attrs">
       <div class="widget-content-wrapper">
         <div v-if="icon" class="widget-content-left pe-2" style="font-size: 2.0rem; line-height: 100%;">
-          <i class="metismenu-icon pe-7s-users"></i>
+          <i class="metismenu-icon pe-7s-users" />
         </div>
         <div class="widget-content-left">
           <div v-if="heading" class="widget-heading">{{ heading }}</div>
@@ -29,7 +29,7 @@ withDefaults(defineProps<{
 }>(), { wrap: undefined, heading: undefined, subheading: undefined, icon: undefined });
 
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
 </script>

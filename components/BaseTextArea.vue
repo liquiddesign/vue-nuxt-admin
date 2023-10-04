@@ -3,7 +3,7 @@
     <label v-if="label !== null" :for="$attrs['id']">
       <span v-if="(form && form.lang) || lang" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>{{ label }}
     </label>
-    <textarea v-bind="$attrs" class="form-control form-control-sm" :class="classes" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange">{{ form && name ? _get(form.input, name) : modelValue }}</textarea>
+    <textarea v-bind="$attrs" class="form-control form-control-sm" :class="classes" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" v-html="form && name ? _get(form.input, name) : modelValue" />
     <template v-if="validationObject?.$errors">
       <div v-for="(error, index) in validationObject?.$errors" :key="index" class="text-danger">
         {{ error.$message }}
@@ -30,10 +30,10 @@ const props = withDefaults(defineProps<{
 }>(), { wrap: undefined, label: null, lang: undefined, nullable: false, name: undefined, modelValue: undefined, validation: undefined });
 
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
-const $emit = defineEmits(['update:modelValue'])
+const $emit = defineEmits(['update:modelValue']);
 
 function onChange($event: any) {
   let value: string|number|null = $event.target.value;

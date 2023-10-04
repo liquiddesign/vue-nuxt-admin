@@ -36,7 +36,7 @@ onMounted(function () {
       let deletedCount = 0;
       for(const k in data[i].items[j].items) {
         if (!$user.hasPermission(data[i].items[j].items[k].route)) {
-          menu[i].items[j].items[k].hidden = true
+          menu[i].items[j].items[k].hidden = true;
           deletedCount++;
           continue;
         }

@@ -17,5 +17,5 @@ export default defineNuxtPlugin(() => {
         provide: {
             currencies: dataProvider,
         },
-    }
-})
+    };
+});

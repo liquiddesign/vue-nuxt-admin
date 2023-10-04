@@ -85,7 +85,7 @@
         </template>
       </Popper>
       <Popper hover content="This is the Popper content" placement="top">
-      <BaseButton class="btn-xs btn-outline-secondary ms-2">Nápověda</BaseButton>
+        <BaseButton class="btn-xs btn-outline-secondary ms-2">Nápověda</BaseButton>
       </Popper>
     </BaseCard>
   </div>
@@ -96,96 +96,95 @@
     </BaseCard>
     <BaseCard wrap="col-lg-6">
       <template #header>Vlajky a ikony</template>
-      <flag iso="gb" /> <span style="font-size: 1.5rem"><flag iso="cz" class="ms-2"/></span>
+      <flag iso="gb" /> <span style="font-size: 1.5rem"><flag iso="cz" class="ms-2" /></span>
       <a target="_blank" href="https://themes-pixeden.com/font-demos/7-stroke">https://themes-pixeden.com/font-demos/7-stroke</a>
       <span style="font-size: 1.5rem"><i class="pe-7s-users " /></span>
       <span style="font-size: 1.5rem"><i class="pe-7s-users icon-gradient bg-ripe-malin" /></span>
       <a target="_blank" href="https://fontawesome.com/v4/icons/">https://fontawesome.com/v4/icons/</a>
-      <i class="fa fa-bookmark-o"></i>
+      <i class="fa fa-bookmark-o" />
     </BaseCard>
   </div>
   <div class="row">
     <BaseCard wrap="col-lg-6">
       <template #header>Formulářové prvky</template>
       <div class="d-flex gap-1">
-        <BaseTextBox id="test" label="BaseTextBox" v-model="formData.name" wrap="flex-shrink-0" style="width: 100px" placeholder="Standartní" />
-        <BaseTextBox label="BaseTextBox" v-model="formData.name" wrap="flex-shrink-0" class="form-control-xs" style="width: 100px" placeholder="Malý" />
-        <BaseTextBox label="BaseTextBox" v-model="formData.numeric" type="number" wrap="flex-shrink-0" style="width: 100px" placeholder="Číslo" />
-        <BaseTextBox label="BaseTextBox" v-model="formData.numeric" type="float" wrap="flex-shrink-0" style="width: 100px" placeholder="Float" />
-        <BaseTextBox label="BaseTextBox" v-model="formData.name" :nullable="true" wrap="flex-shrink-0" style="width: 100px" placeholder="Nullable" />
-        <BaseTextBox label="BaseTextBox" v-model="formData.name" :disabled="true" wrap="flex-shrink-0" style="width: 100px" placeholder="Disable" />
-        <BaseTextBox label="BaseTextBox" v-model="formData.test" wrap="flex-shrink-0" style="width: 100px" placeholder="predvyplnene" />
-        <BaseTextBox label="" v-model="formData.name" wrap="flex-shrink-0" style="width: 100px" placeholder="S prázdným popiskem" />
+        <BaseTextBox id="test" v-model="formData.name" label="BaseTextBox" wrap="flex-shrink-0" style="width: 100px" placeholder="Standartní" />
+        <BaseTextBox v-model="formData.name" label="BaseTextBox" wrap="flex-shrink-0" class="form-control-xs" style="width: 100px" placeholder="Malý" />
+        <BaseTextBox v-model="formData.numeric" label="BaseTextBox" type="number" wrap="flex-shrink-0" style="width: 100px" placeholder="Číslo" />
+        <BaseTextBox v-model="formData.numeric" label="BaseTextBox" type="float" wrap="flex-shrink-0" style="width: 100px" placeholder="Float" />
+        <BaseTextBox v-model="formData.name" label="BaseTextBox" :nullable="true" wrap="flex-shrink-0" style="width: 100px" placeholder="Nullable" />
+        <BaseTextBox v-model="formData.name" label="BaseTextBox" :disabled="true" wrap="flex-shrink-0" style="width: 100px" placeholder="Disable" />
+        <BaseTextBox v-model="formData.test" label="BaseTextBox" wrap="flex-shrink-0" style="width: 100px" placeholder="predvyplnene" />
+        <BaseTextBox v-model="formData.name" label="" wrap="flex-shrink-0" style="width: 100px" placeholder="S prázdným popiskem" />
         <BaseTextBox v-model="formData.name" wrap="flex-shrink-0" style="width: 100px" placeholder="Bez popisku" />
         <BaseForm :input="formData">
           <BaseTextBox name="test2" wrap="flex-shrink-0" style="width: 100px" placeholder="S formulářem" />
           <BaseTextBox name="test2" wrap="flex-shrink-0" style="width: 100px" placeholder="S formulářem" />
         </BaseForm>-->
-        <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.name }} (null: {{ formData.name === null ? 'ano' : 'ne'}})</div>
+        <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.name }} (null: {{ formData.name === null ? 'ano' : 'ne' }})</div>
       </div>
       <div class="d-flex gap-1">
-        <BaseTextArea label="BaseTextArea" wrap="flex-shrink-0" v-model="formData.name" placeholder="Standartní" />
-        <BaseTextArea label="BaseTextArea" wrap="flex-shrink-0" :nullable="true" v-model="formData.name" placeholder="Nullable" />
+        <BaseTextArea v-model="formData.name" label="BaseTextArea" wrap="flex-shrink-0" placeholder="Standartní" />
+        <BaseTextArea v-model="formData.name" label="BaseTextArea" wrap="flex-shrink-0" :nullable="true" placeholder="Nullable" />
         <BaseForm :input="formData">
           <BaseTextArea label="BaseTextArea" name="test2" placeholder="S formulářem" />
         </BaseForm>
-        <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.name }} (null: {{ formData.name === null ? 'ano' : 'ne'}}) | Test2: {{ formData.test2 }}</div>
+        <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.name }} (null: {{ formData.name === null ? 'ano' : 'ne' }}) | Test2: {{ formData.test2 }}</div>
       </div>
       <div class="d-flex gap-1">
-        <BaseSelect label="BaseSelect" v-model="formData.gender" prompt="Choose" wrap="flex-shrink-0" :options="{'male': 'muz', 'female' : 'zena'}" />
+        <BaseSelect v-model="formData.gender" label="BaseSelect" prompt="Choose" wrap="flex-shrink-0" :options="{'male': 'muz', 'female' : 'zena'}" />
         <BaseForm :input="formData">
           <BaseSelect label="BaseSelect" name="gender" prompt="Choose" wrap="flex-shrink-0" :options="{'male': 'muz', 'female' : 'zena'}" />
         </BaseForm>
-        <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.gender }} (null: {{ formData.gender === null ? 'ano' : 'ne'}})</div>
+        <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.gender }} (null: {{ formData.gender === null ? 'ano' : 'ne' }})</div>
       </div>
       <div class="d-flex gap-1">
-        <BaseCheckBox label="BaseCheckBox" v-model="formData.hidden" wrap="flex-shrink-0" />
+        <BaseCheckBox v-model="formData.hidden" label="BaseCheckBox" wrap="flex-shrink-0" />
         <BaseCheckBox v-model="formData.hidden" wrap="flex-shrink-0" />
         <BaseForm :input="formData">
           <BaseCheckBox label="BaseCheckBox" name="hidden" wrap="flex-shrink-0" />
         </BaseForm>
-        <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.hidden }} (null: {{ formData.hidden === null ? 'ano' : 'ne'}})</div>
+        <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.hidden }} (null: {{ formData.hidden === null ? 'ano' : 'ne' }})</div>
       </div>
       <div class="d-flex gap-1">
-        <BaseRadioBox v-model="formData.gender" :options="{'male': 'muz', 'female' : 'zena'}"></BaseRadioBox>
+        <BaseRadioBox v-model="formData.gender" :options="{'male': 'muz', 'female' : 'zena'}" />
         <BaseForm :input="formData">
-          <BaseRadioBox name="gender" :options="{'male': 'muz', 'female' : 'zena'}"></BaseRadioBox>
+          <BaseRadioBox name="gender" :options="{'male': 'muz', 'female' : 'zena'}" />
         </BaseForm>
-        <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.gender }} (null: {{ formData.gender === null ? 'ano' : 'ne'}})</div>
+        <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.gender }} (null: {{ formData.gender === null ? 'ano' : 'ne' }})</div>
       </div>
       <div class="d-flex gap-2">
-        <BaseMultiSelect label="BaseMultiSelect" wrap="flex-shrink-0" v-model="formData.gender" :options="{'male': 'muz', 'female' : 'zena'}" />
+        <BaseMultiSelect v-model="formData.gender" label="BaseMultiSelect" wrap="flex-shrink-0" :options="{'male': 'muz', 'female' : 'zena'}" />
         <BaseForm :input="formData">
           <BaseMultiSelect label="BaseMultiSelect" wrap="flex-shrink-0" name="gender" :options="{'male': 'muz', 'female' : 'zena'}" />
         </BaseForm>
 
-        <BaseMultiSelect label="BaseMultiSelect (Multi)" :multiple="true" wrap="flex-shrink-0" v-model="formData.colors" :options="{'red': 'cervena', 'blue' : 'modra', 'green' : 'zelena'}" />
+        <BaseMultiSelect v-model="formData.colors" label="BaseMultiSelect (Multi)" :multiple="true" wrap="flex-shrink-0" :options="{'red': 'cervena', 'blue' : 'modra', 'green' : 'zelena'}" />
 
 
-        <BaseMultiSelect label="BaseMultiSelect" wrap="flex-shrink-0" v-model="formData.company" options-url="customer" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
-        <BaseMultiSelect label="BaseMultiSelect" wrap="flex-shrink-0" v-model="formData.company" :async="true" options-url="customer" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
+        <BaseMultiSelect v-model="formData.company" label="BaseMultiSelect" wrap="flex-shrink-0" options-url="customer" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
+        <BaseMultiSelect v-model="formData.company" label="BaseMultiSelect" wrap="flex-shrink-0" :async="true" options-url="customer" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
 
-        <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.colors }} (null: {{ formData.colors === null ? 'ano' : 'ne'}})</div>
-        <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.company }} (null: {{ formData.company === null ? 'ano' : 'ne'}})</div>
+        <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.colors }} (null: {{ formData.colors === null ? 'ano' : 'ne' }})</div>
+        <div class="flex-shrink-0" style="line-height: 29px;">Value: {{ formData.company }} (null: {{ formData.company === null ? 'ano' : 'ne' }})</div>
         https://github.com/shentao/vue-multiselect/tree/next
       </div>
       <div class="d-flex gap-1">
         <BaseFileBox />
       </div>
       <div class="d-flex gap-1">
-        <BaseImageBox :maxUploadSize="2" :max-files="3" />
+        <BaseImageBox :max-upload-size="2" :max-files="3" />
       </div>
     </BaseCard>
     <BaseCard wrap="col-lg-6">
       <template #header>Validace</template>
       <div class="d-flex gap-1">
-
-        <BaseTextBox label="BaseTextBox" v-model="formData.validation1" :validation="v$.validation1 as BaseValidation" wrap="flex-shrink-0" style="width: 100px" placeholder="Standartní" />
-        <BaseTextArea label="BaseTextArea" wrap="flex-shrink-0" v-model="formData.validation1" :validation="v$.validation1 as BaseValidation" placeholder="Standartní" />
+        <BaseTextBox v-model="formData.validation1" label="BaseTextBox" :validation="v$.validation1 as BaseValidation" wrap="flex-shrink-0" style="width: 100px" placeholder="Standartní" />
+        <BaseTextArea v-model="formData.validation1" label="BaseTextArea" wrap="flex-shrink-0" :validation="v$.validation1 as BaseValidation" placeholder="Standartní" />
         <BaseSelect v-model="formData.gender2" prompt="-zvolte-" :options="{'male': 'muz', 'female' : 'zena'}" wrap="flex-shrink-0" :validation="v$.gender2 as BaseValidation" />
-        <BaseRadioBox v-model="formData.gender2" :options="{'male': 'muz', 'female' : 'zena'}" :validation="v$.gender2 as BaseValidation"></BaseRadioBox>
-        <BaseMultiSelect label="BaseMultiSelect" wrap="flex-shrink-0" v-model="formData.gender2" :options="{'male': 'muz', 'female' : 'zena'}" :validation="v$.gender2 as BaseValidation" />
-        <BaseButton @click="v$.$validate()" class="btn-success">Zvalidovat</BaseButton> Valid: {{ !v$.$invalid }}
+        <BaseRadioBox v-model="formData.gender2" :options="{'male': 'muz', 'female' : 'zena'}" :validation="v$.gender2 as BaseValidation" />
+        <BaseMultiSelect v-model="formData.gender2" label="BaseMultiSelect" wrap="flex-shrink-0" :options="{'male': 'muz', 'female' : 'zena'}" :validation="v$.gender2 as BaseValidation" />
+        <BaseButton class="btn-success" @click="v$.$validate()">Zvalidovat</BaseButton> Valid: {{ !v$.$invalid }}
         <BaseForm :input="formData" :rules="rules">
           <BaseTextBox label="BaseTextBox" name="validation2" wrap="flex-shrink-0" style="width: 100px" placeholder="Standartní" />
         </BaseForm>
@@ -198,11 +197,11 @@
     <BaseCard wrap="col-lg-6">
       <template #header>Jazyky</template>
       <div class="d-flex gap-1">
-        <BaseTextBox label="BaseTextBox" lang="cz" v-model="formData.name" wrap="flex-shrink-0" style="width: 100px" placeholder="Standartní" />
-        <BaseTextArea label="BaseTextArea" lang="cz" v-model="formData.name" wrap="flex-shrink-0" placeholder="Standartní" />
-        <BaseSelect label="BaseSelect" v-model="formData.gender2" lang="cz" prompt="-zvolte-" :options="{'male': 'muz', 'female' : 'zena'}" wrap="flex-shrink-0" />
-        <BaseRadioBox v-model="formData.gender2" lang="cz" :options="{'male': 'muz', 'female' : 'zena'}" ></BaseRadioBox>
-        <BaseMultiSelect label="BaseMultiSelect" lang="cz" wrap="flex-shrink-0" v-model="formData.gender2" :options="{'male': 'muz', 'female' : 'zena'}"  />
+        <BaseTextBox v-model="formData.name" label="BaseTextBox" lang="cz" wrap="flex-shrink-0" style="width: 100px" placeholder="Standartní" />
+        <BaseTextArea v-model="formData.name" label="BaseTextArea" lang="cz" wrap="flex-shrink-0" placeholder="Standartní" />
+        <BaseSelect v-model="formData.gender2" label="BaseSelect" lang="cz" prompt="-zvolte-" :options="{'male': 'muz', 'female' : 'zena'}" wrap="flex-shrink-0" />
+        <BaseRadioBox v-model="formData.gender2" lang="cz" :options="{'male': 'muz', 'female' : 'zena'}" />
+        <BaseMultiSelect v-model="formData.gender2" label="BaseMultiSelect" lang="cz" wrap="flex-shrink-0" :options="{'male': 'muz', 'female' : 'zena'}" />
         <BaseForm :input="formData" lang="cz">
           <BaseTextBox label="BaseTextBox" name="validation2" wrap="flex-shrink-0" style="width: 100px" placeholder="Ve formu" />
         </BaseForm>
@@ -223,11 +222,11 @@
         <BaseForm :input="formData" :omit="['name']" wrap="flex-shrink-0">
           <BaseTextBox label="BaseTextBox" name="name" wrap="flex-shrink-0" style="width: 150px" placeholder="vynechani" />
         </BaseForm>
-        <BaseForm :input="formData" @submit.stop="toast.info('Odesilam.')" wrap="flex-shrink-0">
+        <BaseForm :input="formData" wrap="flex-shrink-0" @submit.stop="toast.info('Odesilam.')">
           <BaseTextBox label="BaseTextBox" name="name" wrap="flex-shrink-0" style="width: 150px" placeholder="bez backendu" />
           <BaseFormButton class="btn-primary" wrap="flex-shrink-0">Uložit</BaseFormButton>
         </BaseForm>
-        <BaseForm :input="formData" url="customer" :silent="true" @error="toast.error('Vlastni error.')" wrap="flex-shrink-0">
+        <BaseForm :input="formData" url="customer" :silent="true" wrap="flex-shrink-0" @error="toast.error('Vlastni error.')">
           <BaseTextBox label="BaseTextBox" name="name" wrap="flex-shrink-0" style="width: 150px" placeholder="tichý" />
           <BaseFormButton class="btn-primary" wrap="flex-shrink-0">Uložit</BaseFormButton>
         </BaseForm>
@@ -279,7 +278,7 @@
             <BaseGridTh order-by="company">Název</BaseGridTh>
           </tr>
         </template>
-        <template #body="{item, selected, deleteRow}">
+        <template #body="{item, selected}">
           <tr :class="{'inactive': item.id === 5, 'active': selected}">
             <BaseGridTdSelect :id="item.uuid" />
             <td class="minimal">test</td>
@@ -299,7 +298,7 @@
             <BaseGridThSelect />
             <BaseGridTh>#</BaseGridTh>
             <BaseGridTh order-by="company">Název</BaseGridTh>
-            <BaseGridTh></BaseGridTh>
+            <BaseGridTh />
           </tr>
         </template>
         <template #body="{item, selected, deleteRow}">
@@ -312,7 +311,7 @@
         </template>
         <template #footer="{deleteRows, exportRows, selectedCount, disabledControls, action, asyncAction}">
           <BaseGridSelectAll wrap="flex-shrink-0 me-1 ms-1" />
-          <BaseGridPaginator wrap="flex-shrink-0" url="customer" :page="page" :on-page="onPage" :filters="filters" @change-page="page = $event" @change-on-page="onPage = $event; page = 1;" v-slot="{ totalCount }">
+          <BaseGridPaginator v-slot="{ totalCount }" wrap="flex-shrink-0" url="customer" :page="page" :on-page="onPage" :filters="filters" @change-page="page = $event" @change-on-page="onPage = $event; page = 1;">
             <BaseButton class="btn-outline-primary btn-paging" :disabled="disabledControls" @click="action(() => toast.info('aaa'));"><i class="fa fa-plus" /> custom ({{ selectedCount(totalCount) }})</BaseButton>
             <BaseButton class="btn-outline-primary btn-paging" :disabled="disabledControls" @click="asyncAction(test())"><i class="fa fa-plus" /> custom ({{ selectedCount(totalCount) }})</BaseButton>
             <BaseButtonEdit class="btn-paging" :outline="true" :disabled="disabledControls" @click="$refs.modal3.open();">({{ selectedCount(totalCount) }})</BaseButtonEdit>
@@ -345,27 +344,26 @@
     <vue-easy-lightbox
       teleport="body"
       :visible="visibleRef"
-      :moveDisabled="true"
-      :rotateDisabled="true"
-      :pinchDisabled="true"
-      :zoomDisabled="true"
-      :maskClosable="true"
+      :move-disabled="true"
+      :rotate-disabled="true"
+      :pinch-disabled="true"
+      :zoom-disabled="true"
+      :mask-closable="true"
       :loop="true"
       :imgs="imgsRef"
       :index="indexRef"
       @hide="onHide"
     />
-
   </BaseCard>
   <BaseCard>
     <template #header>Strom</template>
 
-    <Tree :nodes="nodes" :config="treeConfig"></Tree>
+    <Tree :nodes="nodes" :config="treeConfig" />
   </BaseCard>
 </template>
 <script setup lang="ts">
 import {ToastPluginApi, useToast} from "vue-toast-notification";
-import VueEasyLightbox, { useEasyLightbox } from 'vue-easy-lightbox'
+import VueEasyLightbox, { useEasyLightbox } from 'vue-easy-lightbox';
 import Tree from "vue3-treeview";
 import "vue3-treeview/dist/style.css";
 import {required} from "@vuelidate/validators";
@@ -400,20 +398,10 @@ function test() {
 const imgs = [
   'http://via.placeholder.com/250x150',
   'http://via.placeholder.com/300x150',
-  'http://via.placeholder.com/350x150'
+  'http://via.placeholder.com/350x150',
 ];
 
-const {
-  // methods
-  show, onHide, changeIndex,
-  // refs
-  visibleRef, indexRef, imgsRef
-} = useEasyLightbox({
-  // src / src[]
-  imgs: imgs,
-  // initial index
-  initIndex: 0
-})
+const { show, onHide, visibleRef, indexRef, imgsRef} = useEasyLightbox({imgs: imgs, initIndex: 0});
 
 const treeConfig = ref({
   roots: ["id1", "id2"],

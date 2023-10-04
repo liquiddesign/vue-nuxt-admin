@@ -183,9 +183,9 @@ function success(result:any) {
   Object.assign(input, {});
 
   if (!goBack.value) {
-    navigateTo({name: 'customers-id', params: {id: result.result}})
+    navigateTo({name: 'customers-id', params: {id: result.result}});
   } else {
-    navigateTo({name: 'customers'})
+    navigateTo({name: 'customers'});
   }
 
 }

@@ -3,7 +3,7 @@
     <div :class="classes">
       <span v-if="(form && form.lang) || lang" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>
       <template v-for="(value, key) in options" :key="key">
-        <input v-bind="$attrs" class="form-check-input" type="radio" :value="key" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" :checked="(form && name ? _get(form.input, name) : modelValue) === key" />
+        <input v-bind="$attrs" class="form-check-input" type="radio" :value="key" :disabled="form?.disabled.value || $attrs['disabled']" :checked="(form && name ? _get(form.input, name) : modelValue) === key" @input="onChange">
         <label :for="$attrs['id']" class="form-check-label">{{ value }}</label>
       </template>
     </div>
@@ -32,10 +32,10 @@ const props = withDefaults(defineProps<{
 }>(), { type: 'text', wrap: undefined, lang: undefined, name: undefined, modelValue: undefined, validation: undefined });
 
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
-const $emit = defineEmits(['update:modelValue'])
+const $emit = defineEmits(['update:modelValue']);
 
 function onChange($event: any) {
   let value: string|number|null = $event.target.value;

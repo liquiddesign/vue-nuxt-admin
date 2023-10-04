@@ -1,5 +1,5 @@
 <template>
-  <slot :totalCount="totalItems" />
+  <slot :total-count="totalItems" />
   <BaseWrapper :wrap="wrap">
     <div class="">
       <nav class="pt-3 ms-auto">
@@ -51,10 +51,10 @@ const debouncing = _debounce(function (value) {
 
 watch(props.filters, (value) => {
   debouncing(value);
-})
+});
 
 
-const {data ,refresh} = useFetch(config.public.baseURL + props.url, {
+const {data, refresh} = useFetch(config.public.baseURL + props.url, {
   method: 'POST',
   query: filterValues,
   body: {'_op': 'itemsCount'},

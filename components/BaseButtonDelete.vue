@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<{
 }>(), { confirmation: false, outline: false });
 
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
 const $emit = defineEmits(['confirm']);

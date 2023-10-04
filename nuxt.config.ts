@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
     modules: ['@nuxtjs/apollo', "nuxt-lodash"],
     typescript: {
-        strict: true
+        strict: true,
     },
     ssr: false,
     css: ["bootstrap/dist/css/bootstrap.min.css", "@/assets/css/base.css", "@/assets/css/adds.css", "@/assets/css/toaster.css", "@/assets/css/popper.css", "@/assets/css/multiselect.css", "pe7-icon/dist/dist/pe-icon-7-stroke.css", "font-awesome/css/font-awesome.css"],
@@ -11,9 +11,9 @@ export default defineNuxtConfig({
             charset: 'utf-8',
             title: 'Roiwell B2B - Administrace',
             meta: [
-                { name: 'description', content: 'My amazing site.' }
+                { name: 'description', content: 'My amazing site.' },
             ],
-        }
+        },
     },
     runtimeConfig: {
         public: {
@@ -25,13 +25,13 @@ export default defineNuxtConfig({
             default: {
                 httpEndpoint: 'http://www.roiwell-api.cz.d4169.masterinter.net/',
                 httpLinkOptions: {
-                    credentials: 'include'
-                }
+                    credentials: 'include',
+                },
             },
         },
     },
     lodash: {
         prefix: "_",
         upperAfterPrefix: false,
-    }
-})
+    },
+});

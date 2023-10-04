@@ -19,6 +19,6 @@
 </template>
 
 <script setup>
-useHead({title: 'Roiwell - administrace',});
+useHead({title: 'Roiwell - administrace'});
 
 </script>

@@ -16,12 +16,12 @@
 
 import {withDefaults} from "vue";
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   confirmation?: boolean
 }>(), { confirmation: false });
 
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
 const $emit = defineEmits(['confirm']);

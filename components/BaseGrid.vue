@@ -28,14 +28,14 @@
       </table>
     </div>
     <div class="d-flex align-items-center flex-wrap gap-1">
-      <slot name="footer" :selected-number="selectedNumber" :action="(i) => action(i)" :async-action="(i) => asyncAction(i)" :selected-count="(i) => selectedCount(i)" :select-all="selectAll" :selected="selected" :delete-rows="deleteRows" :disabledControls="processing || (!selectedAllChecked && !selectedNumber)" />
+      <slot name="footer" :selected-number="selectedNumber" :action="(i) => action(i)" :async-action="(i) => asyncAction(i)" :selected-count="(i) => selectedCount(i)" :select-all="selectAll" :selected="selected" :delete-rows="deleteRows" :disabled-controls="processing || (!selectedAllChecked && !selectedNumber)" />
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import {reactive, withDefaults, computed, onActivated, Ref} from "vue";
 import {ToastPluginApi, useToast} from "vue-toast-notification";
-import qs from 'qs'
+import qs from 'qs';
 
 const props = withDefaults(defineProps<{
   url: string,
@@ -66,7 +66,7 @@ const params = computed(function () {
   orderByValue.value ? params['order'] =  orderByValue.value + '-' + (orderByAsc.value ? 'ASC' : 'DESC') : delete params['order'];
 
   return params;
-})
+});
 
 const toast: ToastPluginApi = inject('toast', useToast());
 
@@ -78,7 +78,7 @@ watch(() => props.filters, (value) => {
   assignFiltersDebounced(value);
   selected.value = {};
   selectedAllChecked.value = false;
-}, { deep: true })
+}, { deep: true });
 
 watch(page, () => {
   selected.value = {};
@@ -139,7 +139,7 @@ function deleteRow(item: any) {
     props.silent || toast.error('Smazání se nezdrařilo');
   }).finally(() => {
     processing.value = false;
-  })
+  });
 }
 
 function deleteRows() {
@@ -155,7 +155,7 @@ function deleteRows() {
     props.silent || toast.error('Smazání se nezdrařilo');
   }).finally(() => {
     processing.value = false;
-  })
+  });
 }
 
 function asyncAction(promise: Promise<void>)

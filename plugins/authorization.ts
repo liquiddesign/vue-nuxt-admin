@@ -39,7 +39,7 @@ export default defineNuxtPlugin(() => {
         },
         hasPermission: function (route: string) {
             return this.identity?.account?.login === 'Servis' || (this.identity?.permissions && this.identity.permissions.includes(data[route]));
-        }
+        },
     };
 
     if (localStorage.getItem('user')) {
@@ -56,5 +56,5 @@ export default defineNuxtPlugin(() => {
         provide: {
             user: reactive(user),
         },
-    }
-})
+    };
+});

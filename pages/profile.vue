@@ -5,7 +5,7 @@
         <BaseButtonBack class="me-2" @click.prevent="success" />
 
         <a class="btn btn-sm bg-primary btn-outline-dark ms-1" @click.prevent="toast.info('Editujete českou mutaci')"><flag iso="cz" class="px-2" /></a>
-        <a class="btn btn-sm btn-outline-dark ms-1"><flag iso="gb" class="px-2"/></a>
+        <a class="btn btn-sm btn-outline-dark ms-1"><flag iso="gb" class="px-2" /></a>
       </div>
       <div class="btn-actions-pane-right">
         <button v-bind="$attrs" class="btn btn-outline-alternate btn-sm me-1"><i class="fa fa-external-link px-1" /></button>
@@ -34,12 +34,13 @@
         </div>
         <div class="row">
           <div class="col-lg-6">
-          <Editor v-model="input.test"
+            <Editor
+              v-model="input.test"
               api-key="no-api-key"
               :init="{
-        plugins: 'lists link image table code help wordcount'
-      }"
-          />
+                plugins: 'lists link image table code help wordcount'
+              }"
+            />
           </div>
         </div>
         <div class="row mt-3">
@@ -58,17 +59,16 @@
 import { inject } from 'vue';
 import {ToastPluginApi, useToast} from 'vue-toast-notification';
 import {required} from "@vuelidate/validators";
-import Editor from '@tinymce/tinymce-vue'
+import Editor from '@tinymce/tinymce-vue';
 
 const toast: ToastPluginApi = inject('toast', useToast());
 
 
 const input:any = ref({ });
-const { $user } = useNuxtApp();
 
 const rules = {
   login: { required },
-  password: { required }
+  password: { required },
 };
 
 

@@ -9,7 +9,7 @@ export default [{
       items: [],
     },
   ],
-  roles: ['A','AOM'],
+  roles: ['A', 'AOM'],
   },
   {
     title: 'Zákazníci',
@@ -31,10 +31,10 @@ export default [{
         icon: 'pe-7s-users',
         name: 'customers',
         items: [
-          { title: 'Zákazníci', route: 'customers',},
-          { title: 'Obchodníci', route: 'merchants',},
-          { title: 'Skupiny', route: 'groups',},
-          { title: 'Exporty', route: 'customersExports',},
+          { title: 'Zákazníci', route: 'customers'},
+          { title: 'Obchodníci', route: 'merchants'},
+          { title: 'Skupiny', route: 'groups'},
+          { title: 'Exporty', route: 'customersExports'},
         ],
       },
       {
@@ -42,10 +42,10 @@ export default [{
         icon: 'pe-7s-edit',
         name: 'prices',
         items: [
-          { title: 'Ceníky', route: 'pricelists',},
-          { title: 'Akce', route: 'dashboardQuestionnaires',},
-          { title: 'DPH', route: 'dashboardOffers',},
-          { title: 'Měny', route: 'dashboardOffers',},
+          { title: 'Ceníky', route: 'pricelists'},
+          { title: 'Akce', route: 'dashboardQuestionnaires'},
+          { title: 'DPH', route: 'dashboardOffers'},
+          { title: 'Měny', route: 'dashboardOffers'},
         ],
       },
       {
@@ -53,7 +53,7 @@ export default [{
         icon: 'pe-7s-delete-user',
         name: 'dashboard',
         items: [
-          { title: 'Viditelnosti', route: 'visibilities',},
+          { title: 'Viditelnosti', route: 'visibilities'},
         ],
       },
     ],
@@ -66,11 +66,11 @@ export default [{
         icon: 'pe-7s-portfolio',
         name: 'hire',
         items: [
-          { title: 'Produkty', route: 'hireLeads',},
-          { title: 'Výrobci', route: 'producers',},
-          { title: 'Nabídky', route: 'hireOffers',},
-          { title: 'Registrace', route: 'hireRegistrations',},
-          { title: 'Přejímky od M', route: 'hireFinished',},
+          { title: 'Produkty', route: 'hireLeads'},
+          { title: 'Výrobci', route: 'producers'},
+          { title: 'Nabídky', route: 'hireOffers'},
+          { title: 'Registrace', route: 'hireRegistrations'},
+          { title: 'Přejímky od M', route: 'hireFinished'},
         ],
       },
       {
@@ -78,7 +78,7 @@ export default [{
         icon: 'pe-7s-culture',
         name: 'estates',
         items: [
-          { title: 'Nemovitosti', route: 'estatesProperties',},
+          { title: 'Nemovitosti', route: 'estatesProperties'},
           { title: 'Přejímky', route: 'estatesAcceptances'},
           { title: 'Reporty KP', route: 'estatesReports'},
           { title: 'Pojištění', route: 'estatesInsurances'},
@@ -90,12 +90,12 @@ export default [{
         icon: 'pe-7s-id',
         name: 'owners',
         items: [
-          { title: 'Majitelé', route: 'ownersOwners',},
-          { title: 'Nájemní smlouvy', route: 'ownersContracts',},
-          { title: 'Prodlužování smluv', route: 'ownersProlonging',},
-          { title: 'Ukončování smluv', route: 'ownersTerminating',},
-          { title: 'Kontroly a reporty', route: 'ownersInspections',},
-          { title: 'Partnerský program', route: 'ownersCommissions',},
+          { title: 'Majitelé', route: 'ownersOwners'},
+          { title: 'Nájemní smlouvy', route: 'ownersContracts'},
+          { title: 'Prodlužování smluv', route: 'ownersProlonging'},
+          { title: 'Ukončování smluv', route: 'ownersTerminating'},
+          { title: 'Kontroly a reporty', route: 'ownersInspections'},
+          { title: 'Partnerský program', route: 'ownersCommissions'},
         ],
       },
       {
@@ -103,11 +103,11 @@ export default [{
         icon: 'pe-7s-users',
         name: 'tenants',
         items: [
-          { title: 'Nájemníci', route: 'tenantsTenants',},
+          { title: 'Nájemníci', route: 'tenantsTenants'},
           { title: 'Rezervační smlouvy', route: 'tenantsReservations'},
-          { title: 'Podnájemní smlouvy', route: 'tenantsContracts',},
+          { title: 'Podnájemní smlouvy', route: 'tenantsContracts'},
           { title: 'Prodlužování smluv', route: 'tenantsProlonging'},
-          { title: 'Ukončování smluv', route: 'tenantsTerminating',},
+          { title: 'Ukončování smluv', route: 'tenantsTerminating'},
         ],
       },
     ],
@@ -120,10 +120,10 @@ export default [{
         icon: 'pe-7s-news-paper',
         name: 'structure',
         items: [
-          { title: 'Menu a stránky', route: 'hireLeads',},
-          { title: 'Aktuality', route: 'hireQuestionnaires',},
-          { title: 'Přesměrování', route: 'hireOffers',},
-          { title: 'Mikrotexty', route: 'hireOffers',},
+          { title: 'Menu a stránky', route: 'hireLeads'},
+          { title: 'Aktuality', route: 'hireQuestionnaires'},
+          { title: 'Přesměrování', route: 'hireOffers'},
+          { title: 'Mikrotexty', route: 'hireOffers'},
         ],
       },
       {
@@ -131,10 +131,10 @@ export default [{
         icon: 'pe-7s-news-paper',
         name: 'elements',
         items: [
-          { title: 'Slider na úvodu', route: 'hireLeads',},
-          { title: 'Videa na úvodu', route: 'hireQuestionnaires',},
+          { title: 'Slider na úvodu', route: 'hireLeads'},
+          { title: 'Videa na úvodu', route: 'hireQuestionnaires'},
         ],
       },
     ],
-  }
-]
+  },
+];

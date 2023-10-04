@@ -6,12 +6,12 @@
   </BaseWrapper>
 </template>
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   wrap?: string,
 }>(), { wrap: undefined });
 
 defineOptions({
-  inheritAttrs: false
-})
+  inheritAttrs: false,
+});
 
 </script>

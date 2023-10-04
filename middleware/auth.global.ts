@@ -12,4 +12,4 @@ export default defineNuxtRouteMiddleware((to) => {
     if (to.path !== '/' && !$user.hasPermission(to.path)) {
         return abortNavigation();
     }
-})
+});

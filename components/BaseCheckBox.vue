@@ -1,10 +1,10 @@
 <template>
   <BaseWrapper :wrap="wrap">
     <label v-if="label !== null" :for="$attrs['id']" class="form-check-label">
-      <input v-bind="$attrs" class="form-check-input" type="checkbox" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" :checked="form && name ? _get(form.input, name) : modelValue" />
+      <input v-bind="$attrs" class="form-check-input" type="checkbox" :disabled="form?.disabled.value || $attrs['disabled']" :checked="form && name ? _get(form.input, name) : modelValue" @input="onChange">
       <span v-if="(form && form.lang) || lang" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span> {{ label }}
     </label>
-    <input v-else v-bind="$attrs" class="form-check-input" type="checkbox" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" :checked="form && name ? _get(form.input, name) : modelValue" />
+    <input v-else v-bind="$attrs" class="form-check-input" type="checkbox" :disabled="form?.disabled.value || $attrs['disabled']" :checked="form && name ? _get(form.input, name) : modelValue" @input="onChange">
   </BaseWrapper>
 </template>
 
@@ -24,10 +24,10 @@ const props = withDefaults(defineProps<{
 }>(), { type: 'text', wrap: undefined, lang: undefined, label: null, name: undefined, modelValue: undefined });
 
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
-const $emit = defineEmits(['update:modelValue'])
+const $emit = defineEmits(['update:modelValue']);
 
 function onChange($event: any) {
 

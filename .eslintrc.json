@@ -21,10 +21,23 @@
         "vue"
     ],
     "rules": {
+        "semi": "error",
+        "comma-spacing": "error",
+        "comma-style": ["error", "last"],
+        "comma-dangle": ["error",
+            {
+                "arrays": "always-multiline",
+                "objects": "always-multiline",
+                "imports": "always-multiline",
+                "exports": "always-multiline",
+                "functions": "never"
+            }
+        ],
         "@typescript-eslint/no-explicit-any": "off",
         "vue/no-multiple-template-root": "off",
         "vue/multi-word-component-names": "off",
         "vue/no-arrow-functions-in-watch": "off",
+        "vue/no-v-html": "off",
         "vue/no-mutating-props": "off",
         "vue/singleline-html-element-content-newline": "off",
         "vue/max-attributes-per-line": [

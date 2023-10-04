@@ -16,7 +16,7 @@ withDefaults(defineProps<{
 }>(), { loading: false, wrap: undefined});
 
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
 </script>

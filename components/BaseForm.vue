@@ -70,7 +70,7 @@ import {RouteParamValue} from "vue-router";
     const inputs = Object.assign({}, props.input);
     props.omit.forEach((val) => {
       delete inputs[val];
-    })
+    });
 
     // wait validate -> or valid by rules
     if (!v$.value.$invalid && !props.disabled && props.url) {

@@ -16,5 +16,5 @@ export const useFormValidation = (form: any, props: any) => {
         };
     });
 
-    return {validationObject, classes}
-}
+    return {validationObject, classes};
+};

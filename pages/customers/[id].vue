@@ -35,19 +35,19 @@ const rules = {};
 
 function success() {
   if (goBack.value) {
-    navigateTo({name: 'customers'})
+    navigateTo({name: 'customers'});
   }
 }
 
 const {data, pending} = useFetch(config.public.baseURL + 'customer/' + route.params.id, {
-  pick : ['ic', 'company', 'uuid']
+  pick : ['ic', 'company', 'uuid'],
 });
 
 
 watch(data, (value) => {
 
-  Object.assign(input, value)
-})
+  Object.assign(input, value);
+});
 
 
 
