@@ -1,7 +1,7 @@
 <template>
   <BaseWrapper :wrap="wrap">
     <div :class="classes">
-      <span v-if="(form && form.lang) || lang" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>
+      <span v-if="((form && form.lang) || lang) && locale" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>
       <template v-for="(value, key) in options" :key="key">
         <input v-bind="$attrs" class="form-check-input" type="radio" :value="key" :disabled="form?.disabled.value || $attrs['disabled']" :checked="(form && name ? _get(form.input, name) : modelValue) === key" @input="onChange">
         <label :for="$attrs['id']" class="form-check-label">{{ value }}</label>
@@ -25,11 +25,12 @@ const form: any = inject('form', null) as any;
 const props = withDefaults(defineProps<{
   wrap?: string
   lang?: string
+  locale: boolean
   options: object
   name?: string,
   modelValue?: string|null,
   validation?: BaseValidation,
-}>(), { type: 'text', wrap: undefined, lang: undefined, name: undefined, modelValue: undefined, validation: undefined });
+}>(), { type: 'text', wrap: undefined, lang: undefined, locale: false, name: undefined, modelValue: undefined, validation: undefined });
 
 defineOptions({
   inheritAttrs: false,

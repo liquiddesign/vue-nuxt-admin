@@ -1,7 +1,7 @@
 <template>
   <BaseWrapper :wrap="wrap">
     <label v-if="label" :for="$attrs['id']">
-      <span v-if="(form && form.lang) || lang" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>{{ label }}
+      <span v-if="((form && form.lang) || lang) && locale" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>{{ label }}
     </label>
     <div style="height: 29.5px;" :class="classes">
       <VueMultiselect
@@ -56,6 +56,7 @@ const config = useRuntimeConfig();
 const props = withDefaults(defineProps<{
   name?: string,
   lang?: string,
+  locale: boolean,
   wrap?: string,
   fetchUrl?: string,
   label?: string|null,
@@ -67,7 +68,7 @@ const props = withDefaults(defineProps<{
   optionsUrlParams?: any,
   optionsUrlQueryName?: any,
   validation?: BaseValidation,
-}>(), { label: null, name: undefined, lang: undefined, async: false, fetchUrl: undefined, asyncStartLength: 1, optionsUrl: undefined, optionsUrlParams: {}, optionsUrlQueryName: 'q', options: {}, wrap: undefined, modelValue: undefined, validation: undefined });
+}>(), { label: null, name: undefined, lang: undefined, locale: false, async: false, fetchUrl: undefined, asyncStartLength: 1, optionsUrl: undefined, optionsUrlParams: {}, optionsUrlQueryName: 'q', options: {}, wrap: undefined, modelValue: undefined, validation: undefined });
 
 defineOptions({
   inheritAttrs: false,

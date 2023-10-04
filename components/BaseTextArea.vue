@@ -1,7 +1,7 @@
 <template>
   <BaseWrapper :wrap="wrap">
     <label v-if="label !== null" :for="$attrs['id']">
-      <span v-if="(form && form.lang) || lang" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>{{ label }}
+      <span v-if="((form && form.lang) || lang) && locale" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>{{ label }}
     </label>
     <textarea v-bind="$attrs" class="form-control form-control-sm" :class="classes" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" v-html="form && name ? _get(form.input, name) : modelValue" />
     <template v-if="validationObject?.$errors">
@@ -22,12 +22,13 @@ const form: any = inject('form', null) as any;
 const props = withDefaults(defineProps<{
   label?: string|null
   lang?: string
+  locale: boolean
   wrap?: string
   nullable?: boolean
   name?: string
   modelValue?: string|null,
   validation?: BaseValidation,
-}>(), { wrap: undefined, label: null, lang: undefined, nullable: false, name: undefined, modelValue: undefined, validation: undefined });
+}>(), { wrap: undefined, label: null, lang: undefined, locale: false, nullable: false, name: undefined, modelValue: undefined, validation: undefined });
 
 defineOptions({
   inheritAttrs: false,

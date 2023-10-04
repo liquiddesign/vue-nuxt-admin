@@ -1,7 +1,7 @@
 <template>
   <BaseWrapper :wrap="wrap">
     <label v-if="label !== null" :for="$attrs['id']">
-      <span v-if="(form && form.lang) || lang" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>{{ label }}
+      <span v-if="((form && form.lang) || lang) && locale" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>{{ label }}
     </label>
     <select v-bind="$attrs" class="form-select form-select-sm" :class="classes" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange">
       <option v-if="prompt" value="" :selected="!(form && name ? _get(form.input, name) : modelValue)">{{ prompt }}</option>
@@ -25,13 +25,14 @@ const form: any = inject('form', null) as any;
 const props = withDefaults(defineProps<{
   label?: string|null
   lang?: string
+  locale: boolean
   prompt?: string
   wrap?: string
   options: object
   name?: string
   modelValue?: string|null,
   validation?: BaseValidation,
-}>(), { wrap: undefined, label: null,  lang: undefined, prompt: undefined, name: undefined, modelValue: undefined, validation: undefined });
+}>(), { wrap: undefined, label: null,  lang: undefined, locale: false, prompt: undefined, name: undefined, modelValue: undefined, validation: undefined });
 
 defineOptions({
   inheritAttrs: false,
