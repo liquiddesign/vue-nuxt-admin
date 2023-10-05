@@ -7,28 +7,33 @@
       <BaseButtonSave :disabled="$refs.form?.disabled || $refs.form?.pending" @click="goBack=false; $refs.form.submit();" />
     </template>
     <template #body>
+      {{ input }}
+
+
       <BaseForm ref="form" url="customer" :input="input" :rules="rules" @success="success">
+
+        <BaseTextBox name="account.name" />
         <div class="row">
           <div class="col-lg-6">
             <h5 class="card-title">Zákazník</h5>
             {{ input }}
-            <BaseCheckbox v-model="isCompany" label="Označit zákazníka jako firmu" />
+            <BaseCheckBox v-model="isCompany" label="Označit zákazníka jako firmu" />
 
             <div class="row mt-2">
-              <BaseFormInput v-if="!isCompany" name="fullname" wrap="col-lg-6" label="Jméno a příjmení" type="text" />
-              <BaseFormInput v-if="isCompany" name="company" wrap="col-lg-6" label="Společnost" type="text" />
+              <BaseTextBox v-if="!isCompany" name="fullname" wrap="col-lg-6" label="Jméno a příjmení" type="text" />
+              <BaseTextBox v-if="isCompany" name="company" wrap="col-lg-6" label="Společnost" type="text" />
             </div>
             <div v-if="isCompany" class="row mt-2">
-              <BaseFormInput name="ic" wrap="col-lg-6" label="IC" type="text" />
-              <BaseFormInput name="dic" wrap="col-lg-6" label="DIČ" type="text" />
+              <BaseTextBox name="ic" wrap="col-lg-6" label="IC" type="text" />
+              <BaseTextBox name="dic" wrap="col-lg-6" label="DIČ" type="text" />
             </div>
             <div class="row mt-2">
-              <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
-              <BaseFormInput name="ccEmails" wrap="col-lg-6" label="E-mail (kopie)" type="text" />
+              <BaseTextBox name="email" wrap="col-lg-6" label="E-mail" type="text" />
+              <BaseTextBox name="ccEmails" wrap="col-lg-6" label="E-mail (kopie)" type="text" />
             </div>
             <div class="row mt-2">
-              <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-              <BaseFormSelect wrap="col-lg-6" name="ssssasd" label="Nadřazený zákazník / centrála" :multiple="true" fetch-url="customer" />
+              <BaseTextBox name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+              <BaseTextBox name="phone" wrap="col-lg-6" label="Telefon" type="text" />
             </div>
             <div v-if="0" class="row mt-2">
               <!--<BaseFormInput name="parentCustomer" wrap="col-lg-6" label="Nadřazený zákazník / centrála" type="text" />-->
@@ -59,22 +64,22 @@
                 </div>
               </div>
               <div class="row mt-2">
-                <BaseFormInput name="billAddress.street" wrap="col-lg-6" label="Ulice" type="text" />
-                <BaseFormInput name="deliveryAddress.street" wrap="col-lg-6" label="Ulice" type="text" />
+                <BaseTextBox name="billAddress.street" wrap="col-lg-6" label="Ulice" type="text" />
+                <BaseTextBox name="deliveryAddress.street" wrap="col-lg-6" label="Ulice" type="text" />
               </div>
               <div class="row mt-2">
-                <BaseFormInput name="billAddress.city" wrap="col-lg-4" label="Město" type="text" />
-                <BaseFormInput name="billAddress.zipcode" wrap="col-lg-2" label="PSČ" type="text" />
-                <BaseFormInput name="deliveryAddress.street" wrap="col-lg-4" label="Město" type="text" />
-                <BaseFormInput name="deliveryAddress.zipcode" wrap="col-lg-2" label="PSČ" type="text" />
+                <BaseTextBox name="billAddress.city" wrap="col-lg-4" label="Město" type="text" />
+                <BaseTextBox name="billAddress.zipcode" wrap="col-lg-2" label="PSČ" type="text" />
+                <BaseTextBox name="deliveryAddress.street" wrap="col-lg-4" label="Město" type="text" />
+                <BaseTextBox name="deliveryAddress.zipcode" wrap="col-lg-2" label="PSČ" type="text" />
               </div>
               <div class="row mt-2">
-                <BaseFormInput name="billAddress.state" wrap="col-lg-6" label="Stát" type="text" />
-                <BaseFormInput name="deliveryAddress.state" wrap="col-lg-6" label="Stát" type="text" />
+                <BaseTextBox name="billAddress.state" wrap="col-lg-6" label="Stát" type="text" />
+                <BaseTextBox name="deliveryAddress.state" wrap="col-lg-6" label="Stát" type="text" />
               </div>
               <div class="row mt-2">
-                <BaseFormInput name="billAddress.note" wrap="col-lg-6" label="Poznámka" type="text" />
-                <BaseFormInput name="deliveryAddress.note" wrap="col-lg-6" label="Poznámka" type="text" />
+                <BaseTextBox name="billAddress.note" wrap="col-lg-6" label="Poznámka" type="text" />
+                <BaseTextBox name="deliveryAddress.note" wrap="col-lg-6" label="Poznámka" type="text" />
               </div>
             </div>
             <h5 class="card-title mt-2">Ceny a slevy</h5>
@@ -93,25 +98,25 @@
               </div>
             </div>
             <div class="row mt-2">
-              <BaseFormInput name="phone" wrap="col-lg-6" label="Procentuální sleva" type="text" />
+              <BaseTextBox name="phone" wrap="col-lg-6" label="Procentuální sleva" type="text" />
             </div>
 
             <div class="form-wrapper-blue mt-3">
               <h5 class="card-title mt-3">Nákup</h5>
               <div class="row">
-                <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-                <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+                <BaseTextBox name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+                <BaseTextBox name="email" wrap="col-lg-6" label="E-mail" type="text" />
               </div>
 
               <div class="row">
-                <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-                <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+                <BaseTextBox name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+                <BaseTextBox name="email" wrap="col-lg-6" label="E-mail" type="text" />
               </div>
             </div>
             <h5 class="card-title">Exporty</h5>
             <div class="row">
-              <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-              <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+              <BaseTextBox name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+              <BaseTextBox name="email" wrap="col-lg-6" label="E-mail" type="text" />
             </div>
             <div class="row mt-3">
               <div class="col-lg-6">
@@ -125,22 +130,22 @@
             <div class="form-wrapper-light mt-3">
               <h5 class=" card-title-lower">1) petr@lqd.cz    <div class="float-end"><button class="btn btn-xs btn-outline-secondary me-2"><i class="fa fa-trash-o" /></button></div></h5>
               <div class="row">
-                <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-                <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+                <BaseTextBox name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+                <BaseTextBox name="email" wrap="col-lg-6" label="E-mail" type="text" />
               </div>
               <div class="row mt-2">
-                <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-                <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+                <BaseTextBox name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+                <BaseTextBox name="email" wrap="col-lg-6" label="E-mail" type="text" />
               </div>
               <hr class="pt-1" style="color: white">
               <h5 class=" card-title-lower">2) petr@lqd.cz    <div class="float-end"><button class="btn btn-xs btn-outline-secondary me-2"><i class="fa fa-trash-o" /></button></div></h5>
               <div class="row">
-                <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-                <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+                <BaseTextBox name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+                <BaseTextBox name="email" wrap="col-lg-6" label="E-mail" type="text" />
               </div>
               <div class="row">
-                <BaseFormInput name="phone" wrap="col-lg-6" label="Telefon" type="text" />
-                <BaseFormInput name="email" wrap="col-lg-6" label="E-mail" type="text" />
+                <BaseTextBox name="phone" wrap="col-lg-6" label="Telefon" type="text" />
+                <BaseTextBox name="email" wrap="col-lg-6" label="E-mail" type="text" />
               </div>
               <div class="mt-3">
                 <button class="btn btn-sm btn-outline-secondary me-2"><i class="fa fa-plus" /></button>
@@ -155,8 +160,9 @@
 <script setup lang="ts">
 import {required} from "@vuelidate/validators";
 import { reactive } from "vue";
+import useVuelidate, {BaseValidation} from "@vuelidate/core";
 
-const input:any = reactive({});
+const input:any = reactive({account: {}});
 const goBack:Ref<boolean> = ref(false);
 const isCompany:Ref<boolean> = ref(false);
 
@@ -173,8 +179,10 @@ $fetch(config.public.baseURL + 'customer', {method: "POST", body: {'_op': 'optio
 
 
 const rules = {
-  company: { required },
+  test: { required },
 };
+
+const v$: Ref<BaseValidation> = useVuelidate(rules, input, {$autoDirty: true});
 
 
 

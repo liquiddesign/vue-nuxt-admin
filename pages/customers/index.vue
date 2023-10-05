@@ -1,11 +1,11 @@
 <template>
-  <BaseCardHeader title="Zákazníci" icon="pe-7s-users" description="Přehled zákazníků">
+  <BasePageHeader title="Zákazníci" icon="pe-7s-users" description="Přehled zákazníků">
     <BaseButtonNew @click="navigateTo({ name: 'customers-new'})">Přidat zákazníka</BaseButtonNew>
-  </BaseCardHeader>
+  </BasePageHeader>
   <BaseCard>
     <template #header>
       <BaseFilter @cancel="resetFilter">
-        <BaseInput v-model="filters.q" wrap="flex-shrink-0" placeholder="Název, kód, #id" type="text" />
+        <BaseTextBox v-model="filters.q" wrap="flex-shrink-0" placeholder="Název, kód, #id" type="text" />
       </BaseFilter>
     </template>
     <template #body>

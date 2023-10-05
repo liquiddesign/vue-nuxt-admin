@@ -197,7 +197,7 @@
     <BaseCard wrap="col-lg-6">
       <template #header>Jazyky</template>
       <div class="d-flex gap-1">
-        <BaseTextBox v-model="formData.name" label="BaseTextBox" lang="cz" wrap="flex-shrink-0" style="width: 100px" placeholder="Standartní" />
+        <BaseTextBox v-model="formData.name" :locale="true" label="BaseTextBox" lang="cz" wrap="flex-shrink-0" style="width: 100px" placeholder="Standartní" />
         <BaseTextArea v-model="formData.name" label="BaseTextArea" lang="cz" wrap="flex-shrink-0" placeholder="Standartní" />
         <BaseSelect v-model="formData.gender2" label="BaseSelect" lang="cz" prompt="-zvolte-" :options="{'male': 'muz', 'female' : 'zena'}" wrap="flex-shrink-0" />
         <BaseRadioBox v-model="formData.gender2" lang="cz" :options="{'male': 'muz', 'female' : 'zena'}" />
@@ -383,6 +383,7 @@ const rules = {
   validation2: { required },
   gender2: { required },
 };
+
 
 const filters: any = ref({});
 const page = ref(1);

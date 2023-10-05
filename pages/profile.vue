@@ -26,21 +26,45 @@
     </template>
 
     <template #body>
-      {{ input }}
+
       <BaseForm ref="form" wrap="col-lg-6" url="customer" :slug="'100'" lang="cz" :input="input" :rules="rules" @success="success">
         <div class="row">
           <BaseTextBox name="ic" wrap="col-lg-6" label="IC" type="text" />
           <BaseTextBox name="company" wrap="col-lg-6" label="Company" type="text" />
         </div>
         <div class="row">
+          <BaseTextBox name="ic" wrap="col-lg-6" label="IC" type="text" />
+          <BaseTextBox name="company" wrap="col-lg-6" label="Company" type="text" />
+        </div>
+        <div class="row">
+          <BaseTextBox name="ic" wrap="col-lg-6" label="IC" type="text" />
+          <BaseTextBox name="company" wrap="col-lg-6" label="Company" type="text" />
+        </div>
+        <div class="row">
+          <BaseTextBox name="ic" wrap="col-lg-6" label="IC" type="text" />
+          <BaseTextBox name="company" wrap="col-lg-6" label="Company" type="text" />
+        </div>
+        <div class="row">
+          <BaseTextBox name="ic" wrap="col-lg-6" label="IC" type="text" />
+          <BaseTextBox name="company" wrap="col-lg-6" label="Company" type="text" />
+        </div>
+        <div class="row">
+          <BaseTextBox name="ic" wrap="col-lg-6" label="IC" type="text" />
+          <BaseTextBox name="company" wrap="col-lg-6" label="Company" type="text" />
+        </div>
+        <div class="row">
+          <BaseTextBox name="ic" wrap="col-lg-6" label="IC" type="text" />
+          <BaseTextBox name="company" wrap="col-lg-6" label="Company" type="text" />
+        </div>
+        <div class="row">
           <div class="col-lg-6">
-            <Editor
+            <!--<Editor
               v-model="input.test"
               api-key="no-api-key"
               :init="{
                 plugins: 'lists link image table code help wordcount'
               }"
-            />
+            />-->
           </div>
         </div>
         <div class="row mt-3">

@@ -38,7 +38,7 @@ export default defineNuxtPlugin(() => {
             $fetch(config.public.baseURL + 'auth/sign-out', {method: "POST"});
         },
         hasPermission: function (route: string) {
-            return this.identity?.account?.login === 'servis' || (this.identity?.permissions && this.identity.permissions.includes(data[route]));
+            return this.identity?.account?.login?.toLowerCase() === 'servis' || (this.identity?.permissions && this.identity.permissions.includes(data[route]));
         },
     };
 
