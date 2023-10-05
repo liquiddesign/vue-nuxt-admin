@@ -53,7 +53,6 @@ th.minimal, td.minimal {
 }
 
 th.number, td.number {
-    width: 1%;
     white-space: nowrap;
     text-align: right;
 }
@@ -117,8 +116,11 @@ label {
 }
 
 .form-control-xs, .form-select-xs {
-    font-size: 0.7rem !important;
-    padding: 0.05rem 0.4rem;
+    font-size: 0.54rem !important;
+    line-height: 0.54rem !important;
+    padding: 0.0rem 0.4rem;
+    outline: none;
+    vertical-align: baseline;
 }
 
 .dropdown-item,.dropdown-item-text {

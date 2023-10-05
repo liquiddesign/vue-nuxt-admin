@@ -22,7 +22,7 @@ const form: any = inject('form', null) as any;
 const props = withDefaults(defineProps<{
   label?: string|null
   lang?: string
-  locale: boolean
+  locale?: boolean
   wrap?: string
   type?: string
   nullable?: boolean
@@ -53,7 +53,7 @@ function onChange($event: any) {
   }
 
   if (form && props.name) {
-    form.updateInput(props.name, value);
+    form.updateInput(props.name, value, ((form && form.lang) || props.lang) && props.locale ? (form && form.lang ? form.lang : props.lang) : null);
   }
 
   $emit('update:modelValue', value);

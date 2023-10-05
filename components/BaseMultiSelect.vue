@@ -56,7 +56,7 @@ const config = useRuntimeConfig();
 const props = withDefaults(defineProps<{
   name?: string,
   lang?: string,
-  locale: boolean,
+  locale?: boolean,
   wrap?: string,
   fetchUrl?: string,
   label?: string|null,

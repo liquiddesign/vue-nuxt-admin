@@ -25,7 +25,7 @@ const form: any = inject('form', null) as any;
 const props = withDefaults(defineProps<{
   wrap?: string
   lang?: string
-  locale: boolean
+  locale?: boolean
   options: object
   name?: string,
   modelValue?: string|null,

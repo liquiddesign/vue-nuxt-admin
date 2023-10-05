@@ -3,9 +3,13 @@
 </template>
 
 <script setup lang="ts">
-import {inject} from 'vue';
+import {inject, withDefaults} from 'vue';
+
+const props = withDefaults(defineProps<{
+  formRef?: object|null,
+}>(), {formRef: null});
+
 
 const form: any = inject('form') as any;
-
 
 </script>

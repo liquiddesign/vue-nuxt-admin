@@ -8,14 +8,14 @@
           </div>
           <div v-else class="modal-header">
             <h5 class="modal-title">{{ title }}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zavřít" />
+            <button ref="closeButton" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zavřít" />
           </div>
           <div v-if="$slots.body || $slots.default" class="modal-body">
             <slot name="body" />
             <slot />
           </div>
-          <div v-if="$slots.header" class="modal-footer">
-            <slot name="header" />
+          <div v-if="displayFooter || $slots.footer" class="modal-footer">
+            <slot name="footer" :close="() => close()" />
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zavřít</button>
           </div>
         </div>
@@ -28,16 +28,23 @@
 
   withDefaults(defineProps<{
     title?: string,
-  }>(), {title: undefined});
+    displayFooter?: boolean,
+  }>(), {title: undefined, displayFooter: false});
 
 
   const { $bootstrap } = useNuxtApp();
   const modal = ref(null);
+  const closeButton = ref(null);
 
 
   function open() {
     const myModal = new $bootstrap.Modal(modal.value ?? '', {});
     myModal.show();
+  }
+
+  function close() {
+    const myModal = $bootstrap.Modal.getInstance(modal.value ?? '');
+    myModal?.hide();
   }
 
   defineExpose({ open } );

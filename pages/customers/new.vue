@@ -2,14 +2,17 @@
   <BaseCard>
     <template #headerLeft>
       <BaseButtonBack @click="navigateTo({name: 'customers'})" />
+      <a class="btn btn-sm  btn-outline-dark ms-1" :class="{'bg-primary': lang === 'cz'}" @click.prevent="lang='cz'"><flag iso="cz" class="px-2" /></a>
+      <a class="btn btn-sm btn-outline-dark ms-1" :class="{'bg-primary': lang === 'gb'}"  @click.prevent="lang='gb'"><flag iso="gb" class="px-2" /></a>
     </template>
     <template #headerRight>
       <BaseButtonSave :disabled="$refs.form?.disabled || $refs.form?.pending" @click="goBack=false; $refs.form.submit();" />
     </template>
     <template #body>
       {{ input }}
-
-
+      =--
+      <BaseTextBoxLocale label="jazyk" v-model="input.pokus[lang]" :lang="lang" :langs="['gb','en','ru']" />
+      =--
       <BaseForm ref="form" url="customer" :input="input" :rules="rules" @success="success">
 
         <BaseTextBox name="account.name" />
@@ -17,6 +20,9 @@
           <div class="col-lg-6">
             <h5 class="card-title">Zákazník</h5>
             {{ input }}
+            ----
+            <BaseTextBoxLocale label="jazyk" name="pokus" :lang="lang" :langs="['cz','gb','ru']" />
+---
             <BaseCheckBox v-model="isCompany" label="Označit zákazníka jako firmu" />
 
             <div class="row mt-2">
@@ -24,8 +30,9 @@
               <BaseTextBox v-if="isCompany" name="company" wrap="col-lg-6" label="Společnost" type="text" />
             </div>
             <div v-if="isCompany" class="row mt-2">
-              <BaseTextBox name="ic" wrap="col-lg-6" label="IC" type="text" />
-              <BaseTextBox name="dic" wrap="col-lg-6" label="DIČ" type="text" />
+              <BaseTextBox name="ic" lang="cz" :locale="true" wrap="col-lg-6" label="IC" type="text" />
+              <BaseTextBox name="dic.cs" wrap="col-lg-6" label="DIČ" type="text" />
+
             </div>
             <div class="row mt-2">
               <BaseTextBox name="email" wrap="col-lg-6" label="E-mail" type="text" />
@@ -162,9 +169,10 @@ import {required} from "@vuelidate/validators";
 import { reactive } from "vue";
 import useVuelidate, {BaseValidation} from "@vuelidate/core";
 
-const input:any = reactive({account: {}});
+const input:any = reactive({account: {}, pokus: {cz: 'aa'}});
 const goBack:Ref<boolean> = ref(false);
 const isCompany:Ref<boolean> = ref(false);
+const lang:Ref<string> = ref('cz');
 
 
 
@@ -180,6 +188,7 @@ $fetch(config.public.baseURL + 'customer', {method: "POST", body: {'_op': 'optio
 
 const rules = {
   test: { required },
+  pokus: { required },
 };
 
 const v$: Ref<BaseValidation> = useVuelidate(rules, input, {$autoDirty: true});

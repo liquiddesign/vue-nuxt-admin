@@ -7,7 +7,7 @@
         </thead>
         <tbody>
           <template v-for="(item,i) in items" :key="i">
-            <slot name="body" :item="applyDecorator(item)" :index="i" :selected="selected[i]" :delete-row="() => deleteRow(item, i)" :processing="processing" :update-row="(value) => updateRow(item, value)" />
+            <slot name="body" :item="applyDecorator(item)" :index="i" :selected="selected[i]" :delete-row="() => deleteRow(item, i)" :processing="processing" :update-row="(value, name) => updateRow(item, value, name)" />
           </template>
           <tr v-if="!pending && !error && Object.values(items).length === 0">
             <td colspan="100%" style="text-align: center; font-style: italic">
@@ -28,7 +28,7 @@
       </table>
     </div>
     <div class="d-flex align-items-center flex-wrap gap-1">
-      <slot name="footer" :selected-number="selectedNumber" :action="(i) => action(i)" :async-action="(i) => asyncAction(i)" :selected-count="(i) => selectedCount(i)" :select-all="selectAll" :selected="selected" :delete-rows="deleteRows" :disabled-controls="processing || (!selectedAllChecked && !selectedNumber)" />
+      <slot name="footer" :selected-number="selectedNumber" :selected-query="selectedQuery" :action="(i) => action(i)" :async-action="(i) => asyncAction(i)" :selected-count="(i) => selectedCount(i)" :select-all="selectAll" :selected="selected" :delete-rows="deleteRows" :export-rows="exportRows" :disabled-controls="processing || (!selectedAllChecked && !selectedNumber)" />
     </div>
   </div>
 </template>
@@ -42,8 +42,9 @@ const props = withDefaults(defineProps<{
   page?: number,
   onPage?: number,
   filters?: any,
+  params?: any,
   silent?: boolean
-}>(), {page: 1, onPage: 15, filters: {}, silent: false});
+}>(), {page: 1, onPage: 15, filters: {}, params: {}, silent: false});
 
 const selected: any = ref({});
 const processing: any = ref(false);
@@ -54,6 +55,8 @@ const orderByAsc: Ref<boolean|null> = ref(true);
 const filterValues: any = ref({});
 const config = useRuntimeConfig();
 
+const { $download } = useNuxtApp();
+
 const { page, onPage } = toRefs(props);
 
 const paging: any = reactive({
@@ -62,7 +65,7 @@ const paging: any = reactive({
 });
 
 const params = computed(function () {
-  const params = Object.assign({}, paging, filterValues.value);
+  const params = Object.assign({}, paging, filterValues.value, props.params);
   orderByValue.value ? params['order'] =  orderByValue.value + '-' + (orderByAsc.value ? 'ASC' : 'DESC') : delete params['order'];
 
   return params;
@@ -128,6 +131,12 @@ function applyDecorator(item: any) {
   return Object.assign(Object.assign({}, item), decorator[item.uuid]);
 }
 
+const selectedQuery = computed(function () {
+  const ids = qs.stringify({ids: selectedIds()}, { arrayFormat: 'indices', encode: false });
+
+  return '?' + ids + '&selectedAll=' + (selectAll.value ? 1 : 0);
+});
+
 function deleteRow(item: any) {
   processing.value = true;
   $fetch(config.public.baseURL + props.url + '/' + item.uuid, { method: 'DELETE'}).then((response) => {
@@ -142,11 +151,24 @@ function deleteRow(item: any) {
   });
 }
 
+function exportRows() {
+  processing.value = true;
+  props.silent || toast.info('Exportuji ...');
+  $fetch(config.public.baseURL +  props.url + selectedQuery.value, { params: props.filters, responseType: 'blob', method: 'POST', body: {'_op': 'export'}})
+    .then((response) => {
+      console.log(response);
+      $download(response, 'export.csv');
+    }).catch(() => {
+      toast.error('Nepodařilo se exportovat data');
+  }).finally(() => {
+    processing.value = false;
+  });
+}
+
 function deleteRows() {
   processing.value = true;
-  const ids = qs.stringify({ids: Object.keys(selected.value)}, { arrayFormat: 'indices', encode: false });
   props.silent || toast.info('Hromadná akce může chvíli trvat ...');
-  $fetch(config.public.baseURL + props.url + '?' + ids + '&selectedAll=' + (selectAll.value ? 1 : 0), { method: 'DELETE', params: props.filters}).then(() => {
+  $fetch(config.public.baseURL + props.url + '?' + selectedQuery.value, { method: 'DELETE', params: props.filters}).then(() => {
     refresh();
     selected.value = {};
     selectAll.value = false;
@@ -178,8 +200,17 @@ function selectedCount(totalCount: number)
   return selectedAllChecked.value ? (totalCount || 0) : selectedNumber.value;
 }
 
-function updateRow() {
+function updateRow(item, value, name = null) {
+  processing.value = true;
 
+  $fetch(config.public.baseURL +  props.url + '/' + item.uuid, {body: name ? {[name]: value, uuid: item.uuid} : item, method: 'PATCH'})
+    .then((result) => {
+      toast.success('Uloženo');
+    }).catch((error) => {
+      toast.error('Nepodařilo se uložit');
+  }).finally(() => {
+    pending.value = false;
+  });
 }
 
 function orderBy(value: string) {
@@ -202,5 +233,9 @@ onActivated(() => {
 function selectedIds() {
   return Object.keys(Object.fromEntries(Object.entries(selected.value).filter(([, value]) => value) ));
 }
+
+provide('grid', {
+  refresh,
+});
 
 </script>
