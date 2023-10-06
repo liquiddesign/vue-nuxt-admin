@@ -9,7 +9,7 @@
       </div>
     </template>
   </Popper>
-  <BaseButton v-else v-bind="$attrs" class="btn btn-danger"><i class="fa fa-trash-o" /> <slot /></BaseButton>
+  <BaseButton v-else v-bind="$attrs" :class="classes" class="btn"><i class="fa fa-trash-o" /> <slot /></BaseButton>
 </template>
 
 <script setup lang="ts">

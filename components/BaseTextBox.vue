@@ -1,7 +1,7 @@
 <template>
   <BaseWrapper :wrap="wrap">
     <label v-if="label !== null" :for="$attrs['id']">
-      <span v-if="((form && form.lang) || lang) && locale" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>{{ label }}
+      <span v-if="((form && form.lang) || lang) && locale" class="pe-1"><BaseFlag :lang="form && form.lang.value ? form.lang.value : lang" /></span>{{ label }}
     </label>
     <input v-bind="$attrs" class="form-control form-control-sm" :class="classes" :type="type === 'float' ? 'number' : type" :value="form && name ? _get(form.input, name) : modelValue" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange">
     <template v-if="validationObject?.$errors">
@@ -53,7 +53,7 @@ function onChange($event: any) {
   }
 
   if (form && props.name) {
-    form.updateInput(props.name, value, ((form && form.lang) || props.lang) && props.locale ? (form && form.lang ? form.lang : props.lang) : null);
+    form.updateInput(props.name, value);
   }
 
   $emit('update:modelValue', value);

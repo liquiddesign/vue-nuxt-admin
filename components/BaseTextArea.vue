@@ -1,7 +1,7 @@
 <template>
   <BaseWrapper :wrap="wrap">
     <label v-if="label !== null" :for="$attrs['id']">
-      <span v-if="((form && form.lang) || lang) && locale" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>{{ label }}
+      <span v-if="((form && form.lang.value) || lang) && locale" class="pe-1"><BaseFlag :lang="form && form.lang.value ? form.lang.value : lang" /></span>{{ label }}
     </label>
     <textarea v-bind="$attrs" class="form-control form-control-sm" :class="classes" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" v-html="form && name ? _get(form.input, name) : modelValue" />
     <template v-if="validationObject?.$errors">

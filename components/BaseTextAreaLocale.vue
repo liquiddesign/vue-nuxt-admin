@@ -1,5 +1,5 @@
 <template>
-  <BaseTextBox :lang="language" :locale="true" v-bind="$attrs" :name="$attrs['name'] ? $attrs['name'] + '.' + language : undefined" :model-value="modelValue" @input="onChange" />
+  <BaseTextArea :lang="language" :locale="true" v-bind="$attrs" :name="$attrs['name'] ? $attrs['name'] + '.' + language : undefined" :model-value="modelValue" @input="onChange" />
 </template>
 
 <script setup lang="ts">

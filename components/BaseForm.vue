@@ -46,12 +46,7 @@ import qs from "qs";
   const toast: ToastPluginApi = inject('toast', useToast());
   const pending: Ref<boolean> = ref(false);
 
-  function updateInput(path: string, value: any, lang: string|null = null) {
-    if (lang) {
-      //path += '.' + lang;
-    }
-
-    console.log(path, '|', value);
+  function updateInput(path: string, value: any) {
     _set(props.input, path, value);
     _get(v$.value, path)?.$touch();
   }
@@ -60,9 +55,13 @@ import qs from "qs";
     return props.disabled;
   });
 
+  const lang = computed(() => {
+    return props.lang;
+  });
+
   provide('form', {
     name: props.name,
-    lang: props.lang,
+    lang: lang,
     disabled: disabled,
     pending: pending,
     input: props.input,
