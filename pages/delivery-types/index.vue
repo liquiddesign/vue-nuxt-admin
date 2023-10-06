@@ -5,15 +5,16 @@
 
   <BaseCard wrap="col-lg-12">
     <template #headerLeft>
+
       <BaseFilter @cancel="filters={}">
-        <BaseTextBox v-model="filters.q" wrap="flex-shrink-0" placeholder="Název, kód, #id" type="text" />
+        <BaseLanguageDropdown class="me-1" :lang="lang" :langs="langs" @select="lang=$event" />
+        <BaseTextBox v-model="filters.q" wrap="flex-shrink-0" :placeholder="'Název (' + lang + '), kód, #id'" type="text" />
       </BaseFilter>
     </template>
     <template #headerRight>
       <BaseCurrencyDropdown class="me-2" :currency="currency" :currencies="currencies" @select="currency=$event;" />
-      <BaseLanguageDropdown class="me-2" :lang="lang" :langs="langs" @select="lang=$event" />
     </template>
-    <BaseGrid ref="grid" url="delivery-type" :page="page" :on-page="onPage" :filters="filters" :params="{currency: currency}">
+    <BaseGrid ref="grid" url="delivery-type" :page="page" :on-page="onPage" :filters="filters" :params="{currency: currency, lang: lang}">
       <template #header>
         <tr>
           <BaseGridThSelect />
