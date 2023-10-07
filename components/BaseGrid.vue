@@ -145,7 +145,7 @@ function deleteRow(item: any) {
     selected.value = {};
     props.silent || toast.success('Smazáno');
   }).catch(() => {
-    props.silent || toast.error('Smazání se nezdrařilo');
+    props.silent || toast.error('Smazání se nezdařilo');
   }).finally(() => {
     processing.value = false;
   });

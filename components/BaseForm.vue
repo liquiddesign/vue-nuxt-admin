@@ -1,5 +1,6 @@
 <template>
   <BaseWrapper :wrap="wrap">
+    <!--{{ v$.test?.$each?.$invalid }}-->
     <form v-bind="$attrs" @submit.prevent="submit">
       <slot />
     </form>
@@ -11,7 +12,6 @@ import {withDefaults, inject, Ref} from "vue";
 import useVuelidate from "@vuelidate/core";
 import {ToastPluginApi, useToast} from "vue-toast-notification";
 import {RouteParamValue} from "vue-router";
-import qs from "qs";
 
   const props = withDefaults(defineProps<{
     name?: string,
@@ -19,7 +19,8 @@ import qs from "qs";
     url?: string|null,
     slug?: string|RouteParamValue[]|null,
     method?: string,
-    input: any | null,
+    data: any | null,
+    loading?: boolean,
     disabled?: boolean,
     params?: any,
     rules?: any,
@@ -32,6 +33,7 @@ import qs from "qs";
     url: null,
     method: undefined,
     slug: null,
+    loading: false,
     disabled: false,
     params: {},
     rules: {},
@@ -42,12 +44,12 @@ import qs from "qs";
 
 
   const config = useRuntimeConfig();
-  const v$:any = useVuelidate(props.rules, props.input);
+  const v$:any = useVuelidate(props.rules, props.data);
   const toast: ToastPluginApi = inject('toast', useToast());
   const pending: Ref<boolean> = ref(false);
 
   function updateInput(path: string, value: any) {
-    _set(props.input, path, value);
+    _set(props.data, path, value);
     _get(v$.value, path)?.$touch();
   }
 
@@ -55,33 +57,48 @@ import qs from "qs";
     return props.disabled;
   });
 
+  const loading = computed(() => {
+    return props.loading;
+  });
+
   const lang = computed(() => {
     return props.lang;
+  });
+
+  const dirty: Ref<boolean> = ref(false);
+
+  watch(props.data, () => {
+    if (!props.loading) {
+      dirty.value = true;
+    }
   });
 
   provide('form', {
     name: props.name,
     lang: lang,
-    disabled: disabled,
+    disabled: disabled || loading || pending,
+    loading: loading,
     pending: pending,
-    input: props.input,
+    dirty: dirty,
+    input: props.data,
     validation: v$,
     updateInput,
   });
 
-  defineExpose({submit, disabled, pending});
+
+
+  defineExpose({submit, disabled, pending, dirty, v$});
   const emit = defineEmits(['success', 'error']);
 
   function submit() {
-    console.log('submiting');
     v$.value.$touch();
 
-    const inputs = Object.assign({}, props.input);
+    const inputs = Object.assign({}, props.data);
     props.omit.forEach((val) => {
       delete inputs[val];
     });
 
-    // wait validate -> or valid by rules
+    // @TODO: wait validate -> or valid by rules to avoid multiple form on one page
     if (!v$.value.$invalid && !props.disabled && props.url) {
       pending.value = true;
 

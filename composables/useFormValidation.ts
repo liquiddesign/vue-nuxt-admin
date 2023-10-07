@@ -4,7 +4,7 @@ import {computed} from "vue";
 
 export const useFormValidation = (form: any, props: any) => {
     const validationObject = computed( function () {
-        return props.name && form?.validation.value ? form.validation.value[props.name] : props.validation;
+        return props.name && form?.validation.value ? _get(form.validation.value, props.name) : props.validation;
     });
 
 

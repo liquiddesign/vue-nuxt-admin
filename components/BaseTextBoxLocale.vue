@@ -1,4 +1,5 @@
 <template>
+  <!--{{ form.validation.value.name.cs.required }}-->
   <BaseTextBox :lang="language" :locale="true" v-bind="$attrs" :name="$attrs['name'] ? $attrs['name'] + '.' + language : undefined" :model-value="modelValue" @input="onChange" />
 </template>
 

@@ -1,7 +1,10 @@
 <template>
   <div class="row">
-    <BaseForm ref="form" wrap="col-lg-6" url="delivery-type" :lang="lang" :input="input" :rules="rules" @success="success">
-      <h5 class="card-title">Nová doprava</h5>
+    <BaseAlert v-if="data?.prices?.length === 0" wrap="col-lg-12" type="warning" icon="fa-exclamation-circle">
+        K teto dopravě neexistuje žádný ceník. Doprava tedy nebude zobrazena
+    </BaseAlert>
+    <BaseForm ref="form" wrap="col-lg-6" url="delivery-type" :lang="lang" :data="data" :slug="slug" :loading="loading" :rules="rules" @success="$emit('success', goBack)">
+      <slot name="top" />
       <div class="row">
         <BaseTextBoxLocale name="name" wrap="col-lg-8" label="Název" type="text" />
         <div class="col-lg-4">
@@ -64,18 +67,25 @@
 
       <div class="row mt-3">
         <div class="col-lg-6">
-          <BaseFormButton class="btn-success btn-sm me-1" @click="goBack=true;">Uložit</BaseFormButton>
-          <BaseFormButton class="btn-outline-primary btn-sm" @click="goBack=false;">Uložit a pokračovat</BaseFormButton>
+          <BaseFormButton class="btn-success btn-sm me-1" :disabled="!$refs.form?.dirty" @click="goBack=true;">Uložit</BaseFormButton>
+          <BaseFormButton class="btn-outline-primary btn-sm" :disabled="!$refs.form?.dirty" @click="goBack=false;">Uložit a pokračovat</BaseFormButton>
         </div>
       </div>
     </BaseForm>
     <div class="col-lg-6 ps-5">
       <h5 class="card-title">Ceník</h5>
       <div class="form-wrapper-light mt-3">
-        <template v-for="(price, index) in input.prices" :key="index">
+        <template v-for="(price, index) in data.prices" :key="index">
           <div class="row">
-            <BaseTextBox v-model="price.price" name="price" wrap="col-lg-3" label="Cena bez DPH" type="number" @change="price.priceVat = Math.round(parseInt(price.price) * 1.21)" />
-            <BaseTextBox v-model="price.priceVat" wrap="col-lg-3" label="Cena s DPH" type="number" @change="price.price = Math.round(parseInt(price.priceVat) / 1.21)" />
+
+            {{ $refs.form?.v$.prices.$each?.$invalid }}
+            <!--<input type="number" v-model="price.testujeme"/>-->
+            <!--<BaseTextTest v-model="price.testujeme" />-->
+            <BaseTextBox v-model="price.testujeme" />
+
+            <!-- @change="price.priceVat = Math.round(parseInt(price.price) * 1.21)" -->
+            <BaseTextBox v-model="price.price" wrap="col-lg-3" label="Cena bez DPH" type="number"  />
+            <BaseTextBox v-model="price.priceVat" wrap="col-lg-3" label="Cena s DPH" type="number" />
             <BaseMultiSelect wrap="col-lg-3" label="Měna" v-model="price.currency" options-url="currency" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
           </div>
           <div class="row mt-2">
@@ -83,13 +93,13 @@
             <BaseTextBox v-model="price.dimensionTo" wrap="col-lg-3" label="Dostupné do rozměru" type="float" :nullable="true"  />
             <div class="col-lg-4">
               <label>&nbsp;</label><br>
-              <button class="btn btn-sm btn-outline-danger me-2" @click="input.prices.splice(index, 1);"><i class="fa fa-trash-o" /></button>
+              <button class="btn btn-sm btn-outline-danger me-2" @click="data.prices.splice(index, 1);"><i class="fa fa-trash-o" /></button>
             </div>
           </div>
           <hr class="pt-1" style="color: white">
         </template>
         <div class="mt-3">
-          <button class="btn btn-sm btn-outline-secondary me-2" @click="input.prices.push({currency: 'CZK'})"><i class="fa fa-plus" /></button>
+          <button class="btn btn-sm btn-outline-secondary me-2" @click="data.prices.push({currency: 'CZK'})"><i class="fa fa-plus" /></button>
         </div>
       </div>
     </div>
@@ -100,25 +110,38 @@
 
 import {inject, withDefaults} from 'vue';
 import {ToastPluginApi, useToast} from 'vue-toast-notification';
-import {required} from "@vuelidate/validators";
+import {required, helpers} from "@vuelidate/validators";
+import {RouteParamValue} from "vue-router";
+import BaseAlert from "~/components/BaseAlert.vue";
 
 const props = withDefaults(defineProps<{
-  input: any,
-  lang: string
-}>(), { });
+  data: any,
+  lang: string,
+  loading?: boolean,
+  slug?: string|RouteParamValue[],
+}>(), { loading: false, slug: undefined });
 
 const toast: ToastPluginApi = inject('toast', useToast());
 
 const rules = {
   priority: { required },
   code: { required },
+  testujeme: { required },
+  name: {
+    cs: {required},
+  },
+  prices: {
+    $each: helpers.forEach({
+      testujeme: {
+        required
+      },
+    })
+  }
 };
 
+const form = ref(null);
+const goBack = ref(false);
 
-function success() {
-
-}
-
-
+const $emit = defineEmits(['success']);
 
 </script>

@@ -16,6 +16,9 @@
     <template #body>
       <div class="row">
       <BaseForm ref="form" wrap="col-lg-6" url="delivery-type" :lang="lang" :input="input" :rules="rules" @success="success">
+        <BaseTextBox name="test.0.price" />
+        <BaseTextBox name="test.1.price" />
+        <BaseTextBox name="test.2.price" />
         <h5 class="card-title">Nová doprava</h5>
         <div class="row">
           <BaseTextBoxLocale name="name" wrap="col-lg-8" label="Název" type="text" />
@@ -117,7 +120,7 @@
 
 import { inject } from 'vue';
 import {ToastPluginApi, useToast} from 'vue-toast-notification';
-import {required} from "@vuelidate/validators";
+import {required, helpers} from "@vuelidate/validators";
 
 const toast: ToastPluginApi = inject('toast', useToast());
 
@@ -130,6 +133,18 @@ const input:any = ref({ priority: 0, externalCarrier: true, prices: [{ currency:
 const rules = {
   priority: { required },
   code: { required },
+  name: {
+    cs: {
+      required
+    }
+  },
+  test: {
+    $each: helpers.forEach({
+      price: {
+        required
+      }
+    }),
+  }
 };
 
 

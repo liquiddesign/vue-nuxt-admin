@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="login">
-    <BaseForm ref="form" url="auth/sign-in" :input="input" :rules="rules" :silent="true" :omit="['remember']" class="no-red" @success="login" @error="error">
+    <BaseForm ref="form" url="auth/sign-in" :data="formData" :rules="rules" :silent="true" :omit="['remember']" class="no-red" @success="login" @error="error">
       <div class="modal-body">
         <div class="h5 modal-title text-center">
           <h4 class="mt-2">Roiwell 2.0 - B2B Eshop<br><span>Přihlášení do administrace:</span></h4>
@@ -27,7 +27,7 @@ definePageMeta({
   layout: false,
 });
 
-const input:any = reactive({ remember: false });
+const formData:any = reactive({ remember: false });
 const { $user } = useNuxtApp();
 
 const toast: ToastPluginApi = inject('toast', useToast());
@@ -37,12 +37,12 @@ const rules = {
   password: { required },
 };
 
-function error() {
-  toast.error('Špatné heslo nebo login.');
+function error(error: any) {
+  toast.error(error?.statusCode !== undefined ? 'Špatné heslo nebo login.' : 'Nepodařil se připojit k serveru.');
 }
 
 function login(response: OkResponse) {
-  $user.login(response.result, input.remember);
+  $user.login(response.result, formData.remember);
   navigateTo({ name: $user.homepage });
 }
 
