@@ -54,7 +54,7 @@ import {RouteParamValue} from "vue-router";
   }
 
   const disabled = computed(() => {
-    return props.disabled;
+    return props.disabled || props.loading || pending.value;
   });
 
   const loading = computed(() => {
@@ -71,12 +71,12 @@ import {RouteParamValue} from "vue-router";
     if (!props.loading) {
       dirty.value = true;
     }
-  });
+  }, { deep: true });
 
   provide('form', {
     name: props.name,
     lang: lang,
-    disabled: disabled || loading || pending,
+    disabled: disabled,
     loading: loading,
     pending: pending,
     dirty: dirty,

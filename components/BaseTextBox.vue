@@ -4,8 +4,14 @@
       <span v-if="((form && form.lang) || lang) && locale" class="pe-1"><BaseFlag :lang="form && form.lang.value ? form.lang.value : lang" /></span>{{ label }}
     </label>
     <input v-bind="$attrs" class="form-control form-control-sm" :class="classes" :type="type === 'float' ? 'number' : type" :value="form && name ? _get(form.input, name) : modelValue" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange">
-    <template v-if="validationObject?.$errors">
-      <div v-for="(error, index) in validationObject?.$errors" :key="index" class="text-danger">
+
+    <template v-if="validationErrors !== undefined">
+      <div v-for="(error, index) in (validationErrors)" :key="index" class="text-danger">
+        {{ error.$message }}
+      </div>
+    </template>
+    <template v-else-if="validationObject?.$errors">
+      <div v-for="(error, index) in (validationObject?.$errors)" :key="index" class="text-danger">
         {{ error.$message }}
       </div>
     </template>
@@ -15,7 +21,7 @@
 <script setup lang="ts">
 import {withDefaults} from "vue/dist/vue";
 import {inject} from "vue";
-import {BaseValidation} from "@vuelidate/core";
+import {BaseValidation, ErrorObject} from "@vuelidate/core";
 
 const form: any = inject('form', null) as any;
 
@@ -29,7 +35,8 @@ const props = withDefaults(defineProps<{
   name?: string,
   modelValue?: string|number|null,
   validation?: BaseValidation
-}>(), { type: 'text', wrap: undefined, label: null, lang: undefined, locale: false, nullable: false, name: undefined, modelValue: undefined, validation: undefined });
+  validationErrors?: ErrorObject[]
+}>(), { type: 'text', wrap: undefined, label: null, lang: undefined, locale: false, nullable: false, name: undefined, modelValue: undefined, validation: undefined, validationErrors: undefined });
 
 defineOptions({
   inheritAttrs: false,
@@ -44,11 +51,11 @@ function onChange($event: any) {
     value = null;
   }
 
-  if (props.type === 'number') {
+  if (props.type === 'number' && $event.target.value !== '') {
     value = parseInt($event.target.value);
   }
 
-  if (props.type === 'float') {
+  if (props.type === 'float' && $event.target.value !== '') {
     value = parseFloat($event.target.value);
   }
 
