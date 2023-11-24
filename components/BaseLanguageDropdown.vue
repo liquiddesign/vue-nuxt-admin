@@ -21,7 +21,7 @@ withDefaults(defineProps<{
   langs: string[],
 }>(), {});
 
-import {withDefaults} from "vue";
+import {withDefaults} from 'vue';
 
 defineOptions({
   inheritAttrs: false,

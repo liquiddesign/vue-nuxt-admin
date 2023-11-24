@@ -1,5 +1,5 @@
 import {User} from "~/utils/User";
-import data from 'assets/data/permissions.js';
+import data from 'assets/data/permissions';
 
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig();

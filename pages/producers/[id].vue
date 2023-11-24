@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 
-import {onActivated, onMounted} from "vue";
+import {onActivated, onMounted} from 'vue';
 
 const route = useRoute();
 

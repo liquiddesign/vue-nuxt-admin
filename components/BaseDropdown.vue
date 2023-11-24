@@ -16,14 +16,14 @@ const props = withDefaults(defineProps<{
   label?: string,
 }>(), {loading: false, icon: undefined, label: ''});
 
-import {computed, withDefaults} from "vue";
+import {computed, withDefaults} from 'vue';
 
 const htmlLabel = computed(function () {
   if (!props.icon) {
     return props.label;
   }
 
-  return (props.loading ? " <i class='fa fa-spinner fa-spin'></i>" : "<i class='fa " + props.icon + "'></i>") + (props.label ? '&nbsp;' + props.label : '');
+  return (props.loading ? ' <i class=\'fa fa-spinner fa-spin\'></i>' : '<i class=\'fa ' + props.icon + '\'></i>') + (props.label ? '&nbsp;' + props.label : '');
 });
 
 defineOptions({

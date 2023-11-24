@@ -31,10 +31,10 @@ const route = useRoute();
 const menu = reactive(data);
 
 onMounted(function () {
-  for(const i in data) {
-    for(const j in data[i].items) {
+  for (const i in data) {
+    for (const j in data[i].items) {
       let deletedCount = 0;
-      for(const k in data[i].items[j].items) {
+      for (const k in data[i].items[j].items) {
         if (!$user.hasPermission(data[i].items[j].items[k].route)) {
           menu[i].items[j].items[k].hidden = true;
           deletedCount++;

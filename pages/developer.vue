@@ -362,12 +362,12 @@
   </BaseCard>
 </template>
 <script setup lang="ts">
-import {ToastPluginApi, useToast} from "vue-toast-notification";
+import {ToastPluginApi, useToast} from 'vue-toast-notification';
 import VueEasyLightbox, { useEasyLightbox } from 'vue-easy-lightbox';
-import Tree from "vue3-treeview";
-import "vue3-treeview/dist/style.css";
-import {required} from "@vuelidate/validators";
-import useVuelidate, {BaseValidation} from "@vuelidate/core";
+import Tree from 'vue3-treeview';
+import 'vue3-treeview/dist/style.css';
+import {required} from '@vuelidate/validators';
+import useVuelidate, {BaseValidation} from '@vuelidate/core';
 
 const config = useRuntimeConfig();
 
@@ -405,23 +405,23 @@ const imgs = [
 const { show, onHide, visibleRef, indexRef, imgsRef} = useEasyLightbox({imgs: imgs, initIndex: 0});
 
 const treeConfig = ref({
-  roots: ["id1", "id2"],
+  roots: ['id1', 'id2'],
   checkboxes: true,
   checkMode: 1,
 });
 const nodes = ref({
   id1: {
-    text: "text1",
-      children: ["id11", "id12"],
+    text: 'text1',
+      children: ['id11', 'id12'],
   },
   id11: {
-    text: "text11",
+    text: 'text11',
   },
   id12: {
-    text: "text12",
+    text: 'text12',
   },
   id2: {
-    text: "text2",
+    text: 'text2',
   },
 });
 

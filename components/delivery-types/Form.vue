@@ -1,7 +1,8 @@
 <template>
   <div class="row">
+    {{ data }}
     <BaseAlert v-if="data?.prices?.length === 0" wrap="col-lg-12" type="warning" icon="fa-exclamation-circle">
-        K teto dopravě neexistuje žádný ceník. Doprava tedy nebude zobrazena
+      K teto dopravě neexistuje žádný ceník. Doprava tedy nebude zobrazena
     </BaseAlert>
     <BaseForm ref="form" wrap="col-lg-6" url="delivery-type" :lang="lang" :data="data" :slug="slug" :loading="loading" :rules="rules" @success="$emit('success', goBack); goBack = false">
       <slot name="top" />
@@ -11,7 +12,7 @@
           <label>Kód</label>
           <div class="input-group">
             <BaseTextBox name="code" />
-            <BaseButton wrap="input-group-append" type="button" class="btn-sm btn-outline-primary"><i class="fa fa-refresh"></i></BaseButton>
+            <BaseButton wrap="input-group-append" type="button" class="btn-sm btn-outline-primary"><i class="fa fa-refresh" /></BaseButton>
           </div>
         </div>
       </div>
@@ -25,7 +26,7 @@
       </div>
       <div class="row mt-2">
         <BaseMultiSelect name="pickupPointType" wrap="col-lg-6" label="Typ výdejních míst" options-url="pickup-point-type" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
-        <BaseMultiSelect name="allowedPaymentTypes" wrap="col-lg-6" :multiple="true" label="Povolené typy plateb" options-url="payment-type" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}"  />
+        <BaseMultiSelect name="allowedPaymentTypes" wrap="col-lg-6" :multiple="true" label="Povolené typy plateb" options-url="payment-type" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
       </div>
       <div class="row mt-3">
         <div class="d-flex gap-3">
@@ -77,37 +78,36 @@
       <div class="form-wrapper-light mt-3">
         <template v-for="(price, index) in data.prices" :key="index">
           <div class="row">
-
-            <BaseTextBox v-model="price.price" wrap="col-lg-3" label="Cena" type="number" :validation="$refs.form?.v$.prices.$each.$response.$data[index].price" :validation-errors="$refs.form?.v$.prices.$each.$response.$errors[index].price" />
+            <BaseTextBox v-model="price.price" wrap="col-lg-3" label="Cena" type="number" :validation="$refs.form?.v$.prices.$each.$response.$data[index].price" :validation-errors="$refs.form?.v$.prices.$each.$response.$errors[index].price" @change="price.priceVat = Math.round(parseInt(price.price) * 1.21)" />
             <BaseTextBox v-model="price.priceVat" wrap="col-lg-3" label="Cena s DPH" :validation="$refs.form?.v$.prices.$each.$response.$data[index].priceVat" :validation-errors="$refs.form?.v$.prices.$each.$response.$errors[index].priceVat" type="number" />
-            <!-- @change="price.priceVat = Math.round(parseInt(price.price) * 1.21)" -->
-             <BaseMultiSelect wrap="col-lg-3" label="Měna" v-model="price.currency" options-url="currency" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
-           </div>
-           <div class="row mt-2">
-             <BaseTextBox v-model="price.weightTo" wrap="col-lg-3" label="Dostupné do váhy" type="float" :nullable="true" />
-             <BaseTextBox v-model="price.dimensionTo" wrap="col-lg-3" label="Dostupné do rozměru" type="float" :nullable="true"  />
-             <div class="col-lg-4">
-               <label>&nbsp;</label><br>
-               <button class="btn btn-sm btn-outline-danger me-2" @click="data.prices.splice(index, 1);"><i class="fa fa-trash-o" /></button>
-             </div>
-           </div>
-           <hr class="pt-1" style="color: white">
-         </template>
-         <div class="mt-3">
-           <button class="btn btn-sm btn-outline-secondary me-2" @click="data.prices.push({price: null,currency: 'CZK'});"><i class="fa fa-plus" /></button>
-         </div>
-       </div>
-     </div>
-   </div>
- </template>
+            <!--  -->
+            <BaseMultiSelect v-model="price.currency" wrap="col-lg-3" label="Měna" options-url="currency" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
+          </div>
+          <div class="row mt-2">
+            <BaseTextBox v-model="price.weightTo" wrap="col-lg-3" label="Dostupné do váhy" type="float" :nullable="true" />
+            <BaseTextBox v-model="price.dimensionTo" wrap="col-lg-3" label="Dostupné do rozměru" type="float" :nullable="true" />
+            <div class="col-lg-4">
+              <label>&nbsp;</label><br>
+              <button class="btn btn-sm btn-outline-danger me-2" @click="data.prices.splice(index, 1);"><i class="fa fa-trash-o" /></button>
+            </div>
+          </div>
+          <hr class="pt-1" style="color: white">
+        </template>
+        <div class="mt-3">
+          <button class="btn btn-sm btn-outline-secondary me-2" @click="data.prices.push({price: null,currency: 'CZK'});"><i class="fa fa-plus" /></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
  <script setup lang="ts">
 
  import {inject, withDefaults} from 'vue';
  import {ToastPluginApi, useToast} from 'vue-toast-notification';
- import {required, helpers} from "@vuelidate/validators";
- import {RouteParamValue} from "vue-router";
- import BaseAlert from "~/components/BaseAlert.vue";
+ import {required, helpers} from '@vuelidate/validators';
+ import {RouteParamValue} from 'vue-router';
+ import BaseAlert from '~/components/BaseAlert.vue';
 
  const props = withDefaults(defineProps<{
    data: any,
@@ -127,13 +127,13 @@
    prices: {
      $each: helpers.forEach({
        price: {
-         required
+         required,
        },
        priceVat: {
-         required
+         required,
        },
-     })
-   }
+     }),
+   },
  };
 
  const form = ref(null);

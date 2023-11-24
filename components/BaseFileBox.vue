@@ -21,7 +21,7 @@
 </template>
 <script setup lang="ts">
 
-import {ComputedRef} from "vue";
+import {ComputedRef} from 'vue';
 
 const files: Ref<any[]> = ref([]);
 
@@ -59,7 +59,7 @@ const errorUploadSize: ComputedRef<boolean> = computed(() => {
   return props.maxUploadSize !== undefined && totalUploadSize.value > props.maxUploadSize;
 });
 
-function onFileChanged($event: Event){
+function onFileChanged($event: Event) {
   const target = $event.target as HTMLInputElement;
   if (target.files) {
     for (let i = 0; i < target.files.length; i++) {

@@ -8,17 +8,18 @@
 </template>
 
 <script setup lang="ts">
-import {withDefaults, inject, Ref} from "vue";
-import useVuelidate from "@vuelidate/core";
-import {ToastPluginApi, useToast} from "vue-toast-notification";
-import {RouteParamValue} from "vue-router";
+import {withDefaults, inject, Ref} from 'vue';
+import useVuelidate from '@vuelidate/core';
+import {ToastPluginApi, useToast} from 'vue-toast-notification';
+import {RouteParamValue} from 'vue-router';
+import {HTTPMethod} from 'h3';
 
   const props = withDefaults(defineProps<{
     name?: string,
     lang?: string,
     url?: string|null,
     slug?: string|RouteParamValue[]|null,
-    method?: string,
+    method?: HTTPMethod,
     data: any | null,
     loading?: boolean,
     disabled?: boolean,
@@ -42,13 +43,16 @@ import {RouteParamValue} from "vue-router";
     wrap: undefined,
   });
 
-
+  const input = computed(() => { return props.data; });
   const config = useRuntimeConfig();
-  const v$:any = useVuelidate(props.rules, props.data);
+  const v$:any = useVuelidate(props.rules, input);
+  const dirty: Ref<boolean> = ref(false);
+
   const toast: ToastPluginApi = inject('toast', useToast());
   const pending: Ref<boolean> = ref(false);
 
   function updateInput(path: string, value: any) {
+    dirty.value = true;
     _set(props.data, path, value);
     _get(v$.value, path)?.$touch();
   }
@@ -65,14 +69,6 @@ import {RouteParamValue} from "vue-router";
     return props.lang;
   });
 
-  const dirty: Ref<boolean> = ref(false);
-
-  watch(props.data, () => {
-    if (!props.loading) {
-      dirty.value = true;
-    }
-  }, { deep: true });
-
   provide('form', {
     name: props.name,
     lang: lang,
@@ -80,7 +76,7 @@ import {RouteParamValue} from "vue-router";
     loading: loading,
     pending: pending,
     dirty: dirty,
-    input: props.data,
+    data: input,
     validation: v$,
     updateInput,
   });
@@ -102,7 +98,7 @@ import {RouteParamValue} from "vue-router";
     if (!v$.value.$invalid && !props.disabled && props.url) {
       pending.value = true;
 
-      $fetch(config.public.baseURL + (props.slug !== null ?  props.url + '/' + props.slug : props.url), {body: inputs, params: props.params, method: props.method !== undefined ? props.method: (props.slug !== null ? 'PATCH' : 'POST')})
+      $fetch(config.public.baseURL + (props.slug !== null ?  props.url + '/' + props.slug : props.url), {body: inputs, params: props.params, method: props.method !== undefined ? props.method : (props.slug !== null ? 'PATCH' : 'POST')})
         .then((result) => {
           emit('success', result);
           props.silent || toast.success('Uloženo');

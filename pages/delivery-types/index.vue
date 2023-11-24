@@ -5,7 +5,6 @@
 
   <BaseCard wrap="col-lg-12">
     <template #headerLeft>
-
       <BaseFilter @cancel="filters={}">
         <BaseLanguageDropdown class="me-1" :lang="lang" :langs="langs" @select="lang=$event" />
         <BaseTextBox v-model="filters.q" wrap="flex-shrink-0" :placeholder="'Název (' + lang + '), kód, #id'" type="text" />
@@ -19,15 +18,15 @@
         <tr>
           <BaseGridThSelect />
           <BaseGridTh class="minimal" order-by="id">#</BaseGridTh>
-          <BaseGridTh></BaseGridTh>
+          <BaseGridTh />
           <BaseGridTh class="minimal" order-by="code">Kód</BaseGridTh>
-          <BaseGridTh></BaseGridTh>
+          <BaseGridTh />
           <BaseGridTh order-by="name"><BaseFlag :lang="lang" /> Název</BaseGridTh>
           <BaseGridTh class="number">Min. cena</BaseGridTh>
           <BaseGridTh class="number">Max. cena</BaseGridTh>
           <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
-          <BaseGridTh class="minimal" order-by="recommended"><i class="fa fa-thumbs-o-up"></i></BaseGridTh>
-          <BaseGridTh class="minimal" order-by="hidden"><i class="fa fa-eye-slash"></i></BaseGridTh>
+          <BaseGridTh class="minimal" order-by="recommended"><i class="fa fa-thumbs-o-up" /></BaseGridTh>
+          <BaseGridTh class="minimal" order-by="hidden"><i class="fa fa-eye-slash" /></BaseGridTh>
           <BaseGridTh><BaseGridThSettings /></BaseGridTh>
         </tr>
       </template>
@@ -35,9 +34,9 @@
         <tr :class="{'inactive': item.hidden, 'active': selected}">
           <BaseGridTdSelect :id="item.uuid" />
           <td class="minimal">{{ item.id }}</td>
-          <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'delivery-types-id', params: { id: item.uuid }})"/></td>
+          <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'delivery-types-id', params: { id: item.uuid }})" /></td>
           <td class="minimal">{{ item.code }}</td>
-          <td class="minimal"><img height="20" src="https://w7.pngwing.com/pngs/130/549/png-transparent-ppl-pakket-servicepunt-dhl-express-logo-others-blue-text-service-thumbnail.png" /></td>
+          <td class="minimal"><img height="20" alt="packeta" src="https://w7.pngwing.com/pngs/130/549/png-transparent-ppl-pakket-servicepunt-dhl-express-logo-others-blue-text-service-thumbnail.png"></td>
           <td>{{ item.name[lang] }}</td>
           <td class="number">{{ $price(item.minPrice, currency) }}</td>
           <td class="number">{{ $price(item.maxPrice, currency) }}</td>
@@ -54,10 +53,10 @@
           <BaseButtonExport class="btn-paging" :outline="true" :disabled="disabledControls" @click="exportRows();">({{ selectedCount(totalCount) }})</BaseButtonExport>
           <BaseButtonDelete class="btn-paging" :outline="true" :disabled="disabledControls" :confirmation="true" @confirm="deleteRows();">({{ selectedCount(totalCount) }})</BaseButtonDelete>
           <BaseModal ref="modalUpdate" :title="'Hromadná úprava (celkem ' + selectedCount(totalCount) + ')'">
-            <BaseForm ref="form" method="PATCH" :input="formData" :url="'delivery-type' + selectedQuery" :params="filters" @success="setDefaults(); resetSelect(); $refs.grid.refresh();">
+            <BaseForm ref="form" method="PATCH" :data="formData" :url="'delivery-type' + selectedQuery" :params="filters" @success="setDefaults(); resetSelect(); $refs.grid.refresh();">
               <div class="row">
                 <BaseCheckBox label="Skrytý" name="recommended.value" wrap="col-lg-6 pt-1" :disabled="formData.recommended.strategy === 'noAction'" />
-                <BaseSelect name="recommended.strategy" :class="{'border-success': formData.recommended.strategy !== 'noAction'}" :options="{noAction: 'původní', replace: 'nahradit'}" wrap="col-lg-6"  />
+                <BaseSelect name="recommended.strategy" :class="{'border-success': formData.recommended.strategy !== 'noAction'}" :options="{noAction: 'původní', replace: 'nahradit'}" wrap="col-lg-6" />
               </div>
               <div class="row mt-3">
                 <BaseCheckBox label="Doporučený" name="hidden.value" wrap="col-lg-6 pt-1" :disabled="formData.hidden.strategy === 'noAction'" />
@@ -72,12 +71,11 @@
       </template>
     </BaseGrid>
   </BaseCard>
-
 </template>
 <script setup lang="ts">
-import {ToastPluginApi, useToast} from "vue-toast-notification";
+import {ToastPluginApi, useToast} from 'vue-toast-notification';
 
-const { $price } = useNuxtApp()
+const { $price } = useNuxtApp();
 
 const filters: any = ref({});
 const defaultFormData = {recommended: {strategy: 'noAction', value: false}, hidden: {strategy: 'noAction', value: false}};
@@ -86,7 +84,7 @@ const page = ref(1);
 const onPage = ref(20);
 const lang = ref('cs');
 const currency = ref('CZK');
-const currencies = ref(['CZK', 'EUR','USD']);
+const currencies = ref(['CZK', 'EUR', 'USD']);
 const langs = ref(['cs', 'en']);
 const toast: ToastPluginApi = inject('toast', useToast());
 

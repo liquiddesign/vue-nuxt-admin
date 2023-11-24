@@ -19,9 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import {required} from "@vuelidate/validators";
-import {OkResponse} from "~/utils/OkResponse";
-import {ToastPluginApi, useToast} from "vue-toast-notification";
+import {required} from '@vuelidate/validators';
+import {OkResponse} from '~/utils/OkResponse';
+import {ToastPluginApi, useToast} from 'vue-toast-notification';
 
 definePageMeta({
   layout: false,

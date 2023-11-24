@@ -28,13 +28,26 @@
       </table>
     </div>
     <div class="d-flex align-items-center flex-wrap gap-1">
-      <slot name="footer" :selected-number="selectedNumber" :reset-select="() => resetSelect()" :selected-query="selectedQuery" :action="(i) => action(i)" :async-action="(i) => asyncAction(i)" :selected-count="(i) => selectedCount(i)" :select-all="selectAll" :selected="selected" :delete-rows="deleteRows" :export-rows="exportRows" :disabled-controls="pending || error || processing || (!selectedAllChecked && !selectedNumber)" />
+      <slot
+        name="footer"
+        :selected-number="selectedNumber"
+        :reset-select="() => resetSelect()"
+        :selected-query="selectedQuery"
+        :action="(i) => action(i)"
+        :async-action="(i) => asyncAction(i)"
+        :selected-count="(i) => selectedCount(i)"
+        :select-all="selectAll"
+        :selected="selected"
+        :delete-rows="deleteRows"
+        :export-rows="exportRows"
+        :disabled-controls="pending || error || processing || (!selectedAllChecked && !selectedNumber)"
+      />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import {reactive, withDefaults, computed, onActivated, Ref} from "vue";
-import {ToastPluginApi, useToast} from "vue-toast-notification";
+import {reactive, withDefaults, computed, onActivated, Ref} from 'vue';
+import {ToastPluginApi, useToast} from 'vue-toast-notification';
 import qs from 'qs';
 
 const props = withDefaults(defineProps<{

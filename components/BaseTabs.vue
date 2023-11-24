@@ -13,7 +13,7 @@
 </template>
 <script setup lang="ts">
 
-import {withDefaults} from "vue";
+import {withDefaults} from 'vue';
 
 withDefaults(defineProps<{
   wrap?: string

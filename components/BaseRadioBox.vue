@@ -3,7 +3,7 @@
     <div :class="classes">
       <span v-if="((form && form.lang) || lang) && locale" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>
       <template v-for="(value, key) in options" :key="key">
-        <input v-bind="$attrs" class="form-check-input" type="radio" :value="key" :disabled="form?.disabled.value || $attrs['disabled']" :checked="(form && name ? _get(form.input, name) : modelValue) === key" @input="onChange">
+        <input v-bind="$attrs" class="form-check-input" type="radio" :value="key" :disabled="form?.disabled.value || $attrs['disabled']" :checked="(form && name ? _get(form.data.value, name) : modelValue) === key" @input="onChange">
         <label :for="$attrs['id']" class="form-check-label">{{ value }}</label>
       </template>
     </div>
@@ -16,9 +16,9 @@
 </template>
 
 <script setup lang="ts">
-import {withDefaults} from "vue/dist/vue";
-import {inject} from "vue";
-import {BaseValidation} from "@vuelidate/core";
+import {withDefaults} from 'vue/dist/vue';
+import {inject} from 'vue';
+import {BaseValidation} from '@vuelidate/core';
 
 const form: any = inject('form', null) as any;
 

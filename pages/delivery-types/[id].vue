@@ -2,9 +2,8 @@
   <BaseCard>
     <template #headerLeft>
       <BaseButtonBack class="me-2" @click="navigateTo({name: 'delivery-types'})" />
-      <BaseButtonSave @click="form.submit()" class="btn-sm me-2" />
+      <BaseButtonSave class="btn-sm me-2" @click="form.submit()" />
       <BaseLanguageList :langs="langs" :lang="lang" @select="lang = $event" />
-
     </template>
     <template #headerRight>
       <BaseButtonExternalLink v-if="0" class="me-1" />
@@ -23,8 +22,8 @@
 </template>
 <script setup lang="ts">
 
-import {ToastPluginApi, useToast} from "vue-toast-notification";
-import {inject} from "vue";
+import {ToastPluginApi, useToast} from 'vue-toast-notification';
+import {inject} from 'vue';
 
 const route = useRoute();
 const config = useRuntimeConfig();

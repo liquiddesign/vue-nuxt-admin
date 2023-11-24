@@ -1,5 +1,5 @@
 <template>
-    <flag :iso="iso"/>
+  <flag :iso="iso" />
 </template>
 <script setup lang="ts">
 
@@ -10,8 +10,8 @@ const props = defineProps<{
 const iso = computed(() => {
   const table: any = {
     'cs' : 'cz',
-    'en' : 'gb'
-  }
+    'en' : 'gb',
+  };
 
   return table[props.lang] !== undefined ? table[props.lang] : props.lang;
 });

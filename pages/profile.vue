@@ -26,7 +26,6 @@
     </template>
 
     <template #body>
-
       <BaseForm ref="form" wrap="col-lg-6" url="customer" :slug="'100'" lang="cz" :input="input" :rules="rules" @success="success">
         <div class="row">
           <BaseTextBox name="ic" wrap="col-lg-6" label="IC" type="text" />
@@ -82,7 +81,7 @@
 
 import { inject } from 'vue';
 import {ToastPluginApi, useToast} from 'vue-toast-notification';
-import {required} from "@vuelidate/validators";
+import {required} from '@vuelidate/validators';
 import Editor from '@tinymce/tinymce-vue';
 
 const toast: ToastPluginApi = inject('toast', useToast());

@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onActivated} from "vue";
+import {computed, onActivated} from 'vue';
 
 const props = defineProps<{
   url: string,

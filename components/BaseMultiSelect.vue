@@ -14,7 +14,7 @@
         select-label=""
         deselect-label="odstranit"
         selected-label="Zvolena"
-        :model-value="form && name ? _get(form.input, name) : modelValue"
+        :model-value="form && name ? _get(form.data.value, name) : modelValue"
         @update:model-value="updateValue"
         @search-change="asyncSearch"
       >
@@ -46,10 +46,10 @@
   </BaseWrapper>
 </template>
 <script setup lang="ts">
-import VueMultiselect from "vue-multiselect";
-import {BaseValidation} from "@vuelidate/core";
-import BaseWrapper from "~/components/BaseWrapper.vue";
-import {computed} from "vue";
+import VueMultiselect from 'vue-multiselect';
+import {BaseValidation} from '@vuelidate/core';
+import BaseWrapper from '~/components/BaseWrapper.vue';
+import {computed} from 'vue';
 
 const config = useRuntimeConfig();
 
