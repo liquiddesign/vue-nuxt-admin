@@ -412,7 +412,7 @@ const treeConfig = ref({
 const nodes = ref({
   id1: {
     text: 'text1',
-      children: ['id11', 'id12'],
+    children: ['id11', 'id12'],
   },
   id11: {
     text: 'text11',
