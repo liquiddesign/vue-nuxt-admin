@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    modules: ['@nuxtjs/apollo', "nuxt-lodash"],
+    modules: ["nuxt-lodash"],
     typescript: {
         strict: true,
     },
@@ -18,16 +18,6 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             baseURL: process.env.NUXT_BASE_URL,
-        },
-    },
-    apollo: {
-        clients: {
-            default: {
-                httpEndpoint: 'http://www.roiwell-api.cz.d4169.masterinter.net/',
-                httpLinkOptions: {
-                    credentials: 'include',
-                },
-            },
         },
     },
     lodash: {
