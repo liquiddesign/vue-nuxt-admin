@@ -1,38 +1,59 @@
-<template>
+ <template>
   <BaseWrapper :wrap="wrap">
     <div class="">
-      <BaseButtonSave class="btn-xs" style="border: 1px solid rgb(128,128,128);" :disabled="!canUpload" />
-      <input v-bind="$attrs" type="file" class="form-control-file" :accept="accept" :disabled="totalUploadAmount >= maxFiles || $attrs['disabled']" :multiple="maxFiles > 1" @change="onFileChanged">
+      <input v-bind="$attrs" type="file" class="form-control-file" v-if="totalUploadAmount + test.length < maxFiles" :accept="accept" :disabled="totalUploadAmount + test.length >= maxFiles || $attrs['disabled']" :multiple="maxFiles > 1" @change="onFileChanged">
       <small class="form-text text-muted">
         <template v-if="minHeight || minWidth">min. š/v: <span :class="{'text-danger': errorMinSize}">{{ minWidth ?? '-' }}/{{ minHeight ?? '-' }}px</span> | </template>
         <template v-if="maxHeight || maxWidth">max. š/v: <span :class="{'text-danger': errorMaxSize}">{{ maxWidth ?? '-' }}/{{ maxHeight ?? '-' }}px</span> | </template>
-        upload: <span :class="{'text-danger': errorUploadSize}">{{ totalUploadSize }}/{{ maxUploadSize }}MB</span> |
-        souborů: {{ totalUploadAmount }}/{{ maxFiles }}
+        <template v-if="totalUploadAmount + test.length < maxFiles">
+          upload: <span :class="{'text-danger': errorUploadSize}">{{ totalUploadSize }}/{{ maxUploadSize }}MB</span> |
+          souborů: {{ totalUploadAmount }}/{{ maxFiles }}
+        </template>
       </small>
     </div>
     <slot />
-    <template v-if="files">
-      <div v-for="(file, i) in files" :key="file.name" class="text-center bg-light p-2">
-        <img :src="file.src" alt="" class="img-thumbnail" style=" max-height: 100px; max-width: 100px; opacity: 0.3;filter: alpha(opacity=40);">
+    <div v-if="tmpFiles" class="d-flex align-items-center flex-wrap gap-1 grid-filter">
+      <div v-for="(file, i) in tmpFiles" :key="file.name" class="flex-shrink-0">
+        <img :src="file.src" alt="" class="img-thumbnail" style=" max-height: 100px; max-width: 100px; opacity: 0.3;filter: alpha(opacity=40);" title="obrázek se nahraje po uložení formuláře">
         <br>
-        <small>{{ file.name }}</small>
-        <button v-if="uploading" class="btn btn-xs btn-light disabled"><i class="fa fa-circle-o-notch fa-spin" /></button>
-        <button v-if="!uploading" :title="file.width + 'px /' + file.height + 'px (' + Math.round(file.size / 1024 / 1024) + 'MB)'" class="btn btn-xs btn-light"><i class="fa fa-info-circle" /></button>
-        <BaseButtonDeleteLight class="btn-xs" @click.prevent="removeUpload(i)" />
+        <div class="text-center">
+          <small>{{ file.name }}</small>
+          <span v-if="uploading" class="btn btn-xs btn-light disabled"><i class="fa fa-circle-o-notch fa-spin" /></span>
+          <span v-if="!uploading" :title="file.width + 'px /' + file.height + 'px (' + Math.round(file.size / 1024 / 1024) + 'MB)'" class="px-1" style="position: relative; top: 2px;"><i class="fa fa-info-circle" /></span>
+          <BaseButtonDeleteLight class="btn-xs" @click.prevent="removeUpload(i)" />
+        </div>
       </div>
-    </template>
+    </div>
+
+    <div v-if="test" class="d-flex align-items-center flex-wrap gap-1 grid-filter">
+      <div v-for="(file, i, index) in test" :key="index" class="flex-shrink-0">
+        <template v-if="file">
+        <img :src="`http://localhost/roiwell/userfiles/delivery-type/61f276288773062696506931/thumbs/${file}`" alt="" class="border border-3 border-dark-subtle">
+        <br>
+          <div class="text-center">
+            <small>{{ file }}</small>
+            <BaseButtonDeleteLight class="btn-xs" @click.prevent="deleteImage(i)" />
+          </div>
+        </template>
+      </div>
+    </div>
   </BaseWrapper>
 </template>
 <script setup lang="ts">
 
-import {ComputedRef} from 'vue';
+import {ComputedRef, inject, Ref} from 'vue';
+import {ToastPluginApi, useToast} from "vue-toast-notification";
 
-const files: Ref<any[]> = ref([]);
+const tmpFiles: Ref<any[]> = ref([]);
 
 const props = withDefaults(defineProps< {
   label? : string,
+  url?: string|null,
+  slug?: string|null,
+  testx?: string|null,
+  action?: string|null,
   wrap? : string,
-  uploading? : boolean,
+  files?: string[],
   validExtensions?: string[],
   maxFiles?: number,
   maxUploadSize?: number,
@@ -40,11 +61,27 @@ const props = withDefaults(defineProps< {
   maxHeight?: number,
   minWidth?: number,
   maxWidth?: number,
-}>(), { label: undefined, wrap : undefined, uploading: false, maxFiles: 1, maxUploadSize: 10, minHeight: 0, minWidth: 0, maxHeight: undefined, maxWidth: undefined, validExtensions: () => ['jpg', 'jpeg', 'png'] });
+  silent?: boolean,
+}>(), { label: undefined, url: null, slug: null, testx: null, action: null, wrap : undefined, files: () => [], maxFiles: 1, maxUploadSize: 10, minHeight: 0, minWidth: 0, maxHeight: undefined, maxWidth: undefined, silent: true, validExtensions: () => ['jpg', 'jpeg', 'png'] });
 
 defineOptions({
   inheritAttrs: false,
 });
+
+const test: Ref<string[]> = ref([]);
+const uploading: Ref<boolean> = ref(false);
+//const test2 = reactive({'a': props.testx});
+//const test2 = toRef(props, 'testx');
+
+const b = computed({
+  get: () => props.testx,
+  set: (v) => props.testx = v,
+})
+
+watch(() => props.files, (value: string[]) => {
+  test.value = [...value];
+});
+
 
 const canUpload: ComputedRef<boolean> = computed(() => {
   return totalUploadAmount.value > 0 && !errorMinSize.value && !errorMaxSize.value && !errorUploadSize.value;
@@ -67,7 +104,7 @@ const accept: ComputedRef<string> = computed(() => {
 
 const totalUploadSize = computed(() => {
   let sum: number = 0;
-  files.value.forEach((file) => {
+  tmpFiles.value.forEach((file) => {
     sum += file.size;
   });
 
@@ -75,11 +112,11 @@ const totalUploadSize = computed(() => {
 });
 
 const totalUploadAmount:ComputedRef<number> = computed(() => {
-  return files.value.length;
+  return tmpFiles.value.length;
 });
 
 const errorMinSize = computed(() => {
-  files.value.forEach((file) => {
+  tmpFiles.value.forEach((file) => {
     if (file.height < props.minHeight || file.width < props.minWidth) {
       return true;
     }
@@ -89,7 +126,7 @@ const errorMinSize = computed(() => {
 });
 
 const errorMaxSize = computed(() => {
-  files.value.forEach((file) => {
+  tmpFiles.value.forEach((file) => {
     if ((props.maxHeight !== undefined && file.height > props.maxHeight) || (props.maxWidth !== undefined && file.width > props.maxWidth)) {
       return true;
     }
@@ -110,7 +147,7 @@ function onFileChanged($event: Event) {
       if (isValidExtension(file.name)) {
         const url = URL.createObjectURL(file);
 
-        const fileObject: any = ref({name: file.name, src: url, size: file.size, width: null, height: null});
+        const fileObject: any = ref({name: file.name, src: url, size: file.size, width: null, height: null, sourceFile: file});
         const img = new Image;
         img.src = url;
         img.onload = function() {
@@ -119,7 +156,7 @@ function onFileChanged($event: Event) {
           URL.revokeObjectURL(img.src);
         };
 
-        files.value.push(fileObject.value);
+        tmpFiles.value.push(fileObject.value);
       }
     }
   }
@@ -127,7 +164,7 @@ function onFileChanged($event: Event) {
 
 function removeUpload(index: number)
 {
-  files.value.splice(index, 1);
+  tmpFiles.value.splice(index, 1);
 }
 
 function isValidExtension(fileName: string)
@@ -135,6 +172,60 @@ function isValidExtension(fileName: string)
   return props.validExtensions.includes(fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length).toLowerCase());
 }
 
-defineExpose({ canUpload, files });
+const emit = defineEmits(['success', 'error']);
+const toast: ToastPluginApi = inject('toast', useToast());
+const config = useRuntimeConfig();
+
+function upload(slug = null)
+{
+
+  if (!tmpFiles.value.length) {
+    return;
+  }
+
+  uploading.value = true;
+
+  let data = new FormData();
+  for (let i = 0; i < tmpFiles.value.length; i++) {
+    data.append(i.toString(), tmpFiles.value[i].sourceFile);
+  }
+
+  tmpFiles.value.splice(0,tmpFiles.value.length);
+
+  $fetch(config.public.baseURL + props.url + '/' + (slug ?? props.slug) + '/' + props.action, {body: data, method: 'POST'})
+      .then((result) => {
+        console.log('ok');
+        props.silent || toast.success('Uloženo');
+        test.value.splice(0,test.value.length);
+        tmpFiles.value.splice(0,tmpFiles.value.length);
+
+        for (let i = 0; i < tmpFiles.value.length; i++) {
+          const aux = tmpFiles.value[i].name;
+          tmpFiles.value.splice(i, 1);
+         // test.value.push(aux);
+        }
+
+        emit('success', result);
+
+      }).catch((error) => {
+    emit('error', error);
+    props.silent || toast.error(error.message);
+  }).finally(() => {
+    uploading.value = false;
+  });
+}
+
+function deleteImage(key: number)
+{
+ // test2.value = 'pes';
+
+  $fetch(config.public.baseURL + props.url + '/' + props.slug + '/' + props.action, {method: 'DELETE'});
+
+  test.value.splice(0, 1);
+  //test.value[0] = 'pes';
+
+}
+
+defineExpose({ canUpload, tmpFiles, upload });
 
 </script>

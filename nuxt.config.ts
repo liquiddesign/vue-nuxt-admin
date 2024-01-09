@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             baseURL: process.env.NUXT_BASE_URL,
+            userFilesURL: process.env.NUXT_USERFILES_URL,
         },
     },
     lodash: {

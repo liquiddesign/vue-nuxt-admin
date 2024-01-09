@@ -45,6 +45,7 @@
         "vue/no-v-html": "off",
         "vue/no-mutating-props": "off",
         "vue/singleline-html-element-content-newline": "off",
+        "vue/space-infix-ops": "error",
         "vue/max-attributes-per-line": [
             "error",
             {

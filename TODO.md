@@ -1,6 +1,6 @@
-
-- smazani starych kodu
-- 
+- generování kódu (použití jako uuid)
+- upload obrazku
+- settings pri loginu -> dph dopravy, jazyky, defaultni jednotka hmontolsti rozmeru, max upload size apod
 
 // --------------------
 filter[]=ic,company;LK;ttttt&

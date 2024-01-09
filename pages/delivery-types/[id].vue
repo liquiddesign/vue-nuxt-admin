@@ -2,7 +2,7 @@
   <BaseCard>
     <template #headerLeft>
       <BaseButtonBack class="me-2" @click="navigateTo({name: 'delivery-types'})" />
-      <BaseButtonSave class="btn-sm me-2" @click="form.submit()" />
+      <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
       <BaseLanguageList :langs="langs" :lang="lang" @select="lang = $event" />
     </template>
     <template #headerRight>
@@ -14,7 +14,7 @@
       <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm" @confirm="deleteItem()" />
     </template>
     <template #body>
-      <DeliveryTypesForm ref="deliveryForm" :lang="lang" :data="formData" :slug="route.params.id" :loading="pending" @success="!$event || navigateTo({name: 'delivery-types'})">
+      <DeliveryTypesForm ref="form" :lang="lang" :data="formData" :slug="route.params.id" :loading="pending" @success="redirect">
         <template #top><h5 class="card-title">Doprava #{{ formData?.id }}</h5></template>
       </DeliveryTypesForm>
     </template>
@@ -41,10 +41,6 @@ watch(data, (value) => {
   Object.assign(formData.value, value);
 });
 
-const form = computed(() => {
-  return deliveryForm.value?.$refs?.form;
-});
-
 function deleteItem() {
   $fetch(config.public.baseURL + 'delivery-type/' + route.params.id, { method: 'DELETE'}).then(() => {
     toast.success('Smazáno');
@@ -62,6 +58,10 @@ function makeCopy() {
     }).catch(() => {
     toast.error('Nepodařilo se vytvořit kopii');
   });
+}
+
+function redirect(id) {
+  id || navigateTo({name: 'delivery-types'})
 }
 
 

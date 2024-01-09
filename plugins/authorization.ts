@@ -7,6 +7,7 @@ export default defineNuxtPlugin(() => {
     const user: User = {
         homepage: 'dashboards',
         identity: {},
+        settings: {},
         isLoggedIn: false,
         updateStorage: function () {
             if (localStorage.getItem('user')) {
@@ -17,6 +18,7 @@ export default defineNuxtPlugin(() => {
         },
         login: function (identity: any, permanent: boolean = false) {
             Object.assign(this.identity, identity);
+            this.settings = identity.settings;
             this.isLoggedIn = true;
             if (permanent) {
                 sessionStorage.removeItem('user');
@@ -46,10 +48,12 @@ export default defineNuxtPlugin(() => {
         const localUser: User = JSON.parse(localStorage.getItem('user') || '');
         Object.assign(user.identity, localUser.identity);
         user.isLoggedIn = localUser.isLoggedIn;
+        user.settings = localUser.settings;
     } else if (sessionStorage.getItem('user')) {
         const sessionUser: User = JSON.parse(sessionStorage.getItem('user') || '');
         Object.assign(user.identity, sessionUser.identity);
         user.isLoggedIn = sessionUser.isLoggedIn;
+        user.settings = sessionUser.settings;
      }
 
     return {

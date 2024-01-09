@@ -81,10 +81,15 @@ import {HTTPMethod} from 'h3';
     updateInput,
   });
 
+  function getDynamicErrors(container: string, index: string|number, property: string)
+  {
+    return v$.value[container]?.$each.$response.$errors[index][property];
+  }
 
 
-  defineExpose({submit, disabled, pending, dirty, v$});
+defineExpose({submit, disabled, pending, dirty, v$, getDynamicErrors});
   const emit = defineEmits(['success', 'error']);
+
 
   function submit() {
     v$.value.$touch();
