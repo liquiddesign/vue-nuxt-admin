@@ -57,6 +57,10 @@ th.number, td.number {
     text-align: right;
 }
 
+th {
+    white-space: nowrap;
+}
+
 td.center {
     text-align: center;
 }

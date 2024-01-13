@@ -109,6 +109,7 @@ defineExpose({submit, disabled, pending, dirty, v$, getDynamicErrors});
           props.silent || toast.success('Uloženo');
 
         }).catch((error) => {
+          console.error(error);
           emit('error', error);
           props.silent || toast.error(error.message);
         }).finally(() => {

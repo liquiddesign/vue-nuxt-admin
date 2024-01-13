@@ -66,7 +66,7 @@ export default [{
         icon: 'pe-7s-portfolio',
         name: 'hire',
         items: [
-          { title: 'Produkty', route: 'hireLeads'},
+          { title: 'Produkty', route: 'hireLeads', disabled: true},
           { title: 'Výrobci', route: 'producers'},
           { title: 'Nabídky', route: 'hireOffers'},
           { title: 'Registrace', route: 'hireRegistrations'},
