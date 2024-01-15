@@ -29,7 +29,6 @@ const route = useRoute();
 const config = useRuntimeConfig();
 const toast: ToastPluginApi = inject('toast', useToast());
 
-const deliveryForm = ref(null);
 const lang = ref('cs');
 const langs = ref(['cs', 'en']);
 

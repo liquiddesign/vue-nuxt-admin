@@ -70,10 +70,11 @@
 
               <button type="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" class="p-0 me-2 btn btn-link">
                 <span class="icon-wrapper icon-wrapper-alt rounded-circle">
-                  <span class="icon-wrapper-bg bg-danger" />
-
+                  <span class="icon-wrapper-bg bg-danger" style="padding-top: 10px;">
+                      <i class="fa fa-bell-o" style="" />
+                  </span>
                   <i class="icon text-danger  ion-android-notifications" :class="{'icon-anim-pulse': false}" />
-                  <span v-if="0" class="badge badge-dot badge-dot-sm bg-danger">Notifications</span>
+                  <span v-if="1" class="badge badge-dot badge-dot-sm bg-danger">Notifications</span>
                 </span>
               </button>
               <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu dropdown-menu-right" style="">
@@ -105,8 +106,9 @@
 
               <button type="button" data-toggle="dropdown" class="p-0 mr-2 btn btn-link" aria-expanded="true">
                 <span class="icon-wrapper icon-wrapper-alt rounded-circle">
-                  <span class="icon-wrapper-bg bg-focus"></span>
-                  <span class="language-icon opacity-8 flag large DE"></span>
+                  <span class="icon-wrapper-bg bg-danger" style="padding-top: 11px;">
+                    <i class="fa fa-shopping-cart" />
+                  </span>
                 </span>
               </button>
               <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu-xl rm-pointers dropdown-menu dropdown-menu-right">
