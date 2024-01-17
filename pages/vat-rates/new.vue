@@ -5,9 +5,9 @@
       <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
     </template>
     <template #body>
-      <CurrenciesForm ref="form" :data="data" @success="redirect">
+      <VatRatesForm ref="form" :data="data" @success="redirect">
         <template #top><h5 class="card-title">Nová měna</h5></template>
-      </CurrenciesForm>
+      </VatRatesForm>
     </template>
   </BaseCard>
 </template>

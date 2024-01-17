@@ -20,13 +20,10 @@
   </BaseCard>
 </template>
 <script setup lang="ts">
-
 const config = useRuntimeConfig();
 const route = useRoute();
 
 const {data, pending, refresh} = useFetch(config.public.baseURL + 'currency/' + route.params.id);
 const {deleteItem, makeCopy, redirect} = useDetailMethods('currency', 'currencies');
-
-
 
 </script>

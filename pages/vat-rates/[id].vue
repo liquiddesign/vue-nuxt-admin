@@ -1,9 +1,8 @@
 <template>
   <BaseCard>
     <template #headerLeft>
-      <BaseButtonBack class="me-2" @click="navigateTo({name: 'delivery-types'})" />
+      <BaseButtonBack class="me-2" @click="navigateTo({name: 'currencies'})" />
       <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
-      <BaseLanguageList :langs="$user.settings.langs" :lang="lang" @select="lang = $event" />
     </template>
     <template #headerRight>
       <BaseButtonExternalLink v-if="0" class="me-1" />
@@ -14,19 +13,17 @@
       <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm" @confirm="deleteItem()" />
     </template>
     <template #body>
-      <DeliveryTypesForm ref="form" :lang="lang" :data="data" :slug="route.params.id" :loading="pending" @success="redirect">
-        <template #top><h5 class="card-title">Doprava #{{ data?.id }}</h5></template>
-      </DeliveryTypesForm>
+      <VatRatesForm ref="form" :data="data" :slug="route.params.id" :loading="pending" @success="redirect">
+        <template #top><h5 class="card-title">Měna #{{ data?.id }}</h5></template>
+      </VatRatesForm>
     </template>
   </BaseCard>
 </template>
 <script setup lang="ts">
 const config = useRuntimeConfig();
 const route = useRoute();
-const { $user } = useNuxtApp();
-const lang: Ref<string> = ref($user.settings.defaultLang);
 
-const {data, pending, refresh} = useFetch(config.public.baseURL + 'delivery-type/' + route.params.id);
-const {deleteItem, makeCopy, redirect} = useDetailMethods('delivery-type', 'delivery-types');
+const {data, pending, refresh} = useFetch(config.public.baseURL + 'currency/' + route.params.id);
+const {deleteItem, makeCopy, redirect} = useDetailMethods('currency', 'currencies');
 
 </script>

@@ -44,7 +44,7 @@ export default [{
         items: [
           { title: 'Ceníky', route: 'pricelists'},
           { title: 'Akce', route: 'dashboardQuestionnaires'},
-          { title: 'DPH', route: 'dashboardOffers'},
+          { title: 'DPH', route: 'vatRates'},
           { title: 'Měny', route: 'currencies'},
         ],
       },
