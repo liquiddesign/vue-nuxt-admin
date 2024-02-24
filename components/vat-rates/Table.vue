@@ -5,13 +5,10 @@
         <BaseGridThSelect />
         <BaseGridTh class="minimal" order-by="id">#</BaseGridTh>
         <BaseGridTh />
-        <BaseGridTh class="minimal" order-by="code">Kód</BaseGridTh>
         <BaseGridTh order-by="name">Název</BaseGridTh>
-        <BaseGridTh order-by="name">Typ</BaseGridTh>
-        <BaseGridTh order-by="name">Kurz</BaseGridTh>
-        <BaseGridTh order-by="name">Konverze</BaseGridTh>
+        <BaseGridTh order-by="name">Výše DPH</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="recommended">Doprava</BaseGridTh>
         <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="recommended"><i class="fa fa-thumbs-o-up" /></BaseGridTh>
         <BaseGridTh class="minimal" order-by="hidden"><i class="fa fa-eye-slash" /></BaseGridTh>
         <BaseGridTh><BaseGridThSettings /></BaseGridTh>
       </tr>
@@ -66,7 +63,7 @@ withDefaults(defineProps<{
   filters: object
 }>(), {  });
 
-const url = 'currency';
+const url = 'vat-rates';
 
 const defaultFormData = {recommended: {strategy: 'noAction', value: false}, hidden: {strategy: 'noAction', value: false}};
 const formData: any = ref(Object.assign({}, defaultFormData));
