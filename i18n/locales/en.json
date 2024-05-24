@@ -1,0 +1,9 @@
+{
+  "description": "Oopsie, where am I?",
+  "backHome": "Get me back on track",
+  "backHome2": "Get me back on track2",
+  "nested": {
+    "pes": "ves",
+    "test": "test2"
+  }
+}
