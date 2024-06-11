@@ -1,4 +1,4 @@
-export const useTableVars = (settings: any) => {
+export const useTableVars = (settings: any): {filters: object, page: Ref<number>, onPage: number, lang: string, currency: string, currencies: string[], langs: string[]} => {
     const filters: any = ref({});
     const page = ref(1);
     const onPage = ref(settings.defaultOnPage);
@@ -7,5 +7,5 @@ export const useTableVars = (settings: any) => {
     const currencies = ref(settings.currencies);
     const langs = ref(settings.langs);
 
-    return {filters, page, onPage, lang, currency, currencies, langs,};
+    return {filters, page, onPage, lang, currency, currencies, langs};
 };

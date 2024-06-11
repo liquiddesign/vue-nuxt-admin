@@ -1,4 +1,4 @@
-import {DataProvider} from "~/utils/DataProvider";
+import {DataProvider} from '~/utils/DataProvider';
 
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig();
@@ -9,7 +9,7 @@ export default defineNuxtPlugin(() => {
         currencies: currencies,
     };
 
-    $fetch(config.public.baseURL + 'list', {method: "GET"}).then((response: any) => {
+    $fetch(config.public.baseURL + 'list', {method: 'GET'}).then((response: any) => {
         Object.assign(dataProvider.currencies, response?.result);
     });
 

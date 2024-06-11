@@ -1,4 +1,4 @@
-import {User} from "~/utils/User";
+import {User} from '~/utils/User';
 import data from 'assets/data/permissions';
 
 export default defineNuxtPlugin(() => {
@@ -40,7 +40,7 @@ export default defineNuxtPlugin(() => {
             $fetch(config.public.baseURL + 'auth/sign-out', {method: "POST"});
         },
         hasPermission: function (route: string) {
-            return this.identity?.account?.login?.toLowerCase() === 'servis' || (this.identity?.permissions && this.identity.permissions.includes(data[route]));
+            return this.identity?.account?.login?.toLowerCase() === 'dn@lqd.cz' || (this.identity?.permissions && this.identity.permissions.includes(data[route]));
         },
     };
 

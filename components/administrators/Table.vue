@@ -5,7 +5,7 @@
         <BaseGridThSelect />
         <BaseGridTh class="minimal" order-by="id">#</BaseGridTh>
         <BaseGridTh />
-        <BaseGridTh class="minimal" order-by="code">Kód</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="login">Login</BaseGridTh>
         <BaseGridTh order-by="name">Název</BaseGridTh>
         <BaseGridTh order-by="name">Typ</BaseGridTh>
         <BaseGridTh order-by="name">Kurz</BaseGridTh>
@@ -19,10 +19,10 @@
     <template #body="{item, selected, deleteRow, updateRow}">
       <tr :class="{'inactive': item.hidden, 'active': selected}">
         <BaseGridTdSelect :id="item.uuid" />
-        <td class="minimal">{{ item.id }}</td>
-        <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'currencies-id', params: { id: item.uuid }})" /></td>
-        <td class="minimal">{{ item.code }}</td>
-        <td>{{ item.name ?? '-' }}</td>
+        <td class="minimal">{{ item.administrator_id }}</td>
+        <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'administrators-id', params: { id: item.uuid }})" /></td>
+        <td class="minimal">{{ item.login }}</td>
+        <td>{{ item.administrator_name ?? '-' }}</td>
         <td>{{ 'realna' }}</td>
         <td>{{ 'realna' }}</td>
         <td class="minimal"><BaseCheckBox v-model="item.hidden" @change="(e) => updateRow(e.target.checked, 'hidden')" /></td>

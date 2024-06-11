@@ -48,7 +48,7 @@
           </div>
           <ul class="header-megamenu nav">
             <li class="dropdown nav-item show">
-              <a aria-haspopup="true" data-toggle="dropdown" class="nav-link" aria-expanded="true" @click="$router.push({name: 'administratorsUsers'})">
+              <a aria-haspopup="true" data-toggle="dropdown" class="nav-link" aria-expanded="true" @click="$router.push({name: 'administrators'})">
                 <i class="nav-link-icon pe-7s-users" /> Administratori
               </a>
             </li>

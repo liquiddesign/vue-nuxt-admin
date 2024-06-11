@@ -19,6 +19,6 @@
 </template>
 
 <script setup>
-useHead({title: 'Roiwell - administrace'});
+useHead({title: 'Liquid IS - informační systém'});
 
 </script>

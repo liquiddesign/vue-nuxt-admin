@@ -1,5 +1,13 @@
 export default defineNuxtRouteMiddleware((to) => {
-    const { $user } = useNuxtApp();
+    //const { $user } = useNuxtApp();
+    console.log(to);
+    /*if (to.path === '/') {
+        return navigateTo('dashboards');
+    }*/
+
+    /*console.log($user.isLoggedIn);
+    console.log(to.path);
+    console.log($user.hasPermission(to.path));
 
     if (to.path !== '/' && !$user.isLoggedIn) {
        return navigateTo('/');
@@ -11,5 +19,5 @@ export default defineNuxtRouteMiddleware((to) => {
 
     if (to.path !== '/' && !$user.hasPermission(to.path)) {
         return abortNavigation();
-    }
+    }*/
 });

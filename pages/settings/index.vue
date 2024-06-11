@@ -1,5 +1,5 @@
 <template>
-  DASHBOARD
+  nastaveni
 
 </template>
 

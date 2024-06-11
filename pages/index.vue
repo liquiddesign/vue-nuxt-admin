@@ -3,7 +3,7 @@
     <BaseForm ref="form" url="auth/sign-in" :data="formData" :rules="rules" :silent="true" :omit="['remember']" class="no-red" @success="login" @error="error">
       <div class="modal-body">
         <div class="h5 modal-title text-center">
-          <h4 class="mt-2">Roiwell 2.0 - B2B Eshop<br><span>Přihlášení do administrace:</span></h4>
+          <h4 class="mt-2">Liquid IS 2.0<br><span>Přihlášení do informačního systému:</span></h4>
         </div>
         <div class="row g-3">
           <BaseTextBox name="login" wrap="foo" placeholder="Login" autocomplete="username" />
@@ -38,11 +38,12 @@ const rules = {
 };
 
 function error(error: any) {
+  console.error(error);
   toast.error(error?.statusCode !== undefined ? 'Špatné heslo nebo login.' : 'Nepodařil se připojit k serveru.');
 }
 
 function login(response: OkResponse) {
-  $user.login(response.result, formData.remember);
+  $user.login(response.result.identity, formData.remember);
   navigateTo({ name: $user.homepage });
 }
 
