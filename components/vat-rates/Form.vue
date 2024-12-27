@@ -18,8 +18,8 @@
         </div>
         <div class="row mt-3">
           <div class="col-lg-6">
-            <BaseFormButton class="btn-success btn-sm me-1" @click="goBack=true;">Uložit</BaseFormButton>
-            <BaseFormButton class="btn-outline-primary me-1 btn-sm" @click="goBack=false;">Uložit a pokračovat</BaseFormButton>
+            <BaseFormButton class="btn-success btn-sm me-1" @click="goBack = true;">Uložit</BaseFormButton>
+            <BaseFormButton class="btn-outline-primary me-1 btn-sm" @click="goBack = false;">Uložit a pokračovat</BaseFormButton>
           </div>
         </div>
       </div>
@@ -32,10 +32,9 @@
 import {withDefaults} from 'vue';
 import {required} from '@vuelidate/validators';
 import {RouteParamValue} from 'vue-router';
-import {Ref} from "vue/dist/vue";
 
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   data: any,
   loading?: boolean,
   slug?: string|RouteParamValue[],

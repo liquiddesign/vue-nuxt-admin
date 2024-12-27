@@ -58,20 +58,130 @@
               </a>
             </li>
             <li class="dropdown nav-item show">
-              <a aria-haspopup="true" data-toggle="dropdown" class="nav-link" aria-expanded="true" @click="$router.push({name: 'developer'})">
-                <i class="nav-link-icon pe-7s-plugin" /> Stavební bloky
+              <a aria-haspopup="true" data-toggle="dropdown" class="nav-link" aria-expanded="true" @click="$router.push({name: 'websockets'})">
+                <i class="nav-link-icon pe-7s-signal" /> Websocket
               </a>
+            </li>
+            <li class="dropdown nav-item">
+              <a aria-haspopup="true" data-bs-toggle="dropdown" class="nav-link" aria-expanded="false">
+                <i class="nav-link-icon pe-7s-plugin" /> Vývojář
+                <i class="fa fa-angle-down ms-2 opacity-5" />
+              </a>
+              <div tabindex="-1" role="menu" aria-hidden="false" class="dropdown-menu-rounded dropdown-menu-lg rm-pointers dropdown-menu">
+                <div class="dropdown-menu-header">
+                  <div class="dropdown-menu-header-inner bg-success">
+                    <div class="menu-header-content text-left">
+                      <h5 class="menu-header-title">Vývojář</h5>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" tabindex="0" class="dropdown-item" @click="$router.push({name: 'developer-basic'})">
+                  <i class="dropdown-icon text-danger fa fa-circle" />Struktura a navigace
+                </button>
+                <button type="button" tabindex="0" class="dropdown-item" @click="$router.push({name: 'developer-basic'})">
+                  <i class="dropdown-icon text-danger fa fa-circle" />Základní UI
+                </button>
+                <button type="button" tabindex="0" class="dropdown-item" @click="$router.push({name: 'developer-button'})">
+                  <i class="dropdown-icon fa fa-circle" />Tlačítka
+                </button>
+                <button type="button" tabindex="0" class="dropdown-item" @click="$router.push({name: 'developer-flags'})">
+                  <i class="dropdown-icon fa fa-circle" />Icony a vlajky
+                </button>
+                <button type="button" tabindex="0" class="dropdown-item" @click="$router.push({name: 'developer-form'})">
+                  <i class="dropdown-icon lnr-file-empty" />Formulář
+                </button>
+                <button type="button" tabindex="0" class="dropdown-item" @click="$router.push({name: 'developer-controls'})">
+                  <i class="dropdown-icon lnr-file-empty" />Formulářové komponenty
+                </button>
+                <button type="button" tabindex="0" class="dropdown-item" @click="$router.push({name: 'developer-button'})">
+                  <i class="dropdown-icon lnr-file-empty" />Tabulky
+                </button>
+                <button type="button" tabindex="0" class="dropdown-item" @click="$router.push({name: 'developer-button'})">
+                  <i class="dropdown-icon lnr-file-empty" />Komentáře
+                </button>
+                <div tabindex="-1" class="dropdown-divider" />
+                <button type="button" tabindex="0" class="dropdown-item">
+                  <i class="dropdown-icon lnr-file-empty" />Helpery
+                </button>
+                <button type="button" tabindex="0" class="dropdown-item">
+                  <i class="dropdown-icon lnr-file-empty" />Uživatel
+                </button>
+                <button type="button" tabindex="0" class="dropdown-item">
+                  <i class="dropdown-icon lnr-file-empty" />Oprávnění
+                </button>
+                <button type="button" tabindex="0" class="dropdown-item">
+                  <i class="dropdown-icon lnr-file-empty" />Bezpečnost
+                </button>
+                <button type="button" tabindex="0" class="dropdown-item">
+                  <i class="dropdown-icon lnr-file-empty" />Live-feed (notifikace, akce)
+                </button>
+                <button type="button" tabindex="0" class="dropdown-item">
+                  <i class="dropdown-icon lnr-file-empty" />Jazyky
+                </button>
+                <button type="button" tabindex="0" class="dropdown-item">
+                  <i class="dropdown-icon lnr-file-empty" />Debug
+                </button>
+              </div>
             </li>
           </ul>
         </div>
         <div class="app-header-right">
           <div class="header-dots">
             <div class="dropdown">
+              <button type="button" aria-haspopup="true" data-bs-toggle="dropdown" aria-expanded="false" class="p-0 btn btn-link dd-chart-btn me-2">
+                <span class="icon-wrapper icon-wrapper-alt rounded-circle" :class="{'bg-danger-subtle': !isConnected, 'bg-success-subtle': isConnected}">
+                  <span class="icon-wrapper-bg" />
+                  <i class="fa fa-rss" style="color: black !important;" />
+                </span>
+              </button>
+              <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu-xl rm-pointers dropdown-menu dropdown-menu-right">
+                <div class="dropdown-menu-header">
+                  <div v-if="!isConnected" class="dropdown-menu-header-inner bg-premium-dark">
+                    <div class="menu-header-content text-white">
+                      <h5 class="menu-header-title">Offline</h5>
+                      <h6 class="menu-header-subtitle">Nejste připojen k Live-feed serveru</h6>
+                    </div>
+                  </div>
+                  <div v-else class="dropdown-menu-header-inner bg-success">
+                    <div class="menu-header-content text-white">
+                      <h5 class="menu-header-title">Online</h5>
+                      <h6 class="menu-header-subtitle">Jste připojen k Live-feed serveru</h6>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="isConnected" class="widget-chart">
+                  <div class="widget-chart-content">
+                    <div class="widget-numbers">
+                      <span>{{ Object.values(liveTable).length }}</span>
+                    </div>
+                    <div class="widget-subheading pt-2">
+                      pracovníků
+                    </div>
+                  </div>
+                  <div class="widget-chart-wrapper">
+                    <div id="dashboard-sparkline-carousel-3-pop" />
+                  </div>
+                </div>
+                <ul class="nav flex-column">
+                  <li v-if="0" class="nav-item-divider mt-0 nav-item" />
+                  <li class="nav-item-btn text-center nav-item">
+                    <BaseButton v-if="!isConnected" class="btn-success" @click="connect">
+                      <i class="fa fa-cog fa-rss-square mr-2" /> Připojit se
+                    </BaseButton>
+                    <BaseButton v-else class="btn-outline-dark" @click="disconnect">
+                      <i class="fa fa-cog fa-times-circle" /> Odpojit
+                    </BaseButton>
+                  </li>
+                </ul>
+              </div>
+            </div>
 
+            <div class="dropdown">
               <button type="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" class="p-0 me-2 btn btn-link">
                 <span class="icon-wrapper icon-wrapper-alt rounded-circle">
                   <span class="icon-wrapper-bg bg-danger" style="padding-top: 10px;">
-                      <i class="fa fa-bell-o" style="" />
+                    <i class="fa fa-bell-o" style="" />
+                    <flag v-if="0" style="font-size:17px" iso="cz" class="mt-1" />
                   </span>
                   <i class="icon text-danger  ion-android-notifications" :class="{'icon-anim-pulse': false}" />
                   <span v-if="1" class="badge badge-dot badge-dot-sm bg-danger">Notifications</span>
@@ -80,27 +190,27 @@
               <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu dropdown-menu-right" style="">
                 <div class="dropdown-menu-header">
                   <div class="dropdown-menu-header-inner pt-4 pb-4 bg-focus">
-                    <div class="menu-header-image opacity-05" style="background-image: url('assets/images/dropdown-header/city2.jpg');"></div>
+                    <div class="menu-header-image opacity-05" style="background-image: url('assets/images/dropdown-header/city2.jpg');" />
                     <div class="menu-header-content text-center text-white">
                       <h6 class="menu-header-subtitle mt-0"> Choose Language</h6>
                     </div>
                   </div>
                 </div>
                 <button type="button" tabindex="0" class="dropdown-item">
-                  <span class="mr-3 opacity-8 flag large US"></span> USA
+                  <span class="mr-3 opacity-8 flag large US" /> <flag iso="cz" class="me-2" /> USA
                 </button>
                 <button type="button" tabindex="0" class="dropdown-item">
-                  <span class="mr-3 opacity-8 flag large CH"></span> Switzerland
+                  <span class="mr-3 opacity-8 flag large CH" /> Switzerland
                 </button>
                 <button type="button" tabindex="0" class="dropdown-item">
-                  <span class="mr-3 opacity-8 flag large FR"></span> France
+                  <span class="mr-3 opacity-8 flag large FR" /> France
                 </button>
                 <button type="button" tabindex="0" class="dropdown-item">
-                  <span class="mr-3 opacity-8 flag large ES"></span>Spain
+                  <span class="mr-3 opacity-8 flag large ES" />Spain
                 </button>
-                <div tabindex="-1" class="dropdown-divider"></div>
+                <div tabindex="-1" class="dropdown-divider" />
                 <button type="button" tabindex="0" class="dropdown-item">
-                  <span class="mr-3 opacity-8 flag large IT"></span> Italy
+                  <span class="mr-3 opacity-8 flag large IT" /> Italy
                 </button>
               </div>
 
@@ -222,7 +332,11 @@
                 <div class="widget-content-left">
                   <div class="btn-group">
                     <a data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                      <img width="42" class="rounded-circle" src="https://demo.dashboardpack.com/architectui-html-pro/assets/images/avatars/1.jpg" alt>
+                      <!--<img width="42" class="rounded-circle" src="https://demo.dashboardpack.com/architectui-html-pro/assets/images/avatars/1.jpg" alt>-->
+
+                      <div class="user-avatar bg-danger" style="display: inline-flex; height: 41px; width: 41px;">
+                        <span class="initials" style="font-size: 15px;">OP</span>
+                      </div>
                       <i class="fa fa-angle-down ms-2 opacity-8" />
                     </a>
                     <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
@@ -324,6 +438,8 @@
 <script setup lang="ts">
 
 const { $user } = useNuxtApp();
+
+const { isConnected, connect, disconnect, liveTable } = useWebSocket();
 
 function logout() {
   $user.logout() ;

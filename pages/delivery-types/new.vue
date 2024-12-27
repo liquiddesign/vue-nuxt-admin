@@ -14,12 +14,6 @@
 </template>
 <script setup lang="ts">
 
-import {ToastPluginApi, useToast} from 'vue-toast-notification';
-import {inject} from 'vue';
-
-const config = useRuntimeConfig();
-const toast: ToastPluginApi = inject('toast', useToast());
-
 const lang = ref('cs');
 const langs = ref(['cs', 'en']);
 
@@ -27,7 +21,7 @@ const formData:any = ref({ priority: 0, externalCarrier: true, prices: [{ curren
 
 function redirect(id) {
   formData.value = { priority: 0, externalCarrier: true, prices: [{ currency: 'CZK'}]};
-  id ? navigateTo({name: 'delivery-types-id', params: {id: id}}) :  navigateTo({name: 'delivery-types'})
+  id ? navigateTo({name: 'delivery-types-id', params: {id: id}}) :  navigateTo({name: 'delivery-types'});
 }
 
 

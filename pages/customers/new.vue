@@ -2,11 +2,11 @@
   <BaseCard>
     <template #headerLeft>
       <BaseButtonBack @click="navigateTo({name: 'customers'})" />
-      <a class="btn btn-sm  btn-outline-dark ms-1" :class="{'bg-primary': lang === 'cz'}" @click.prevent="lang='cz'"><flag iso="cz" class="px-2" /></a>
-      <a class="btn btn-sm btn-outline-dark ms-1" :class="{'bg-primary': lang === 'gb'}" @click.prevent="lang='gb'"><flag iso="gb" class="px-2" /></a>
+      <a class="btn btn-sm  btn-outline-dark ms-1" :class="{'bg-primary': lang === 'cz'}" @click.prevent="lang = 'cz'"><flag iso="cz" class="px-2" /></a>
+      <a class="btn btn-sm btn-outline-dark ms-1" :class="{'bg-primary': lang === 'gb'}" @click.prevent="lang = 'gb'"><flag iso="gb" class="px-2" /></a>
     </template>
     <template #headerRight>
-      <BaseButtonSave :disabled="$refs.form?.disabled || $refs.form?.pending" @click="goBack=false; $refs.form.submit();" />
+      <BaseButtonSave :disabled="$refs.form?.disabled || $refs.form?.pending" @click="goBack = false; $refs.form.submit();" />
     </template>
     <template #body>
       {{ input }}
@@ -125,8 +125,8 @@
             </div>
             <div class="row mt-3">
               <div class="col-lg-6">
-                <BaseFormButton class="btn-success me-1" @click="goBack=true;">Uložit</BaseFormButton>
-                <BaseFormButton class="btn-outline-primary" @click="goBack=false;">Uložit a pokračovat</BaseFormButton>
+                <BaseFormButton class="btn-success me-1" @click="goBack = true;">Uložit</BaseFormButton>
+                <BaseFormButton class="btn-outline-primary" @click="goBack = false;">Uložit a pokračovat</BaseFormButton>
               </div>
             </div>
           </div>
@@ -165,7 +165,6 @@
 <script setup lang="ts">
 import {required} from '@vuelidate/validators';
 import { reactive } from 'vue';
-import useVuelidate, {BaseValidation} from '@vuelidate/core';
 
 const input:any = reactive({account: {}, pokus: {cz: 'aa'}});
 const goBack:Ref<boolean> = ref(false);
@@ -189,7 +188,7 @@ const rules = {
   pokus: { required },
 };
 
-const v$: Ref<BaseValidation> = useVuelidate(rules, input, {$autoDirty: true});
+//const v$: Ref<BaseValidation> = useVuelidate(rules, input, {$autoDirty: true});
 
 
 

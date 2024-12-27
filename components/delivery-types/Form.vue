@@ -81,8 +81,8 @@
 
         <div class="row mt-3">
           <div class="col-lg-6">
-            <BaseFormButton class="btn-success btn-sm me-1" @click="goBack=true;">Uložit</BaseFormButton>
-            <BaseFormButton class="btn-outline-primary me-1 btn-sm" @click="goBack=false;">Uložit a pokračovat</BaseFormButton>
+            <BaseFormButton class="btn-success btn-sm me-1" @click="goBack = true;">Uložit</BaseFormButton>
+            <BaseFormButton class="btn-outline-primary me-1 btn-sm" @click="goBack = false;">Uložit a pokračovat</BaseFormButton>
           </div>
         </div>
       </div>
@@ -91,8 +91,8 @@
         <div class="form-wrapper-light mt-3">
           <template v-for="(price, index) in data.prices" :key="index">
             <div class="row">
-              <BaseTextBox :name="`prices.${index}.price`" :validation-errors="pricesErrors?.[index].price" wrap="col-lg-3" label="Cena" type="number" @change="price.priceVat = Math.round(parseInt(price.price) * 1.21)"  />
-              <BaseTextBox :name="`prices.${index}.priceVat`" :validation-errors="pricesErrors?.[index].priceVat" wrap="col-lg-3" label="Cena" type="number"  />
+              <BaseTextBox :name="`prices.${index}.price`" :validation-errors="pricesErrors?.[index].price" wrap="col-lg-3" label="Cena" type="number" @change="price.priceVat = Math.round(parseInt(price.price) * 1.21)" />
+              <BaseTextBox :name="`prices.${index}.priceVat`" :validation-errors="pricesErrors?.[index].priceVat" wrap="col-lg-3" label="Cena" type="number" />
               <BaseMultiSelect :name="`prices.${index}.currency`" wrap="col-lg-2" label="Měna" options-url="currency" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
               <div class="col-lg-1">
                 <label>&nbsp;</label><br>
@@ -100,7 +100,6 @@
               </div>
             </div>
             <div class="row mt-2">
-
               <BaseCheckBox v-model="limitPriceList[index]" label="Limitovat na max. váhu nebo rozměr" @change="data.prices[index].weightTo = null; data.prices[index].dimensionTo = null;" />
               <template v-if="limitPriceList[index]">
                 <BaseTextBox :name="`prices.${index}.weightTo`" wrap="col-lg-3" label="Dostupné do váhy" placeholder="nelimitovat" type="float" :nullable="true" />
@@ -120,12 +119,11 @@
 
  <script setup lang="ts">
 
- import {inject, withDefaults} from 'vue';
- import {ToastPluginApi, useToast} from 'vue-toast-notification';
+ import {withDefaults} from 'vue';
+
  import {required, helpers} from '@vuelidate/validators';
  import {RouteParamValue} from 'vue-router';
  import BaseAlert from '~/components/BaseAlert.vue';
- import {Ref} from "vue/dist/vue";
 
 
  const props = withDefaults(defineProps<{
@@ -135,7 +133,6 @@
    slug?: string|RouteParamValue[],
  }>(), { loading: false, slug: undefined });
 
- const toast: ToastPluginApi = inject('toast', useToast());
  const { $user } = useNuxtApp();
 
  const rules = {

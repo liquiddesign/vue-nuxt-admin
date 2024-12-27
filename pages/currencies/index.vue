@@ -4,7 +4,7 @@
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">
     <template #headerLeft>
-      <BaseFilter @cancel="filters={}">
+      <BaseFilter @cancel="filters = {}">
         <BaseTextBox v-model="filters.q" wrap="flex-shrink-0" :placeholder="'Název, kód, #id'" type="text" />
       </BaseFilter>
     </template>

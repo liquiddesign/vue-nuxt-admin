@@ -68,8 +68,8 @@
         </div>
         <div class="row mt-3">
           <div class="col-lg-6">
-            <BaseFormButton class="btn-success btn-sm me-1" @click="goBack=true;">Uložit</BaseFormButton>
-            <BaseFormButton class="btn-outline-primary btn-sm" @click="goBack=false;">Uložit a pokračovat</BaseFormButton>
+            <BaseFormButton class="btn-success btn-sm me-1" @click="goBack = true;">Uložit</BaseFormButton>
+            <BaseFormButton class="btn-outline-primary btn-sm" @click="goBack = false;">Uložit a pokračovat</BaseFormButton>
           </div>
         </div>
       </BaseForm>
@@ -82,7 +82,6 @@
 import { inject } from 'vue';
 import {ToastPluginApi, useToast} from 'vue-toast-notification';
 import {required} from '@vuelidate/validators';
-import Editor from '@tinymce/tinymce-vue';
 
 const toast: ToastPluginApi = inject('toast', useToast());
 

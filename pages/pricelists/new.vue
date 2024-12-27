@@ -12,13 +12,6 @@
   </BaseCard>
 </template>
 <script setup lang="ts">
-
-import {ToastPluginApi, useToast} from 'vue-toast-notification';
-import {inject} from 'vue';
-
-const config = useRuntimeConfig();
-const toast: ToastPluginApi = inject('toast', useToast());
-
 const defaultFormData = { priority: 0};
 const data:any = ref(Object.assign({}, defaultFormData));
 

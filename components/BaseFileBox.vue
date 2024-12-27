@@ -14,7 +14,7 @@
         <small><i class="fa fa-file-pdf-o" /> {{ file.name }}</small>
         <button v-if="uploading" class="btn btn-xs btn-light disabled"><i class="fa fa-circle-o-notch fa-spin" /></button>
         <button v-if="!uploading" :title="Math.round(file.size / 1024 / 1024) + 'MB'" class="btn btn-xs btn-light"><i class="fa fa-info-circle" /></button>
-        <BaseButtonDeleteLight class="btn-xs" @click.prevent="removeUpload(i)" />
+        <BaseButtonDelete class="btn-xs btn-light" @click.prevent="removeUpload(i)" />
       </div>
     </template>
   </BaseWrapper>

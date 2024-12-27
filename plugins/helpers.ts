@@ -8,7 +8,7 @@ export default defineNuxtPlugin(() => {
                     maximumFractionDigits: currency === 'CZK' ? 0 : 2,
                 });
 
-                return value === null ? '-' :formatter.format(value);
+                return value === null ? '-' : formatter.format(value);
             },
             download: (data:any, fileName: string, qualifiedName: string = 'download'): void => {
                 const url = window.URL.createObjectURL(new Blob([data]));

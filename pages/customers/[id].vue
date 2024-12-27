@@ -4,7 +4,7 @@
       <button class="btn btn-light btn-sm" @click="navigateTo({name: 'customers'})"><i class="fa fa-long-arrow-left" /> Zpět</button>
     </template>
     <template #headerRight>
-      <BaseButtonSave :disabled="$refs.form?.disabled || $refs.form?.pending" @click="goBack=false; $refs.form.submit();" />
+      <BaseButtonSave :disabled="$refs.form?.disabled || $refs.form?.pending" @click="goBack = false; $refs.form.submit();" />
     </template>
     <template #body>
       <div class="row">
@@ -15,8 +15,8 @@
           </div>
           <div class="row mt-3">
             <div class="col-lg-6">
-              <BaseFormButton class="btn-success me-1" @click="goBack=true;">Uložit</BaseFormButton>
-              <BaseFormButton class="btn-outline-primary" @click="goBack=false;">Uložit a pokračovat</BaseFormButton>
+              <BaseFormButton class="btn-success me-1" @click="goBack = true;">Uložit</BaseFormButton>
+              <BaseFormButton class="btn-outline-primary" @click="goBack = false;">Uložit a pokračovat</BaseFormButton>
             </div>
           </div>
         </BaseForm>

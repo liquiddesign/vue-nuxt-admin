@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import {inject, withDefaults} from 'vue';
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   formRef?: object|null,
 }>(), {formRef: null});
 

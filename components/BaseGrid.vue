@@ -223,9 +223,10 @@ function updateRow(item, value, name = null) {
   processing.value = true;
 
   $fetch(config.public.baseURL +  props.url + '/' + item.uuid, {body: name ? {[name]: value, uuid: item.uuid} : item, method: 'PATCH'})
-    .then((result) => {
+    .then(() => {
       toast.success('Uloženo');
     }).catch((error) => {
+      console.error(error);
       toast.error('Nepodařilo se uložit');
   }).finally(() => {
     processing.value = false;

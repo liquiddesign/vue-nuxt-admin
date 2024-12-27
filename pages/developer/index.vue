@@ -244,13 +244,13 @@
   <div class="row">
     <BaseCard wrap="col-lg-6">
       <template #header>Taby</template>
-      <BaseTabs :active="activeTab" :tabs="{'accepted': 'Přijaté', 'sent': 'Odeslané', 'canceled': 'Stornované'}" @select="activeTab=$event">
+      <BaseTabs :active="activeTab" :tabs="{'accepted': 'Přijaté', 'sent': 'Odeslané', 'canceled': 'Stornované'}" @select="activeTab = $event">
         <i>|{{ activeTab }}| Tohle se zobrazi nad obsahem, dokumentace k dynamickym slotum: https://vuejs.org/guide/components/slots.html#dynamic-slot-names</i><br>
         <template #accepted>Obsah tabu Přijaté</template>
         <template #sent>Obsah tabu Odeslané</template>
         <template #canceled>Obsah tabu Stornované</template>
       </BaseTabs>
-      <BaseTabs :active="activeTab" :tabs="{'accepted': 'Přijaté', 'sent': 'Odeslané', 'canceled': 'Stornované'}" @select="activeTab=$event">
+      <BaseTabs :active="activeTab" :tabs="{'accepted': 'Přijaté', 'sent': 'Odeslané', 'canceled': 'Stornované'}" @select="activeTab = $event">
         <i>Dynamicky tabs</i><br>
         <template #[activeTab]>Obsah tabu {{ activeTab }}</template>
       </BaseTabs>
@@ -289,7 +289,7 @@
     </BaseCard>
     <BaseCard wrap="col-lg-6">
       <template #header>Tabulky</template>
-      <BaseFilter @cancel="filters={}">
+      <BaseFilter @cancel="filters = {}">
         <BaseTextBox v-model="filters.q" wrap="flex-shrink-0" placeholder="Název, kód, #id" type="text" />
       </BaseFilter>
       <BaseGrid url="customer" :page="page" :on-page="onPage" :filters="filters">

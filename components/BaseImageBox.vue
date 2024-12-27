@@ -1,7 +1,7 @@
- <template>
+<template>
   <BaseWrapper :wrap="wrap">
     <div class="">
-      <input v-bind="$attrs" type="file" class="form-control-file" v-if="totalUploadAmount + test.length < maxFiles" :accept="accept" :disabled="totalUploadAmount + test.length >= maxFiles || $attrs['disabled']" :multiple="maxFiles > 1" @change="onFileChanged">
+      <input v-if="totalUploadAmount + test.length < maxFiles" v-bind="$attrs" type="file" class="form-control-file" :accept="accept" :disabled="totalUploadAmount + test.length >= maxFiles || $attrs['disabled']" :multiple="maxFiles > 1" @change="onFileChanged">
       <small class="form-text text-muted">
         <template v-if="minHeight || minWidth">min. š/v: <span :class="{'text-danger': errorMinSize}">{{ minWidth ?? '-' }}/{{ minHeight ?? '-' }}px</span> | </template>
         <template v-if="maxHeight || maxWidth">max. š/v: <span :class="{'text-danger': errorMaxSize}">{{ maxWidth ?? '-' }}/{{ maxHeight ?? '-' }}px</span> | </template>
@@ -20,7 +20,7 @@
           <small>{{ file.name }}</small>
           <span v-if="uploading" class="btn btn-xs btn-light disabled"><i class="fa fa-circle-o-notch fa-spin" /></span>
           <span v-if="!uploading" :title="file.width + 'px /' + file.height + 'px (' + Math.round(file.size / 1024 / 1024) + 'MB)'" class="px-1" style="position: relative; top: 2px;"><i class="fa fa-info-circle" /></span>
-          <BaseButtonDeleteLight class="btn-xs" @click.prevent="removeUpload(i)" />
+          <BaseButtonDelete class="btn-xs btn-light" @click.prevent="removeUpload(i)" />
         </div>
       </div>
     </div>
@@ -28,11 +28,11 @@
     <div v-if="test" class="d-flex align-items-center flex-wrap gap-1 grid-filter">
       <div v-for="(file, i, index) in test" :key="index" class="flex-shrink-0">
         <template v-if="file">
-        <img :src="`http://localhost/roiwell/userfiles/delivery-type/61f276288773062696506931/thumbs/${file}`" alt="" class="border border-3 border-dark-subtle">
-        <br>
+          <img :src="`http://localhost/roiwell/userfiles/delivery-type/61f276288773062696506931/thumbs/${file}`" alt="" class="border border-3 border-dark-subtle">
+          <br>
           <div class="text-center">
             <small>{{ file }}</small>
-            <BaseButtonDeleteLight class="btn-xs" @click.prevent="deleteImage(i)" />
+            <BaseButtonDelete class="btn-xs btn-light" @click.prevent="deleteImage(i)" />
           </div>
         </template>
       </div>
@@ -42,7 +42,7 @@
 <script setup lang="ts">
 
 import {ComputedRef, inject, Ref} from 'vue';
-import {ToastPluginApi, useToast} from "vue-toast-notification";
+import {ToastPluginApi, useToast} from 'vue-toast-notification';
 
 const tmpFiles: Ref<any[]> = ref([]);
 
@@ -72,11 +72,6 @@ const test: Ref<string[]> = ref([]);
 const uploading: Ref<boolean> = ref(false);
 //const test2 = reactive({'a': props.testx});
 //const test2 = toRef(props, 'testx');
-
-const b = computed({
-  get: () => props.testx,
-  set: (v) => props.testx = v,
-})
 
 watch(() => props.files, (value: string[]) => {
   test.value = [...value];
@@ -185,22 +180,21 @@ function upload(slug = null)
 
   uploading.value = true;
 
-  let data = new FormData();
+  const data = new FormData();
   for (let i = 0; i < tmpFiles.value.length; i++) {
     data.append(i.toString(), tmpFiles.value[i].sourceFile);
   }
 
-  tmpFiles.value.splice(0,tmpFiles.value.length);
+  tmpFiles.value.splice(0, tmpFiles.value.length);
 
   $fetch(config.public.baseURL + props.url + '/' + (slug ?? props.slug) + '/' + props.action, {body: data, method: 'POST'})
       .then((result) => {
         console.log('ok');
         props.silent || toast.success('Uloženo');
-        test.value.splice(0,test.value.length);
-        tmpFiles.value.splice(0,tmpFiles.value.length);
+        test.value.splice(0, test.value.length);
+        tmpFiles.value.splice(0, tmpFiles.value.length);
 
         for (let i = 0; i < tmpFiles.value.length; i++) {
-          const aux = tmpFiles.value[i].name;
           tmpFiles.value.splice(i, 1);
          // test.value.push(aux);
         }
@@ -218,7 +212,7 @@ function upload(slug = null)
 function deleteImage(key: number)
 {
  // test2.value = 'pes';
-
+  console.log(key);
   $fetch(config.public.baseURL + props.url + '/' + props.slug + '/' + props.action, {method: 'DELETE'});
 
   test.value.splice(0, 1);

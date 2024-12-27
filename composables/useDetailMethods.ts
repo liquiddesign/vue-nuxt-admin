@@ -1,4 +1,4 @@
-import {ToastPluginApi, useToast} from "vue-toast-notification";
+import {type ToastPluginApi, useToast} from 'vue-toast-notification';
 
 const config = useRuntimeConfig();
 const route = useRoute();
@@ -17,7 +17,7 @@ export const useDetailMethods = (url: string, routeName: string) => {
 
     function makeCopy() {
         $fetch(config.public.baseURL +  url + '/' + route.params.id, { method: 'POST', body: {'_op': 'makeCopy'}})
-            .then((response) => {
+            .then(() => {
                 toast.success('Kopie vyvtořena');
                 navigateTo({name: 'delivery-types'});
             }).catch((error) => {
@@ -27,8 +27,8 @@ export const useDetailMethods = (url: string, routeName: string) => {
     }
 
     function redirect(id: string) {
-        id ? navigateTo({name: routeName + '-id', params: {id: id}}) :  navigateTo({name: routeName})
+        id ? navigateTo({name: routeName + '-id', params: {id: id}}) :  navigateTo({name: routeName});
     }
 
     return {deleteItem, makeCopy, redirect};
-}
+};

@@ -1,5 +1,10 @@
 export default defineNuxtRouteMiddleware((to) => {
     //const { $user } = useNuxtApp();
+    const { sendMessage } = useWebSocket();
+
+
+    sendMessage('view', to);
+
     console.log(to);
     /*if (to.path === '/') {
         return navigateTo('dashboards');

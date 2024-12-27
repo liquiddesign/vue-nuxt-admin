@@ -1,7 +1,7 @@
-interface Menu {
+/*interface Menu {
     items: MenuItem[]|never[]
     active: null
-}
+}*/
 
 interface MenuItem {
     title: string
@@ -23,8 +23,8 @@ const menu: MenuItem[] = [
                 route: 'dashboards',
                 icon: 'pe-7s-graph',
                 items: [],
-            }
-        ]
+            },
+        ],
     },
     <MenuItem>{
         title: 'Zákazníci',
@@ -72,11 +72,11 @@ const menu: MenuItem[] = [
                     <MenuItem>{ title: 'Poptávky', route: 'demands', disabled: true},
                     <MenuItem>{ title: 'Reklamace', route: 'complaints', disabled: true},
                 ],
-            }
+            },
         ],
     },
 ];
-menu.push(<MenuItem>{title: 'pes'})
+menu.push(<MenuItem>{title: 'pes'});
 
 
 /*export default [{

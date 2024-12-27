@@ -1,6 +1,5 @@
 <template>
   nastaveni
-
 </template>
 
 

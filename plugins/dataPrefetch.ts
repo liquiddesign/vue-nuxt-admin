@@ -1,4 +1,4 @@
-import {DataProvider} from '~/utils/DataProvider';
+import {type DataProvider} from '~/utils/DataProvider';
 
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig();

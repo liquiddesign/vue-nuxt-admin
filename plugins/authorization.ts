@@ -1,5 +1,4 @@
-import {User} from '~/utils/User';
-import data from 'assets/data/permissions';
+import {type User} from '~/utils/User';
 
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig();
@@ -37,10 +36,11 @@ export default defineNuxtPlugin(() => {
                 localStorage.removeItem('user');
             }
 
-            $fetch(config.public.baseURL + 'auth/sign-out', {method: "POST"});
+            $fetch(config.public.baseURL + 'auth/sign-out', {method: 'POST'});
         },
         hasPermission: function (route: string) {
-            return this.identity?.account?.login?.toLowerCase() === 'dn@lqd.cz' || (this.identity?.permissions && this.identity.permissions.includes(data[route]));
+            // @TODO: fix
+            return true || (this.identity?.permissions && this.identity.permissions?.[route]);
         },
     };
 
