@@ -5,12 +5,9 @@
       <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
     </template>
     <template #headerRight>
-      <div style="display: inline-block" class="me-4">
-        <span title="Lukáš Knotek"><img width="30" class="rounded-circle me-2" style="border: 2px solid #ff6464;" src="https://api.dokonalynajemnik.cz/userfiles/administrators/63b6c8c71357a00154123794/thumbs/Knotek.jpeg" alt=""><!----><!----></span>
-        <span title="Lukáš Knotek"><img width="30" class="rounded-circle" style="border: 2px solid #0b0c0d;" src="https://api.dokonalynajemnik.cz/userfiles/administrators/63b6c8c71357a00154123794/thumbs/Knotek.jpeg" alt=""><!----><!----></span>
-      </div>
+      <BaseLiveUsers class="me-2" />
 
-      <BaseButtonExternalLink v-if="0" class="me-1" />
+      <BaseButtonExternalLink v-if="0" />
       <BaseButtonRefresh class="btn-sm me-1" @click="refresh();" />
       <BaseDropdown class="btn-outline-primary me-1" icon="fa-bolt">
         <BaseDropdownItem @click="makeCopy()">Vytvořit kopii</BaseDropdownItem>
@@ -53,6 +50,8 @@
   </BaseCard>
 </template>
 <script setup lang="ts">
+import BaseAvatar from '~/components/BaseAvatar.vue';
+
 const config = useRuntimeConfig();
 const route = useRoute();
 const router = useRouter();

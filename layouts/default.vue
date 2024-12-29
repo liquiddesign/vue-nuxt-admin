@@ -57,11 +57,6 @@
                 <i class="nav-link-icon pe-7s-settings" /> Nastavení
               </a>
             </li>
-            <li class="dropdown nav-item show">
-              <a aria-haspopup="true" data-toggle="dropdown" class="nav-link" aria-expanded="true" @click="$router.push({name: 'websockets'})">
-                <i class="nav-link-icon pe-7s-signal" /> Websocket
-              </a>
-            </li>
             <li class="dropdown nav-item">
               <a aria-haspopup="true" data-bs-toggle="dropdown" class="nav-link" aria-expanded="false">
                 <i class="nav-link-icon pe-7s-plugin" /> Vývojář
@@ -82,11 +77,15 @@
                   <i class="dropdown-icon text-danger fa fa-circle" />Základní UI
                 </button>
                 <button type="button" tabindex="0" class="dropdown-item" @click="$router.push({name: 'developer-button'})">
-                  <i class="dropdown-icon fa fa-circle" />Tlačítka
+                  <i class="dropdown-icon text-black fa fa-circle" />Tlačítka
                 </button>
                 <button type="button" tabindex="0" class="dropdown-item" @click="$router.push({name: 'developer-flags'})">
-                  <i class="dropdown-icon fa fa-circle" />Icony a vlajky
+                  <i class="dropdown-icon text-warning fa fa-circle" />Ikony, avataři a vlajky
                 </button>
+                <div tabindex="0" class="text-center mt-2 mb-1" >
+                  Formuláře
+                </div>
+
                 <button type="button" tabindex="0" class="dropdown-item" @click="$router.push({name: 'developer-form'})">
                   <i class="dropdown-icon lnr-file-empty" />Formulář
                 </button>
@@ -96,6 +95,9 @@
                 <button type="button" tabindex="0" class="dropdown-item" @click="$router.push({name: 'developer-button'})">
                   <i class="dropdown-icon lnr-file-empty" />Tabulky
                 </button>
+                <div tabindex="0" class="text-center mt-2 mb-1" >
+                  Tabulky
+                </div>
                 <button type="button" tabindex="0" class="dropdown-item" @click="$router.push({name: 'developer-button'})">
                   <i class="dropdown-icon lnr-file-empty" />Komentáře
                 </button>
@@ -125,56 +127,60 @@
             </li>
           </ul>
         </div>
+        {{ status }}
+
         <div class="app-header-right">
           <div class="header-dots">
-            <div class="dropdown">
-              <button type="button" aria-haspopup="true" data-bs-toggle="dropdown" aria-expanded="false" class="p-0 btn btn-link dd-chart-btn me-2">
-                <span class="icon-wrapper icon-wrapper-alt rounded-circle" :class="{'bg-danger-subtle': !isConnected, 'bg-success-subtle': isConnected}">
-                  <span class="icon-wrapper-bg" />
-                  <i class="fa fa-rss" style="color: black !important;" />
-                </span>
-              </button>
-              <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu-xl rm-pointers dropdown-menu dropdown-menu-right">
-                <div class="dropdown-menu-header">
-                  <div v-if="!isConnected" class="dropdown-menu-header-inner bg-premium-dark">
-                    <div class="menu-header-content text-white">
-                      <h5 class="menu-header-title">Offline</h5>
-                      <h6 class="menu-header-subtitle">Nejste připojen k Live-feed serveru</h6>
-                    </div>
-                  </div>
-                  <div v-else class="dropdown-menu-header-inner bg-success">
-                    <div class="menu-header-content text-white">
-                      <h5 class="menu-header-title">Online</h5>
-                      <h6 class="menu-header-subtitle">Jste připojen k Live-feed serveru</h6>
-                    </div>
-                  </div>
-                </div>
-                <div v-if="isConnected" class="widget-chart">
-                  <div class="widget-chart-content">
-                    <div class="widget-numbers">
-                      <span>{{ Object.values(liveTable).length }}</span>
-                    </div>
-                    <div class="widget-subheading pt-2">
-                      pracovníků
-                    </div>
-                  </div>
-                  <div class="widget-chart-wrapper">
-                    <div id="dashboard-sparkline-carousel-3-pop" />
-                  </div>
-                </div>
-                <ul class="nav flex-column">
-                  <li v-if="0" class="nav-item-divider mt-0 nav-item" />
-                  <li class="nav-item-btn text-center nav-item">
-                    <BaseButton v-if="!isConnected" class="btn-success" @click="connect">
-                      <i class="fa fa-cog fa-rss-square mr-2" /> Připojit se
-                    </BaseButton>
-                    <BaseButton v-else class="btn-outline-dark" @click="disconnect">
-                      <i class="fa fa-cog fa-times-circle" /> Odpojit
-                    </BaseButton>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <!--
+           <div class="dropdown">
+             <button type="button" aria-haspopup="true" data-bs-toggle="dropdown" aria-expanded="false" class="p-0 btn btn-link dd-chart-btn me-2">
+               <span class="icon-wrapper icon-wrapper-alt rounded-circle" :class="{'bg-danger-subtle': !isConnected, 'bg-success-subtle': isConnected}">
+                 <span class="icon-wrapper-bg" />
+                 <i class="fa fa-rss" style="color: black !important;" />
+               </span>
+             </button>
+             <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu-xl rm-pointers dropdown-menu dropdown-menu-right">
+               <div class="dropdown-menu-header">
+                 <div v-if="!isConnected" class="dropdown-menu-header-inner bg-premium-dark">
+                   <div class="menu-header-content text-white">
+                     <h5 class="menu-header-title">Offline</h5>
+                     <h6 class="menu-header-subtitle">Nejste připojen k Live-feed serveru</h6>
+                   </div>
+                 </div>
+                 <div v-else class="dropdown-menu-header-inner bg-success">
+                   <div class="menu-header-content text-white">
+                     <h5 class="menu-header-title">Online</h5>
+                     <h6 class="menu-header-subtitle">Jste připojen k Live-feed serveru</h6>
+                   </div>
+                 </div>
+               </div>
+               <div v-if="isConnected" class="widget-chart">
+                 <div class="widget-chart-content">
+                   <div class="widget-numbers">
+                     <span>{{ Object.values(liveTable).length }}</span>
+                   </div>
+                   <div class="widget-subheading pt-2">
+                     pracovníků
+                   </div>
+                 </div>
+                 <div class="widget-chart-wrapper">
+                   <div id="dashboard-sparkline-carousel-3-pop" />
+                 </div>
+               </div>
+               <ul class="nav flex-column">
+                 <li v-if="0" class="nav-item-divider mt-0 nav-item" />
+                 <li class="nav-item-btn text-center nav-item">
+                   <BaseButton v-if="!isConnected" class="btn-success" @click="connect">
+                     <i class="fa fa-cog fa-rss-square mr-2" /> Připojit se
+                   </BaseButton>
+                   <BaseButton v-else class="btn-outline-dark" @click="disconnect">
+                     <i class="fa fa-cog fa-times-circle" /> Odpojit
+                   </BaseButton>
+                 </li>
+               </ul>
+             </div>
+           </div>
+           -->
 
             <div class="dropdown">
               <button type="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" class="p-0 me-2 btn btn-link">
@@ -331,12 +337,8 @@
               <div class="widget-content-wrapper">
                 <div class="widget-content-left">
                   <div class="btn-group">
-                    <a data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                      <!--<img width="42" class="rounded-circle" src="https://demo.dashboardpack.com/architectui-html-pro/assets/images/avatars/1.jpg" alt>-->
-
-                      <div class="user-avatar bg-danger" style="display: inline-flex; height: 41px; width: 41px;">
-                        <span class="initials" style="font-size: 15px;">OP</span>
-                      </div>
+                    <a data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn" style="border: 0; cursor: pointer;">
+                      <BaseAvatar :user-id="$user.identity.uuid" style="width: 45px; font-size: 18px;" />
                       <i class="fa fa-angle-down ms-2 opacity-8" />
                     </a>
                     <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
@@ -439,7 +441,7 @@
 
 const { $user } = useNuxtApp();
 
-const { isConnected, connect, disconnect, liveTable } = useWebSocket();
+const { status } = useWS();
 
 function logout() {
   $user.logout() ;

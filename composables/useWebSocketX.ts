@@ -6,7 +6,7 @@ const isConnected = ref(false);
 const liveTable = ref({});
 const messages = shallowRef<string[]>([]);
 
-export function useWebSocket() {
+export function useWebSocketX() {
     const config = useRuntimeConfig();
     const { $user } = useNuxtApp();
     let onDeleteCallback: ((message: string) => void) | null = null;

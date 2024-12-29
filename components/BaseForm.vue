@@ -103,6 +103,7 @@ defineExpose({submit, disabled, pending, dirty, v$, getDynamicErrors});
     if (!v$.value.$invalid && !props.disabled && props.url) {
       pending.value = true;
 
+      console.log(config.public.baseURL);
       $fetch(config.public.baseURL + (props.slug !== null ?  props.url + '/' + props.slug : props.url), {body: inputs, params: props.params, method: props.method !== undefined ? props.method : (props.slug !== null ? 'PATCH' : 'POST')})
         .then((result) => {
           emit('success', result);
