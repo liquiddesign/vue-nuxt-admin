@@ -24,35 +24,35 @@ const user = computed(() => {
     return null;
   }
 
-  return $user.identity.administrators[props.userId] ?? null;
+  return $user.identity?.administrators?.[props.userId] ?? null;
 });
 
 const colors = [
-  "bg-happy-green",
-  "bg-premium-dark",
-  "bg-love-kiss",
-  "bg-grow-early",
-  "bg-strong-bliss",
-  "bg-warm-flame",
-  "bg-tempting-azure",
-  "bg-sunny-morning",
-  "bg-mean-fruit",
-  "bg-night-fade",
-  "bg-heavy-rain",
-  "bg-amy-crisp",
-  "bg-malibu-beach",
-  "bg-deep-blue",
-  "bg-mixed-hopes",
-  "bg-happy-itmeo",
-  "bg-happy-fisher",
-  "bg-arielle-smile",
-  "bg-ripe-malin",
-  "bg-vicious-stance",
-  "bg-midnight-bloom",
-  "bg-night-sky",
-  "bg-slick-carbon",
-  "bg-royal",
-  "bg-asteroid",
+  'bg-happy-green',
+  'bg-premium-dark',
+  'bg-love-kiss',
+  'bg-grow-early',
+  'bg-strong-bliss',
+  'bg-warm-flame',
+  'bg-tempting-azure',
+  'bg-sunny-morning',
+  'bg-mean-fruit',
+  'bg-night-fade',
+  'bg-heavy-rain',
+  'bg-amy-crisp',
+  'bg-malibu-beach',
+  'bg-deep-blue',
+  'bg-mixed-hopes',
+  'bg-happy-itmeo',
+  'bg-happy-fisher',
+  'bg-arielle-smile',
+  'bg-ripe-malin',
+  'bg-vicious-stance',
+  'bg-midnight-bloom',
+  'bg-night-sky',
+  'bg-slick-carbon',
+  'bg-royal',
+  'bg-asteroid',
 ];
 
 function generateColor(uuid) {

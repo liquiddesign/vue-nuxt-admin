@@ -1,13 +1,16 @@
 import {type ToastPluginApi, useToast} from 'vue-toast-notification';
 
-const config = useRuntimeConfig();
-const route = useRoute();
-
 export const useDetailMethods = (url: string, routeName: string) => {
+    const config = useRuntimeConfig();
+    const route = useRoute();
+    const { sendDelete } = useLiveFeed();
+
     const toast: ToastPluginApi = inject('toast', useToast());
     function deleteItem() {
         $fetch(config.public.baseURL + url + '/' + route.params.id, { method: 'DELETE'}).then(() => {
             toast.success('Smazáno');
+            sendDelete(route.params.id.toString());
+
             navigateTo({name: 'delivery-types'});
         }).catch((error) => {
             console.error(error);

@@ -1,34 +1,34 @@
 <template>
-    <!-- Sekce: BaseTextBox -->
-    <div id="base-textbox" class="row mb-4">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="card-title mb-0">BaseTextBox <small class="ps-1">vstupní pole s validací</small></h5>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <!-- Ukázka -->
-              <div class="col-md-6">
-                <h6>Ukázka vstupního pole</h6>
-                <BaseTextBox
-                    label="Jméno"
-                    name="username"
-                    :modelValue="''"
-                    :lang="'cs'"
-                    :locale="true"
-                    :validation="{ required: true }"
-                />
+  <!-- Sekce: BaseTextBox -->
+  <div id="base-textbox" class="row mb-4">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">BaseTextBox <small class="ps-1">vstupní pole s validací</small></h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <!-- Ukázka -->
+            <div class="col-md-6">
+              <h6>Ukázka vstupního pole</h6>
+              <BaseTextBox
+                label="Jméno"
+                name="username"
+                :model-value="''"
+                :lang="'cs'"
+                :locale="true"
+                :validation="{ required: true }"
+              />
 
-                <!-- Použití -->
-                <div id="pouziti" class="mt-4">
-                  <h6>Použití</h6>
-                  <div class="code-example">
-                    <BaseButton class="btn-light btn-xs" @click="select('textboxExample')">
-                      <i class="fa fa-copy" />
-                    </BaseButton>
-                    <code :ref="el => setRef('textboxExample', el)">
-                      {{ `<BaseTextBox
+              <!-- Použití -->
+              <div id="pouziti" class="mt-4">
+                <h6>Použití</h6>
+                <div class="code-example">
+                  <BaseButton class="btn-light btn-xs" @click="select('textboxExample')">
+                    <i class="fa fa-copy" />
+                  </BaseButton>
+                  <code :ref="el => setRef('textboxExample', el)">
+                    {{ `<BaseTextBox
                         label="Jméno"
                         name="username"
                         :modelValue="''"
@@ -36,24 +36,24 @@
                         :locale="true"
                         :validation="{ required: true }"
                     />` }}
-                    </code>
-                  </div>
+                  </code>
                 </div>
               </div>
+            </div>
 
-              <!-- Props -->
-              <div class="col-md-6">
-                <h6>Props</h6>
-                <table class="table table-striped">
-                  <thead>
+            <!-- Props -->
+            <div class="col-md-6">
+              <h6>Props</h6>
+              <table class="table table-striped">
+                <thead>
                   <tr>
                     <th>Název</th>
                     <th>Typ</th>
                     <th>Výchozí hodnota</th>
                     <th>Popis</th>
                   </tr>
-                  </thead>
-                  <tbody>
+                </thead>
+                <tbody>
                   <tr>
                     <td><code>label</code></td>
                     <td><code>string|null</code></td>
@@ -114,32 +114,32 @@
                     <td><code>undefined</code></td>
                     <td>Seznam chybových zpráv pro validaci.</td>
                   </tr>
-                  </tbody>
-                </table>
+                </tbody>
+              </table>
 
-                <!-- Eventy -->
-                <h6 class="mt-4">Eventy</h6>
-                <table class="table table-striped">
-                  <thead>
+              <!-- Eventy -->
+              <h6 class="mt-4">Eventy</h6>
+              <table class="table table-striped">
+                <thead>
                   <tr>
                     <th>Název</th>
                     <th>Popis</th>
                   </tr>
-                  </thead>
-                  <tbody>
+                </thead>
+                <tbody>
                   <tr>
                     <td><code>update:modelValue</code></td>
                     <td>Vyvoláno při změně hodnoty pole.</td>
                   </tr>
-                  </tbody>
-                </table>
-              </div>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
   <script setup lang="ts">
 
     const {select, setRef} = useCopyPaste();

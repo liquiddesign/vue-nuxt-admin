@@ -14,6 +14,8 @@
         <BaseDropdownItem>Aktualizovat kurzy z CNB</BaseDropdownItem>
       </BaseDropdown>
     </template>
+    <button @click="sendDelete('665c203759dec14096341833')">aa</button>
+
     <RolesTable :page="page" :on-page="onPage" :filters="filters" />
   </BaseCard>
 </template>
@@ -22,5 +24,11 @@
 <script setup lang="ts">
 const { $user } = useNuxtApp();
 const { filters, page, onPage } = useTableVars($user.settings);
+
+const { sendDelete, onDelete } = useLiveFeed();
+
+onDelete(() => {
+  console.log('remote delete');
+});
 
 </script>

@@ -10,7 +10,7 @@
             <!-- Ukázka -->
             <div class="col-md-6">
               <h6>Ukázka avataru</h6>
-              <BaseAvatar :userId="'user123'" />
+              <BaseAvatar :user-id="'user123'" />
 
               <!-- Použití -->
               <div id="pouziti" class="mt-4">
@@ -31,20 +31,20 @@
               <h6>Props</h6>
               <table class="table table-striped">
                 <thead>
-                <tr>
-                  <th>Název</th>
-                  <th>Typ</th>
-                  <th>Výchozí hodnota</th>
-                  <th>Popis</th>
-                </tr>
+                  <tr>
+                    <th>Název</th>
+                    <th>Typ</th>
+                    <th>Výchozí hodnota</th>
+                    <th>Popis</th>
+                  </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td><code>userId</code></td>
-                  <td><code>string|null</code></td>
-                  <td><code>null</code></td>
-                  <td>ID uživatele, jehož avatar má být zobrazen.</td>
-                </tr>
+                  <tr>
+                    <td><code>userId</code></td>
+                    <td><code>string|null</code></td>
+                    <td><code>null</code></td>
+                    <td>ID uživatele, jehož avatar má být zobrazen.</td>
+                  </tr>
                 </tbody>
               </table>
             </div>

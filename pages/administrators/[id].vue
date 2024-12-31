@@ -15,16 +15,8 @@
       <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm" @confirm="deleteItem()" />
     </template>
     <template #body>
-      <div class="alert alert-dismissible fade show alert-primary py-2" style="display: flex" role="alert">Záznam byl změněn. Chcete jej znovu načíst? <button class="btn btn-outline-secondary btn-xs ms-2 btn"><!--v-if--><i class="fa fa-refresh" /> </button></div>
-      <div class="alert alert-dismissible fade show alert-danger py-2" style="display: flex" role="alert">Záznam byl smazán</div>
-      <div class="alert alert-dismissible fade show alert-alternate py-2" style="display: flex" role="alert">
-        <div style=" display: flex;"> Záznam je právě editován</div>
-        <div class="typing-indicator ms-3 pt-1">
-          <span class="dot" />
-          <span class="dot" />
-          <span class="dot" />
-        </div>
-      </div>
+      <BaseLiveAlert />
+
 
 
       <div class="user-avatar bg-warning">
@@ -50,7 +42,6 @@
   </BaseCard>
 </template>
 <script setup lang="ts">
-import BaseAvatar from '~/components/BaseAvatar.vue';
 
 const config = useRuntimeConfig();
 const route = useRoute();

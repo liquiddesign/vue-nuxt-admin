@@ -47,18 +47,32 @@ import {HTTPMethod} from 'h3';
   const config = useRuntimeConfig();
   const v$:any = useVuelidate(props.rules, input);
   const dirty: Ref<boolean> = ref(false);
+  const deleted: Ref<boolean> = ref(false);
+  const { sendTyping, sendUpdate, sendCreated, onDelete } = useLiveFeed();
 
   const toast: ToastPluginApi = inject('toast', useToast());
   const pending: Ref<boolean> = ref(false);
 
   function updateInput(path: string, value: any) {
     dirty.value = true;
+
+    const throttle = _throttle(function () {
+      sendTyping();
+    }, 1000);
+
+    throttle();
     _set(props.data, path, value);
     _get(v$.value, path)?.$touch();
   }
 
+  onDelete((id: string) => {
+    if (props.slug?.toString() === id) {
+      deleted.value = true;
+    }
+  });
+
   const disabled = computed(() => {
-    return props.disabled || props.loading || pending.value;
+    return props.disabled || props.loading || pending.value || deleted.value;
   });
 
   const loading = computed(() => {
@@ -108,6 +122,12 @@ defineExpose({submit, disabled, pending, dirty, v$, getDynamicErrors});
         .then((result) => {
           emit('success', result);
           props.silent || toast.success('Uloženo');
+
+          if (props.slug !== null) {
+            sendUpdate(props.slug.toString());
+          } else {
+            sendCreated();
+          }
 
         }).catch((error) => {
           console.error(error);

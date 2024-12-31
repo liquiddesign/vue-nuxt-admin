@@ -6,7 +6,14 @@ export default defineNuxtPlugin(() => {
     const user: User = {
         homepage: 'dashboards',
         identity: {},
-        settings: {},
+        settings: {
+            'defaultOnPage': 10,
+            'defaultLang': 'cs',
+            'defaultCurrency': 'CZK',
+            'currencies': ['CZK'],
+            'maxUploads': 10,
+            'maxFilesize': 2 * 1024 * 1024,
+        },
         isLoggedIn: false,
         updateStorage: function () {
             if (localStorage.getItem('user')) {

@@ -1,11 +1,29 @@
-export const useTableVars = (settings: any): {filters: object, page: Ref<number>, onPage: number, lang: string, currency: string, currencies: string[], langs: string[]} => {
-    const filters: any = ref({});
-    const page = ref(1);
-    const onPage = ref(settings.defaultOnPage);
-    const lang = ref(settings.defaultLang);
-    const currency = ref(settings.defaultCurrency);
-    const currencies = ref(settings.currencies);
-    const langs = ref(settings.langs);
+import {type Ref, ref } from 'vue';
 
-    return {filters, page, onPage, lang, currency, currencies, langs};
+interface Settings {
+    defaultOnPage: number;
+    defaultLang: string;
+    defaultCurrency: string;
+    currencies: string[];
+    langs: string[];
+}
+
+export const useTableVars = (settings: Settings): {
+    filters: Ref<object>;
+    page: Ref<number>;
+    onPage: Ref<number>;
+    lang: Ref<string>;
+    currency: Ref<string>;
+    currencies: Ref<string[]>;
+    langs: Ref<string[]>;
+} => {
+    const filters = ref<object>({});
+    const page = ref<number>(1);
+    const onPage = ref<number>(settings.defaultOnPage);
+    const lang = ref<string>(settings.defaultLang);
+    const currency = ref<string>(settings.defaultCurrency);
+    const currencies = ref<string[]>(settings.currencies);
+    const langs = ref<string[]>(settings.langs);
+
+    return { filters, page, onPage, lang, currency, currencies, langs };
 };

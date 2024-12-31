@@ -1,7 +1,7 @@
 <template>
   <div class="vertical-timeline-item" :class="`dot-${type} vertical-timeline-element`">
     <div>
-      <span class="vertical-timeline-element-icon bounce-in"></span>
+      <span class="vertical-timeline-element-icon bounce-in" />
       <div class="vertical-timeline-element-content bounce-in">
         <h4 class="timeline-title">
           <slot />
@@ -22,7 +22,7 @@
 import { defineProps } from 'vue';
 
 // Define props for NotificationItem with validation
-const props = defineProps({
+defineProps({
   type: {
     type: String,
     required: true,

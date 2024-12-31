@@ -1,5 +1,5 @@
 <template>
-  <BaseButton :loading="form.pending.value" @click="form.submit"><slot /></BaseButton>
+  <BaseButton :loading="form.pending.value" :disabled="form?.disabled.value || $attrs['disabled']" @click="form.submit"><slot /></BaseButton>
 </template>
 
 <script setup lang="ts">

@@ -7,7 +7,7 @@
         </thead>
         <tbody>
           <template v-for="(item,i) in items" :key="i">
-            <slot name="body" :item="applyDecorator(item)" :index="i" :selected="selected[i]" :delete-row="() => deleteRow(item, i)" :processing="processing" :update-row="(value, name) => updateRow(item, value, name)" />
+            <slot name="body" :item="applyDecorator(item)" :index="i" :selected="selected[i]" :changed="changed[i]" :delete-row="() => deleteRow(item, i)" :processing="processing" :update-row="(value, name) => updateRow(item, value, name)" />
           </template>
           <tr v-if="!pending && !error && Object.values(items).length === 0">
             <td colspan="100%" style="text-align: center; font-style: italic">
@@ -59,6 +59,7 @@ const props = withDefaults(defineProps<{
   silent?: boolean
 }>(), {page: 1, onPage: 15, filters: {}, params: {}, silent: false});
 
+const changed: any = ref({});
 const selected: any = ref({});
 const processing: any = ref(false);
 const decorator: any = reactive({});
@@ -69,6 +70,7 @@ const filterValues: any = ref({});
 const config = useRuntimeConfig();
 
 const { $download } = useNuxtApp();
+const { onDelete, onUpdate, onCreated, sendDelete, sendUpdate } = useLiveFeed();
 
 const { page, onPage } = toRefs(props);
 
@@ -134,7 +136,22 @@ const selectAll = computed({
   }}
 );
 
-defineExpose({ selected, selectedIds, decorator, pending, refresh, selectPage, selectAll, orderBy, orderByValue, orderByAsc, processing});
+function refreshRows(uuids) {
+
+  $fetch(config.public.baseURL + props.url, { params: {uuid: uuids}}).then((response) => {
+
+    for (const uuid in response.items) {
+      if (data.value.items[uuid]) {
+        data.value.items[uuid] = response.items[uuid];
+
+        markRowsAsChanged(uuid);
+      }
+    }
+
+  });
+}
+
+defineExpose({ selected, selectedIds, decorator, pending, refresh, refreshRows, selectPage, selectAll, orderBy, orderByValue, orderByAsc, processing});
 
 function applyDecorator(item: any) {
   if (!decorator[item.uuid]) {
@@ -150,13 +167,18 @@ const selectedQuery = computed(function () {
   return '?' + ids + '&selectedAll=' + (selectAll.value ? 1 : 0);
 });
 
-function deleteRow(item: any) {
+function deleteRow(item: any, sendLiveMessage = true) {
   processing.value = true;
   $fetch(config.public.baseURL + props.url + '/' + item.uuid, { method: 'DELETE'}).then((response) => {
     refresh();
     console.log(response);
     selected.value = {};
-    props.silent || toast.success('Smazáno');
+
+    if (sendLiveMessage) {
+      props.silent || toast.success('Smazáno');
+      sendDelete(item.uuid);
+    }
+
   }).catch(() => {
     props.silent || toast.error('Smazání se nezdařilo');
   }).finally(() => {
@@ -225,6 +247,7 @@ function updateRow(item, value, name = null) {
   $fetch(config.public.baseURL +  props.url + '/' + item.uuid, {body: name ? {[name]: value, uuid: item.uuid} : item, method: 'PATCH'})
     .then(() => {
       toast.success('Uloženo');
+      sendUpdate(item.uuid);
     }).catch((error) => {
       console.error(error);
       toast.error('Nepodařilo se uložit');
@@ -232,6 +255,30 @@ function updateRow(item, value, name = null) {
     processing.value = false;
   });
 }
+
+
+
+function markRowsAsChanged(uuid) {
+  changed.value[uuid] = true;
+
+  setTimeout(() => {
+    delete changed.value[uuid];
+  }, 500);
+}
+
+
+
+onDelete(() => {
+  refresh();
+});
+
+onCreated(() => {
+  refresh();
+});
+
+onUpdate((id) => {
+  refreshRows([id]);
+});
 
 function orderBy(value: string) {
   const aux: boolean|null = orderByAsc.value;

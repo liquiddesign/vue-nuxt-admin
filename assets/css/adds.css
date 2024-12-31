@@ -69,6 +69,11 @@ td.center {
     text-align: center;
 }
 
+tr.changed {
+    background-color: #eefff0 !important;
+    transition: background-color 0.4s ease;
+}
+
 [contenteditable="true"]:active,
 [contenteditable="true"]:focus{
     background: #f0f0f0;

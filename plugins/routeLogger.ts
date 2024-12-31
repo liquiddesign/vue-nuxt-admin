@@ -5,15 +5,15 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     nuxtApp.hook('page:finish', (context) => {
         console.log('Stránka byla načtena:', context, route.name, route.path);
-        const { send } = useWS();
+        const { sendVisit } = useLiveFeed();
 
-        const msg = {
+        /*const msg = {
             action: 'test',
             route: route?.name,
             recordId: route?.params?.id,
             user: null,
-        };
+        };*/
 
-        send(JSON.stringify(msg));
+        sendVisit();
     });
 });

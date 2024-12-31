@@ -1,8 +1,8 @@
 <template>
-  <BasePageHeader title="Administratoři" icon="pe-7s-users" description="Správa administrátoru, rolí a práv">
-    <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'groups-new'})">Přidat administrátora</BaseButtonNew>
+  <BasePageHeader title="Skupiny" icon="pe-7s-users" description="Správa administrátorských skupin">
+    <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'groups-new'})">Přidat skupinu</BaseButtonNew>
   </BasePageHeader>
-  <BaseTabs class="col-xl-6 col-lg-12" :active="$route.name" :tabs="{'administrators': 'Administratoři', 'roles': 'Role', 'groups': 'Skupiny'}" @select="navigateTo($event)" />
+  <BaseTabs class="col-xl-6 col-lg-12" :active="route.name.toString()" :tabs="{'administrators': 'Administratoři', 'roles': 'Role', 'groups': 'Skupiny'}" @select="navigateTo($event)" />
   <BaseCard wrap="col-lg-12">
     <template #headerLeft>
       <BaseFilter @cancel="filters = {}">
@@ -10,17 +10,19 @@
       </BaseFilter>
     </template>
     <template #headerRight>
-      <BaseDropdown class="btn-outline-primary btn-sm me-1" icon="fa-bolt">
-        <BaseDropdownItem>Aktualizovat kurzy z CNB</BaseDropdownItem>
+      <BaseLiveUsers class="me-2" />
+      <BaseDropdown class="btn-outline-primary btn-sm me-2" icon="fa-bolt">
+        <BaseDropdownItem>Hromadná akce</BaseDropdownItem>
       </BaseDropdown>
     </template>
-    <GroupsTable :page="page" :on-page="onPage" :filters="filters" />
+    <GroupsTable :filters="filters" />
   </BaseCard>
 </template>
 
 
 <script setup lang="ts">
 const { $user } = useNuxtApp();
-const { filters, page, onPage } = useTableVars($user.settings);
+const route = useRoute();
+const { filters } = useTableVars($user.settings);
 
 </script>
