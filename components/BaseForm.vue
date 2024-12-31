@@ -1,6 +1,5 @@
 <template>
   <BaseWrapper :wrap="wrap">
-    <!--{{ v$.test?.$each?.$invalid }}-->
     <form v-bind="$attrs" @submit.prevent="submit">
       <slot />
     </form>
@@ -8,137 +7,144 @@
 </template>
 
 <script setup lang="ts">
-import {withDefaults, inject, Ref} from 'vue';
+import { withDefaults, inject, computed, ref, provide } from 'vue';
 import useVuelidate from '@vuelidate/core';
-import {ToastPluginApi, useToast} from 'vue-toast-notification';
-import {RouteParamValue} from 'vue-router';
-import {HTTPMethod} from 'h3';
+import { ToastPluginApi, useToast } from 'vue-toast-notification';
+import { RouteParamValue } from 'vue-router';
+import { HTTPMethod } from 'h3';
+import { useLiveFeed } from '@/composables/useLiveFeed';
 
-  const props = withDefaults(defineProps<{
-    name?: string,
-    lang?: string,
-    url?: string|null,
-    slug?: string|RouteParamValue[]|null,
-    method?: HTTPMethod,
-    data: any | null,
-    loading?: boolean,
-    disabled?: boolean,
-    params?: any,
-    rules?: any,
-    omit?: string[],
-    wrap?: string,
-    silent?: boolean,
-  }>(), {
-    name: 'frm',
-    lang: undefined,
-    url: null,
-    method: undefined,
-    slug: null,
-    loading: false,
-    disabled: false,
-    params: {},
-    rules: {},
-    omit: () => [],
-    silent: false,
-    wrap: undefined,
-  });
+const props = withDefaults(
+    defineProps<{
+      name?: string;
+      lang?: string;
+      url?: string | null;
+      slug?: string | RouteParamValue[] | null;
+      method?: HTTPMethod;
+      data: any | null;
+      loading?: boolean;
+      disabled?: boolean;
+      params?: any;
+      rules?: any;
+      omit?: string[];
+      wrap?: string;
+      silent?: boolean;
+      liveFeed?: boolean;
+    }>(),
+    {
+      name: 'frm',
+      lang: undefined,
+      url: null,
+      method: undefined,
+      slug: null,
+      loading: false,
+      disabled: false,
+      params: {},
+      rules: {},
+      omit: () => [],
+      silent: false,
+      wrap: undefined,
+      liveFeed: true,
+    }
+);
 
-  const input = computed(() => { return props.data; });
-  const config = useRuntimeConfig();
-  const v$:any = useVuelidate(props.rules, input);
-  const dirty: Ref<boolean> = ref(false);
-  const deleted: Ref<boolean> = ref(false);
-  const { sendTyping, sendUpdate, sendCreated, onDelete } = useLiveFeed();
+const input = computed(() => props.data);
+const config = useRuntimeConfig();
+const v$: any = useVuelidate(props.rules, input);
 
-  const toast: ToastPluginApi = inject('toast', useToast());
-  const pending: Ref<boolean> = ref(false);
+const dirty = ref(false);
+const deleted = ref(false);
+const pending = ref(false);
 
-  function updateInput(path: string, value: any) {
-    dirty.value = true;
+const disabled = computed(() => props.disabled || props.loading || pending.value || deleted.value);
+const loading = computed(() => props.loading);
+const lang = computed(() => props.lang);
 
-    const throttle = _throttle(function () {
-      sendTyping();
-    }, 1000);
-
-    throttle();
-    _set(props.data, path, value);
-    _get(v$.value, path)?.$touch();
-  }
+let liveFeedFunctions: any = {};
+if (props.liveFeed) {
+  liveFeedFunctions = useLiveFeed();
+  const { onDelete } = liveFeedFunctions;
 
   onDelete((id: string) => {
     if (props.slug?.toString() === id) {
       deleted.value = true;
     }
   });
+}
 
-  const disabled = computed(() => {
-    return props.disabled || props.loading || pending.value || deleted.value;
+const toast: ToastPluginApi = inject('toast', useToast());
+
+function updateInput(path: string, value: any) {
+  dirty.value = true;
+
+  const throttle = _throttle(() => {
+    if (props.liveFeed && liveFeedFunctions.sendTyping) {
+      liveFeedFunctions.sendTyping();
+    }
+  }, 1000);
+
+  throttle();
+  _set(props.data, path, value);
+  _get(v$.value, path)?.$touch();
+}
+
+function getDynamicErrors(container: string, index: string | number, property: string) {
+  return v$.value[container]?.$each.$response.$errors[index][property];
+}
+
+function submit() {
+  v$.value.$touch();
+
+  const inputs = { ...props.data };
+  props.omit.forEach((key) => {
+    delete inputs[key];
   });
 
-  const loading = computed(() => {
-    return props.loading;
-  });
+  if (!v$.value.$invalid && !props.disabled && props.url) {
+    pending.value = true;
 
-  const lang = computed(() => {
-    return props.lang;
-  });
+    const url = `${config.public.baseURL}${props.slug ? `${props.url}/${props.slug}` : props.url}`;
+    const method = props.method || (props.slug ? 'PATCH' : 'POST');
 
-  provide('form', {
-    name: props.name,
-    lang: lang,
-    disabled: disabled,
-    loading: loading,
-    pending: pending,
-    dirty: dirty,
-    data: input,
-    validation: v$,
-    updateInput,
-  });
-
-  function getDynamicErrors(container: string, index: string|number, property: string)
-  {
-    return v$.value[container]?.$each.$response.$errors[index][property];
-  }
-
-
-defineExpose({submit, disabled, pending, dirty, v$, getDynamicErrors});
-  const emit = defineEmits(['success', 'error']);
-
-
-  function submit() {
-    v$.value.$touch();
-
-    const inputs = Object.assign({}, props.data);
-    props.omit.forEach((val) => {
-      delete inputs[val];
-    });
-
-    // @TODO: wait validate -> or valid by rules to avoid multiple form on one page
-    if (!v$.value.$invalid && !props.disabled && props.url) {
-      pending.value = true;
-
-      console.log(config.public.baseURL);
-      $fetch(config.public.baseURL + (props.slug !== null ?  props.url + '/' + props.slug : props.url), {body: inputs, params: props.params, method: props.method !== undefined ? props.method : (props.slug !== null ? 'PATCH' : 'POST')})
+    $fetch(url, { body: inputs, params: props.params, method })
         .then((result) => {
           emit('success', result);
-          props.silent || toast.success('Uloženo');
+          if (!props.silent) { toast.success('Uloženo'); }
 
-          if (props.slug !== null) {
-            sendUpdate(props.slug.toString());
-          } else {
-            sendCreated();
+          if (props.liveFeed) {
+            if (props.slug) {
+              liveFeedFunctions.sendUpdate(props.slug.toString());
+            } else {
+              liveFeedFunctions.sendCreated();
+            }
           }
-
-        }).catch((error) => {
+        })
+        .catch((error) => {
           console.error(error);
           emit('error', error);
-          props.silent || toast.error(error.message);
-        }).finally(() => {
+          if (!props.silent) { toast.error(error.message); }
+        })
+        .finally(() => {
           pending.value = false;
         });
 
-      v$.value.$reset();
-    }
+    v$.value.$reset();
   }
+}
 
+provide('form', {
+  name: props.name,
+  lang,
+  disabled,
+  loading,
+  pending,
+  dirty,
+  data: input,
+  validation: v$,
+  updateInput,
+});
+
+defineExpose({ submit, disabled, pending, dirty, v$, getDynamicErrors });
+
+const emit = defineEmits(['success', 'error']);
 </script>

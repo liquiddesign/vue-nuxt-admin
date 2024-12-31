@@ -2,7 +2,6 @@ import {type DataProvider} from '~/utils/DataProvider';
 
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig();
-
     const currencies: object  = reactive({});
 
     const dataProvider: DataProvider = {

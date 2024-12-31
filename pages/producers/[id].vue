@@ -20,12 +20,12 @@ const request = reactive(useFetch('http://localhost/levior-b2b/api/producer/' + 
 const input = reactive(data);
 
 onActivated(() => {
-  console.log('activated');
+
 
 });
 
 onMounted(() => {
-  console.log('mounted');
+
   execute();
   request.execute();
 });

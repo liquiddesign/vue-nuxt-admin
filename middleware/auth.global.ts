@@ -1,25 +1,20 @@
 export default defineNuxtRouteMiddleware((to) => {
-    //const { $user } = useNuxtApp();
+    const { $user } = useNuxtApp();
+    const destination: string | undefined = to.name?.toString();
 
-
-    console.log(to);
-    /*if (to.path === '/') {
-        return navigateTo('dashboards');
-    }*/
-
-    /*console.log($user.isLoggedIn);
-    console.log(to.path);
-    console.log($user.hasPermission(to.path));
-
-    if (to.path !== '/' && !$user.isLoggedIn) {
-       return navigateTo('/');
+    if (!destination) {
+        return;
     }
 
-    if (to.path === '/' && $user.isLoggedIn) {
+    if ((destination === 'index' || !$user.hasPermission(destination)) && $user.isLoggedIn) {
         return navigateTo($user.homepage);
     }
 
-    if (to.path !== '/' && !$user.hasPermission(to.path)) {
+    if (destination !== 'index' && !$user.isLoggedIn) {
+        return navigateTo({name: 'index', query: {redirectTo: to.path}});
+    }
+
+    if (destination !== 'index' && $user.isLoggedIn && !$user.hasPermission(destination)) {
         return abortNavigation();
-    }*/
+    }
 });

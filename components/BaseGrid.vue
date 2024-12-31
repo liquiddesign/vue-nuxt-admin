@@ -171,7 +171,7 @@ function deleteRow(item: any, sendLiveMessage = true) {
   processing.value = true;
   $fetch(config.public.baseURL + props.url + '/' + item.uuid, { method: 'DELETE'}).then((response) => {
     refresh();
-    console.log(response);
+
     selected.value = {};
 
     if (sendLiveMessage) {
@@ -191,7 +191,7 @@ function exportRows() {
   props.silent || toast.info('Exportuji ...');
   $fetch(config.public.baseURL +  props.url + selectedQuery.value, { params: props.filters, responseType: 'blob', method: 'POST', body: {'_op': 'export'}})
     .then((response) => {
-      console.log(response);
+
       $download(response, 'export.csv');
     }).catch(() => {
       toast.error('Nepodařilo se exportovat data');

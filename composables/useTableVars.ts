@@ -1,12 +1,5 @@
 import {type Ref, ref } from 'vue';
-
-interface Settings {
-    defaultOnPage: number;
-    defaultLang: string;
-    defaultCurrency: string;
-    currencies: string[];
-    langs: string[];
-}
+import type {Settings} from '~/plugins/authorization';
 
 export const useTableVars = (settings: Settings): {
     filters: Ref<object>;

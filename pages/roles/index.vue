@@ -25,10 +25,5 @@
 const { $user } = useNuxtApp();
 const { filters, page, onPage } = useTableVars($user.settings);
 
-const { sendDelete, onDelete } = useLiveFeed();
-
-onDelete(() => {
-  console.log('remote delete');
-});
 
 </script>

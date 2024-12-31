@@ -6,6 +6,10 @@ const liveTable = ref({});
 let wsInstance: ReturnType<typeof useWebSocket> | null = null;
 
 function initWebSocket(url: string, options?: UseWebSocketOptions) {
+    if (wsInstance && wsInstance.status.value === 'CLOSED') {
+        wsInstance.open();
+    }
+
     if (!wsInstance) {
         wsInstance = useWebSocket(url, options);
     }
@@ -74,7 +78,7 @@ export function useLiveFeed() {
     const ws = initWebSocket(config.public.wsURL, {
         onMessage: (ws, event) => {
             const msg = JSON.parse(event.data);
-            console.log('msg', msg);
+
             liveTable.value = msg.table;
 
             if (!msg.action) {
@@ -83,7 +87,7 @@ export function useLiveFeed() {
 
             if (msg.route?.split('-')[0] === route.name?.toString().split('-')[0]) {
                 const callbacks = eventCallbacks[msg.action];
-                console.log('callbacks', eventCallbacks);
+
                 if (callbacks && msg.recordId) {
                     callbacks.forEach(callback => callback(msg.recordId));
                 }
