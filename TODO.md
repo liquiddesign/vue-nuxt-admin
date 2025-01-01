@@ -1,13 +1,15 @@
 
 ======
-- BaseLiveFeed components
-- notification component
+- notification component -> notify, subcribe for topic
+- komentare
 - dokumentacky
-
+- utils typy do DataFormu a podobne
 
 ======
 - permissions
 - nastaveni -> ulozeni do profilu
+- prefetched data
+- backend user_id -> user.id
 
 
 

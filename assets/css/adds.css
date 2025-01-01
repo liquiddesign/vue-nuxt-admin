@@ -223,7 +223,10 @@ textarea.input-required {
 }
 
 .metismenu li a.disabled {
-    color: silver !important;;
+    color: silver !important;
+    pointer-events: none;
+    cursor: not-allowed;
+    text-decoration: none;
 }
 
 .tabs-animated-shadow .nav-link::before {
