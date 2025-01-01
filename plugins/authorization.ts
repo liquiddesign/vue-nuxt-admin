@@ -3,6 +3,12 @@ export interface Identity {
     [key: string]: any;
 }
 
+export enum AuthorizationLevel {
+    Public = 'public',
+    Authenticated = 'authenticated',
+    SuperAdmin = 'superAdmin',
+}
+
 export interface Settings {
     defaultOnPage: number;
     defaultLang: string;

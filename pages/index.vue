@@ -22,9 +22,12 @@
 import {required} from '@vuelidate/validators';
 import {OkResponse} from '~/utils/OkResponse';
 import {ToastPluginApi, useToast} from 'vue-toast-notification';
+import {AuthorizationLevel} from '~/plugins/authorization';
 
 definePageMeta({
   layout: false,
+  authorization: AuthorizationLevel.Public,
+  description: 'Login obrazovka',
 });
 
 const formData:any = reactive({ remember: false });

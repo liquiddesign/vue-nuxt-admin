@@ -82,6 +82,12 @@
 import { inject } from 'vue';
 import {ToastPluginApi, useToast} from 'vue-toast-notification';
 import {required} from '@vuelidate/validators';
+import {AuthorizationLevel} from '~/plugins/authorization';
+
+definePageMeta({
+  authorization: AuthorizationLevel.Authenticated,
+  description: 'Editace profilu',
+});
 
 const toast: ToastPluginApi = inject('toast', useToast());
 
