@@ -20,8 +20,8 @@
 </template>
 <script setup lang="ts">
 
-import data from 'assets/data/Menu';
-import {type MenuItem} from 'assets/data/Menu';
+import data from '~/utils/Menu';
+import {type MenuItem} from '~/utils/Menu';
 const { $user } = useNuxtApp();
 
 const active: any = reactive({});
