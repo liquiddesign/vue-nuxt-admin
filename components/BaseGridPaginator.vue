@@ -32,6 +32,7 @@
 
 <script setup lang="ts">
 import {computed, onActivated} from 'vue';
+import {transformObjectWithArrays} from '~/utils/transformObjectWithArrays';
 
 const props = defineProps<{
   url: string,
@@ -46,7 +47,7 @@ const config = useRuntimeConfig();
 const filterValues: any = reactive({});
 
 const debouncing = _debounce(function (value) {
-  Object.assign(filterValues, value);
+  Object.assign(filterValues, transformObjectWithArrays(value));
 }, 150);
 
 watch(props.filters, (value) => {

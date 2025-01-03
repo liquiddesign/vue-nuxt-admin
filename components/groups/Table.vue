@@ -39,7 +39,8 @@ withDefaults(defineProps<{
 }>(), {  });
 
 const { $user } = useNuxtApp();
-const { page, onPage } = useTableVars($user.settings);
+const page = ref<number>(1);
+const onPage = ref<number>($user.settings.defaultOnPage);
 
 const url = 'groups';
 

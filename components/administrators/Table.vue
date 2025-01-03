@@ -6,13 +6,15 @@
         <BaseGridTh class="minimal" order-by="id">#</BaseGridTh>
         <BaseGridTh />
         <BaseGridTh class="minimal" order-by="login">Login</BaseGridTh>
-        <BaseGridTh order-by="name">Název</BaseGridTh>
-        <BaseGridTh order-by="name">Typ</BaseGridTh>
-        <BaseGridTh order-by="name">Kurz</BaseGridTh>
-        <BaseGridTh order-by="name">Konverze</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="recommended"><i class="fa fa-thumbs-o-up" /></BaseGridTh>
-        <BaseGridTh class="minimal" order-by="hidden"><i class="fa fa-eye-slash" /></BaseGridTh>
+        <BaseGridTh order-by="name">Zkratka</BaseGridTh>
+        <BaseGridTh order-by="name">Příjmení a jméno</BaseGridTh>
+        <BaseGridTh order-by="name">Role</BaseGridTh>
+        <BaseGridTh order-by="name">E-mail</BaseGridTh>
+        <BaseGridTh order-by="name">Telefon</BaseGridTh>
+        <BaseGridTh order-by="name">Popis</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="priority">2FA</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="priority">Pořadí</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="priority">Aktivní</BaseGridTh>
         <BaseGridTh><BaseGridThSettings /></BaseGridTh>
       </tr>
     </template>
@@ -22,37 +24,23 @@
         <td class="minimal">{{ item.administrator_id }}</td>
         <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'administrators-id', params: { id: item.uuid }})" /></td>
         <td class="minimal">{{ item.login }}</td>
-        <td>{{ item.administrator_name ?? '-' }}</td>
-        <td>{{ 'realna' }}</td>
-        <td>{{ 'realna' }}</td>
+        <td>{{ item.administrator_nickname }}</td>
+        <td>{{ item.administrator_surname ?? '-' }} {{ item.administrator_name ?? '-' }}</td>
+        <td>{{ item.role_name ?? '-' }}</td>
+        <td>{{ item.administrator_email ?? '-' }}</td>
+        <td>{{ item.administrator_phone ?? '-' }}</td>
+        <td>{{ item.administrator_description ?? '-' }}</td>
+        <td>{{ item.administrator_google2faEnabled ? 'ano' : 'ne' }}</td>
+        <td class="minimal"><BaseTextBox v-model="item.administrator_priority" type="number" class="form-control-xs" style="width: 50px;" @change="(e) => updateRow(parseInt(e.target.value), 'priority')" /></td>
         <td class="minimal"><BaseCheckBox v-model="item.hidden" @change="(e) => updateRow(e.target.checked, 'hidden')" /></td>
-        <td class="minimal"><BaseTextBox v-model="item.priority" type="number" class="form-control-xs" style="width: 50px;" @change="(e) => updateRow(parseInt(e.target.value), 'priority')" /></td>
-        <td class="minimal"><BaseCheckBox v-model="item.recommended" @change="(e) => updateRow(e.target.checked, 'recommended')" /></td>
-        <td class="minimal"><BaseCheckBox v-model="item.hidden" @change="(e) => updateRow(e.target.checked, 'hidden')" /></td>
-        <td class="minimal"><BaseButtonDelete class="btn-xs" :confirmation="true" @confirm="deleteRow();" /></td>
+        <td class="minimal"><BaseButtonDelete class="btn-xs btn-danger" :confirmation="true" @confirm="deleteRow();" /></td>
       </tr>
     </template>
-    <template #footer="{deleteRows, exportRows, selectedCount, disabledControls, selectedQuery, resetSelect}">
+    <template #footer="{deleteRows, exportRows, selectedCount, disabledControls}">
       <BaseGridSelectAll wrap="flex-shrink-0 me-1 ms-1" />
       <BaseGridPaginator v-slot="{ totalCount }" wrap="flex-shrink-0" :url="url" :page="page" :on-page="onPage" :filters="filters" @change-page="page = $event" @change-on-page="onPage = $event; page = 1;">
-        <BaseButtonEdit class="btn-paging" :outline="true" :disabled="disabledControls" @click="$refs.modalUpdate.open();">({{ selectedCount(totalCount) }})</BaseButtonEdit>
         <BaseButtonExport class="btn-paging" :outline="true" :disabled="disabledControls" @click="exportRows();">({{ selectedCount(totalCount) }})</BaseButtonExport>
         <BaseButtonDelete class="btn-paging" :outline="true" :disabled="disabledControls" :confirmation="true" @confirm="deleteRows();">({{ selectedCount(totalCount) }})</BaseButtonDelete>
-        <BaseModal ref="modalUpdate" :title="'Hromadná úprava (celkem ' + selectedCount(totalCount) + ')'">
-          <BaseForm ref="form" method="PATCH" :data="formData" :url="'delivery-type' + selectedQuery" :params="filters" @success="setDefaults(); resetSelect(); $refs.grid.refresh();">
-            <div class="row">
-              <BaseCheckBox label="Skrytý" name="recommended.value" wrap="col-lg-6 pt-1" :disabled="formData.recommended.strategy === 'noAction'" />
-              <BaseSelect name="recommended.strategy" :class="{'border-success': formData.recommended.strategy !== 'noAction'}" :options="{noAction: 'původní', replace: 'nahradit'}" wrap="col-lg-6" />
-            </div>
-            <div class="row mt-3">
-              <BaseCheckBox label="Doporučený" name="hidden.value" wrap="col-lg-6 pt-1" :disabled="formData.hidden.strategy === 'noAction'" />
-              <BaseSelect name="hidden.strategy" :class="{'border-success': formData.hidden.strategy !== 'noAction'}" :options="{noAction: 'původní', replace: 'nahradit'}" wrap="col-lg-6" />
-            </div>
-          </BaseForm>
-          <template #footer="{close}">
-            <BaseButton class="btn-primary" :loading="$refs.form?.pending" wrap="flex-shrink-0" @click="$refs.form?.submit(); close();">Upravit záznamy</BaseButton>
-          </template>
-        </BaseModal>
       </BaseGridPaginator>
     </template>
   </BaseGrid>
@@ -61,19 +49,13 @@
 <script setup lang="ts">
 
 withDefaults(defineProps<{
-  page: number
-  onPage: number
   filters: object
 }>(), {  });
 
 const url = 'administrators';
 
-const defaultFormData = {recommended: {strategy: 'noAction', value: false}, hidden: {strategy: 'noAction', value: false}};
-const formData: any = ref(Object.assign({}, defaultFormData));
-
-function setDefaults()
-{
-  formData.value = defaultFormData;
-}
+const { $user } = useNuxtApp();
+const page = ref<number>(1);
+const onPage = ref<number>($user.settings.defaultOnPage ?? 0);
 
 </script>

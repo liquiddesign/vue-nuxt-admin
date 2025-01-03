@@ -97,7 +97,7 @@ function submit() {
 
   const inputs = { ...props.data };
   props.omit.forEach((key) => {
-    delete inputs[key];
+    _unset(inputs, key);
   });
 
   if (!v$.value.$invalid && !props.disabled && props.url) {

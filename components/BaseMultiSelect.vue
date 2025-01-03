@@ -10,7 +10,7 @@
         :options-limit="20"
         :loading="isLoading"
         :custom-label="customLabel"
-        placeholder="Zvolte položku ..."
+        :placeholder="$attrs['placeholder'] ? $attrs['placeholder'] : 'Zvolte položku ...'"
         select-label=""
         deselect-label="odstranit"
         selected-label="Zvolena"

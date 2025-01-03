@@ -4,6 +4,9 @@
       <BaseButtonBack class="me-2" @click="navigateTo({name: 'roles'})" />
       <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
     </template>
+    <template #headerRight>
+      <BaseLiveUsers class="me-2" />
+    </template>
     <template #body>
       <RolesForm ref="form" :data="data" @success="redirect">
         <template #top><h5 class="card-title">Nová role</h5></template>

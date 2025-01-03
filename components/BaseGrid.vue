@@ -49,6 +49,7 @@
 import {reactive, withDefaults, computed, onActivated, Ref} from 'vue';
 import {ToastPluginApi, useToast} from 'vue-toast-notification';
 import qs from 'qs';
+import {transformObjectWithArrays} from '~/utils/transformObjectWithArrays';
 
 const props = withDefaults(defineProps<{
   url: string,
@@ -83,7 +84,7 @@ const params = computed(function () {
   const params = Object.assign({}, paging, filterValues.value, props.params);
   orderByValue.value ? params['order'] =  orderByValue.value + '-' + (orderByAsc.value ? 'ASC' : 'DESC') : delete params['order'];
 
-  return params;
+  return transformObjectWithArrays(params);
 });
 
 const toast: ToastPluginApi = inject('toast', useToast());
@@ -169,7 +170,7 @@ const selectedQuery = computed(function () {
 
 function deleteRow(item: any, sendLiveMessage = true) {
   processing.value = true;
-  $fetch(config.public.baseURL + props.url + '/' + item.uuid, { method: 'DELETE'}).then((response) => {
+  $fetch(config.public.baseURL + props.url + '/' + item.uuid, { method: 'DELETE'}).then(() => {
     refresh();
 
     selected.value = {};

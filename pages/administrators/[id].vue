@@ -6,37 +6,17 @@
     </template>
     <template #headerRight>
       <BaseLiveUsers class="me-2" />
-
       <BaseButtonExternalLink v-if="0" />
       <BaseButtonRefresh class="btn-sm me-1" @click="refresh();" />
       <BaseDropdown class="btn-outline-primary me-1" icon="fa-bolt">
         <BaseDropdownItem @click="makeCopy()">Vytvořit kopii</BaseDropdownItem>
       </BaseDropdown>
-      <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm" @confirm="deleteItem()" />
+      <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm btn-danger" @confirm="deleteItem()" />
     </template>
     <template #body>
-      <BaseLiveAlert />
-
-
-
-      <div class="user-avatar bg-warning">
-        <span class="initials">AB</span>
-      </div>
-
-      <div class="user-avatar bg-alternate">
-        <span class="initials">OP</span>
-      </div>
-
-      <div class="user-avatar bg-heavy-rain">
-        <span class="initials">OP</span>
-      </div>
-
-      <div class="user-avatar bg-heavy-rain">
-        <span class="initials">?</span>
-      </div>
-
+      <BaseLiveAlert :record-id="route.params.id.toString()" @refresh="refresh" />
       <AdministratorsForm ref="form" :data="data" :slug="route.params.id" :loading="pending" @success="redirect">
-        <template #top><h5 class="card-title">Administrátor #{{ data?.id }}</h5></template>
+        <template #top><h5 class="card-title">Administrátor ID {{ data?.id }}</h5></template>
       </AdministratorsForm>
     </template>
   </BaseCard>

@@ -1,12 +1,14 @@
+import {AuthorizationLevel} from '~/plugins/authorization';
+
 export default defineNuxtRouteMiddleware((to) => {
     const { $user } = useNuxtApp();
     const destination: string | undefined = to.name?.toString();
 
-    if (!destination) {
+    if (!destination || to.meta.authorization === AuthorizationLevel.Public || (to.meta.authorization === AuthorizationLevel.Authenticated && $user.isLoggedIn)) {
         return;
     }
 
-    if ((destination === 'index' || !$user.hasPermission(destination)) && $user.isLoggedIn) {
+    if ($user.isLoggedIn && (destination === 'index' || !$user.hasPermission(destination))) {
         return navigateTo($user.homepage);
     }
 

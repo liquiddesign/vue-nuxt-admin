@@ -15,14 +15,14 @@
         <BaseDropdownItem>Hromadná akce</BaseDropdownItem>
       </BaseDropdown>
     </template>
-    <RolesTable :page="page" :on-page="onPage" :filters="filters" />
+    <RolesTable :filters="filters" />
   </BaseCard>
 </template>
 
 
 <script setup lang="ts">
 const { $user } = useNuxtApp();
-const { filters, page, onPage } = useTableVars($user.settings);
+const { filters } = useTableVars($user.settings);
 
 
 </script>

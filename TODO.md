@@ -1,15 +1,21 @@
 
 ======
-- notification component -> notify, subcribe for topic
-- komentare
-- dokumentacky
-- utils typy do DataFormu a podobne
+
+- ukladani filtru (url)
+- horni menicko
+- nastaveni -> ulozeni do profilu
+
+- google sign
+
 
 ======
 - permissions
-- nastaveni -> ulozeni do profilu
+- dokumentacky
+- utils typy do DataFormu a podobne
 - prefetched data
 - backend user_id -> user.id
+- - notification component -> notify, subcribe for topic
+- komentare
 
 
 

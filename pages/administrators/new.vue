@@ -4,6 +4,9 @@
       <BaseButtonBack class="me-2" @click="navigateTo({name: 'administrators'})" />
       <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
     </template>
+    <template #headerRight>
+      <BaseLiveUsers class="me-2" />
+    </template>
     <template #body>
       <AdministratorsForm ref="form" :data="data" @success="redirect">
         <template #top><h5 class="card-title">Nový administrátor</h5></template>

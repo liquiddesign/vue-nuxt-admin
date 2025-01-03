@@ -22,6 +22,7 @@
     "bootstrap": "^5.2.3",
     "font-awesome": "^4.7.0",
     "pe7-icon": "^1.0.4",
+    "qrcode.vue": "^3.6.0",
     "qs": "^6.11.2",
     "vue-easy-lightbox": "^1.16.0",
     "vue-flag-icon": "^2.1.0",

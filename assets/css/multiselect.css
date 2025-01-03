@@ -176,6 +176,7 @@ fieldset[disabled] .multiselect {
     overflow: hidden;
     max-width: 100%;
     text-overflow: ellipsis;
+    font-weight: normal;
 }
 
 .multiselect__tag-icon {
@@ -256,10 +257,13 @@ fieldset[disabled] .multiselect {
 }
 
 .multiselect__placeholder {
-    color: #adadad;
+    color: #5b646b;
     display: inline-block;
+    font-weight: normal;
+    text-transform: none;
     margin-bottom: 0;
     padding-top: 2px;
+    line-height: 22px;
 }
 
 .multiselect--active .multiselect__placeholder {
@@ -319,6 +323,7 @@ fieldset[disabled] .multiselect {
     position: relative;
     cursor: pointer;
     white-space: nowrap;
+    font-weight: normal;
 }
 
 .multiselect__option::after {
