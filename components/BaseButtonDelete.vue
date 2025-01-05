@@ -14,8 +14,6 @@
 
 <script setup lang="ts">
 
-import {withDefaults} from 'vue';
-
 withDefaults(defineProps<{
   confirmation?: boolean
   confirmationPlacement?: string

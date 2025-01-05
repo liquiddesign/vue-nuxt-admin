@@ -46,7 +46,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import {reactive, withDefaults, computed, onActivated, Ref} from 'vue';
+import {reactive, computed, onActivated, Ref} from 'vue';
 import {ToastPluginApi, useToast} from 'vue-toast-notification';
 import qs from 'qs';
 import {transformObjectWithArrays} from '~/utils/transformObjectWithArrays';

@@ -19,8 +19,6 @@
 
 <script setup lang="ts">
 
-import {withDefaults} from 'vue';
-
 withDefaults(defineProps<{
   wrap?: string
   heading?: string

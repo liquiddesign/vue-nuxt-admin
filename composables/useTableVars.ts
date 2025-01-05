@@ -24,5 +24,9 @@ export const useTableVars = (settings: Settings): {
         filters.value = {...route.query};
     });
 
+
+    onActivated(() => {
+        router.push({ query: {...filters.value} });
+    });
     return { filters, lang, currency, currencies, langs };
 };

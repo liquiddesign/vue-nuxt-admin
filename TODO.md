@@ -1,34 +1,19 @@
+Obalit fetch -> dat with credentials
 
 ======
 
-- ukladani filtru (url)
-- horni menicko
+- dokazy na zaznam (administrator role ->)
+- seznam skupin v prehledu
 - nastaveni -> ulozeni do profilu
-
 - google sign
-
-
-======
-- permissions
 - dokumentacky
 - utils typy do DataFormu a podobne
 - prefetched data
 - backend user_id -> user.id
-- - notification component -> notify, subcribe for topic
+- notification component -> notify, subcribe for topic
 - komentare
-
-
-
-======
-- par dokumentacek
-Obrazky
-
-(- prismJS)
-
-
---------------------------------
-- upload obrazku
-- settings pri loginu -> dph dopravy, jazyky, defaultni jednotka hmontolsti rozmeru, max upload size apod
+- uploader
+- image resizer (file manager global)
 
 
 // --------------------

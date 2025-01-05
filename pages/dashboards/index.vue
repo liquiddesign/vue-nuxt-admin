@@ -5,7 +5,7 @@
   </select>
 
   {{ $t('backHome2', { name: 'vue-i18n' }) }}
-
+  {{ data2 }}
   <hr>
   {{ liveTable }}
   <hr>
@@ -98,7 +98,7 @@
 
 import {useI18n} from 'vue-i18n';
 
-
+const { data: data2 } = useFetch('http://localhost/vue-nuxt-api/api/auth/status', {credentials: 'include'});
 const { locale } = useI18n();
 const { isConnected, liveTable, status } = useLiveFeed();
 

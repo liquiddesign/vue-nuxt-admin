@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import {withDefaults} from 'vue/dist/vue';
 import {inject} from 'vue';
 
 const form: any = inject('form', null) as any;

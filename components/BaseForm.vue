@@ -7,11 +7,10 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults, inject, computed, ref, provide } from 'vue';
+import { inject, computed, ref, provide } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { ToastPluginApi, useToast } from 'vue-toast-notification';
 import { RouteParamValue } from 'vue-router';
-import { HTTPMethod } from 'h3';
 import { useLiveFeed } from '@/composables/useLiveFeed';
 
 const props = withDefaults(
@@ -20,7 +19,7 @@ const props = withDefaults(
       lang?: string;
       url?: string | null;
       slug?: string | RouteParamValue[] | null;
-      method?: HTTPMethod;
+      method?: 'GET' | 'POST' | 'PUT'  | 'DELETE' | 'PATCH';
       data: any | null;
       loading?: boolean;
       disabled?: boolean;
@@ -35,7 +34,7 @@ const props = withDefaults(
       name: 'frm',
       lang: undefined,
       url: null,
-      method: undefined,
+      method: 'POST',
       slug: null,
       loading: false,
       disabled: false,
@@ -49,7 +48,6 @@ const props = withDefaults(
 );
 
 const input = computed(() => props.data);
-const config = useRuntimeConfig();
 const v$: any = useVuelidate(props.rules, input);
 
 const dirty = ref(false);
@@ -103,10 +101,10 @@ function submit() {
   if (!v$.value.$invalid && !props.disabled && props.url) {
     pending.value = true;
 
-    const url = `${config.public.baseURL}${props.slug ? `${props.url}/${props.slug}` : props.url}`;
+    const url = `${props.slug ? `${props.url}/${props.slug}` : props.url}`;
     const method = props.method || (props.slug ? 'PATCH' : 'POST');
 
-    $fetch(url, { body: inputs, params: props.params, method })
+    apiFetch(url, { body: inputs, params: props.params, method, credentials: 'include' })
         .then((result) => {
           emit('success', result);
           if (!props.silent) { toast.success('Uloženo'); }

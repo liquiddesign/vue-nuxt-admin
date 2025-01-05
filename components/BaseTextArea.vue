@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import {withDefaults} from 'vue/dist/vue';
 import {inject} from 'vue';
 import {BaseValidation} from '@vuelidate/core';
 

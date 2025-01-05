@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<{
   label?: string,
 }>(), {loading: false, icon: undefined, label: ''});
 
-import {computed, withDefaults} from 'vue';
+import {computed} from 'vue';
 
 const htmlLabel = computed(function () {
   if (!props.icon) {

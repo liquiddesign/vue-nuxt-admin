@@ -65,7 +65,6 @@
 
 <script setup lang="ts">
 
-import {withDefaults} from 'vue';
 import {required, email, sameAs, maxLength, requiredIf} from '@vuelidate/validators';
 import {RouteParamValue} from 'vue-router';
 import QrcodeVue from 'qrcode.vue';

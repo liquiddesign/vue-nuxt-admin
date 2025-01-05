@@ -287,3 +287,14 @@ textarea.input-required {
 .initials {
     display: block;
 }
+
+.notification-dot {
+    width: 8px !important;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}

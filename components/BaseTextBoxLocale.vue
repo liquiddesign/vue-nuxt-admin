@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import {inject, withDefaults} from 'vue';
+import {inject} from 'vue';
 
 const props = withDefaults(defineProps<{
   lang?: string

@@ -24,7 +24,6 @@
   </Teleport>
 </template>
 <script setup lang="ts">
-  import {withDefaults} from 'vue/dist/vue';
 
   withDefaults(defineProps<{
     title?: string,

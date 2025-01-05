@@ -60,7 +60,6 @@
 
 <script setup lang="ts">
 
-import {withDefaults} from 'vue';
 import {required} from '@vuelidate/validators';
 import {RouteParamValue} from 'vue-router';
 

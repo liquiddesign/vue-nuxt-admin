@@ -1,5 +1,8 @@
+import type {Reactive} from 'vue';
+import {apiFetch} from '~/utils/apiFetch';
+
 export interface Identity {
-    permissions?: Record<string, boolean>;
+    permissions?: string[];
     [key: string]: any;
 }
 
@@ -29,15 +32,23 @@ const defaultSettings: Settings = {
     maxFilesize: 2 * 1024 * 1024,
 };
 
+export enum LogoutReason {
+    MANUAL = 'MANUAL',
+    TIMEOUT = 'TIMEOUT',
+    ERROR = 'ERROR',
+}
+
+
 export class User {
     homepage: string = 'dashboards';
     identity: Identity = {};
     settings: Settings = { ...defaultSettings };
     isLoggedIn: boolean = false;
-    private config: any;
+    logoutReason?: LogoutReason;
+    private readonly baseUrl: string;
 
-    constructor(config: any) {
-        this.config = config;
+    constructor(baseUrl: string) {
+        this.baseUrl = baseUrl;
         this.restoreFromStorage();
     }
 
@@ -57,19 +68,24 @@ export class User {
         storage.setItem('user', JSON.stringify(this));
     }
 
-    logout(): void {
-        Object.keys(this.identity).forEach((key) => delete this.identity[key]);
-        this.isLoggedIn = false;
+    async logout(logoutReason = LogoutReason.MANUAL): Promise<any> {
+        const result = await apiFetch('auth/sign-out', {method: 'POST'});
 
+        this.isLoggedIn = false;
+        this.logoutReason = logoutReason;
+        Object.keys(this.identity).forEach((key) => delete this.identity[key]);
         sessionStorage.removeItem('user');
         localStorage.removeItem('user');
 
-        $fetch(`${this.config.public.baseURL}auth/sign-out`, { method: 'POST' });
+        return result;
     }
 
     hasPermission(route: string): boolean {
-        //return !!this.identity?.permissions?.[route];
-        return true;
+        return (this.identity?.permissions && this.identity.permissions.includes(route)) || this.isSuperAdmin();
+    }
+
+    isSuperAdmin(): boolean {
+        return this.identity?.admin;
     }
 
     private restoreFromStorage(): void {
@@ -98,7 +114,7 @@ export class User {
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig();
 
-    const user = reactive(new User(config));
+    const user:Reactive<User> = reactive(new User(config.public.baseURL));
 
     return {
         provide: {

@@ -7,7 +7,7 @@
       :rules="rules"
       :live-feed="false"
       :silent="true"
-      :omit="['remember']"
+      :omit="['lifeFeed']"
       class="no-red"
       @success="login"
       @error="error"
@@ -22,11 +22,14 @@
         <div v-else class="row g-3">
           <BaseTextBox name="login" wrap="foo" placeholder="Login" autocomplete="username" />
           <BaseTextBox name="password" wrap="foo" placeholder="Heslo" type="password" autocomplete="current-password" />
-          <BaseCheckBox name="remember" label="Zapamatovat si přihlášení" />
+          <BaseCheckBox name="lifeFeed" label="Připojit k live-feed serveru" />
         </div>
       </div>
       <div class="modal-footer clearfix">
         <BaseFormButton wrap="float-end" class="btn-primary">Přihlásit se</BaseFormButton>
+        <a :href="data?.result" class="btn btn-outline-secondary bg-white" :class="{disabled: !data?.result}">
+          <img src="/g-logo.png" height="18px" alt="Google logo">
+        </a>
       </div>
     </BaseForm>
   </NuxtLayout>
@@ -44,12 +47,14 @@ definePageMeta({
   description: 'Login obrazovka',
 });
 
-const formData:any = reactive({ remember: false });
+const formData:any = reactive({ lifeFeed: true });
 const { $user } = useNuxtApp();
 
 const toast: ToastPluginApi = inject('toast', useToast());
 const route = useRoute();
 const twoFactorRequired: Ref<boolean> = ref(false);
+
+const { data } = useApiFetch('auth/google-link');
 
 const rules = {
   login: { required },
@@ -68,7 +73,7 @@ function login(response: OkResponse) {
   if (response.result.success && response.result.strategy === 'otp') {
     twoFactorRequired.value = true;
   } else {
-    $user.login(response.result.identity, formData.remember);
+    $user.login(response.result.identity, formData.lifeFeed);
 
     if (route.query?.redirectTo) {
       navigateTo({path: route.query.redirectTo.toString()});
@@ -79,3 +84,9 @@ function login(response: OkResponse) {
 }
 
 </script>
+
+<style scoped>
+
+
+
+</style>

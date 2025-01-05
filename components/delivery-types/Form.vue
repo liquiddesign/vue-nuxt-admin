@@ -119,8 +119,6 @@
 
  <script setup lang="ts">
 
- import {withDefaults} from 'vue';
-
  import {required, helpers} from '@vuelidate/validators';
  import {RouteParamValue} from 'vue-router';
  import BaseAlert from '~/components/BaseAlert.vue';
