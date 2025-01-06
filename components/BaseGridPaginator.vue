@@ -42,7 +42,6 @@ const props = defineProps<{
   wrap?: string,
 }>();
 
-const config = useRuntimeConfig();
 
 const filterValues: any = reactive({});
 
@@ -55,7 +54,7 @@ watch(props.filters, (value) => {
 });
 
 
-const {data, refresh} = useFetch(config.public.baseURL + props.url, {
+const {data, refresh} = useApiFetch(props.url, {
   method: 'POST',
   query: filterValues,
   body: {'_op': 'itemsCount'},

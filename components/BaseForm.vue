@@ -34,7 +34,7 @@ const props = withDefaults(
       name: 'frm',
       lang: undefined,
       url: null,
-      method: 'POST',
+      method: undefined,
       slug: null,
       loading: false,
       disabled: false,

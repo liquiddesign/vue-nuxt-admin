@@ -41,9 +41,11 @@ export enum LogoutReason {
 
 export class User {
     homepage: string = 'dashboards';
+    token: string | null = null;
     identity: Identity = {};
     settings: Settings = { ...defaultSettings };
     isLoggedIn: boolean = false;
+    liveFeedEnabled: boolean = true;
     logoutReason?: LogoutReason;
     private readonly baseUrl: string;
 
@@ -53,19 +55,20 @@ export class User {
     }
 
     updateStorage(): void {
-        const storage = localStorage.getItem('user') ? localStorage : sessionStorage;
-        storage.setItem('user', JSON.stringify(this));
+        localStorage.setItem('user', JSON.stringify(this));
     }
 
-    login(identity: Identity, permanent: boolean = false): void {
+    login(identity: Identity, liveFeedEnabled: boolean = true, token: string): void {
         Object.assign(this.identity, identity);
         this.settings = identity.settings || defaultSettings;
         this.isLoggedIn = true;
+        this.token = token;
+        this.liveFeedEnabled = liveFeedEnabled;
 
-        const storage = permanent ? localStorage : sessionStorage;
-        sessionStorage.removeItem('user');
         localStorage.removeItem('user');
-        storage.setItem('user', JSON.stringify(this));
+        localStorage.removeItem('token');
+        localStorage.setItem('user', JSON.stringify(this));
+        localStorage.setItem('token', token);
     }
 
     async logout(logoutReason = LogoutReason.MANUAL): Promise<any> {
@@ -74,7 +77,6 @@ export class User {
         this.isLoggedIn = false;
         this.logoutReason = logoutReason;
         Object.keys(this.identity).forEach((key) => delete this.identity[key]);
-        sessionStorage.removeItem('user');
         localStorage.removeItem('user');
 
         return result;
@@ -98,6 +100,7 @@ export class User {
                 Object.assign(this.identity, parsedUser.identity);
                 this.isLoggedIn = !!parsedUser.isLoggedIn;
                 this.settings = parsedUser.settings || defaultSettings;
+                this.token = storage.getItem('token');
             } catch {
                 console.error('Invalid user data in storage');
             }
@@ -105,8 +108,6 @@ export class User {
 
         if (localStorage.getItem('user')) {
             restoreUser(localStorage);
-        } else if (sessionStorage.getItem('user')) {
-            restoreUser(sessionStorage);
         }
     }
 }

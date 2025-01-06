@@ -23,11 +23,10 @@
 </template>
 <script setup lang="ts">
 
-const config = useRuntimeConfig();
 const route = useRoute();
 const router = useRouter();
 
-const {data, pending, refresh} = useFetch(config.public.baseURL + 'administrators/' + route.params.id);
+const {data, pending, refresh} = useApiFetch('administrators/' + route.params.id);
 const {deleteItem, makeCopy, redirect} = useDetailMethods('administrators', 'administrators');
 
 </script>

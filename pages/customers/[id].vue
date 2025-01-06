@@ -27,7 +27,6 @@
 <script setup lang="ts">
 
 const route = useRoute();
-const config = useRuntimeConfig();
 
 const input:any = reactive({});
 const goBack:Ref<boolean> = ref(false);
@@ -39,7 +38,7 @@ function success() {
   }
 }
 
-const {data, pending} = useFetch(config.public.baseURL + 'customer/' + route.params.id, {
+const {data, pending} = useApiFetch('customer/' + route.params.id, {
   pick : ['ic', 'company', 'uuid'],
 });
 

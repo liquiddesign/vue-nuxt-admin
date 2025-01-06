@@ -22,11 +22,10 @@
   </BaseCard>
 </template>
 <script setup lang="ts">
-const config = useRuntimeConfig();
 const route = useRoute();
 const router = useRouter();
 
-const {data, pending, refresh} = useFetch(config.public.baseURL + 'roles/' + route.params.id);
+const {data, pending, refresh} = useApiFetch('roles/' + route.params.id);
 
 const {deleteItem, makeCopy, redirect} = useDetailMethods('roles', 'roles');
 

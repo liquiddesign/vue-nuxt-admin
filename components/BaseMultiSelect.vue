@@ -50,8 +50,8 @@ import VueMultiselect from 'vue-multiselect';
 import {BaseValidation} from '@vuelidate/core';
 import BaseWrapper from '~/components/BaseWrapper.vue';
 import {computed} from 'vue';
+import {apiFetch} from '~/utils/apiFetch';
 
-const config = useRuntimeConfig();
 
 const props = withDefaults(defineProps<{
   name?: string,
@@ -80,7 +80,7 @@ const options:Ref<any> = ref(props.options ?? {});
 if (!props.async &&  props.optionsUrl) {
   isLoading.value = true;
 
-  $fetch(config.public.baseURL + props.optionsUrl, props.optionsUrlParams).then((response: any) => {
+  apiFetch(props.optionsUrl, props.optionsUrlParams).then((response: any) => {
     options.value = response.result;
   }).finally(() => {
     isLoading.value = false;
@@ -101,7 +101,7 @@ function asyncSearch(query: string) {
       const params = props.optionsUrlParams;
       params['query'] = {[props.optionsUrlQueryName]: query};
 
-      $fetch(config.public.baseURL + props.optionsUrl, params).then((response: any) => {
+      apiFetch(props.optionsUrl, params).then((response: any) => {
         options.value = response.result;
       }).finally(() => {
         isLoading.value = false;

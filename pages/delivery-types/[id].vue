@@ -21,12 +21,11 @@
   </BaseCard>
 </template>
 <script setup lang="ts">
-const config = useRuntimeConfig();
 const route = useRoute();
 const { $user } = useNuxtApp();
 const lang: Ref<string> = ref($user.settings.defaultLang);
 
-const {data, pending, refresh} = useFetch(config.public.baseURL + 'delivery-type/' + route.params.id);
+const {data, pending, refresh} = useApiFetch('delivery-type/' + route.params.id);
 const {deleteItem, makeCopy, redirect} = useDetailMethods('delivery-type', 'delivery-types');
 
 </script>

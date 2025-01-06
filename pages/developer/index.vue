@@ -369,7 +369,6 @@ import 'vue3-treeview/dist/style.css';
 import {required} from '@vuelidate/validators';
 import useVuelidate, {BaseValidation} from '@vuelidate/core';
 
-const config = useRuntimeConfig();
 
 const toast: ToastPluginApi = inject('toast', useToast());
 
@@ -392,9 +391,6 @@ const lang = ref('cz');
 
 const v$: Ref<BaseValidation> = useVuelidate(rules, formData, {$autoDirty: true});
 
-function test() {
-  return $fetch(config.public.baseURL + 'customer');
-}
 
 const imgs = [
   'http://via.placeholder.com/250x150',

@@ -1,13 +1,13 @@
 import {type ToastPluginApi, useToast} from 'vue-toast-notification';
+import {apiFetch} from '~/utils/apiFetch';
 
 export const useDetailMethods = (url: string, routeName: string) => {
-    const config = useRuntimeConfig();
     const route = useRoute();
     const { sendDelete } = useLiveFeed();
 
     const toast: ToastPluginApi = inject('toast', useToast());
     function deleteItem() {
-        $fetch(config.public.baseURL + url + '/' + route.params.id, { method: 'DELETE'}).then(() => {
+        apiFetch(url + '/' + route.params.id, { method: 'DELETE'}).then(() => {
             toast.success('Smazáno');
             sendDelete(route.params.id.toString());
 
@@ -19,7 +19,7 @@ export const useDetailMethods = (url: string, routeName: string) => {
     }
 
     function makeCopy() {
-        $fetch(config.public.baseURL +  url + '/' + route.params.id, { method: 'POST', body: {'_op': 'makeCopy'}})
+        apiFetch(url + '/' + route.params.id, { method: 'POST', body: {'_op': 'makeCopy'}})
             .then(() => {
                 toast.success('Kopie vyvtořena');
                 navigateTo({name: 'delivery-types'});

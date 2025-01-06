@@ -54,7 +54,7 @@ const toast: ToastPluginApi = inject('toast', useToast());
 const route = useRoute();
 const twoFactorRequired: Ref<boolean> = ref(false);
 
-const { data } = useApiFetch('auth/google-link');
+const { data } = useApiFetch('auth/google-link', {}, false);
 
 const rules = {
   login: { required },
@@ -73,7 +73,7 @@ function login(response: OkResponse) {
   if (response.result.success && response.result.strategy === 'otp') {
     twoFactorRequired.value = true;
   } else {
-    $user.login(response.result.identity, formData.lifeFeed);
+    $user.login(response.result.identity, formData.lifeFeed, response.result.csrfToken);
 
     if (route.query?.redirectTo) {
       navigateTo({path: route.query.redirectTo.toString()});

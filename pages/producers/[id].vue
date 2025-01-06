@@ -11,11 +11,11 @@ import {onActivated, onMounted} from 'vue';
 
 const route = useRoute();
 
-const { data, execute } = useLazyFetch('http://localhost/levior-b2b/api/producer/' + route.params.id,
+const { data, execute } = useApiLazyFetch('levior-b2b/api/producer/' + route.params.id,
   { immediate: false}
 );
 
-const request = reactive(useFetch('http://localhost/levior-b2b/api/producer/' + route.params.id, { immediate: false}));
+const request = reactive(useApiFetch('producer/' + route.params.id, { immediate: false}));
 
 const input = reactive(data);
 

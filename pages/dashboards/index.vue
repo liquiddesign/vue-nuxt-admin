@@ -98,7 +98,7 @@
 
 import {useI18n} from 'vue-i18n';
 
-const { data: data2 } = useFetch('http://localhost/vue-nuxt-api/api/auth/status', {credentials: 'include'});
+const { data: data2 } = useApiFetch('auth/status', {credentials: 'include'});
 const { locale } = useI18n();
 const { isConnected, liveTable, status } = useLiveFeed();
 

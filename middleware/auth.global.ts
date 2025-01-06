@@ -4,6 +4,7 @@ type AuthStatusResponse = {
     result: {
         isLoggedIn: boolean;
         identity: Identity;
+        csrfToken: string;
     };
 };
 
@@ -11,12 +12,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
     const { $user } = useNuxtApp();
     const destination: string | undefined = to.name?.toString();
 
-
     if (!$user.isLoggedIn) {
         const { data } = await useFetch<AuthStatusResponse>('http://localhost/vue-nuxt-api/api/auth/status', {credentials: 'include'});
         if (data.value && data.value.result && data.value.result.isLoggedIn) {
             console.log(data.value.result.identity);
-            $user.login(data.value.result.identity);
+            $user.login(data.value.result.identity, true, data.value.result.csrfToken);
         }
     }
 

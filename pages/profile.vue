@@ -102,7 +102,7 @@ const rules = {
 
 function success() {
 
-  //const mouse = useFetch('https://api.nuxtjs.dev/api/eshop-producer');
+  //const mouse = useApiFetch('https://api.nuxtjs.dev/api/eshop-producer');
   //dataTest.value = mouse.data;
 
   toast.success('uloženo');

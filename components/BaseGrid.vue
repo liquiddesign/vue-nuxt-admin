@@ -68,7 +68,6 @@ const selectedAllChecked: Ref<boolean> = ref(false);
 const orderByValue: Ref<string|null> = ref(null);
 const orderByAsc: Ref<boolean|null> = ref(true);
 const filterValues: any = ref({});
-const config = useRuntimeConfig();
 
 const { $download } = useNuxtApp();
 const { onDelete, onUpdate, onCreated, sendDelete, sendUpdate } = useLiveFeed();
@@ -113,7 +112,7 @@ const items = computed(function() {
   return data?.value?.items || {};
 });
 
-const {data, pending, error, refresh} = useFetch(config.public.baseURL + props.url, {params: params});
+const {data, pending, error, refresh} = useApiFetch(props.url, {query: params});
 
 const selectedNumber = computed( () => selectedIds().length);
 
@@ -139,7 +138,7 @@ const selectAll = computed({
 
 function refreshRows(uuids) {
 
-  $fetch(config.public.baseURL + props.url, { params: {uuid: uuids}}).then((response) => {
+  apiFetch(props.url, { params: {uuid: uuids}}).then((response) => {
 
     for (const uuid in response.items) {
       if (data.value.items[uuid]) {
@@ -170,7 +169,7 @@ const selectedQuery = computed(function () {
 
 function deleteRow(item: any, sendLiveMessage = true) {
   processing.value = true;
-  $fetch(config.public.baseURL + props.url + '/' + item.uuid, { method: 'DELETE'}).then(() => {
+  apiFetch(props.url + '/' + item.uuid, { method: 'DELETE'}).then(() => {
     refresh();
 
     selected.value = {};
@@ -190,7 +189,7 @@ function deleteRow(item: any, sendLiveMessage = true) {
 function exportRows() {
   processing.value = true;
   props.silent || toast.info('Exportuji ...');
-  $fetch(config.public.baseURL +  props.url + selectedQuery.value, { params: props.filters, responseType: 'blob', method: 'POST', body: {'_op': 'export'}})
+  apiFetch(props.url + selectedQuery.value, { params: props.filters, responseType: 'blob', method: 'POST', body: {'_op': 'export'}})
     .then((response) => {
 
       $download(response, 'export.csv');
@@ -204,7 +203,7 @@ function exportRows() {
 function deleteRows() {
   processing.value = true;
   props.silent || toast.info('Hromadná akce může chvíli trvat ...');
-  $fetch(config.public.baseURL + props.url + '?' + selectedQuery.value, { method: 'DELETE', params: props.filters}).then(() => {
+  apiFetch(props.url + '?' + selectedQuery.value, { method: 'DELETE', params: props.filters}).then(() => {
     refresh();
     selected.value = {};
     selectAll.value = false;
@@ -245,7 +244,7 @@ function selectedCount(totalCount: number)
 function updateRow(item, value, name = null) {
   processing.value = true;
 
-  $fetch(config.public.baseURL +  props.url + '/' + item.uuid, {body: name ? {[name]: value, uuid: item.uuid} : item, method: 'PATCH'})
+  apiFetch(props.url + '/' + item.uuid, {body: name ? {[name]: value, uuid: item.uuid} : item, method: 'PATCH'})
     .then(() => {
       toast.success('Uloženo');
       sendUpdate(item.uuid);

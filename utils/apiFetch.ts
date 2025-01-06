@@ -1,17 +1,29 @@
+import { generateCsfrToken } from '~/utils/generateCsfrToken';
+import type {NitroFetchOptions} from 'nitropack';
+
 export const apiFetch = async <T>(
     url: string,
-    options: {
-        body?: any;
+    options: Partial<NitroFetchOptions<any>> & {
         params?: Record<string, any>;
-        method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-        credentials?: RequestCredentials;
-    } = {}
+        body?: any;
+    } = {},
+    csrfProtection: boolean = true
 ): Promise<T> => {
     const config = useRuntimeConfig();
+    //const { accessToken } = useUser();
+    const { $user } = useNuxtApp();
+    let token: string = '';
 
-    return $fetch<T>( config.public.baseURL + url, {
-        credentials: 'include',
-        headers: {'Csrf-Token': 'token'},
+    if (csrfProtection && $user.token) {
+        token = generateCsfrToken($user.token, url);
+    }
+
+    return $fetch<T>(config.public.baseURL + url, {
         ...options,
+        headers: {
+            ...options.headers,
+            'Csrf-Token': token,
+        },
+        credentials: 'include',
     });
 };

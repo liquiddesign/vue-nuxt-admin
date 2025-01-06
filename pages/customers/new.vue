@@ -173,14 +173,6 @@ const lang:Ref<string> = ref('cz');
 
 
 
-/*
-$fetch(config.public.baseURL + 'customer', {method: "POST", body: {'_op': 'optionsList'}}).then((response: any) => {
-
-  options2.value = Object.values(response.result);
-  optionsValues.value = response.result;
-
-});*/
-
 
 
 const rules = {
