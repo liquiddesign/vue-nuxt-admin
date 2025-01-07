@@ -12,19 +12,21 @@
 
 <script setup lang="ts">
 
-const { $user } = useNuxtApp();
+import type {Identity} from '~/composables/useUser';
+
+const { administrators } = usePrefetchedData();
 const config = useRuntimeConfig();
 
 const props = defineProps<{
   userId: string|null,
 }>();
 
-const user = computed(() => {
+const user: ComputedRef<Identity> = computed(() => {
   if (!props.userId) {
     return null;
   }
 
-  return $user.identity?.administrators?.[props.userId] ?? null;
+  return administrators[props.userId] ?? null;
 });
 
 const colors = [

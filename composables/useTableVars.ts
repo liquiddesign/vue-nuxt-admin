@@ -1,18 +1,18 @@
 import {type Ref, ref } from 'vue';
-import type {Settings} from '~/plugins/authorization';
 
-export const useTableVars = (settings: Settings): {
+export const useTableVars = (): {
     filters: Ref<object>;
     lang: Ref<string>;
     currency: Ref<string>;
     currencies: Ref<string[]>;
     langs: Ref<string[]>;
 } => {
+    const { settings } = useUser();
     const filters = ref<object>({});
-    const lang = ref<string>(settings.defaultLang);
-    const currency = ref<string>(settings.defaultCurrency);
-    const currencies = ref<string[]>(settings.currencies);
-    const langs = ref<string[]>(settings.langs);
+    const lang = ref<string>(settings.value.defaultLang);
+    const currency = ref<string>(settings.value.defaultCurrency);
+    const currencies = ref<string[]>(settings.value.currencies);
+    const langs = ref<string[]>(settings.value.langs);
     const router = useRouter();
     const route = useRoute();
 

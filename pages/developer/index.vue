@@ -92,7 +92,7 @@
   <div class="row">
     <BaseCard wrap="col-lg-6">
       <template #header>Uživatel</template>
-      {{ $user }}
+      {{ identity }}
     </BaseCard>
     <BaseCard wrap="col-lg-6">
       <template #header>Vlajky a ikony</template>
@@ -372,7 +372,7 @@ import useVuelidate, {BaseValidation} from '@vuelidate/core';
 
 const toast: ToastPluginApi = inject('toast', useToast());
 
-const { $user } = useNuxtApp();
+const { identity } = useUser();
 
 const activeTab: Ref<string> = ref('accepted');
 const formData: Ref<any> = ref({gender: 'female', gender2: null, hidden: true, colors: ['green'], company: null, test: 'test'});

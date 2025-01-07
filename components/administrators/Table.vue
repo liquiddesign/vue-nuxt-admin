@@ -54,8 +54,8 @@ withDefaults(defineProps<{
 
 const url = 'administrators';
 
-const { $user } = useNuxtApp();
+const { settings } = useUser();
 const page = ref<number>(1);
-const onPage = ref<number>($user.settings.defaultOnPage ?? 0);
+const onPage = ref<number>(settings.value.defaultOnPage);
 
 </script>

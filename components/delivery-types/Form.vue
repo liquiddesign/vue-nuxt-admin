@@ -45,7 +45,7 @@
             <BaseTextBox name="maxDepth" wrap="col-lg-4" label="Hloubka" type="number" placeholder="nelimitovat" :nullable="true" />
           </div>
           <div class="row mt-2">
-            <BaseTextBox name="maxWeight" wrap="col-lg-4" :label="`Váha (${$user.settings.deliveryUnitWeight})`" placeholder="nelimitovat" type="number" :nullable="true" />
+            <BaseTextBox name="maxWeight" wrap="col-lg-4" :label="`Váha ()`" placeholder="nelimitovat" type="number" :nullable="true" />
           </div>
           <br>
           <i class="fa fa-info-circle" /> Pokud bude některá z jednotek překročena. Bude zásilka rozdělena na více balíků.
@@ -130,8 +130,6 @@
    loading?: boolean,
    slug?: string|RouteParamValue[],
  }>(), { loading: false, slug: undefined });
-
- const { $user } = useNuxtApp();
 
  const rules = {
    priority: { required },

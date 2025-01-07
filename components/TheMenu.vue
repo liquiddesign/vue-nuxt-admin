@@ -22,7 +22,7 @@
 
 import data from '~/utils/Menu';
 import {type MenuItem} from '~/utils/Menu';
-const { $user } = useNuxtApp();
+const { hasPermission } = useUser();
 
 const active: any = reactive({});
 const route = useRoute();
@@ -32,7 +32,7 @@ onMounted(() => {
   data.forEach((section: MenuItem, i) => {
     section.items.forEach((item: MenuItem, j) => {
       item.items.forEach((subItem: MenuItem, k) => {
-        if (subItem.route && !$user.hasPermission(subItem.route)) {
+        if (subItem.route && !hasPermission(subItem.route)) {
           menu[i].items[j].items[k].hidden = true;
           return;
         }

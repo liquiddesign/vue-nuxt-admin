@@ -15,7 +15,7 @@
           </div>
         </div>
       </div>
-      <a v-for="l in $user.settings.langs" :key="l" type="button" tabindex="0" class="dropdown-item text-center py-1" @click.prevent="locale = l;">
+      <a v-for="l in settings.langs" :key="l" type="button" tabindex="0" class="dropdown-item text-center py-1" @click.prevent="locale = l;">
         <div style="margin: auto;"><BaseFlag style="font-size:20px" :lang="l" class="me-2" /> {{ l }}</div>
       </a>
     </div>
@@ -25,7 +25,7 @@
 
 import {useI18n} from 'vue-i18n';
 
-const { $user } = useNuxtApp();
+const { settings } = useUser();
 const { locale } = useI18n();
 
 

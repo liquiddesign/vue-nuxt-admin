@@ -3,7 +3,8 @@
     <option value="en">en</option>
     <option value="cs">cs</option>
   </select>
-
+  {{ identity }} | {{ isLoggedIn }}
+  <hr>
   {{ $t('backHome2', { name: 'vue-i18n' }) }}
   {{ data2 }}
   <hr>
@@ -101,6 +102,7 @@ import {useI18n} from 'vue-i18n';
 const { data: data2 } = useApiFetch('auth/status', {credentials: 'include'});
 const { locale } = useI18n();
 const { isConnected, liveTable, status } = useLiveFeed();
+const { identity, isLoggedIn } = useUser();
 
 
 </script>

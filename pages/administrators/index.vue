@@ -5,7 +5,6 @@
   <BaseTabs class="col-xl-6 col-lg-12" :active="$route.name" :tabs="{'administrators': 'Administratoři', 'roles': 'Role', 'groups': 'Skupiny'}" @select="navigateTo($event)" />
   <BaseCard wrap="col-lg-12">
     <template #headerLeft>
-      {{ filters }}
       <BaseFilter @cancel="filters = {}">
         <BaseTextBox v-model="filters.idn" wrap="flex-shrink-0" placeholder="id" type="number" style="width: 60px;" />
         <BaseTextBox v-model="filters.search" wrap="flex-shrink-0" placeholder="Login, příjmení, jméno, zkratka" type="text" size="40" />
@@ -25,7 +24,7 @@
 
 
 <script setup lang="ts">
-const { $user } = useNuxtApp();
-const { filters } = useTableVars($user.settings);
+
+const { filters } = useTableVars();
 
 </script>

@@ -1,38 +1,27 @@
-import {AuthorizationLevel, type Identity} from '~/plugins/authorization';
-
-type AuthStatusResponse = {
-    result: {
-        isLoggedIn: boolean;
-        identity: Identity;
-        csrfToken: string;
-    };
-};
+import {AuthorizationLevel} from '~/composables/useUser';
+const fallBackRoute: string  = 'dashboards';
 
 export default defineNuxtRouteMiddleware(async (to) => {
-    const { $user } = useNuxtApp();
+    const { isLoggedIn, hasPermission, reload, settings } = useUser();
     const destination: string | undefined = to.name?.toString();
 
-    if (!$user.isLoggedIn) {
-        const { data } = await useFetch<AuthStatusResponse>('http://localhost/vue-nuxt-api/api/auth/status', {credentials: 'include'});
-        if (data.value && data.value.result && data.value.result.isLoggedIn) {
-            console.log(data.value.result.identity);
-            $user.login(data.value.result.identity, true, data.value.result.csrfToken);
-        }
+    if (!isLoggedIn.value && destination !== 'index') {
+        await reload();
     }
 
-    if (destination && $user.isLoggedIn && (destination === 'index' || !$user.hasPermission(destination)) && $user.hasPermission($user.homepage)) {
-        return navigateTo($user.homepage);
+    if (destination && isLoggedIn.value && (destination === 'index' || !hasPermission(destination)) && hasPermission(settings.value.homepage  ?? fallBackRoute)) {
+        return navigateTo(settings.value.homepage ?? fallBackRoute);
     }
 
-    if (!destination || to.meta.authorization === AuthorizationLevel.Public || (to.meta.authorization === AuthorizationLevel.Authenticated && $user.isLoggedIn)) {
+    if (!destination || to.meta.authorization === AuthorizationLevel.Public || (to.meta.authorization === AuthorizationLevel.Authenticated && isLoggedIn.value)) {
         return;
     }
 
-    if (destination !== 'index' && !$user.isLoggedIn) {
+    if (destination !== 'index' && !isLoggedIn.value) {
         return navigateTo({name: 'index', query: {redirectTo: to.path}});
     }
 
-    if (destination !== 'index' && $user.isLoggedIn && !$user.hasPermission(destination)) {
+    if (destination !== 'index' && isLoggedIn.value && !hasPermission(destination)) {
         return abortNavigation();
     }
 });

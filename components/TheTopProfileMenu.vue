@@ -3,7 +3,7 @@
     <div class="widget-content-left">
       <div class="btn-group">
         <a data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn" style="border: 0; cursor: pointer;">
-          <BaseAvatar :user-id="$user.identity?.uuid ?? null" style="width: 45px; font-size: 18px;" />
+          <BaseAvatar :user-id="identity?.uuid ?? null" style="width: 45px; font-size: 18px;" />
           <i class="fa fa-angle-down ms-2 opacity-8" />
         </a>
         <div tabindex="-1" role="menu" class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
@@ -14,14 +14,14 @@
                 <div class="widget-content p-0">
                   <div class="widget-content-wrapper">
                     <div class="widget-content-left me-3">
-                      <BaseAvatar :user-id="$user.identity?.uuid ?? null" style="width: 45px; font-size: 18px;" />
+                      <BaseAvatar :user-id="identity?.uuid ?? null" style="width: 45px; font-size: 18px;" />
                     </div>
                     <div class="widget-content-left">
-                      <div class="widget-heading">{{ $user.identity?.surname }} {{ $user.identity?.name }}</div>
-                      <div class="widget-subheading opacity-8">{{ $user.identity?.account?.login }}</div>
+                      <div class="widget-heading">{{ identity?.surname }} {{ identity?.name }}</div>
+                      <div class="widget-subheading opacity-8">{{ identity?.account?.login }}</div>
                     </div>
                     <div class="widget-content-right me-2">
-                      <button class="btn-pill btn-shadow btn-shine btn btn-focus" @click.prevent.stop="logout">Odhlásit</button>
+                      <button class="btn-pill btn-shadow btn-shine btn btn-focus" @click.prevent.stop="logoutAction">Odhlásit</button>
                     </div>
                   </div>
                 </div>
@@ -29,8 +29,8 @@
             </div>
           </div>
           <p class="ps-2 mb-0">
-            <span>Přezdívka:</span> {{ $user.identity?.nickname }}<br>
-            <span>Role:</span> {{ $user.identity?.role }}
+            <span>Přezdívka:</span> {{ identity?.nickname }}<br>
+            <span>Role:</span> {{ identity?.role }}
           </p>
           <ul class="nav flex-column">
             <li class="nav-item-divider nav-item" />
@@ -43,21 +43,21 @@
     </div>
     <div class="widget-content-left  ms-3 header-user-info">
       <div class="widget-heading">
-        {{ $user.identity?.surname }} {{ $user.identity?.name }}
+        {{ identity?.surname }} {{ identity?.name }}
       </div>
       <div class="widget-subheading">
-        {{ $user.identity?.account?.login }}
+        {{ identity?.account?.login }}
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 
-const { $user } = useNuxtApp();
+const { identity, logout } = useUser();
 
-async function logout() {
+async function logoutAction() {
 
-  await $user.logout();
+  await logout();
   navigateTo('/');
   console.log('logouted');
 }

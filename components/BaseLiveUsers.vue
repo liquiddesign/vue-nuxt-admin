@@ -7,14 +7,14 @@
   </div>
 </template>
 <script setup lang="ts">
-const { $user } = useNuxtApp();
+const { identity } = useUser();
 const route = useRoute();
 const { liveTable } = useLiveFeed();
 
 // Computed property to filter avatars
 const filteredAvatars = computed(() => {
   return Object.values(liveTable.value).filter(
-      (meta) => route.path === meta.routePath && meta.user !== $user.identity?.uuid
+      (meta: any) => route.path === meta.routePath && meta.user !== identity.value?.uuid
   );
 });
 

@@ -40,7 +40,7 @@ const removeEventListener = (event: string, callback: (...args: any[]) => void) 
 export function useLiveFeed() {
     const config = useRuntimeConfig();
     const route = useRoute();
-    const { $user } = useNuxtApp();
+    const { identity } = useUser();
 
     const sendAction = (action: string, recordId: string | null = null, replyWithTable: boolean = false) => {
         const msg = {
@@ -48,7 +48,7 @@ export function useLiveFeed() {
             routePath: route.path,
             route: route.name,
             recordId: recordId ?? route.params?.id ?? null,
-            user: $user.identity?.uuid ?? null,
+            user: identity ? identity.uuid : null,
             replyWithTable: replyWithTable,
         };
 

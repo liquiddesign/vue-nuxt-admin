@@ -82,7 +82,7 @@
 import { inject } from 'vue';
 import {ToastPluginApi, useToast} from 'vue-toast-notification';
 import {required} from '@vuelidate/validators';
-import {AuthorizationLevel} from '~/plugins/authorization';
+import {AuthorizationLevel} from '~/composables/useUser';
 
 definePageMeta({
   authorization: AuthorizationLevel.Authenticated,

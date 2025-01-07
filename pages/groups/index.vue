@@ -21,8 +21,7 @@
 
 
 <script setup lang="ts">
-const { $user } = useNuxtApp();
 const route = useRoute();
-const { filters } = useTableVars($user.settings);
+const { filters } = useTableVars();
 
 </script>

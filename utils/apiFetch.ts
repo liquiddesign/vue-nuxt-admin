@@ -1,4 +1,3 @@
-import { generateCsfrToken } from '~/utils/generateCsfrToken';
 import type {NitroFetchOptions} from 'nitropack';
 
 export const apiFetch = async <T>(
@@ -10,12 +9,11 @@ export const apiFetch = async <T>(
     csrfProtection: boolean = true
 ): Promise<T> => {
     const config = useRuntimeConfig();
-    //const { accessToken } = useUser();
-    const { $user } = useNuxtApp();
+    const { generateCsfrToken } = useUser();
     let token: string = '';
 
-    if (csrfProtection && $user.token) {
-        token = generateCsfrToken($user.token, url);
+    if (csrfProtection) {
+        token = generateCsfrToken(url);
     }
 
     return $fetch<T>(config.public.baseURL + url, {

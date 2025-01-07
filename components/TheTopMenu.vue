@@ -1,16 +1,16 @@
 <template>
   <ul class="header-megamenu nav">
-    <li v-if="$user.hasPermission('administrators')" class="dropdown nav-item show">
+    <li v-if="hasPermission('administrators')" class="dropdown nav-item show">
       <a aria-haspopup="true" data-toggle="dropdown" class="nav-link" aria-expanded="true" @click="router.push({name: 'administrators'})">
         <i class="nav-link-icon pe-7s-users" /> Administratori
       </a>
     </li>
-    <li v-if="$user.hasPermission('administrators')" class="dropdown nav-item show">
+    <li v-if="hasPermission('administrators')" class="dropdown nav-item show">
       <a aria-haspopup="true" data-toggle="dropdown" class="nav-link" aria-expanded="true" @click="router.push({name: 'settings'})">
         <i class="nav-link-icon pe-7s-settings" /> Nastavení
       </a>
     </li>
-    <li v-if="$user.isSuperAdmin()" class="dropdown nav-item">
+    <li v-if="identity?.admin" class="dropdown nav-item">
       <a aria-haspopup="true" data-bs-toggle="dropdown" class="nav-link" aria-expanded="false">
         <i class="nav-link-icon pe-7s-plugin" /> Vývojář
         <i class="fa fa-angle-down ms-2 opacity-5" />
@@ -84,6 +84,6 @@
 <script setup lang="ts">
 
 const router = useRouter();
-const { $user } = useNuxtApp();
+const { identity, hasPermission } = useUser();
 
 </script>
