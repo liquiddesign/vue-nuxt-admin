@@ -7,26 +7,26 @@ export const useTableVars = (): {
     currencies: Ref<string[]>;
     langs: Ref<string[]>;
 } => {
+    const router = useRouter();
+    const route = useRoute();
+
+    console.log(route.query);
+
     const { settings } = useUser();
-    const filters = ref<object>({});
+    const filters = ref<object>({...route.query});
     const lang = ref<string>(settings.value.defaultLang);
     const currency = ref<string>(settings.value.defaultCurrency);
     const currencies = ref<string[]>(settings.value.currencies);
     const langs = ref<string[]>(settings.value.langs);
-    const router = useRouter();
-    const route = useRoute();
+
 
     watch(filters,  (newFilters) => {
         router.push({ query: {...newFilters} });
     }, { deep: true });
 
-    onMounted(() => {
-        filters.value = {...route.query};
-    });
-
-
     onActivated(() => {
         router.push({ query: {...filters.value} });
     });
+
     return { filters, lang, currency, currencies, langs };
 };

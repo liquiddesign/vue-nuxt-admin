@@ -38,6 +38,7 @@
         </div>
         <div class="app-header-right">
           <div class="header-dots">
+            <TheTopDropdownDatabase />
             <TheTopDropdownWS />
             <TheTopDropdownLanguage />
             <TheTopDropdownNotifications />

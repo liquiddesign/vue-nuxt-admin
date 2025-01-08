@@ -9,7 +9,7 @@ export const apiFetch = async <T>(
     csrfProtection: boolean = true
 ): Promise<T> => {
     const config = useRuntimeConfig();
-    const { generateCsfrToken } = useUser();
+    const { generateCsfrToken, settings } = useUser();
     let token: string = '';
 
     if (csrfProtection) {
@@ -21,6 +21,7 @@ export const apiFetch = async <T>(
         headers: {
             ...options.headers,
             'Csrf-Token': token,
+            'Database': settings.value.database,
         },
         credentials: 'include',
     });

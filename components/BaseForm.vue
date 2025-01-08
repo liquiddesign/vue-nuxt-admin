@@ -104,7 +104,7 @@ function submit() {
     const url = `${props.slug ? `${props.url}/${props.slug}` : props.url}`;
     const method = props.method || (props.slug ? 'PATCH' : 'POST');
 
-    apiFetch(url, { body: inputs, params: props.params, method, credentials: 'include' })
+    apiFetch(url, { body: inputs, params: props.params, method })
         .then((result) => {
           emit('success', result);
           if (!props.silent) { toast.success('Uloženo'); }

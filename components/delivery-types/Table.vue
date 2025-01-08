@@ -1,5 +1,5 @@
 <template>
-  <BaseGrid ref="grid" url="delivery-type" :page="page" :on-page="onPage" :filters="filters" :params="{currency: currency, lang: lang}">
+  <BaseGrid ref="grid" :url="url" :page="page" :on-page="onPage" :filters="filters" :params="{currency: currency, lang: lang}">
     <template #header>
       <tr>
         <BaseGridThSelect />
@@ -24,8 +24,8 @@
         <td class="minimal">{{ item.code }}</td>
         <td class="minimal"><img height="20" alt="packeta" src="https://w7.pngwing.com/pngs/130/549/png-transparent-ppl-pakket-servicepunt-dhl-express-logo-others-blue-text-service-thumbnail.png"></td>
         <td>{{ item.name[lang] }}</td>
-        <td class="number">{{ $price(item.minPrice, currency) }}</td>
-        <td class="number">{{ $price(item.maxPrice, currency) }}</td>
+        <td class="number">{{ formatPrice(item.minPrice, currency) }}</td>
+        <td class="number">{{ formatPrice(item.maxPrice, currency) }}</td>
         <td class="minimal"><BaseTextBox v-model="item.priority" type="number" class="form-control-xs" style="width: 50px;" @change="(e) => updateRow(parseInt(e.target.value), 'priority')" /></td>
         <td class="minimal"><BaseCheckBox v-model="item.recommended" @change="(e) => updateRow(e.target.checked, 'recommended')" /></td>
         <td class="minimal"><BaseCheckBox v-model="item.hidden" @change="(e) => updateRow(e.target.checked, 'hidden')" /></td>
@@ -34,7 +34,7 @@
     </template>
     <template #footer="{deleteRows, exportRows, selectedCount, disabledControls, selectedQuery, resetSelect}">
       <BaseGridSelectAll wrap="flex-shrink-0 me-1 ms-1" />
-      <BaseGridPaginator v-slot="{ totalCount }" wrap="flex-shrink-0" url="delivery-type" :page="page" :on-page="onPage" :filters="filters" @change-page="page = $event" @change-on-page="onPage = $event; page = 1;">
+      <BaseGridPaginator v-slot="{ totalCount }" wrap="flex-shrink-0" :url="url" :page="page" :on-page="onPage" :filters="filters" @change-page="page = $event" @change-on-page="onPage = $event; page = 1;">
         <BaseButtonEdit class="btn-paging" :outline="true" :disabled="disabledControls" @click="$refs.modalUpdate.open();">({{ selectedCount(totalCount) }})</BaseButtonEdit>
         <BaseButtonExport class="btn-paging" :outline="true" :disabled="disabledControls" @click="exportRows();">({{ selectedCount(totalCount) }})</BaseButtonExport>
         <BaseButtonDelete class="btn-paging" :outline="true" :disabled="disabledControls" :confirmation="true" @confirm="deleteRows();">({{ selectedCount(totalCount) }})</BaseButtonDelete>
@@ -60,18 +60,22 @@
 
 <script setup lang="ts">
 
-const { $price } = useNuxtApp();
+const url: string = 'delivery-types';
+
+const { settings } = useUser();
 
 withDefaults(defineProps<{
-  lang: string
-  currency: string
-  page: number
-  onPage: number
   filters: object
 }>(), {  });
 
 const defaultFormData = {recommended: {strategy: 'noAction', value: false}, hidden: {strategy: 'noAction', value: false}};
 const formData: any = ref(Object.assign({}, defaultFormData));
+
+const page = ref<number>(1);
+const lang = ref<string>('cs');
+const currency = ref<string>('CZK');
+
+const onPage = ref<number>(settings.value.defaultOnPage);
 
 function setDefaults()
 {

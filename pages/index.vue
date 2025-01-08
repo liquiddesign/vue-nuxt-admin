@@ -47,26 +47,26 @@ definePageMeta({
   description: 'Login obrazovka',
 });
 
-const formData:any = reactive({ lifeFeed: true });
 const { login, settings } = useUser();
-
 const toast: ToastPluginApi = inject('toast', useToast());
 const route = useRoute();
-const twoFactorRequired: Ref<boolean> = ref(false);
 
 const { data } = useApiFetch('auth/google-link', {}, false);
 
-function error(error: any) {
-  console.error(error);
-
-  toast.error(error?.statusCode !== undefined ? (twoFactorRequired.value ? 'Neplatné jednorázové heslo' : 'Špatné heslo nebo login') : 'Nepodařil se připojit k serveru');
-}
+const twoFactorRequired: Ref<boolean> = ref(false);
+const formData:any = reactive({ lifeFeed: true });
 
 const rules = {
   login: { required },
   password: { required },
   otp: { requiredIf: requiredIf(() => twoFactorRequired.value) },
 };
+
+function error(error: any) {
+  console.error(error);
+
+  toast.error(error?.statusCode !== undefined ? (twoFactorRequired.value ? 'Neplatné jednorázové heslo' : 'Špatné heslo nebo login') : 'Nepodařil se připojit k serveru');
+}
 
 function success(response: OkResponse) {
   if (response.result.success && response.result.strategy === 'otp') {

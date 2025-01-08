@@ -40,10 +40,12 @@ type AuthStatusResponse = {
 };
 
 export interface Settings {
+    database: string;
     homepage: string;
     defaultOnPage: number;
     defaultLang: string;
     defaultCurrency: string;
+    availableDatabases: string[];
     currencies: string[];
     langs: string[];
     maxUploads: number;
@@ -51,10 +53,12 @@ export interface Settings {
 }
 
 const defaultSettings: Settings = {
+    database: 'flumasys',
     homepage: 'dashboard',
     defaultOnPage: 10,
     defaultLang: 'cs',
     langs: ['cs', 'en'],
+    availableDatabases: ['flumasys', 'finnsub'],
     defaultCurrency: 'CZK',
     currencies: ['CZK'],
     maxUploads: 10,
@@ -75,7 +79,7 @@ if (localStorage.getItem('cachedAccessToken')) {
 const cachedIdentity = localStorage.getItem('cachedIdentity');
 if (cachedIdentity !== null) {
     identity.value = <Identity>JSON.parse(cachedIdentity);
-    settings.value = identity.value.settings || defaultSettings;
+    settings.value = Object.assign(defaultSettings, identity.value.settings);
 }
 
 const generateCsfrToken = (endpoint: string) => {

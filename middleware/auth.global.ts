@@ -1,4 +1,5 @@
 import {AuthorizationLevel} from '~/composables/useUser';
+
 const fallBackRoute: string  = 'dashboards';
 
 export default defineNuxtRouteMiddleware(async (to) => {

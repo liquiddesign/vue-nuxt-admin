@@ -50,6 +50,7 @@ import {reactive, computed, onActivated, Ref} from 'vue';
 import {ToastPluginApi, useToast} from 'vue-toast-notification';
 import qs from 'qs';
 import {transformObjectWithArrays} from '~/utils/transformObjectWithArrays';
+import {downloadFile} from '~/utils/helpers';
 
 const props = withDefaults(defineProps<{
   url: string,
@@ -67,9 +68,8 @@ const decorator: any = reactive({});
 const selectedAllChecked: Ref<boolean> = ref(false);
 const orderByValue: Ref<string|null> = ref(null);
 const orderByAsc: Ref<boolean|null> = ref(true);
-const filterValues: any = ref({});
+const filterValues: any = ref(props.filters);
 
-const { $download } = useNuxtApp();
 const { onDelete, onUpdate, onCreated, sendDelete, sendUpdate } = useLiveFeed();
 
 const { page, onPage } = toRefs(props);
@@ -78,6 +78,8 @@ const paging: any = reactive({
   page : page,
   onpage : onPage,
 });
+
+
 
 const params = computed(function () {
   const params = Object.assign({}, paging, filterValues.value, props.params);
@@ -93,10 +95,11 @@ const assignFiltersDebounced = _debounce(function (value) {
 }, 150);
 
 watch(() => props.filters, (value) => {
+  console.log('changed filters');
   assignFiltersDebounced(value);
   selected.value = {};
   selectedAllChecked.value = false;
-}, { deep: true });
+}, { deep: true, immediate: false });
 
 watch(page, () => {
   selected.value = {};
@@ -192,7 +195,7 @@ function exportRows() {
   apiFetch(props.url + selectedQuery.value, { params: props.filters, responseType: 'blob', method: 'POST', body: {'_op': 'export'}})
     .then((response) => {
 
-      $download(response, 'export.csv');
+      downloadFile(response, 'export.csv');
     }).catch(() => {
       toast.error('Nepodařilo se exportovat data');
   }).finally(() => {
