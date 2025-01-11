@@ -6,7 +6,9 @@
   <BaseCard wrap="col-lg-12">
     <template #headerLeft>
       <BaseFilter @cancel="filters = {}">
-        <BaseTextBox v-model="filters.q" wrap="flex-shrink-0" :placeholder="'Název, kód, #id'" type="text" />
+        <BaseTextBox v-model="filters['f:name%+id']" wrap="flex-shrink-0" :placeholder="'Název, #id'" type="text" />
+        <BaseTextBox v-model="filters['f:>id']" wrap="flex-shrink-0" :placeholder="'Od'" type="text" />
+        <BaseTextBox v-model="filters['f:>>id']" wrap="flex-shrink-0" :placeholder="'Od (včetně)'" type="text" />
       </BaseFilter>
     </template>
     <template #headerRight>

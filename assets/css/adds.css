@@ -298,3 +298,14 @@ textarea.input-required {
     top: 50%;
     transform: translateY(-50%);
 }
+
+.glowing-cell {
+    position: relative;
+    animation: glowing 1.5s infinite;
+}
+
+@keyframes glowing {
+    0% { background-color: rgba(240, 248, 255, 0.5); } /* Velmi světlá modrá (AliceBlue) */
+    50% { background-color: rgba(245, 245, 245, 0.8); } /* Světle šedá (WhiteSmoke) */
+    100% { background-color: rgba(240, 248, 255, 0.5); } /* Zpět na světlou modrou */
+}

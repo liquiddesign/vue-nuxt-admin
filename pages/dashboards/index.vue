@@ -7,7 +7,6 @@
     <option value="en">en</option>
     <option value="cs">cs</option>
   </select>
-
 </template>
 
 

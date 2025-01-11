@@ -1,13 +1,14 @@
 <template>
-  <BaseGrid ref="grid" :url="url" :page="page" :on-page="onPage" :filters="filters" :params="{currency: currency, lang: lang}">
+  <BaseGrid ref="grid" :url="url" :page="page" :on-page="onPage" :filters="filters" :params="{currency: currency}">
     <template #header>
       <tr>
         <BaseGridThSelect />
-        <BaseGridTh class="minimal" order-by="id">#</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="id">ID</BaseGridTh>
         <BaseGridTh />
         <BaseGridTh class="minimal" order-by="code">Kód</BaseGridTh>
         <BaseGridTh />
         <BaseGridTh order-by="name"><BaseFlag :lang="lang" /> Název</BaseGridTh>
+        <BaseGridTh order-by="name">Limit váhy</BaseGridTh>
         <BaseGridTh class="number">Min. cena</BaseGridTh>
         <BaseGridTh class="number">Max. cena</BaseGridTh>
         <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
@@ -19,17 +20,18 @@
     <template #body="{item, selected, deleteRow, updateRow}">
       <tr :class="{'inactive': item.hidden, 'active': selected}">
         <BaseGridTdSelect :id="item.uuid" />
-        <td class="minimal">{{ item.id }}</td>
+        <td class="minimal">{{ item.id ?? '-' }}</td>
         <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'delivery-types-id', params: { id: item.uuid }})" /></td>
         <td class="minimal">{{ item.code }}</td>
         <td class="minimal"><img height="20" alt="packeta" src="https://w7.pngwing.com/pngs/130/549/png-transparent-ppl-pakket-servicepunt-dhl-express-logo-others-blue-text-service-thumbnail.png"></td>
         <td>{{ item.name[lang] }}</td>
-        <td class="number">{{ formatPrice(item.minPrice, currency) }}</td>
-        <td class="number">{{ formatPrice(item.maxPrice, currency) }}</td>
+        <td>{{ item.totalMaxWeight ?? '-' }}</td>
+        <td class="number minimal">{{ formatPrice(item.minPrice, item.currencyCode ?? currency) }}</td>
+        <td class="number minimal">{{ formatPrice(item.maxPrice, item.currencyCode ?? currency) }}</td>
         <td class="minimal"><BaseTextBox v-model="item.priority" type="number" class="form-control-xs" style="width: 50px;" @change="(e) => updateRow(parseInt(e.target.value), 'priority')" /></td>
         <td class="minimal"><BaseCheckBox v-model="item.recommended" @change="(e) => updateRow(e.target.checked, 'recommended')" /></td>
         <td class="minimal"><BaseCheckBox v-model="item.hidden" @change="(e) => updateRow(e.target.checked, 'hidden')" /></td>
-        <td class="minimal"><BaseButtonDelete class="btn-xs" :confirmation="true" @confirm="deleteRow();" /></td>
+        <td class="minimal"><BaseButtonDelete class="btn-xs btn-danger" :confirmation="true" @confirm="deleteRow();" /></td>
       </tr>
     </template>
     <template #footer="{deleteRows, exportRows, selectedCount, disabledControls, selectedQuery, resetSelect}">
@@ -66,15 +68,14 @@ const { settings } = useUser();
 
 withDefaults(defineProps<{
   filters: object
+  lang: string,
+  currency: string,
 }>(), {  });
 
 const defaultFormData = {recommended: {strategy: 'noAction', value: false}, hidden: {strategy: 'noAction', value: false}};
 const formData: any = ref(Object.assign({}, defaultFormData));
 
 const page = ref<number>(1);
-const lang = ref<string>('cs');
-const currency = ref<string>('CZK');
-
 const onPage = ref<number>(settings.value.defaultOnPage);
 
 function setDefaults()

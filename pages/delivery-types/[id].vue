@@ -3,7 +3,7 @@
     <template #headerLeft>
       <BaseButtonBack class="me-2" @click="navigateTo({name: 'delivery-types'})" />
       <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
-      <BaseLanguageList :langs="settings.langs" :lang="lang.value" @select="lang = $event" />
+      <BaseLanguageList :langs="settings.langs" :lang="lang" @select="lang = $event" />
     </template>
     <template #headerRight>
       <BaseButtonExternalLink v-if="0" class="me-1" />
@@ -14,8 +14,8 @@
       <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm" @confirm="deleteItem()" />
     </template>
     <template #body>
-      <DeliveryTypesForm ref="form" :lang="lang.value" :data="data" :slug="route.params.id" :loading="pending" @success="redirect">
-        <template #top><h5 class="card-title">Doprava #{{ data?.id }}</h5></template>
+      <DeliveryTypesForm ref="form" :lang="lang" :data="data" :slug="route.params.id" :loading="pending" @success="redirect">
+        <template #top><h5 class="card-title">Doprava ID {{ data?.id }}</h5></template>
       </DeliveryTypesForm>
     </template>
   </BaseCard>
@@ -25,7 +25,7 @@ const route = useRoute();
 const { settings } = useUser();
 const lang: Ref<string> = ref(settings.value.defaultLang);
 
-const {data, pending, refresh} = useApiFetch('delivery-type/' + route.params.id);
-const {deleteItem, makeCopy, redirect} = useDetailMethods('delivery-type', 'delivery-types');
+const {data, pending, refresh} = useApiFetch('delivery-types/' + route.params.id);
+const {deleteItem, makeCopy, redirect} = useDetailMethods('delivery-types', 'delivery-types');
 
 </script>

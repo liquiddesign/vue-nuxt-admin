@@ -1,5 +1,5 @@
 <template>
-  <BaseForm ref="form" url="delivery-type" :lang="lang" :data="data" :slug="slug" :loading="loading" :rules="rules" @success="$refs?.imageBox?.upload($event.result); $emit('success', goBack ? null : $event.result); goBack = false">
+  <BaseForm ref="form" url="delivery-types" :lang="lang" :data="data" :slug="slug" :loading="loading" :rules="rules" @success="$refs?.imageBox?.upload($event.result); $emit('success', goBack ? null : $event.result); goBack = false">
     <div class="row">
       <BaseAlert v-if="data?.prices?.length === 0" wrap="col-lg-12" type="warning" icon="fa-exclamation-circle">
         K této dopravě neexistuje žádný ceník. Doprava tedy nebude zobrazena
@@ -25,7 +25,7 @@
           <div class="row mt-2">
             <div class="col-lg-6">
               <label>Logo dopravce</label>
-              <BaseImageBox ref="imageBox" url="delivery-type" :slug="slug" action="image" :directory="`delivery-type/${slug}/thumbs`" :testx="data.imageFileName" :files="!data.imageFileName ? [] : [data.imageFileName]" />
+              <BaseImageBox ref="imageBox" url="delivery-types" :slug="slug" action="image" :directory="`delivery-type/${slug}/thumbs`" :testx="data?.imageFileName" :files="!data?.imageFileName ? [] : [data?.imageFileName]" />
             </div>
           </div>
         </div>
@@ -51,12 +51,12 @@
           <i class="fa fa-info-circle" /> Pokud bude některá z jednotek překročena. Bude zásilka rozdělena na více balíků.
         </div>
         <div class="row mt-2">
-          <BaseMultiSelect name="defaultDisplayDelivery" wrap="col-lg-6" label="Výchozí zobrazované doručení" options-url="display-delivery" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
-          <BaseMultiSelect name="exclusive" wrap="col-lg-6" label="Exkluzivní pro skupinu uživatelů" options-url="customer-group" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
+          <BaseMultiSelect name="defaultDisplayDelivery" wrap="col-lg-6" label="Výchozí zobrazované doručení" options-url="display-deliveries" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
+          <BaseMultiSelect name="exclusive" wrap="col-lg-6" label="Exkluzivní pro skupinu uživatelů" options-url="customer-groups" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
         </div>
         <div class="row mt-2">
-          <BaseMultiSelect name="pickupPointType" wrap="col-lg-6" label="Typ výdejních míst" options-url="pickup-point-type" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
-          <BaseMultiSelect name="allowedPaymentTypes" wrap="col-lg-6" :multiple="true" label="Povolené typy plateb" options-url="payment-type" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
+          <BaseMultiSelect name="pickupPointType" wrap="col-lg-6" label="Typ výdejních míst" options-url="eshop/pickup-point-type" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
+          <BaseMultiSelect name="allowedPaymentTypes" wrap="col-lg-6" :multiple="true" label="Povolené typy plateb" options-url="payment-types" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
         </div>
         <div class="row mt-3">
           <div class="d-flex gap-3">
@@ -88,12 +88,13 @@
       </div>
       <div class="col-lg-6 ps-5">
         <h5 class="card-title">Ceník</h5>
-        <div class="form-wrapper-light mt-3">
+        {{ data?.prices }}
+        <div v-if="data?.prices" class="form-wrapper-light mt-3">
           <template v-for="(price, index) in data.prices" :key="index">
             <div class="row">
               <BaseTextBox :name="`prices.${index}.price`" :validation-errors="pricesErrors?.[index].price" wrap="col-lg-3" label="Cena" type="number" @change="price.priceVat = Math.round(parseInt(price.price) * 1.21)" />
               <BaseTextBox :name="`prices.${index}.priceVat`" :validation-errors="pricesErrors?.[index].priceVat" wrap="col-lg-3" label="Cena" type="number" />
-              <BaseMultiSelect :name="`prices.${index}.currency`" wrap="col-lg-2" label="Měna" options-url="currency" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
+              <BaseMultiSelect :name="`prices.${index}.currency`" wrap="col-lg-2" label="Měna" :options="currencies" />
               <div class="col-lg-1">
                 <label>&nbsp;</label><br>
                 <button class="btn btn-sm btn-outline-danger me-2" @click="data.prices.splice(index, 1);"><i class="fa fa-trash-o" /></button>
@@ -149,12 +150,14 @@
    },
  };
 
+ const { currencies } = usePrefetchedData();
+
 
  const form = ref(null);
  const goBack: Ref<boolean> = ref(false);
  const limitPriceList: Ref<any> = ref({});
 
- watch(() => props.data.prices, (value) => {
+ watch(() => props.data?.prices, (value) => {
    let i:number = 0;
    value.forEach((val: any) => {
      if (val.weightTo || val.dimensionTo) {

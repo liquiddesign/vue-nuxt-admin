@@ -58,9 +58,9 @@ const defaultSettings: Settings = {
     defaultOnPage: 10,
     defaultLang: 'cs',
     langs: ['cs', 'en'],
-    availableDatabases: ['flumasys', 'finnsub'],
+    availableDatabases: ['abel', 'levior', 'flumasys', 'finnsub'],
     defaultCurrency: 'CZK',
-    currencies: ['CZK'],
+    currencies: ['CZK', 'EUR'],
     maxUploads: 10,
     maxFilesize: 2 * 1024 * 1024,
 };
@@ -134,10 +134,6 @@ export const useUser = (): {
     generateCsfrToken: (endpoint: string) => string,
     isLoggedIn: ComputedRef<boolean>,
 } => {
-
-    // @TODO: usePrefetchedData, helpers.tx
-    // methods put outside
-
     const isLoggedIn: ComputedRef<boolean> = computed((): boolean => {
         return identity.value !== null;
     });
