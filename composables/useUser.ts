@@ -54,7 +54,7 @@ export interface Settings {
 
 const defaultSettings: Settings = {
     database: 'flumasys',
-    homepage: 'dashboard',
+    homepage: 'dashboards',
     defaultOnPage: 10,
     defaultLang: 'cs',
     langs: ['cs', 'en'],
@@ -94,7 +94,7 @@ const generateCsfrToken = (endpoint: string) => {
 const login = (loggedIdentity: Identity, loggedAccessToken: string): void => {
     logoutReason.value = null;
     identity.value = loggedIdentity;
-    settings.value = loggedIdentity.settings || defaultSettings;
+    settings.value = Object.assign(defaultSettings, identity.value.settings);
     accessToken.value = loggedAccessToken;
     localStorage.setItem('cachedIdentity', JSON.stringify(identity.value));
     localStorage.setItem('cachedAccessToken',  accessToken.value);
