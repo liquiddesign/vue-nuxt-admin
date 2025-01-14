@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 
-const url: string = 'delivery-types';
+const url: string = 'eshop/delivery-type';
 
 const { settings } = useUser();
 

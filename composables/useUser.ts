@@ -53,7 +53,7 @@ export interface Settings {
 }
 
 const defaultSettings: Settings = {
-    database: 'flumasys',
+    database: 'abel',
     homepage: 'dashboards',
     defaultOnPage: 10,
     defaultLang: 'cs',
