@@ -1,6 +1,6 @@
 <template>
-  <BasePageHeader title="Administratoři" icon="pe-7s-users" description="Správa administrátorů">
-    <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'administrators-new'})">Přidat administrátora</BaseButtonNew>
+  <BasePageHeader title="Typy dopravy" icon="pe-7s-car" description="Administrace možných doprav vašeho zboží">
+    <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'delivery-types-new'})">Přidat dopravu</BaseButtonNew>
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">
     <template #headerLeft>

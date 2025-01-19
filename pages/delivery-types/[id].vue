@@ -14,7 +14,7 @@
       <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm" @confirm="deleteItem()" />
     </template>
     <template #body>
-      <DeliveryTypesForm ref="form" :lang="lang" :data="data" :slug="route.params.id" :loading="pending" @success="redirect">
+      <DeliveryTypesForm ref="form" :lang="lang" :data="data" url="eshop/delivery-type" :slug="route.params.id" :loading="pending" @success="redirect">
         <template #top><h5 class="card-title">Doprava ID {{ data?.id }}</h5></template>
       </DeliveryTypesForm>
     </template>
@@ -25,7 +25,7 @@ const route = useRoute();
 const { settings } = useUser();
 const lang: Ref<string> = ref(settings.value.defaultLang);
 
-const {data, pending, refresh} = useApiFetch('delivery-types/' + route.params.id);
-const {deleteItem, makeCopy, redirect} = useDetailMethods('delivery-types', 'delivery-types');
+const {data, pending, refresh} = useApiFetch('eshop/delivery-type/' + route.params.id  + '/?expand=deliveryTypePrices,allowedPaymentTypes-uuid');
+const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/delivery-type/', 'delivery-types');
 
 </script>
