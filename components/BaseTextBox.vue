@@ -2,6 +2,7 @@
   <BaseWrapper :wrap="wrap">
     <label v-if="label !== null" :for="$attrs['id']">
       <span v-if="((form && form.lang) || lang) && locale" class="pe-1"><BaseFlag :lang="form && form.lang.value ? form.lang.value : lang" /></span>{{ label }}
+      <span v-if="required" class="text-danger">*</span>
     </label>
     <input v-bind="$attrs" class="form-control form-control-sm" :class="classes" :type="type === 'float' ? 'number' : type" :step="type === 'float' ? 0.01 : 1" :value="form && name ? _get(form.data.value, name) : modelValue" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange">
 
@@ -28,6 +29,7 @@ const props = withDefaults(defineProps<{
   label?: string|null
   lang?: string
   locale?: boolean
+  required?: boolean
   wrap?: string
   type?: string
   nullable?: boolean
