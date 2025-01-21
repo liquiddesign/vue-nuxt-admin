@@ -1,15 +1,16 @@
 <script setup lang="ts">
-const { filters, lang } = useTableVars();
+const { filters, lang, langs } = useTableVars();
 </script>
 
 <template>
-  <BasePageHeader :title="'Dostupnost'" :icon="'icon'" />
+  <BasePageHeader :title="'Dostupnost'" :icon="'icon'">
+    <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'amount-new'})">Přidat dostupnost</BaseButtonNew>
+  </BasePageHeader>
   <BaseCard wrap="col-lg-12">
-    <template #headerLeft>
-      <AmountTableFilter v-model="filters" />
-    </template>
-    <template #headerRight>
-      <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'amount-new'})">Nová položka</BaseButtonNew>
+    <template #header>
+      <AmountTableFilter v-model="filters">
+        <BaseLanguageDropdown class="me-1" :lang="lang" :langs="langs" @select="lang = $event" />
+      </AmountTableFilter>
     </template>
     <template #body>
       <AmountTable :filters="filters" :lang="lang" />
