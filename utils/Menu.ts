@@ -43,15 +43,16 @@ const menu: MenuItem[] = [
                 items: [
                     <MenuItem>{ title: 'Sklady a množství', route: 'orders2', disabled: true},
                     <MenuItem>{ title: 'Dostupnost', route: 'display-amount'},
+                    <MenuItem>{ title: 'Doručení', route: 'display-delivery'},
                     <MenuItem>{ title: 'Výdejní místa', route: 'demands2', disabled: true},
                 ],
             },
-            <MenuItem>{
-                title: 'Doručení',
-                icon: 'pe-7s-box1',
-                name: 'contracts3',
-                items: [],
-            },
+            // <MenuItem>{
+            //     title: 'Doručení',
+            //     icon: 'pe-7s-box1',
+            //     name: 'contracts3',
+            //     items: [],
+            // },
         ],
     },
     <MenuItem>{

@@ -1,15 +1,13 @@
 <script setup lang="ts">
-
 const { settings } = useUser();
 withDefaults(defineProps<{
   filters: object
   lang: string,
 }>(), {  });
 
-const url: string = '/eshop/display-amount';
+const url: string = '/eshop/display-delivery';
 const page = ref<number>(1);
 const onPage = ref<number>(settings.value.defaultOnPage);
-
 </script>
 
 <template>
@@ -19,7 +17,7 @@ const onPage = ref<number>(settings.value.defaultOnPage);
         <BaseGridThSelect />
         <BaseGridTh />
         <BaseGridTh order-by="label"><BaseFlag :lang="lang"/> Popisek</BaseGridTh>
-        <BaseGridTh order-by="isSold">Vyprodáno</BaseGridTh>
+        <BaseGridTh order-by="timeThreshold">Časový práh</BaseGridTh>
         <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
         <BaseGridTh><BaseGridThSettings /></BaseGridTh>
       </tr>
@@ -27,9 +25,9 @@ const onPage = ref<number>(settings.value.defaultOnPage);
     <template #body="{item, selected, deleteRow, updateRow}">
       <tr :class="{'inactive': item.hidden, 'active': selected}">
         <BaseGridTdSelect :id="item.uuid" />
-        <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'display-amount-id', params: { id: item.uuid }})" /></td>
+        <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'display-delivery-id', params: { id: item.uuid }})" /></td>
         <td>{{ item.label[lang] ?? '-' }}</td>
-        <td class="minimal"><BaseCheckBox v-model="item.isSold" @change="(e) => updateRow(e.target.checked, 'isSold')" /></td>
+        <td class="minimal">{{ item.timeThreshold }}</td>
         <td class="minimal"><BaseTextBox v-model="item.priority" type="number" class="form-control-xs" style="width: 50px;" @change="(e) => updateRow(parseInt(e.target.value), 'priority')" /></td>
         <td class="minimal"><BaseButtonDelete class="btn-xs btn-danger" :confirmation="true" @confirm="deleteRow();" /></td>
       </tr>
