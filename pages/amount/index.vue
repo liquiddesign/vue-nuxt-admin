@@ -3,7 +3,7 @@ const { filters, lang, langs } = useTableVars();
 </script>
 
 <template>
-  <BasePageHeader :title="'Dostupnost'" :icon="'icon'">
+  <BasePageHeader title="Dostupnost" description="Administrace dostupnosti" icon="pe-7s-box1">
     <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'amount-new'})">Přidat dostupnost</BaseButtonNew>
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">

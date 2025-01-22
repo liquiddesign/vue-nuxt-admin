@@ -18,10 +18,10 @@ const onPage = ref<number>(settings.value.defaultOnPage);
       <tr>
         <BaseGridThSelect />
         <BaseGridTh />
-        <BaseGridTh order-by="label">Popisek</BaseGridTh>
-        <BaseGridTh order-by="label">Vyprodáno</BaseGridTh>
+        <BaseGridTh order-by="label"><BaseFlag :lang="lang"/> Popisek</BaseGridTh>
+        <BaseGridTh order-by="isSold">Vyprodáno</BaseGridTh>
         <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
-        <BaseGridTh />
+        <BaseGridTh><BaseGridThSettings /></BaseGridTh>
       </tr>
     </template>
     <template #body="{item, selected, deleteRow, updateRow}">
