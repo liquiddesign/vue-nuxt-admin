@@ -42,7 +42,7 @@ const menu: MenuItem[] = [
                 name: 'stores-availability',
                 items: [
                     <MenuItem>{ title: 'Sklady a množství', route: 'orders2', disabled: true},
-                    <MenuItem>{ title: 'Dostupnost', route: 'amount'},
+                    <MenuItem>{ title: 'Dostupnost', route: 'display-amount'},
                     <MenuItem>{ title: 'Výdejní místa', route: 'demands2', disabled: true},
                 ],
             },

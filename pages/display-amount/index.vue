@@ -4,16 +4,16 @@ const { filters, lang, langs } = useTableVars();
 
 <template>
   <BasePageHeader title="Dostupnost" description="Administrace dostupnosti" icon="pe-7s-box1">
-    <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'amount-new'})">Přidat dostupnost</BaseButtonNew>
+    <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'display-amount-new'})">Přidat dostupnost</BaseButtonNew>
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">
     <template #header>
-      <AmountTableFilter v-model="filters">
+      <DisplayAmountTableFilter v-model="filters">
         <BaseLanguageDropdown class="me-1" :lang="lang" :langs="langs" @select="lang = $event" />
-      </AmountTableFilter>
+      </DisplayAmountTableFilter>
     </template>
     <template #body>
-      <AmountTable :filters="filters" :lang="lang" />
+      <DisplayAmountTable :filters="filters" :lang="lang" />
     </template>
   </BaseCard>
 </template>

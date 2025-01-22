@@ -4,14 +4,14 @@ const { settings } = useUser();
 const lang: Ref<string> = ref(settings.value.defaultLang);
 
 const {data, pending, refresh} = useApiFetch('/eshop/display-amount/' + route.params.id);
-const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/display-amount/', 'amount');
+const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/display-amount/', 'display-amount');
 
 </script>
 
 <template>
   <BaseCard>
     <template #headerLeft>
-      <BaseButtonBack class="me-2" @click="navigateTo({name: 'amount'})" />
+      <BaseButtonBack class="me-2" @click="navigateTo({name: 'display-amount'})" />
       <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
       <BaseLanguageList :langs="settings.langs" :lang="lang" @select="lang = $event" />
     </template>
@@ -23,6 +23,6 @@ const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/display-amount/
       </BaseDropdown>
       <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm" @confirm="deleteItem()" />
     </template>
-    <AmountForm ref="form" :lang="lang" :data="data" :loading="pending" url="/eshop/display-amount" :slug="route.params.id" @success="redirect"/>
+    <DisplayAmountForm ref="form" :lang="lang" :data="data" :loading="pending" url="/eshop/display-amount" :slug="route.params.id" @success="redirect" />
   </BaseCard>
 </template>
