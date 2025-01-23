@@ -33,7 +33,7 @@ const menu: MenuItem[] = [
                 name: 'delivery-payments',
                 items: [
                     <MenuItem>{ title: 'Typy dopravy', route: 'delivery-types'},
-                    <MenuItem>{ title: 'Typy plateb', route: 'history-orders1', disabled: true},
+                    <MenuItem>{ title: 'Typy plateb', route: 'payment-type'},
                 ],
             },
             <MenuItem>{
