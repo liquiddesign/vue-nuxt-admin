@@ -22,7 +22,7 @@ const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/display-deliver
       <BaseDropdown class="btn-outline-primary me-1" icon="fa-bolt">
         <BaseDropdownItem @click="makeCopy()">Vytvořit kopii</BaseDropdownItem>
       </BaseDropdown>
-      <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm" @confirm="deleteItem()" />
+      <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm text-danger" @confirm="deleteItem()" />
     </template>
     <DisplayDeliveryForm ref="form" :lang="lang" :data="data" url="eshop/display-delivery" :slug="route.params.id" :loading="pending" @success="redirect" />
   </BaseCard>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {RouteParamValue} from 'vue-router';
-import {required} from '@vuelidate/validators';
+import {helpers, required} from '@vuelidate/validators';
 
 withDefaults(defineProps<{
   url: string,
@@ -12,12 +12,34 @@ withDefaults(defineProps<{
 
 const form = ref(null);
 const goBack: Ref<boolean> = ref(false);
+const suppliers: Ref<any> = ref(null);
+const { currencies } = usePrefetchedData();
+
+const pricesErrors = computed(() => {
+  return form.value?.v$?.paymentTypePrices?.$each?.$response?.$errors;
+});
+
+useApiFetch('eshop/supplier/').then((response) => {
+  if (response?.data.value) {
+    suppliers.value = response.data.value;
+  }
+});
 
 const rules = {
   priority: {required},
   code: {required},
   name: {
     cs: {required},
+  },
+  paymentTypePrices: {
+    $each: helpers.forEach({
+      price: {
+        required,
+      },
+      priceVat: {
+        required,
+      },
+    }),
   },
 };
 
@@ -45,6 +67,7 @@ defineExpose({ submit } );
             </div>
           </div>
         </div>
+
         <div class="row mt-2">
           <BaseTextBox name="comgateMethod" wrap="col-lg-10" label="Polovené metody pro Comgate" placeholder="Zadejte povolené metody plateb" type="text" />
           <BaseTextBox name="priority" wrap="col-lg-2" label="Priorita" type="number" />
@@ -76,26 +99,37 @@ defineExpose({ submit } );
             <BaseCheckBox name="hidden" label="Skryto" wrap="flex-shrink-0" />
           </div>
         </div>
-      </div>
-      <div class="col-lg-6 ">
-        <div class="row form-wrapper-blue">
+
+        <div class="row form-wrapper-blue mt-3">
           <div class="col-lg-6">
             <h5 class="card-title">EXTERNÍ ID</h5>
-            <BaseTextBox name="externalId" wrap="row mt-2 flex-nowrap" label="Externí ID: Obecné" type="text" />
-            <BaseTextBox name="externalId " wrap="row mt-2 flex-nowrap" label="Externí ID: Default" type="text" />
-            <BaseTextBox name="externalId " wrap="row mt-2 flex-nowrap" label="Externí ID: AGEM.CZ" type="text" />
-            <BaseTextBox name="externalId " wrap="row mt-2 flex-nowrap" label="Externí ID: Arles" type="text" />
-            <BaseTextBox name="externalId " wrap="row mt-2 flex-nowrap" label="Externí ID: ASBIS" type="text" />
-            <BaseTextBox name="externalId " wrap="row mt-2 flex-nowrap" label="Externí ID: AT Computers" type="text" />
-            <BaseTextBox name="externalId " wrap="row mt-2 flex-nowrap" label="Externí ID: BHC" type="text" />
-            <BaseTextBox name="externalId " wrap="row mt-2 flex-nowrap" label="Externí ID: eD system" type="text" />
-            <BaseTextBox name="externalId " wrap="row mt-2 flex-nowrap" label="Externí ID: FAST s.r.o." type="text" />
-            <BaseTextBox name="externalId " wrap="row mt-2 flex-nowrap" label="Externí ID: LAMA" type="text" />
-            <BaseTextBox name="externalId " wrap="row mt-2 flex-nowrap" label="Externí ID: Starý eshop" type="text" />
-            <BaseTextBox name="externalId " wrap="row mt-2 flex-nowrap" label="Externí ID: QI" type="text" />
-            <BaseTextBox name="externalId " wrap="row mt-2 flex-nowrap" label="Externí ID: QIAll" type="text" />
-            <BaseTextBox name="externalId " wrap="row mt-2 flex-nowrap" label="Externí ID: TONERCENTRUM" type="text" />
-            <BaseTextBox name="externalId " wrap="row mt-2 flex-nowrap" label="Externí ID: TechData" type="text" />
+            <BaseTextBox name="externalId" wrap="row mt-2 flex-nowrap" label="Obecné" type="text" />
+            <template v-if="suppliers?.items">
+              <template v-for="(item, index) in suppliers.items" :key="index">
+                <BaseTextBox :name="item[item.code]" wrap="row mt-2 flex-nowrap" :label="item.name" type="text" />
+              </template>
+            </template>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 ps-5">
+        <h5 class="card-title">Ceník</h5>
+        <div v-if="data?.paymentTypePrices" class="form-wrapper-light mt-3">
+          <template v-for="(price, index) in data.paymentTypePrices" :key="index">
+            <div class="row">
+              <BaseTextBox :name="`paymentTypePrices.${index}.price`" :validation-errors="pricesErrors?.[index].price" wrap="col-lg-3" label="Cena" type="number" @change="price.priceVat = Math.round(parseInt(price.price) * 1.21)" />
+              <BaseTextBox :name="`paymentTypePrices.${index}.priceVat`" :validation-errors="pricesErrors?.[index].priceVat" wrap="col-lg-3" label="Cena s DPH" type="number" />
+              <BaseMultiSelect :name="`paymentTypePrices.${index}.currency`" wrap="col-lg-2" label="Měna" :options="currencies" />
+              <div class="col-lg-1">
+                <label>&nbsp;</label><br>
+                <button class="btn btn-sm btn-outline-danger me-2" @click="data.paymentTypePrices.splice(index, 1);"><i class="fa fa-trash-o" /></button>
+              </div>
+            </div>
+            <hr class="pt-1" style="color: white">
+          </template>
+          <div class="mt-3">
+            <button class="btn btn-sm btn-outline-secondary me-2" @click="data.paymentTypePrices.push({paymentType: slug, price: null,currency: 'CZK', country: 'CZ'});"><i class="fa fa-plus" /></button>
           </div>
         </div>
       </div>
