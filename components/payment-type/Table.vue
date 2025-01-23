@@ -38,7 +38,7 @@ const onPage = ref<number>(settings.value.defaultOnPage);
         <td class="minimal"><BaseTextBox v-model="item.priority" type="number" class="form-control-xs" style="width: 50px;" @change="(e) => updateRow(parseInt(e.target.value), 'priority')" /></td>
         <td class="minimal"><BaseCheckBox v-model="item.recommended" @change="(e) => updateRow(e.target.checked, 'recommended')" /></td>
         <td class="minimal"><BaseCheckBox v-model="item.hidden" @change="(e) => updateRow(e.target.checked, 'hidden')" /></td>
-        <td class="minimal"><BaseButton class="btn btn-outline-primary" @click="navigateTo({name: 'payment-type-pracelist'})">Ceník</BaseButton></td>
+        <td class="minimal"><BaseButton class="btn btn-outline-primary" @click="navigateTo({name: 'payment-type-prices-id', params: { id: item.uuid }})">Ceník</BaseButton></td>
         <td class="minimal"><BaseButtonDelete class="btn-xs btn-danger" :confirmation="true" @confirm="deleteRow();" /></td>
       </tr>
     </template>
