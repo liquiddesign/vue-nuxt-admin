@@ -48,6 +48,7 @@ function submit()
   form.value?.submit();
 }
 
+
 const $emit = defineEmits(['success']);
 defineExpose({ submit } );
 </script>
@@ -77,7 +78,6 @@ defineExpose({ submit } );
           <div class="row mt-2">
             <div class="col-lg-6">
               <label>Obrázek</label>
-<!--              <BaseImageBox ref="imageBox" url="payment-type" :slug="slug" action="image" :directory="`https://www.abel.cz//userfiles/paymenttype_images/thumb/` + data?.imageFileName" :testx="data?.imageFileName" :files="!data?.imageFileName ? [] : [data?.imageFileName]" />-->
               <BaseImageBox ref="imageBox" url="payment-type" :slug="slug" action="image" :directory="''" :testx="data?.imageFileName" :files="!data?.imageFileName ? [] : [data?.imageFileName]" />
             </div>
           </div>
@@ -111,6 +111,13 @@ defineExpose({ submit } );
             </template>
           </div>
         </div>
+
+        <div class="row mt-3">
+          <div class="col-lg-6">
+            <BaseFormButton class="btn-success btn-sm me-1" @click="goBack = true;">Uložit</BaseFormButton>
+            <BaseFormButton class="btn-outline-primary me-1 btn-sm" @click="goBack = false;">Uložit a pokračovat</BaseFormButton>
+          </div>
+        </div>
       </div>
 
       <div class="col-lg-6 ps-5">
@@ -131,13 +138,6 @@ defineExpose({ submit } );
           <div class="mt-3">
             <button class="btn btn-sm btn-outline-secondary me-2" @click="data.paymentTypePrices.push({paymentType: slug, price: null,currency: 'CZK', country: 'CZ'});"><i class="fa fa-plus" /></button>
           </div>
-        </div>
-      </div>
-
-      <div class="row mt-3">
-        <div class="col-lg-6">
-          <BaseFormButton class="btn-success btn-sm me-1" @click="goBack = true;">Uložit</BaseFormButton>
-          <BaseFormButton class="btn-outline-primary me-1 btn-sm" @click="goBack = false;">Uložit a pokračovat</BaseFormButton>
         </div>
       </div>
     </div>
