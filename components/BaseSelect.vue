@@ -29,9 +29,10 @@ const props = withDefaults(defineProps<{
   wrap?: string
   options: object
   name?: string
-  modelValue?: string|null,
+  type?: string
+  modelValue?: string|number|boolean|null,
   validation?: BaseValidation,
-}>(), { wrap: undefined, label: null,  lang: undefined, locale: false, prompt: undefined, name: undefined, modelValue: undefined, validation: undefined });
+}>(), { wrap: undefined, label: null,  lang: undefined, locale: false, type: 'text', prompt: undefined, name: undefined, modelValue: undefined, validation: undefined });
 
 defineOptions({
   inheritAttrs: false,
@@ -40,7 +41,15 @@ defineOptions({
 const $emit = defineEmits(['update:modelValue']);
 
 function onChange($event: any) {
-  let value: string|number|null = $event.target.value;
+  let value: string|null|number|boolean = $event.target.value;
+
+  if (props.type === 'number') {
+    value = Number(value);
+  }
+
+  if (props.type === 'boolean') {
+    value = value === 'true';
+  }
 
   if ($event.target.value === '') {
     value = null;
@@ -49,6 +58,8 @@ function onChange($event: any) {
   if (form && props.name) {
     form.updateInput(props.name, value);
   }
+
+   console.log(value);
 
   $emit('update:modelValue', value);
 }

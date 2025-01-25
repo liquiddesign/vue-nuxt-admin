@@ -38,7 +38,7 @@
         <h5 class="card-title mt-3">Konverze a přepočet</h5>
         <div class="row mt-2">
           <BaseTextBox name="convertRatio" wrap="col-lg-3" label="Kurz" type="float" :nullable="true" />
-          <BaseMultiSelect name="convertCurrency" wrap="col-lg-2" label="Vztažen k měně" options-url="currency" :options-url-params="{method: 'POST', body: {'_op': 'optionsList'}}" />
+          <BaseMultiSelect name="convertCurrency" wrap="col-lg-2" label="Vztažen k měně" options-url="eshop/currency?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
           <BaseTextBox name="calculationPrecision" wrap="col-lg-3" label="Počet desetiných míst při konverzi" type="number" :nullable="true" />
         </div>
         <div class="row mt-3">
