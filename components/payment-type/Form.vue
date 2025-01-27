@@ -100,18 +100,6 @@ defineExpose({ submit } );
           </div>
         </div>
 
-        <div class="row form-wrapper-blue mt-3">
-          <div class="col-lg-6">
-            <h5 class="card-title">EXTERNÍ ID</h5>
-            <BaseTextBox name="externalId" wrap="row mt-2 flex-nowrap" label="Obecné" type="text" />
-            <template v-if="suppliers?.items">
-              <template v-for="(item, index) in suppliers.items" :key="index">
-                <BaseTextBox :name="item[item.code]" wrap="row mt-2 flex-nowrap" :label="item.name" type="text" />
-              </template>
-            </template>
-          </div>
-        </div>
-
         <div class="row mt-3">
           <div class="col-lg-6">
             <BaseFormButton class="btn-success btn-sm me-1" @click="goBack = true;">Uložit</BaseFormButton>
@@ -137,6 +125,17 @@ defineExpose({ submit } );
           </template>
           <div class="mt-3">
             <button class="btn btn-sm btn-outline-secondary me-2" @click="data.paymentTypePrices.push({paymentType: slug, price: null,currency: 'CZK', country: 'CZ'});"><i class="fa fa-plus" /></button>
+          </div>
+        </div>
+        <div class="row form-wrapper-blue mt-3">
+          <div class="col-lg-6">
+            <h5 class="card-title">EXTERNÍ ID</h5>
+            <BaseTextBox name="externalId" wrap="row mt-2 flex-nowrap" label="Obecné" type="text" />
+            <template v-if="suppliers?.items">
+              <template v-for="(item, index) in suppliers.items" :key="index">
+                <BaseTextBox :name="item[item.code]" wrap="row mt-2 flex-nowrap" :label="item.name" type="text" />
+              </template>
+            </template>
           </div>
         </div>
       </div>
