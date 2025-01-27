@@ -4,9 +4,9 @@
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">
     <template #headerLeft>
-<!--      <CurrencyTableFilter v-model="filters">-->
-<!--        <BaseLanguageDropdown class="me-1" :lang="lang" :langs="langs" @select="lang = $event" />-->
-<!--      </CurrencyTableFilter>-->
+      <CurrencyTableFilter v-model="filters">
+        <BaseLanguageDropdown class="me-1" :lang="lang" :langs="langs" @select="lang = $event" />
+      </CurrencyTableFilter>
     </template>
     <CurrencyTable :filters="filters" :lang="lang" />
   </BaseCard>
