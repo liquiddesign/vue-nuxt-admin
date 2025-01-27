@@ -1,7 +1,7 @@
 <template>
   <BaseCard>
     <template #headerLeft>
-      <BaseButtonBack class="me-2" @click="navigateTo({name: 'currencies'})" />
+      <BaseButtonBack class="me-2" @click="navigateTo({name: 'currency'})" />
       <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
     </template>
     <template #headerRight>
@@ -13,9 +13,9 @@
       <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm" @confirm="deleteItem()" />
     </template>
     <template #body>
-      <CurrenciesForm ref="form" :data="data" :slug="route.params.id" :loading="pending" @success="redirect">
+      <CurrencyForm ref="form" :data="data" :slug="route.params.id" :loading="pending" @success="redirect">
         <template #top><h5 class="card-title">Měna #{{ data?.id }}</h5></template>
-      </CurrenciesForm>
+      </CurrencyForm>
     </template>
   </BaseCard>
 </template>
@@ -23,6 +23,6 @@
 const route = useRoute();
 
 const {data, pending, refresh} = useApiFetch('currency/' + route.params.id);
-const {deleteItem, makeCopy, redirect} = useDetailMethods('currency', 'currencies');
+const {deleteItem, makeCopy, redirect} = useDetailMethods('currency', 'currency');
 
 </script>

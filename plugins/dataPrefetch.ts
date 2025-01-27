@@ -9,7 +9,7 @@ export default defineNuxtPlugin(() => {
     };
 
     /*$fetch(config.public.baseURL + 'list', {method: 'GET'}).then((response: any) => {
-        Object.assign(dataProvider.currencies, response?.result);
+        Object.assign(dataProvider.currency, response?.result);
     });*/
 
     return {

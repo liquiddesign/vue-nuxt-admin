@@ -75,7 +75,7 @@ const menu: MenuItem[] = [
                 name: 'contracts2',
                 items: [
                     <MenuItem>{ title: 'Země a DPH', route: 'orders2', disabled: true},
-                    <MenuItem>{ title: 'Měny', route: 'history-orders2', disabled: true},
+                    <MenuItem>{ title: 'Měny', route: 'currency'},
                     <MenuItem>{ title: 'Výdejní místa', route: 'demands2', disabled: true},
                 ],
             },
