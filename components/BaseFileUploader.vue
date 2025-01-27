@@ -13,6 +13,23 @@
 </template>
 <script setup lang="ts">
 
+import {generateUUID} from '~/utils/helpers';
+import {type ToastPluginApi, useToast} from 'vue-toast-notification';
+
+const $emit = defineEmits(['filesSelected']);
+
+interface FileData {
+  hash: string;
+  name: string;
+  size: number;
+  fileUpload: File;
+  uploadProcess: any | null;
+  isImage: boolean;
+  uploaded: any | null;
+  dbObject: object;
+  objectSrc?: string;
+  dataSrc?: string;
+}
 
 const props = defineProps({
   url: {
@@ -100,6 +117,9 @@ const props = defineProps({
 const id: string = 'TODOUUID';
 
 const files: Ref<any[]> = ref([]);
+const maxUploadReached: Ref<boolean> = ref(false);
+const toast: ToastPluginApi = inject('toast', useToast());
+
 const { settings } = useUser();
 
 const totalUploadAmount:ComputedRef<number> = computed(() => {
@@ -133,7 +153,7 @@ function isValidExtension(fileName: string)
 }
 
 function onFileChanged($event: Event) {
-  maxUploadReached = false;
+  maxUploadReached.value = false;
 
   const target = $event.target as HTMLInputElement;
   if (target.files) {
@@ -145,44 +165,67 @@ function onFileChanged($event: Event) {
         break;
       }
 
-      if (files.value.length >= maxUploadLimit) {
-        this.maxUploadReached = true;
+      if (files.value.length >= settings.value.maxFilesize) {
+        maxUploadReached.value = true;
         console.error('max uploader reached');
         break;
       }
 
-      let fileUpload = target.files[i];
+      const fileUpload = target.files[i];
 
-      const file = {hash: this.$helpers.uuidv4(), fileUpload, uploadProcess: null, isImage: !!fileUpload.type?.startsWith('image/'), uploaded: null, dbObject: {}};
+      const file: FileData = {
+        hash: generateUUID(),
+        name: '',
+        size: '',
+        fileUpload,
+        uploadProcess: null,
+        isImage: !!fileUpload.type?.startsWith('image/'),
+        uploaded: null,
+        dbObject: {},
+      };
 
-      if (!this.isValidExtension(fileUpload.name)) {
+      if (!isValidExtension(fileUpload.name)) {
         continue;
       }
 
-      if (this.maxUploadSize !== null && file.size > this.maxUploadSize) {
-        this.$toast.error('Soubor ' + file.name + ' má větší než max. povolnou velikost (' + (Math.round(this.maxUploadSize / 1024 / 1024)) + ' MB)');
+      if (settings.value.maxFilesize !== null && file.size > settings.value.maxFilesize) {
+        toast.error('Soubor ' + file.name + ' má větší než max. povolnou velikost (' + (Math.round(settings.value.maxFilesize / 1024 / 1024)) + ' MB)');
 
         continue;
       }
 
       file.objectSrc = URL.createObjectURL(fileUpload);
 
-      this.blobToDataURL(fileUpload, function(dataUrl) {
+      blobToDataURL(fileUpload, function(dataUrl) {
         file.dataSrc = dataUrl;
       });
 
-      this.files.push(file);
+      files.value.push(file);
       newFiles.push(file);
     }
 
-    this.$emit('filesSelected', newFiles);
+    $emit('filesSelected', newFiles);
 
-    event.target.value = '';
+    target.value = '';
 
-    if (this.autoUpload && newFiles.length) {
-      this.upload();
+    if (props.autoUpload && newFiles.length) {
+      upload();
     }
   }
+}
+
+function upload() {
+  console.log('upload');
+}
+
+function blobToDataURL(blob: Blob, callback: (dataUrl: string) => void): void {
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    if (event.target?.result) {
+      callback(event.target.result as string);
+    }
+  };
+  reader.readAsDataURL(blob);
 }
 
 
