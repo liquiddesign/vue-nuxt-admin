@@ -8,7 +8,9 @@
         <BaseGridTh class="minimal" order-by="code">Kód</BaseGridTh>
         <BaseGridTh />
         <BaseGridTh order-by="name"><BaseFlag :lang="lang" /> Název</BaseGridTh>
-        <BaseGridTh order-by="name">Limit váhy</BaseGridTh>
+        <BaseGridTh order-by="name">Doručení</BaseGridTh>
+        <BaseGridTh><BaseFlag :lang="lang" /> Povolené platby</BaseGridTh>
+        <BaseGridTh class="number" order-by="totalMaxWeight">Limit váhy</BaseGridTh>
         <BaseGridTh class="number">Min. cena</BaseGridTh>
         <BaseGridTh class="number">Max. cena</BaseGridTh>
         <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
@@ -20,12 +22,14 @@
     <template #body="{item, selected, deleteRow, updateRow}">
       <tr :class="{'inactive': item.hidden, 'active': selected}">
         <BaseGridTdSelect :id="item.uuid" />
-        <td class="minimal">{{ item.id ?? '-' }}</td>
+        <td class="minimal handle">{{ item.id ?? '-' }}  ☰</td>
         <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'delivery-types-id', params: { id: item.uuid }})" /></td>
         <td class="minimal">{{ item.code }}</td>
         <td class="minimal"><img height="20" alt="packeta" src="https://w7.pngwing.com/pngs/130/549/png-transparent-ppl-pakket-servicepunt-dhl-express-logo-others-blue-text-service-thumbnail.png"></td>
         <td>{{ item.name[lang] }}</td>
-        <td>{{ item.totalMaxWeight ?? '-' }}</td>
+        <td> <button class="btn btn-outline-secondary btn-xs" style="top: -1px;">1</button> {{ item.defaultDisplayDelivery?.label }}</td>
+        <td>{{ item.allowedPaymentTypes?.map(item => item['name'][lang] || null).join(', ') }}</td>
+        <td class="number">{{ formatNumber(item.totalMaxWeight, settings.defaultWeightUnit) }}</td>
         <td class="number minimal">{{ formatPrice(item.minPrice, item.currencyCode ?? currency) }}</td>
         <td class="number minimal">{{ formatPrice(item.maxPrice, item.currencyCode ?? currency) }}</td>
         <td class="minimal"><BaseTextBox v-model="item.priority" type="number" class="form-control-xs" style="width: 50px;" @change="(e) => updateRow(parseInt(e.target.value), 'priority')" /></td>
@@ -62,9 +66,12 @@
 
 <script setup lang="ts">
 
-const url: string = 'eshop/delivery-type';
+
+const url: string = 'eshop/delivery-type?expand=defaultDisplayDelivery,allowedPaymentTypes';
+//const url: string = 'eshop/delivery-type?expand=defaultDisplayDelivery.,allowedPaymentTypes';
 
 const { settings } = useUser();
+
 
 withDefaults(defineProps<{
   filters: object
@@ -82,5 +89,6 @@ function setDefaults()
 {
   formData.value = defaultFormData;
 }
+
 
 </script>

@@ -57,6 +57,30 @@
         </div>
       </div>
     </BaseForm>
+    <hr>
+    <br><br>
+
+    <BaseFileUploader />
+    <hr>
+    <br><br>
+      <table border="1">
+        <thead>
+        <tr>
+          <th>Pořadí</th>
+          <th>Jméno</th>
+          <th>Věk</th>
+          <th>Město</th>
+        </tr>
+        </thead>
+        <tbody ref="sortableTable">
+        <tr v-for="(item, index) in items" :key="item.id" :data-id="item.id + 'TEST'">
+          <td class="handle">☰</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.age }}</td>
+          <td>{{ item.city }}</td>
+        </tr>
+        </tbody>
+      </table>
   </BaseCard>
 </template>
 
@@ -98,6 +122,26 @@ function submit(data: any) {
 const el = useTemplateRef<HTMLElement>('el')
 useSortable(el, data.value.langs)
 
+
+const items = ref([
+  { id: 1, name: "Jan", age: 28, city: "Praha" },
+  { id: 2, name: "Anna", age: 22, city: "Brno" },
+  { id: 3, name: "Tomáš", age: 35, city: "Ostrava" },
+]);
+
+const sortableTable = ref(null);
+
+
+// [] -> on end prekreslit
+useSortable(sortableTable, items, {
+  handle: ".handle", // Pouze madla umožní přesun
+  animation: 150, // Animace při přesunu
+  onEnd: ({ item, newIndex  }) => {
+
+    console.log(item.dataset.id);
+    console.log(newIndex);
+  },
+});
 
 
 

@@ -58,7 +58,7 @@ const defaultSettings: Settings = {
     database: 'abel',
     homepage: 'dashboards',
     interactivePermissions: true,
-    defaultWeightUnit: 'g',
+    defaultWeightUnit: 'kg',
     defaultOnPage: 10,
     defaultLang: 'cs',
     langs: ['cs', 'en'],
