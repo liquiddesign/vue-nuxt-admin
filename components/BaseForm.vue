@@ -127,7 +127,10 @@ function submit() {
         });
 
     v$.value.$reset();
+  } else if (!v$.value.$invalid && !props.disabled) {
+    emit('success', inputs);
   }
+
 }
 
 provide('form', {

@@ -9,7 +9,7 @@
         </a>
         <ul v-if="item.items.length" class="mm-collapse" :class="{'mm-show' : active[item.name] === true}">
           <li v-for="(subItem, index3) in item.items" :key="index3">
-            <a v-if="!subItem.hidden" :class="{'mm-active': subItem.route === route.name || _startsWith($route.name, subItem.route), 'disabled': subItem.disabled}" @click.stop.prevent="navigateTo({name: subItem.route})">
+            <a v-if="!subItem.hidden" style="cursor: pointer" :class="{'mm-active': subItem.route === route.name || _startsWith($route.name, subItem.route), 'disabled': subItem.disabled}" @click.stop.prevent="navigateTo({name: subItem.route})">
               <i class="metismenu-icon" />{{ subItem.title }}
             </a>
           </li>
