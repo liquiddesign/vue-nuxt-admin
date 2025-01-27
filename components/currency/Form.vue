@@ -5,17 +5,10 @@
         <slot name="top" />
         <div class="row">
           <BaseTextBox name="name" wrap="col-lg-8" label="Název" type="text" />
-          <BaseTextBox name="code" wrap="col-lg-4" label="Kód" type="text" />
         </div>
         <div class="row mt-2">
+          <BaseTextBox name="code" wrap="col-lg-4" label="Kód" type="text" />
           <BaseTextBox name="symbol" wrap="col-lg-4" label="Symbol" type="text" />
-          <BaseTextBox name="priority" wrap="col-lg-2" label="Priorita" type="number" />
-        </div>
-        <div class="row mt-3">
-          <div class="d-flex gap-3">
-            <BaseCheckBox name="recommended" label="Doporučeno" wrap="flex-shrink-0" />
-            <BaseCheckBox name="hidden" label="Skryto" wrap="flex-shrink-0" />
-          </div>
         </div>
         <div class="row mt-3">
           <BaseCheckBox name="isVirtual">Virtuální měna <small class="ps-1 text-secondary"><i class="fa fa-info-circle" /> Jako měnu můžete přidat například kredity nebo jiné alternativní jednotky</small></BaseCheckBox>

@@ -4,14 +4,12 @@
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">
     <template #headerLeft>
-      <CurrencyTableFilter v-model="filters">
-        <BaseLanguageDropdown class="me-1" :lang="lang" :langs="langs" @select="lang = $event" />
-      </CurrencyTableFilter>
+      <CurrencyTableFilter v-model="filters" />
     </template>
     <CurrencyTable :filters="filters" :lang="lang" />
   </BaseCard>
 </template>
 
 <script setup lang="ts">
-const { filters, lang, langs } = useTableVars();
+const { filters, lang } = useTableVars();
 </script>

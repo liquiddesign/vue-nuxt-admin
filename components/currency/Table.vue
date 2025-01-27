@@ -7,13 +7,9 @@
         <BaseGridTh />
         <BaseGridTh class="minimal" order-by="code">Kód</BaseGridTh>
         <BaseGridTh class="minimal" order-by="symbol">Symbol</BaseGridTh>
-        <BaseGridTh order-by="name"><BaseFlag :lang="lang" /> Název</BaseGridTh>
-        <BaseGridTh class="minimal">Typ</BaseGridTh>
+        <BaseGridTh order-by="name">Název</BaseGridTh>
         <BaseGridTh class="minimal" order-by="convertRatio">Kurz</BaseGridTh>
         <BaseGridTh class="minimal" order-by="enableConversion">Konverze</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="recommended"><i class="fa fa-thumbs-o-up" /></BaseGridTh>
-        <BaseGridTh class="minimal" order-by="hidden"><i class="fa fa-eye-slash" /></BaseGridTh>
         <BaseGridTh class="minimal"><BaseGridThSettings /></BaseGridTh>
       </tr>
     </template>
@@ -25,12 +21,8 @@
         <td class="minimal">{{ item.code }}</td>
         <td>{{ item.symbol ?? '-' }}</td>
         <td>{{ item.name ?? '-' }}</td>
-        <td class="minimal">{{ 'realna' }}</td>
         <td class="minimal">{{ item.convertRatio }}</td>
         <td class="minimal"><BaseCheckBox v-model="item.enableConversion" @change="(e) => updateRow(e.target.checked, 'enableConversion')" /></td>
-        <td class="minimal"><BaseTextBox v-model="item.priority" type="number" class="form-control-xs" style="width: 50px;" @change="(e) => updateRow(parseInt(e.target.value), 'priority')" /></td>
-        <td class="minimal"><BaseCheckBox v-model="item.recommended" @change="(e) => updateRow(e.target.checked, 'recommended')" /></td>
-        <td class="minimal"><BaseCheckBox v-model="item.hidden" @change="(e) => updateRow(e.target.checked, 'hidden')" /></td>
         <td class="minimal"><BaseButtonDelete class="btn-xs btn-danger" :confirmation="true" @confirm="deleteRow();" /></td>
       </tr>
     </template>
@@ -42,14 +34,14 @@
         <BaseButtonDelete class="btn-paging" :outline="true" :disabled="disabledControls" :confirmation="true" @confirm="deleteRows();">({{ selectedCount(totalCount) }})</BaseButtonDelete>
         <BaseModal ref="modalUpdate" :title="'Hromadná úprava (celkem ' + selectedCount(totalCount) + ')'">
           <BaseForm ref="form" method="PATCH" :data="formData" :url="'currency' + selectedQuery" :params="filters" @success="setDefaults(); resetSelect(); $refs.grid.refresh();">
-            <div class="row">
-              <BaseCheckBox label="Skrytý" name="recommended.value" wrap="col-lg-6 pt-1" :disabled="formData.recommended.strategy === 'noAction'" />
-              <BaseSelect name="recommended.strategy" :class="{'border-success': formData.recommended.strategy !== 'noAction'}" :options="{noAction: 'původní', replace: 'nahradit'}" wrap="col-lg-6" />
-            </div>
-            <div class="row mt-3">
-              <BaseCheckBox label="Doporučený" name="hidden.value" wrap="col-lg-6 pt-1" :disabled="formData.hidden.strategy === 'noAction'" />
-              <BaseSelect name="hidden.strategy" :class="{'border-success': formData.hidden.strategy !== 'noAction'}" :options="{noAction: 'původní', replace: 'nahradit'}" wrap="col-lg-6" />
-            </div>
+<!--            <div class="row">-->
+<!--              <BaseCheckBox label="Skrytý" name="recommended.value" wrap="col-lg-6 pt-1" :disabled="formData.recommended.strategy === 'noAction'" />-->
+<!--              <BaseSelect name="recommended.strategy" :class="{'border-success': formData.recommended.strategy !== 'noAction'}" :options="{noAction: 'původní', replace: 'nahradit'}" wrap="col-lg-6" />-->
+<!--            </div>-->
+<!--            <div class="row mt-3">-->
+<!--              <BaseCheckBox label="Doporučený" name="hidden.value" wrap="col-lg-6 pt-1" :disabled="formData.hidden.strategy === 'noAction'" />-->
+<!--              <BaseSelect name="hidden.strategy" :class="{'border-success': formData.hidden.strategy !== 'noAction'}" :options="{noAction: 'původní', replace: 'nahradit'}" wrap="col-lg-6" />-->
+<!--            </div>-->
           </BaseForm>
           <template #footer="{close}">
             <BaseButton class="btn-primary" :loading="$refs.form?.pending" wrap="flex-shrink-0" @click="$refs.form?.submit(); close();">Upravit záznamy</BaseButton>

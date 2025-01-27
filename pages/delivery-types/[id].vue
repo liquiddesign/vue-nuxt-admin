@@ -11,7 +11,7 @@
       <BaseDropdown class="btn-outline-primary me-1" icon="fa-bolt">
         <BaseDropdownItem @click="makeCopy()">Vytvořit kopii</BaseDropdownItem>
       </BaseDropdown>
-      <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm text-danger" @confirm="deleteItem()" />
+      <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm btn-danger" @confirm="deleteItem()" />
     </template>
     <template #body>
       <DeliveryTypesForm ref="form" :lang="lang" :data="data" url="eshop/delivery-type" :slug="route.params.id" :loading="pending" @success="redirect">
