@@ -42,6 +42,8 @@ type AuthStatusResponse = {
 export interface Settings {
     database: string;
     homepage: string;
+    interactivePermissions: boolean;
+    defaultWeightUnit: string;
     defaultOnPage: number;
     defaultLang: string;
     defaultCurrency: string;
@@ -55,6 +57,8 @@ export interface Settings {
 const defaultSettings: Settings = {
     database: 'abel',
     homepage: 'dashboards',
+    interactivePermissions: true,
+    defaultWeightUnit: 'kg',
     defaultOnPage: 10,
     defaultLang: 'cs',
     langs: ['cs', 'en'],
@@ -81,6 +85,10 @@ if (cachedIdentity !== null) {
     identity.value = <Identity>JSON.parse(cachedIdentity);
     settings.value = Object.assign(defaultSettings, identity.value.settings);
 }
+
+const storeSettings = (data: Settings) => {
+    settings.value = Object.assign(settings.value, data);
+};
 
 const generateCsfrToken = (endpoint: string) => {
     const currentTime = Math.floor(Date.now() / 300000) * 300000; // Zakrouhlení na 5 minut
@@ -127,6 +135,7 @@ export const useUser = (): {
     accessToken: Ref<string | null>;
     identity: Ref<Identity | null>;
     settings: Ref<Settings>;
+    storeSettings: (data: Settings) => void,
     reload: () => void,
     login: (loggedIdentity: Identity, loggedAccessToken: string) => void,
     logout: (currentLogoutReason?: LogoutReason) => void,
@@ -138,5 +147,5 @@ export const useUser = (): {
         return identity.value !== null;
     });
 
-    return { accessToken, identity, settings, reload, login, logout, isLoggedIn, generateCsfrToken, hasPermission };
+    return { accessToken, identity, settings, storeSettings, reload, login, logout, isLoggedIn, generateCsfrToken, hasPermission };
 };

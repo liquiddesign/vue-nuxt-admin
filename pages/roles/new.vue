@@ -16,7 +16,7 @@
 </template>
 <script setup lang="ts">
 
-const defaultFormData = { };
+const defaultFormData = { permissions: {}};
 const data:any = ref(Object.assign({}, defaultFormData));
 
 function redirect(id?: string) {
