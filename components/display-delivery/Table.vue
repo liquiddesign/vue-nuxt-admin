@@ -16,7 +16,7 @@ const onPage = ref<number>(settings.value.defaultOnPage);
       <tr>
         <BaseGridThSelect />
         <BaseGridTh />
-        <BaseGridTh order-by="label"><BaseFlag :lang="lang"/> Popisek</BaseGridTh>
+        <BaseGridTh order-by="label"><BaseFlag :lang="lang" /> Popisek</BaseGridTh>
         <BaseGridTh order-by="timeThreshold">Časový práh</BaseGridTh>
         <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
         <BaseGridTh><BaseGridThSettings /></BaseGridTh>
