@@ -4,16 +4,23 @@
       <BaseButtonBack class="me-2" @click="navigateTo({name: 'internal-ribbon'})" />
       <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
     </template>
-    <InternalRibbonForm ref="form" :data="formData" @success="redirect" />
+    <InternalRibbonForm ref="form" url="eshop/internal-ribbon" :data="formData" @success="redirect" />
   </BaseCard>
 </template>
 
 <script setup lang="ts">
 
-const formData:any = ref({ code: '', name: {cs: '', en: ''}, priority: 0});
+const defaultFormData = {
+  uuid: '',
+  name: '',
+  type: '',
+  color: '',
+  backgroundColor: '',
+};
+const formData:any = ref(Object.assign({}, defaultFormData));
 
 function redirect(id) {
-  formData.value = { code: '', name: {cs: '', en: ''}, priority: 0};
+  formData.value = Object.assign({}, defaultFormData);
   id ? navigateTo({name: 'internal-ribbon-id', params: {id: id}}) :  navigateTo({name: 'internal-ribbon'});
 }
 </script>
