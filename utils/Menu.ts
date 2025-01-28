@@ -95,8 +95,18 @@ const menu: MenuItem[] = [
                 title: 'Štítky',
                 icon: 'pe-7s-box1',
                 name: 'internal-ribbon',
+                route: 'internal-ribbon',
                 items: [
-                    <MenuItem>{ title: 'Štítky', route: 'internal-ribbon'},
+                    // <MenuItem>{ title: 'Štítky', route: 'internal-ribbon'},
+                ],
+            },
+            <MenuItem>{
+                title: 'Zákazníci',
+                icon: 'pe-7s-box1',
+                name: 'customer',
+                route: 'customer',
+                items: [
+                    // <MenuItem>{ title: 'Štítky', route: 'internal-ribbon'},
                 ],
             },
 

@@ -34,7 +34,6 @@
 const { settings } = useUser();
 withDefaults(defineProps<{
   filters: object
-  lang: string,
 }>(), {  });
 
 const url: string = '/eshop/internal-ribbon';
