@@ -4,7 +4,7 @@
     <BaseTextBox wrap="col-3 row flex-nowrap" name="name" label="Popisek" type="text" required />
     <BaseColorPicker wrap="col-3 row flex-nowrap mt-2" name="color" label="Barva textu" />
     <BaseColorPicker wrap="col-3 row flex-nowrap mt-2" name="backgroundColor" label="Barva pozadí" />
-    <BaseTextBox wrap="col-3 row flex-nowrap mt-2" name="type" label="Typ" type="text" required />
+    <BaseSelect wrap="col-3 row flex-nowrap mt-2" name="type" label="Typ" :options="typeOptions" required />
 
     <div class="row mt-3">
       <div class="col-lg-6">
@@ -33,6 +33,12 @@ const goBack: Ref<boolean> = ref(false);
 const rules = {
   name: {required},
   type: {required},
+};
+
+const typeOptions = {
+  product: 'product',
+  order: 'order',
+  price_list: 'price_list',
 };
 
 function submit()
