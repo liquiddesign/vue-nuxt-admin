@@ -4,14 +4,12 @@
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">
     <template #headerLeft>
-      <InternalRibbonTableFilter v-model="filters">
-        <BaseLanguageDropdown class="me-1" :lang="lang" :langs="langs" @select="lang = $event" />
-      </InternalRibbonTableFilter>
+      <InternalRibbonTableFilter v-model="filters" />
     </template>
-    <InternalRibbonTable :filters="filters" :lang="lang" />
+    <InternalRibbonTable :filters="filters" />
   </BaseCard>
 </template>
 
 <script setup lang="ts">
-const { filters, lang, langs } = useTableVars();
+const { filters } = useTableVars();
 </script>
