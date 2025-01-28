@@ -87,6 +87,21 @@ const menu: MenuItem[] = [
             },
         ],
     },
+    <MenuItem>{
+        title: 'Nastavení',
+        name: 'settings',
+        items: [
+            <MenuItem>{
+                title: 'Štítky',
+                icon: 'pe-7s-box1',
+                name: 'internal-ribbon',
+                items: [
+                    <MenuItem>{ title: 'Štítky', route: 'internal-ribbon'},
+                ],
+            },
+
+        ],
+    },
 ];
 
 export default menu;
