@@ -3,7 +3,7 @@
     <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'customer-new'})">Přidat zákazníka</BaseButtonNew>
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">
-    <template #headerLeft>
+    <template #header>
       <CustomerTableFilter v-model="filters" />
     </template>
     <CustomerTable :filters="filters" />
