@@ -48,7 +48,7 @@ export function useLiveFeed() {
             routePath: route.path,
             route: route.name,
             recordId: recordId ?? route.params?.id ?? null,
-            user: identity ? identity.uuid : null,
+            user: identity.value ? identity.value.uuid : null,
             replyWithTable: replyWithTable,
         };
 

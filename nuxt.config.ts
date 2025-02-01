@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   },
 
   ssr: false,
-  css: ['bootstrap/dist/css/bootstrap.min.css', '@/assets/css/base.css', '@/assets/css/adds.css', '@/assets/css/toaster.css', '@/assets/css/popper.css', '@/assets/css/multiselect.css', 'pe7-icon/dist/dist/pe-icon-7-stroke.css', 'font-awesome/css/font-awesome.css'],
+  css: ['bootstrap/dist/css/bootstrap.min.css', '@/assets/css/base.css', '@/assets/css/adds.css', '@/assets/css/toaster.css', '@/assets/css/popper.css', '@/assets/css/multiselect.css', 'pe7-icon/dist/dist/pe-icon-7-stroke.css', '@fortawesome/fontawesome-free/css/all.min.css'],
 
   app: {
       head: {

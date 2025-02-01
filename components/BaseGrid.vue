@@ -5,7 +5,8 @@
         <thead>
           <slot name="header" :select-page="selectPage" :order-by="(value) => orderBy(value)" :order-by-value="orderByValue" :order-by-asc="orderByAsc" />
         </thead>
-        <tbody>
+        <tbody style="position:relative;">
+          <Loading :active="pending" :can-cancel="false" :is-full-page="false" loader="bars" color="gray" />
           <template v-for="(item,i) in items" :key="i">
             <slot name="body" :item="applyDecorator(item)" :index="i" :selected="selected[i]" :changed="changed[i]" :delete-row="() => deleteRow(item, i)" :processing="processing" :update-row="(value, name) => updateRow(item, value, name)" />
           </template>
@@ -21,7 +22,7 @@
           </tr>
           <tr v-if="pending && Object.values(items).length === 0 ">
             <td colspan="100%" style="text-align: center; font-style: italic">
-              <i class="fa fa-circle-notch fa-spin" /> Načítám data ...
+             &nbsp;
             </td>
           </tr>
         </tbody>
@@ -51,23 +52,31 @@ import {ToastPluginApi, useToast} from 'vue-toast-notification';
 import qs from 'qs';
 import {transformObjectWithArrays} from '~/utils/transformObjectWithArrays';
 import {downloadFile} from '~/utils/helpers';
+import type {GridOrder} from '~/composables/useTableVars';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 const props = withDefaults(defineProps<{
   url: string,
   page?: number,
   onPage?: number,
   filters?: any,
+  order?: GridOrder,
   params?: any,
   silent?: boolean
-}>(), {page: 1, onPage: 15, filters: {}, params: {}, silent: false});
+}>(), {page: 1, onPage: 15, filters: {}, order: undefined, params: {},  silent: false});
 
 const changed: any = ref({});
 const selected: any = ref({});
 const processing: any = ref(false);
 const decorator: any = reactive({});
 const selectedAllChecked: Ref<boolean> = ref(false);
-const orderByValue: Ref<string|null> = ref(null);
-const orderByAsc: Ref<boolean|null> = ref(true);
+
+
+const orderByValue: Ref<string|null|undefined> = ref(props.order ? props.order.property : null);
+const orderByAsc: Ref<boolean|null> = ref(props.order ? props.order.direction === 'asc' : true);
+
+
 const filterValues: any = ref(props.filters);
 
 const { onDelete, onUpdate, onCreated, sendDelete, sendUpdate } = useLiveFeed();
@@ -79,27 +88,29 @@ const paging: any = reactive({
   onpage : onPage,
 });
 
-
-
 const params = computed(function () {
-  const params = Object.assign({}, paging, filterValues.value, props.params);
-  orderByValue.value ? params['order'] =  orderByValue.value + '-' + (orderByAsc.value ? 'ASC' : 'DESC') : delete params['order'];
+  const params2 = Object.assign({}, paging, filterValues.value, props.params);
+  orderByValue.value ? params2['order'] =  orderByValue.value + '-' + (orderByAsc.value ? 'ASC' : 'DESC') : delete params2['order'];
 
-  return transformObjectWithArrays(params);
+  return transformObjectWithArrays(params2);
 });
+
+const debounceParams: any = ref(params.value);
+watch(params, _debounce((value) => {
+  debounceParams.value = value;
+}, 150));
 
 const toast: ToastPluginApi = inject('toast', useToast());
 
-const assignFiltersDebounced = _debounce(function (value) {
-  filterValues.value = value;
-}, 150);
+
 
 watch(() => props.filters, (value) => {
-  console.log('changed filters');
-  assignFiltersDebounced(value);
+  filterValues.value = value;
   selected.value = {};
   selectedAllChecked.value = false;
 }, { deep: true, immediate: false });
+
+
 
 watch(page, () => {
   selected.value = {};
@@ -115,7 +126,7 @@ const items = computed(function() {
   return data?.value?.items || {};
 });
 
-const {data, pending, error, refresh} = useApiFetch(props.url, {query: params});
+const {data, pending, error, refresh} = useApiFetch(props.url, {query: debounceParams});
 
 const selectedNumber = computed( () => selectedIds().length);
 
@@ -292,6 +303,8 @@ function orderBy(value: string) {
   //Object.keys(items.value).forEach((key:string) => delete selected[key]);
   selected.value = {};
   selectedAllChecked.value = false;
+
+  emit('changeOrder', {property: orderByValue.value, direction: orderByAsc.value ? 'asc' : 'desc'});
 }
 
 onActivated(() => {
@@ -303,6 +316,8 @@ onActivated(() => {
 function selectedIds() {
   return Object.keys(Object.fromEntries(Object.entries(selected.value).filter(([, value]) => value) ));
 }
+
+const emit = defineEmits(['changeOrder']);
 
 provide('grid', {
   refresh,

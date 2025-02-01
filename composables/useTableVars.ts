@@ -1,32 +1,77 @@
 import {type Ref, ref } from 'vue';
+import type {LocationQueryValue} from 'vue-router';
+
+export interface GridOrder {
+    property?: string
+    direction?: 'asc' | 'desc',
+}
 
 export const useTableVars = (): {
     filters: Ref<object>;
+    clearFilters: () => void;
     lang: Ref<string>;
     currency: Ref<string>;
     currencies: Ref<string[]>;
     langs: Ref<string[]>;
+    page: Ref<number>;
+    onPage: Ref<number>;
+    order: Ref<GridOrder>;
 } => {
     const router = useRouter();
     const route = useRoute();
 
-    console.log(route.query);
+    const { order: queryOrder, page: queryPage, onPage: queryOnPage, ...filterQuery } = route.query;
 
     const { settings } = useUser();
-    const filters = ref<object>({...route.query});
+    const filters = ref<Record<string, LocationQueryValue | LocationQueryValue[]>>(filterQuery);
     const lang = ref<string>(settings.value.defaultLang);
     const currency = ref<string>(settings.value.defaultCurrency);
     const currencies = ref<string[]>(settings.value.currencies);
     const langs = ref<string[]>(settings.value.langs);
+    const page = ref<number>(queryPage ? parseInt(queryPage.toString()) : 1);
+    const onPage = ref<number>(queryOnPage ? parseInt(queryOnPage.toString()) : settings.value.defaultOnPage);
+
+    let auxOrder = {};
+    if (queryOrder) {
+       const [property, direction] = queryOrder.toString().split('-');
+       auxOrder = {property, direction: direction.toLowerCase() as 'asc' | 'desc' };
+    }
+
+    const order = ref<GridOrder>(auxOrder);
 
 
     watch(filters,  (newFilters) => {
-        router.push({ query: {...newFilters} });
+        const { order} = route.query;
+
+        const cleanedFilters = Object.fromEntries(
+            Object.entries(newFilters).filter(([, value]) => value !== '')
+        );
+
+        router.push({ query: { order,  ...cleanedFilters} });
+        page.value = 1;
     }, { deep: true });
 
-    onActivated(() => {
-        router.push({ query: {...filters.value} });
+    watch(order,  (order: GridOrder) => {
+        if (!order.property) {
+            router.push({query: {...route.query, order: undefined}});
+        } else {
+            router.push({query: {...route.query, order: order.property + '-' + order.direction}});
+        }
+    }, { deep: true });
+
+    watch(page,  (page) => {
+        console.log('pushhing', page);
+        if (page > 1) {
+            router.push({query: {...route.query, page: page}});
+        } else {
+            router.push({query: {...route.query, page: undefined}});
+        }
     });
 
-    return { filters, lang, currency, currencies, langs };
+    const clearFilters = function () {
+        console.log('clearing filter', filters);
+        Object.keys(filters.value).forEach(key => delete filters.value[key]);
+    };
+
+    return { filters, clearFilters, lang, currency, currencies, langs, page, onPage, order };
 };

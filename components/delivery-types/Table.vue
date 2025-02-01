@@ -1,5 +1,5 @@
 <template>
-  <BaseGrid ref="grid" :url="url" :page="page" :on-page="onPage" :filters="filters" :params="{currency: currency}">
+  <BaseGrid ref="grid" :url="url" :page="page" :on-page="onPage" :filters="filters" :order="order" :params="{currency: currency}" @change-order="emit('update:order', $event)">
     <template #header>
       <tr>
         <BaseGridThSelect />
@@ -15,7 +15,7 @@
         <BaseGridTh class="number">Max. cena</BaseGridTh>
         <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
         <BaseGridTh class="minimal" order-by="recommended"><i class="fa fa-thumbs-o-up" /></BaseGridTh>
-        <BaseGridTh class="minimal" order-by="hidden"><i class="fa fa-eye-slash" /></BaseGridTh>
+        <BaseGridTh class="minimal" order-by="hidden"><i class="far fa-eye-slash" /></BaseGridTh>
         <BaseGridTh><BaseGridThSettings /></BaseGridTh>
       </tr>
     </template>
@@ -39,8 +39,8 @@
       </tr>
     </template>
     <template #footer="{deleteRows, exportRows, selectedCount, disabledControls, selectedQuery, resetSelect}">
-      <BaseGridSelectAll wrap="flex-shrink-0 me-1 ms-1" />
-      <BaseGridPaginator v-slot="{ totalCount }" wrap="flex-shrink-0" :url="url" :page="page" :on-page="onPage" :filters="filters" @change-page="page = $event" @change-on-page="onPage = $event; page = 1;">
+
+      <BaseGridPaginator v-slot="{ totalCount }" wrap="flex-shrink-0" :url="url" :page="page" :on-page="onPage" :filters="filters" @change-page="emit('update:page', $event)" @change-on-page="emit('update:onPage', $event); page = 1;">
         <BaseButtonEdit class="btn-paging" :outline="true" :disabled="disabledControls" @click="$refs.modalUpdate.open();">({{ selectedCount(totalCount) }})</BaseButtonEdit>
         <BaseButtonExport class="btn-paging" :outline="true" :disabled="disabledControls" @click="exportRows();">({{ selectedCount(totalCount) }})</BaseButtonExport>
         <BaseButtonDelete class="btn-paging" :outline="true" :disabled="disabledControls" :confirmation="true" @confirm="deleteRows();">({{ selectedCount(totalCount) }})</BaseButtonDelete>
@@ -67,28 +67,34 @@
 <script setup lang="ts">
 
 
+import type {GridOrder} from '~/composables/useTableVars';
+
 const url: string = 'eshop/delivery-type?expand=defaultDisplayDelivery,allowedPaymentTypes';
 //const url: string = 'eshop/delivery-type?expand=defaultDisplayDelivery.,allowedPaymentTypes';
 
 const { settings } = useUser();
 
+const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
+
 
 withDefaults(defineProps<{
-  filters: object
+  filters?: any
   lang: string,
   currency: string,
-}>(), {  });
+  page: number,
+  onPage: number,
+  order: GridOrder,
+}>(), { filters: {}  });
 
 const defaultFormData = {recommended: {strategy: 'noAction', value: false}, hidden: {strategy: 'noAction', value: false}};
 const formData: any = ref(Object.assign({}, defaultFormData));
-
-const page = ref<number>(1);
-const onPage = ref<number>(settings.value.defaultOnPage);
 
 function setDefaults()
 {
   formData.value = defaultFormData;
 }
+
+
 
 
 </script>
