@@ -31,6 +31,12 @@ interface FileData {
   dataSrc?: string;
 }
 
+interface UploadProcess {
+  id: string | number;
+  progress: number;
+  controller: AbortController;
+}
+
 const props = defineProps({
   url: {
     type: String,
@@ -117,6 +123,7 @@ const props = defineProps({
 const id: string = 'TODOUUID';
 
 const files: Ref<any[]> = ref([]);
+const uploadProcesses: Ref<Record<string, UploadProcess>> = ref({});
 const maxUploadReached: Ref<boolean> = ref(false);
 const toast: ToastPluginApi = inject('toast', useToast());
 
@@ -176,7 +183,7 @@ function onFileChanged($event: Event) {
       const file: FileData = {
         hash: generateUUID(),
         name: '',
-        size: '',
+        size: fileUpload.size,
         fileUpload,
         uploadProcess: null,
         isImage: !!fileUpload.type?.startsWith('image/'),
@@ -216,6 +223,63 @@ function onFileChanged($event: Event) {
 
 function upload() {
   console.log('upload');
+
+  const id: string = generateUUID();
+
+  uploadProcesses.value[id] = {id: id, progress: 0, controller: new AbortController()} as UploadProcess;
+
+  //  apiFetch(url, { body: inputs, params: props.params, method })
+  return axios.post(url, getUploadData(), {
+    headers: {'content-type': 'multipart/form-data'},
+    signal: uploadProcesses.value[id].controller.signal,
+    onUploadProgress: progressEvent => {
+      uploadProcesses.value[id].progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+    }
+  }).then((response) => {
+    const uploaded = [];
+    files.value.filter(v => v.uploadProcess?.id === id).forEach((value) => {
+
+      if (value.uploaded !== null) {
+        return;
+      }
+
+      value.uploadProcess = null;
+
+      if (response.data.result[value.hash]) {
+        value.uploaded = true;
+        Object.assign(value.dbObject, response.data.result[value.hash]);
+        uploaded.push(value);
+      } else {
+        console.error('not in result', value.hash, response.data.result);
+        value.uploaded = false;
+        toast.error('Soubor byl odmítnut serverem.');
+      }
+    });
+    delete uploadProcesses.value[id];
+
+    if (props.clearOnSuccess) {
+      files.value.splice(0);
+    }
+  }).catch((x) => {
+    if (x instanceof CanceledError) {
+      $emit('canceled', x);
+    } else {
+      //if (this.maxUploadSize !== null && getUploadSize() > this.maxUploadSize) {
+      if (0) {
+        toast.error('Soubory mají větší než max. povolenou velikost (' + (Math.round(this.maxUploadSize / 1024 / 1024)) + ' MB). Zkuste je nahrát po menších dávkách.');
+      } else {
+        toast.error('Soubor se nepodařilo nahrát.');
+      }
+    }
+
+    files.value.forEach((value) => {
+      value.uploadProcess = null;
+      value.uploaded = false;
+    });
+    console.error('upload error', x);
+
+    delete uploadProcesses.value[id];
+  });
 }
 
 function blobToDataURL(blob: Blob, callback: (dataUrl: string) => void): void {
@@ -227,6 +291,23 @@ function blobToDataURL(blob: Blob, callback: (dataUrl: string) => void): void {
   };
   reader.readAsDataURL(blob);
 }
+
+const getUploadData = () => {
+  const data = new FormData();
+  const hashes = [];
+  data.append('name', 'attachments');
+
+  for (let i = 0; i < files.value.length; i++) {
+    if (files.value[i].uploadProcess !== null && !files.value[i].uploaded) {
+      data.append(i.toString(), files.value[i].fileUpload);
+      hashes.push(files.value[i].hash);
+    }
+  }
+
+  data.append('hashes', JSON.stringify(hashes));
+
+  return data;
+};
 
 
 
