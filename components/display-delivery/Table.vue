@@ -1,17 +1,5 @@
-<script setup lang="ts">
-const { settings } = useUser();
-withDefaults(defineProps<{
-  filters: object
-  lang: string,
-}>(), {  });
-
-const url: string = '/eshop/display-delivery';
-const page = ref<number>(1);
-const onPage = ref<number>(settings.value.defaultOnPage);
-</script>
-
 <template>
-  <BaseGrid ref="grid" :url="url" :page="page" :on-page="onPage" :filters="filters">
+  <BaseGrid ref="grid" :url="url" :page="page" :on-page="onPage" :filters="filters" :order="order" @change-order="emit('update:order', $event)">
     <template #header>
       <tr>
         <BaseGridThSelect />
@@ -33,7 +21,22 @@ const onPage = ref<number>(settings.value.defaultOnPage);
       </tr>
     </template>
     <template #footer>
-      <BaseGridPaginator wrap="flex-shrink-0" :url="url" :page="page" :on-page="onPage" :filters="filters" @change-page="page = $event" @change-on-page="onPage = $event; page = 1;" />
+      <BaseGridPaginator wrap="flex-shrink-0" :url="url" :page="page" :on-page="onPage" :filters="filters" @change-page="emit('update:page', $event)" @change-on-page="emit('update:onPage', $event); page = 1;" />
     </template>
   </BaseGrid>
 </template>
+
+<script setup lang="ts">
+import type {GridOrder} from '~/composables/useTableVars';
+
+withDefaults(defineProps<{
+  filters?: any
+  lang: string,
+  page: number,
+  onPage: number,
+  order: GridOrder,
+}>(), { filters: {}  });
+
+const url: string = '/eshop/display-delivery';
+const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
+</script>
