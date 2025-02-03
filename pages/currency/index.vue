@@ -6,7 +6,7 @@
     <template #headerLeft>
       <CurrencyTableFilter v-model="filters" @clear="clearFilters" />
     </template>
-    <CurrencyTable :filters="filters" :lang="lang" v-model:page="page" v-model:on-page="onPage" v-model:order="order" />
+    <CurrencyTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" :lang="lang" />
   </BaseCard>
 </template>
 

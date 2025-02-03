@@ -1,13 +1,3 @@
-<script setup lang="ts">
-const route = useRoute();
-const { settings } = useUser();
-const lang: Ref<string> = ref(settings.value.defaultLang);
-
-const {data, pending, refresh} = useApiFetch('eshop/payment-type/' + route.params.id  + '/?expand=paymentTypePrices');
-const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/payment-type/', 'payment-type');
-
-</script>
-
 <template>
   <BaseCard>
     <template #headerLeft>
@@ -26,3 +16,13 @@ const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/payment-type/',
     <PaymentTypeForm ref="form" :lang="lang" :data="data" url="eshop/payment-type" :slug="route.params.id" :loading="pending" @success="redirect" />
   </BaseCard>
 </template>
+
+<script setup lang="ts">
+const route = useRoute();
+const { settings } = useUser();
+const lang: Ref<string> = ref(settings.value.defaultLang);
+
+const {data, pending, refresh} = useApiFetch('eshop/payment-type/' + route.params.id  + '/?expand=paymentTypePrices');
+const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/payment-type/', 'payment-type');
+
+</script>

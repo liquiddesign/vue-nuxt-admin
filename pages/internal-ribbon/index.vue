@@ -6,7 +6,7 @@
     <template #headerLeft>
       <InternalRibbonTableFilter v-model="filters" @clear="clearFilters" />
     </template>
-    <InternalRibbonTable :filters="filters" v-model:page="page" v-model:on-page="onPage" v-model:order="order" />
+    <InternalRibbonTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
   </BaseCard>
 </template>
 

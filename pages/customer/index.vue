@@ -6,7 +6,7 @@
     <template #header>
       <CustomerTableFilter v-model="filters" @clear="clearFilters" />
     </template>
-    <CustomerTable :filters="filters" v-model:page="page" v-model:on-page="onPage" v-model:order="order" />
+    <CustomerTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
   </BaseCard>
 </template>
 

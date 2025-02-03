@@ -15,5 +15,5 @@
 </template>
 
 <script setup lang="ts">
-const { filters, clearFilters, lang, langs, currencies, currency, page, onPage, order } = useTableVars();
+const { filters, clearFilters, lang, langs, page, onPage, order } = useTableVars();
 </script>
