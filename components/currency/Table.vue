@@ -1,5 +1,5 @@
 <template>
-  <BaseGrid ref="grid" :url="url" :page="page" :on-page="onPage" :filters="filters">
+  <BaseGrid ref="grid" :url="url" :page="page" :on-page="onPage" :filters="filters" :order="order" @change-order="emit('update:order', $event)">
     <template #header>
       <tr>
         <BaseGridThSelect />
@@ -28,7 +28,7 @@
     </template>
     <template #footer="{deleteRows, exportRows, selectedCount, disabledControls, selectedQuery, resetSelect}">
       <BaseGridSelectAll wrap="flex-shrink-0 me-1 ms-1" />
-      <BaseGridPaginator v-slot="{ totalCount }" wrap="flex-shrink-0" :url="url" :page="page" :on-page="onPage" :filters="filters" @change-page="page = $event" @change-on-page="onPage = $event; page = 1;">
+      <BaseGridPaginator v-slot="{ totalCount }" wrap="flex-shrink-0" :url="url" :page="page" :on-page="onPage" :filters="filters" @change-page="emit('update:page', $event)" @change-on-page="emit('update:onPage', $event); page = 1;">
         <BaseButtonEdit class="btn-paging" :outline="true" :disabled="disabledControls" @click="$refs.modalUpdate.open();">({{ selectedCount(totalCount) }})</BaseButtonEdit>
         <BaseButtonExport class="btn-paging" :outline="true" :disabled="disabledControls" @click="exportRows();">({{ selectedCount(totalCount) }})</BaseButtonExport>
         <BaseButtonDelete class="btn-paging" :outline="true" :disabled="disabledControls" :confirmation="true" @confirm="deleteRows();">({{ selectedCount(totalCount) }})</BaseButtonDelete>
@@ -53,14 +53,19 @@
 </template>
 
 <script setup lang="ts">
+import type {GridOrder} from '~/composables/useTableVars';
+
 withDefaults(defineProps<{
   lang: string,
-  page: number
-  onPage: number
-  filters: object
-}>(), {  });
+  filters?: any,
+  page: number,
+  onPage: number,
+  order: GridOrder,
+}>(), { filters: {}  });
 
 const url = 'eshop/currency';
+const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
+
 
 const defaultFormData = {recommended: {strategy: 'noAction', value: false}, hidden: {strategy: 'noAction', value: false}};
 const formData: any = ref(Object.assign({}, defaultFormData));
