@@ -4,7 +4,7 @@
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">
     <template #headerLeft>
-      <DeliveryTypesTableFilter v-model="filters">
+      <DeliveryTypesTableFilter v-model="filters" @clear="clearFilters">
         <BaseLanguageDropdown class="me-1" :lang="lang" :langs="langs" @select="lang = $event" />
         <BaseCurrencyDropdown class="me-1" :currency="currency" :currencies="currencies" @select="currency = $event" />
       </DeliveryTypesTableFilter>
@@ -12,13 +12,14 @@
     <template #headerRight>
       <BaseLiveUsers class="me-2" />
     </template>
-    <DeliveryTypesTable :filters="filters" :lang="lang" :currency="currency" />
+    <DeliveryTypesTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" :lang="lang" :currency="currency" />
   </BaseCard>
 </template>
 
 
 <script setup lang="ts">
 
-const { filters, lang, langs, currencies, currency } = useTableVars();
+const { filters, clearFilters, lang, langs, currencies, currency, page, onPage, order } = useTableVars();
+
 
 </script>

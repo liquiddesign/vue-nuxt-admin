@@ -1,7 +1,7 @@
 <template>
   <slot :total-count="totalItems" />
   <BaseWrapper :wrap="wrap">
-    <div class="">
+    <div class="" style="position: relative;">
       <nav class="pt-3 ms-auto">
         <ul class="pagination pagination-sm">
           <li class="page-item" :class="{disabled: page === 1}">
@@ -20,7 +20,12 @@
               <span class="sr-only">Další</span>
             </a>
           </li>
-          <li class="px-2"><span class="page-link text-black " style="border: 0;pointer-events: none;">&sum; {{ data?.result }}</span></li>
+          <li class="px-2">
+            <span class="page-link text-black " style="border: 0;pointer-events: none; min-width: 35px;">
+              <template v-if="!pending">&sum; {{ data?.result }}</template>
+              <i v-else class="fas fa-ellipsis fa-fade text-black-50" style="top: 1px; position: relative" />
+            </span>
+          </li>
           <li class="page-item" style=""><a class="page-link text-black" :class="{'bg-light' : onPage === 20, 'bg-white' : onPage !== 20}" @click.prevent.stop="emit('changeOnPage', 20)">20</a></li>
           <li class="page-item" style=""><a class="page-link text-black" :class="{'bg-light' : onPage === 40, 'bg-white' : onPage !== 40}" @click.prevent.stop="emit('changeOnPage', 40)">40</a></li>
           <li class="page-item" style=""><a class="page-link text-black" :class="{'bg-light' : onPage === 80, 'bg-white' : onPage !== 80}" @click.prevent.stop="emit('changeOnPage', 80)">80</a></li>
@@ -34,27 +39,27 @@
 import {computed, onActivated} from 'vue';
 import {transformObjectWithArrays} from '~/utils/transformObjectWithArrays';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   url: string,
   page: number,
   onPage: number,
   filters?: any,
   wrap?: string,
-}>();
+}>(), {filters: {}, wrap: undefined});
 
 
-const filterValues: any = reactive({});
+const filterValues: any = ref(props.filters);
+
 
 const debouncing = _debounce(function (value) {
-  Object.assign(filterValues, transformObjectWithArrays(value));
-}, 150);
+  filterValues.value = transformObjectWithArrays(value);
+}, 250);
 
-watch(props.filters, (value) => {
+watch(() => props.filters, (value) => {
   debouncing(value);
-});
+}, { deep: true, immediate: false });
 
-
-const {data, refresh} = useApiFetch(props.url, {
+const {data, refresh, pending} = useApiFetch(props.url, {
   method: 'POST',
   query: filterValues,
   body: {'_op': 'itemsCount'},

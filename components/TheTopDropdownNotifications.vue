@@ -6,7 +6,8 @@
           <i class="fa fa-bell-o" style="" />
           <flag v-if="0" style="font-size:17px" iso="cz" class="mt-1" />
         </span>
-        <i class="icon text-danger  ion-android-notifications" :class="{'icon-anim-pulse': false}" />
+        <i v-if="0" class="icon text-danger  ion-android-notifications" :class="{'icon-anim-pulse': false}" />
+        <i v-else class=" text-danger fa fas fa-bell" :class="{'icon-anim-pulse': false}" />
         <span v-if="1" class="badge badge-dot badge-dot-sm bg-danger">Notifikace</span>
       </span>
     </button>

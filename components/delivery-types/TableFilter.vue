@@ -1,5 +1,5 @@
 <template>
-  <BaseFilter @cancel="emit('update:modelValue', {})">
+  <BaseFilter @clear="emit('clear')">
     <slot />
     <BaseTextBox v-model="modelValue.idn" wrap="flex-shrink-0" placeholder="id" type="number" style="width: 60px;" />
     <BaseTextBox v-model="modelValue['f-code+name%']" wrap="flex-shrink-0" placeholder="Kód a název" type="text" size="40" />
@@ -39,7 +39,7 @@ withDefaults(defineProps<{
   modelValue?: any | null,
 }>(), { modelValue: undefined });
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'clear']);
 
 
 </script>

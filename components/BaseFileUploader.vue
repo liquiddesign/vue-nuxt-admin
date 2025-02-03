@@ -13,12 +13,31 @@
 </template>
 <script setup lang="ts">
 
+import {generateUUID} from '~/utils/helpers';
+import {type ToastPluginApi, useToast} from 'vue-toast-notification';
+import axios from 'axios';
+
+const $emit = defineEmits(['filesSelected']);
+
+interface FileData {
+  hash: string;
+  name: string;
+  size: number;
+  fileUpload: File;
+  uploadProcess: UploadProcess | null;
+  isImage: boolean;
+  uploaded: any | null;
+  dbObject: object;
+  objectSrc?: string;
+  dataSrc?: string;
+}
+
+interface UploadProcess {
+  progress: number;
+  controller: AbortController;
+}
 
 const props = defineProps({
-  url: {
-    type: String,
-    required: true,
-  },
   downloadUrl: {
     type: String,
     default: null,
@@ -91,15 +110,15 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
-  storeDirectory: {
-    type: String,
-    required: true,
-  },
 });
 
 const id: string = 'TODOUUID';
 
 const files: Ref<any[]> = ref([]);
+const uploadProcesses: Ref<Record<string, UploadProcess>> = ref({});
+const maxUploadReached: Ref<boolean> = ref(false);
+const toast: ToastPluginApi = inject('toast', useToast());
+
 const { settings } = useUser();
 
 const totalUploadAmount:ComputedRef<number> = computed(() => {
@@ -133,7 +152,7 @@ function isValidExtension(fileName: string)
 }
 
 function onFileChanged($event: Event) {
-  maxUploadReached = false;
+  maxUploadReached.value = false;
 
   const target = $event.target as HTMLInputElement;
   if (target.files) {
@@ -145,45 +164,149 @@ function onFileChanged($event: Event) {
         break;
       }
 
-      if (files.value.length >= maxUploadLimit) {
-        this.maxUploadReached = true;
+      if (files.value.length >= settings.value.maxFilesize) {
+        maxUploadReached.value = true;
         console.error('max uploader reached');
         break;
       }
 
-      let fileUpload = target.files[i];
+      const fileUpload = target.files[i];
 
-      const file = {hash: this.$helpers.uuidv4(), fileUpload, uploadProcess: null, isImage: !!fileUpload.type?.startsWith('image/'), uploaded: null, dbObject: {}};
+      const file: FileData = {
+        hash: generateUUID(),
+        name: '',
+        size: fileUpload.size,
+        fileUpload,
+        uploadProcess: null,
+        isImage: !!fileUpload.type?.startsWith('image/'),
+        uploaded: null,
+        dbObject: {},
+      };
 
-      if (!this.isValidExtension(fileUpload.name)) {
+      if (!isValidExtension(fileUpload.name)) {
         continue;
       }
 
-      if (this.maxUploadSize !== null && file.size > this.maxUploadSize) {
-        this.$toast.error('Soubor ' + file.name + ' má větší než max. povolnou velikost (' + (Math.round(this.maxUploadSize / 1024 / 1024)) + ' MB)');
+      if (settings.value.maxFilesize !== null && file.size > settings.value.maxFilesize) {
+        toast.error('Soubor ' + file.name + ' má větší než max. povolnou velikost (' + (Math.round(settings.value.maxFilesize / 1024 / 1024)) + ' MB)');
 
         continue;
       }
 
       file.objectSrc = URL.createObjectURL(fileUpload);
 
-      this.blobToDataURL(fileUpload, function(dataUrl) {
+      blobToDataURL(fileUpload, function(dataUrl) {
         file.dataSrc = dataUrl;
       });
 
-      this.files.push(file);
+      files.value.push(file);
       newFiles.push(file);
     }
 
-    this.$emit('filesSelected', newFiles);
+    $emit('filesSelected', newFiles);
 
-    event.target.value = '';
+    target.value = '';
 
-    if (this.autoUpload && newFiles.length) {
-      this.upload();
+    if (props.autoUpload && newFiles.length) {
+      upload();
     }
   }
 }
+
+function upload() {
+  console.log('upload');
+
+  const url = 'http://localhost/vue-nuxt-api/api/file';
+
+  // prepare upload process
+  const id: string = generateUUID();
+  uploadProcesses.value[id] = {progress: 0, controller: new AbortController()};
+
+  files.value.forEach((value) => {
+    if (!value.uploaded) {
+      value.uploadProcess = uploadProcesses.value[id];
+    }
+  });
+
+  return axios.post(url, getUploadData(), {
+    headers: {'content-type': 'multipart/form-data'},
+    signal: uploadProcesses.value[id].controller.signal,
+    onUploadProgress: (progressEvent : any) => {
+      uploadProcesses.value[id].progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+    },
+  }).then((response: any) => {
+    const uploaded = [];
+    files.value.filter(v => v.uploadProcess?.id === id).forEach((value) => {
+
+      if (value.uploaded !== null) {
+        return;
+      }
+
+      value.uploadProcess = null;
+
+      if (response.data.result[value.hash]) {
+        value.uploaded = true;
+        Object.assign(value.dbObject, response.data.result[value.hash]);
+        uploaded.push(value);
+      } else {
+        console.error('not in result', value.hash, response.data.result);
+        value.uploaded = false;
+        toast.error('Soubor byl odmítnut serverem.');
+      }
+    });
+    delete uploadProcesses.value[id];
+
+    if (props.clearOnSuccess) {
+      files.value.splice(0);
+    }
+  }).catch((x) => {
+    if (x instanceof CanceledError) {
+      $emit('canceled', x);
+    } else {
+      //if (this.maxUploadSize !== null && getUploadSize() > this.maxUploadSize) {
+      if (0) {
+        toast.error('Soubory mají větší než max. povolenou velikost (' + (Math.round(this.maxUploadSize / 1024 / 1024)) + ' MB). Zkuste je nahrát po menších dávkách.');
+      } else {
+        toast.error('Soubor se nepodařilo nahrát.');
+      }
+    }
+
+    files.value.forEach((value) => {
+      value.uploadProcess = null;
+      value.uploaded = false;
+    });
+    console.error('upload error', x);
+
+    delete uploadProcesses.value[id];
+  });
+}
+
+function blobToDataURL(blob: Blob, callback: (dataUrl: string) => void): void {
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    if (event.target?.result) {
+      callback(event.target.result as string);
+    }
+  };
+  reader.readAsDataURL(blob);
+}
+
+const getUploadData = () => {
+  const data = new FormData();
+  const hashes = [];
+  data.append('name', 'attachments');
+
+  for (let i = 0; i < files.value.length; i++) {
+    if (files.value[i].uploadProcess !== null && !files.value[i].uploaded) {
+      data.append(i.toString(), files.value[i].fileUpload);
+      hashes.push(files.value[i].hash);
+    }
+  }
+
+  data.append('hashes', JSON.stringify(hashes));
+
+  return data;
+};
 
 
 
