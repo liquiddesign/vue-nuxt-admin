@@ -1,6 +1,6 @@
 <template>
   <Popper v-if="confirmation" arrow :placement="confirmationPlacement">
-    <BaseButton v-bind="$attrs" class="btn"><i class="fa fa-trash-o" /> <slot /></BaseButton>
+    <BaseButton v-bind="$attrs" class="btn"><i class="fas fa-trash-alt" /> <slot /></BaseButton>
     <template #content="{close}">
       Opravdu smazat?<br>
       <div class="text-center">

@@ -33,7 +33,7 @@ const menu: MenuItem[] = [
                 name: 'delivery-payments',
                 items: [
                     <MenuItem>{ title: 'Typy dopravy', route: 'delivery-types'},
-                    <MenuItem>{ title: 'Typy plateb', route: 'history-orders1', disabled: true},
+                    <MenuItem>{ title: 'Typy plateb', route: 'payment-type'},
                 ],
             },
             <MenuItem>{
@@ -42,16 +42,17 @@ const menu: MenuItem[] = [
                 name: 'stores-availability',
                 items: [
                     <MenuItem>{ title: 'Sklady a množství', route: 'orders2', disabled: true},
-                    <MenuItem>{ title: 'Dostupnost', route: 'history-orders2', disabled: true},
+                    <MenuItem>{ title: 'Dostupnost', route: 'display-amount'},
+                    <MenuItem>{ title: 'Doručení', route: 'display-delivery'},
                     <MenuItem>{ title: 'Výdejní místa', route: 'demands2', disabled: true},
                 ],
             },
-            <MenuItem>{
-                title: 'Doručení',
-                icon: 'pe-7s-box1',
-                name: 'contracts3',
-                items: [],
-            },
+            // <MenuItem>{
+            //     title: 'Doručení',
+            //     icon: 'pe-7s-box1',
+            //     name: 'contracts3',
+            //     items: [],
+            // },
         ],
     },
     <MenuItem>{
@@ -74,7 +75,7 @@ const menu: MenuItem[] = [
                 name: 'contracts2',
                 items: [
                     <MenuItem>{ title: 'Země a DPH', route: 'orders2', disabled: true},
-                    <MenuItem>{ title: 'Měny', route: 'history-orders2', disabled: true},
+                    <MenuItem>{ title: 'Měny', route: 'currency'},
                     <MenuItem>{ title: 'Výdejní místa', route: 'demands2', disabled: true},
                 ],
             },
@@ -84,6 +85,31 @@ const menu: MenuItem[] = [
                 name: 'contracts3',
                 items: [],
             },
+        ],
+    },
+    <MenuItem>{
+        title: 'Nastavení',
+        name: 'settings',
+        items: [
+            <MenuItem>{
+                title: 'Štítky',
+                icon: 'pe-7s-box1',
+                name: 'internal-ribbon',
+                route: 'internal-ribbon',
+                items: [
+                    // <MenuItem>{ title: 'Štítky', route: 'internal-ribbon'},
+                ],
+            },
+            <MenuItem>{
+                title: 'Zákazníci',
+                icon: 'pe-7s-box1',
+                name: 'customer',
+                route: 'customer',
+                items: [
+                    // <MenuItem>{ title: 'Štítky', route: 'internal-ribbon'},
+                ],
+            },
+
         ],
     },
 ];

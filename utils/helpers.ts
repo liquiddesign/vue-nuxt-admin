@@ -17,6 +17,9 @@ export function formatNumber(value: number | null, suffix: string): string {
     return value === null ? '-' : formatter.format(value) + ' ' + suffix;
 }
 
+export function doubleFormat(value: any) : string {
+    return value.toString().length < 2 ? ('0' + value) : value;
+}
 
 export function downloadFile(data: any, fileName: string, qualifiedName: string = 'download'): void {
     const url = window.URL.createObjectURL(new Blob([data]));

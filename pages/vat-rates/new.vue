@@ -1,7 +1,7 @@
 <template>
   <BaseCard>
     <template #headerLeft>
-      <BaseButtonBack class="me-2" @click="navigateTo({name: 'currencies'})" />
+      <BaseButtonBack class="me-2" @click="navigateTo({name: 'currency'})" />
       <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
     </template>
     <template #body>
@@ -18,7 +18,7 @@ const data:any = ref(Object.assign({}, defaultFormData));
 
 function redirect(id) {
   data.value = Object.assign({}, defaultFormData);
-  id ? navigateTo({name: 'currencies-id', params: {id: id}}) :  navigateTo({name: 'currencies'});
+  id ? navigateTo({name: 'currency-id', params: {id: id}}) :  navigateTo({name: 'currency'});
 }
 
 

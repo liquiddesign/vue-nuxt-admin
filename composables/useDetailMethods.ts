@@ -11,7 +11,7 @@ export const useDetailMethods = (url: string, routeName: string) => {
             toast.success('Smazáno');
             sendDelete(route.params.id.toString());
 
-            navigateTo({name: 'delivery-types'});
+            navigateTo({name: routeName});
         }).catch((error) => {
             console.error(error);
             toast.error('Smazání se nezdařilo');
@@ -22,7 +22,7 @@ export const useDetailMethods = (url: string, routeName: string) => {
         apiFetch(url + '/' + route.params.id, { method: 'POST', body: {'_op': 'makeCopy'}})
             .then(() => {
                 toast.success('Kopie vyvtořena');
-                navigateTo({name: 'delivery-types'});
+                navigateTo({name: routeName});
             }).catch((error) => {
             console.error(error);
             toast.error('Nepodařilo se vytvořit kopii');
