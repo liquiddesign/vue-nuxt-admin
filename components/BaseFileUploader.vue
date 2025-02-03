@@ -1,15 +1,39 @@
 <template>
-  <label :for="id + 'file'" class="btn btn-outline-secondary btn-sm upload-file-label bg-white" :class="{'btn-outline-light pointer-none': maxFilesExceeded, disabled: !canUpload}">
-    <i class="fa fa-paperclip" />
-    {{ labelUpload }}
-  </label>
-  <input :id="id + 'file'" class="d-none" type="file" :accept="props.acceptedFileTypes" :disabled="!canUpload" :multiple="multiple" @change="onFileChanged">
+  <div class="upload-files">
+    <label :for="id + 'file'" class="btn btn-outline-secondary btn-sm upload-file-label bg-white" :class="{'btn-outline-light pointer-none': maxFilesExceeded, disabled: !canUpload}">
+      <i class="fa fa-paperclip" />
+      {{ labelUpload }}
+    </label>
+    <input :id="id + 'file'" class="d-none" type="file" :accept="props.acceptedFileTypes" :disabled="!canUpload" :multiple="multiple" @change="onFileChanged">
 
-  <div class="bg-success-subtle">
-    TOTAL FILES<br>
-    MB LEFT<br>
+    <template v-for="(file) in files" :key="file.hash">
+      <div class="upload-file" :style="file.isImage ? ('background-image: ' + (!file.uploaded ? 'linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)),' : '') + 'url(\'' + getImageSrc(file) + '\');') : ''">
+
+        <div v-if="!file.isImage">
+          <div class="upload-file-doc" >
+            {{ file.isImage }}
+            <i class="far fa-file-pdf fa-2x text-danger mb-2"></i>
+            10 MB
+          </div>
+        </div>
+
+        <div class="upload-file-controls">
+          <button v-if="0" class="btn btn-xs upload-button-control me-1" type="button">{{ file.dbObject?.priority }}</button>
+          <button v-if="downloadUrl && file.uploaded" type="button" class="btn btn-xs upload-button-control" :disabled="busy[file.hash]" @click.prevent.stop="downloadFile(file)"><i class="fa fa-download" /></button>
+          <button v-if="canRotate && file.isImage && file.uploaded" type="button" class="btn btn-xs upload-button-control" :disabled="busy[file.hash]" @click.prevent.stop="rotateImage(file, 90)"><i class="fa fa-rotate-left" /></button>
+          <button v-if="canRotate && file.isImage && file.uploaded" type="button" class="btn btn-xs upload-button-control" :disabled="busy[file.hash]" @click.prevent.stop="rotateImage(file, -90)"><i class="fa fa-rotate-right" /></button>
+        </div>
+
+        <div class="upload-file-progress">
+          <button v-if="file.uploaded === false" class="btn btn-xs upload-button-control me-1" type="button" @click.prevent.stop="file.uploaded = null; upload()"><i class="fa fa-upload" /></button>
+          <button v-if="file.uploadProcess" class="btn btn-xs upload-button-control" type="button" @click.prevent.stop="stopUpload(file.uploadProcess.id)"><i class="fa fa-stop" /></button>
+          <button v-if="1" :disabled="busy[file.hash]" class="btn btn-xs upload-button-cancel" type="button" @click.prevent.stop="removeFile(file)"><i class="fa fa-times" /></button>
+          <button v-if="canDelete && file.uploaded && !file.uploadProcess && file.dbObject?.uuid && !disabled" :disabled="busy[file.hash]" class="btn btn-xs upload-button-cancel" type="button" @click.prevent.stop="deleteFile(file)"><i class="fa fa-times" /></button>
+        </div>
+
+      </div>
+    </template>
   </div>
-  {{ files }}
 </template>
 <script setup lang="ts">
 
@@ -114,6 +138,7 @@ const props = defineProps({
 
 const id: string = 'TODOUUID';
 
+const busy: Ref<object> = ref({});
 const files: Ref<any[]> = ref([]);
 const uploadProcesses: Ref<Record<string, UploadProcess>> = ref({});
 const maxUploadReached: Ref<boolean> = ref(false);
@@ -193,13 +218,15 @@ function onFileChanged($event: Event) {
         continue;
       }
 
+      files.value.push(file);
       file.objectSrc = URL.createObjectURL(fileUpload);
 
       blobToDataURL(fileUpload, function(dataUrl) {
         file.dataSrc = dataUrl;
+        files.value = [...files.value];
       });
 
-      files.value.push(file);
+
       newFiles.push(file);
     }
 
@@ -308,6 +335,16 @@ const getUploadData = () => {
   return data;
 };
 
+const getImageSrc = (file: FileData, imgSize = 'medium') => {
+  return file.dbObject?.fileName ? 'test/' + file.dbObject.fileName + '?lm=' + Date.parse(file.dbObject.lastModified) : file.dataSrc;
+};
+
+const removeFile = (file: FileData) => {
+  delete files.value[file.hash];
+};
 
 
+
+</script>
+<script setup lang="ts">
 </script>
