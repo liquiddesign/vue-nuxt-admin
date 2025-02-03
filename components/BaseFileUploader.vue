@@ -15,6 +15,7 @@
 
 import {generateUUID} from '~/utils/helpers';
 import {type ToastPluginApi, useToast} from 'vue-toast-notification';
+import axios from 'axios';
 
 const $emit = defineEmits(['filesSelected']);
 
@@ -23,7 +24,7 @@ interface FileData {
   name: string;
   size: number;
   fileUpload: File;
-  uploadProcess: any | null;
+  uploadProcess: UploadProcess | null;
   isImage: boolean;
   uploaded: any | null;
   dbObject: object;
@@ -32,16 +33,11 @@ interface FileData {
 }
 
 interface UploadProcess {
-  id: string | number;
   progress: number;
   controller: AbortController;
 }
 
 const props = defineProps({
-  url: {
-    type: String,
-    required: true,
-  },
   downloadUrl: {
     type: String,
     default: null,
@@ -113,10 +109,6 @@ const props = defineProps({
   dbFiles: {
     type: Array,
     default: () => [],
-  },
-  storeDirectory: {
-    type: String,
-    required: true,
   },
 });
 
@@ -224,18 +216,25 @@ function onFileChanged($event: Event) {
 function upload() {
   console.log('upload');
 
+  const url = 'http://localhost/vue-nuxt-api/api/file';
+
+  // prepare upload process
   const id: string = generateUUID();
+  uploadProcesses.value[id] = {progress: 0, controller: new AbortController()};
 
-  uploadProcesses.value[id] = {id: id, progress: 0, controller: new AbortController()} as UploadProcess;
+  files.value.forEach((value) => {
+    if (!value.uploaded) {
+      value.uploadProcess = uploadProcesses.value[id];
+    }
+  });
 
-  //  apiFetch(url, { body: inputs, params: props.params, method })
   return axios.post(url, getUploadData(), {
     headers: {'content-type': 'multipart/form-data'},
     signal: uploadProcesses.value[id].controller.signal,
-    onUploadProgress: progressEvent => {
+    onUploadProgress: (progressEvent : any) => {
       uploadProcesses.value[id].progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-    }
-  }).then((response) => {
+    },
+  }).then((response: any) => {
     const uploaded = [];
     files.value.filter(v => v.uploadProcess?.id === id).forEach((value) => {
 

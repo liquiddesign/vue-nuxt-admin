@@ -60,7 +60,7 @@
     <hr>
     <br><br>
 
-    <BaseFileUploader />
+    <BaseFileUploader :auto-upload="true" />
     <hr>
     <br><br>
       <table border="1">

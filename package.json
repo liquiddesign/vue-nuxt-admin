@@ -22,6 +22,7 @@
     "@vuelidate/validators": "^2.0.0",
     "@vueuse/core": "^12.2.0",
     "@vueuse/integrations": "^12.5.0",
+    "axios": "^1.7.9",
     "bootstrap": "^5.2.3",
     "crypto-js": "^4.2.0",
     "font-awesome": "^4.7.0",
