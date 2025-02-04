@@ -141,7 +141,7 @@ const props = defineProps({
 const id: string = 'TODOUUID';
 
 const busy: Ref<object> = ref({});
-const files: Ref<any[]> = ref([]);
+const files: Ref<Record<string, FileData>> = ref({});
 const uploadProcesses: Ref<Record<string, UploadProcess>> = ref({});
 const maxUploadReached: Ref<boolean> = ref(false);
 const toast: ToastPluginApi = inject('toast', useToast());
@@ -186,7 +186,7 @@ function onFileChanged($event: Event) {
 
     const newFiles = [];
     for (let i = 0; i < target.files.length; i++) {
-      if (files.value.length >= props.maxFiles && props.maxFiles !== null) {
+      if (Object.values(files.value).length >= props.maxFiles && props.maxFiles !== null) {
         console.error('max file reached');
         break;
       }
@@ -220,14 +220,12 @@ function onFileChanged($event: Event) {
         continue;
       }
 
-      files.value.push(file);
+      files.value[file.hash] = file;
       file.objectSrc = URL.createObjectURL(fileUpload);
 
       blobToDataURL(fileUpload, function(dataUrl) {
-        file.dataSrc = dataUrl;
-        files.value = [...files.value];
+        files.value[file.hash].dataSrc = dataUrl;
       });
-
 
       newFiles.push(file);
     }
