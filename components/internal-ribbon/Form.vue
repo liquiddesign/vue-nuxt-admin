@@ -1,10 +1,18 @@
 <template>
   <BaseForm ref="form" :url="url" :data="data" :slug="slug" :rules="rules" :loading="loading" @success="$emit('success', goBack ? null : $event.result); goBack = false">
     <h5 class="card-title">HLAVNÍ ÚDAJE</h5>
-    <BaseTextBox wrap="col-3 row flex-nowrap" name="name" label="Popisek" type="text" required />
-    <BaseColorPicker wrap="col-3 row flex-nowrap mt-2" name="color" label="Barva textu" />
-    <BaseColorPicker wrap="col-3 row flex-nowrap mt-2" name="backgroundColor" label="Barva pozadí" />
-    <BaseSelect wrap="col-3 row flex-nowrap mt-2" name="type" label="Typ" :options="typeOptions" required />
+    <div class="col-lg-6">
+      <div class="row">
+        <BaseTextBox wrap="col-lg-6" name="name" label="Popisek" type="text" required />
+        <BaseSelect wrap="col-lg-6" name="type" label="Typ" :options="typeOptions" required />
+      </div>
+      <div class="row mt-2">
+        <BaseColorPicker wrap="col-lg-12" name="color" label="Barva textu" />
+      </div>
+      <div class="row mt-2">
+        <BaseColorPicker wrap="col-lg-12" name="backgroundColor" label="Barva pozadí" />
+      </div>
+    </div>
 
     <div class="row mt-3">
       <div class="col-lg-6">
