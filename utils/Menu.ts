@@ -109,6 +109,15 @@ const menu: MenuItem[] = [
                     // <MenuItem>{ title: 'Štítky', route: 'internal-ribbon'},
                 ],
             },
+            <MenuItem>{
+                title: 'Obchodníci',
+                icon: 'pe-7s-box1',
+                name: 'merchant',
+                route: 'merchant',
+                items: [
+                    // <MenuItem>{ title: 'Štítky', route: 'internal-ribbon'},
+                ],
+            },
 
         ],
     },
