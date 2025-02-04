@@ -10,7 +10,7 @@
       <div>
         <div class="upload-file" :style="file.isImage ? ('background-image: ' + (!file.uploaded ? 'linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)),' : '') + 'url(\'' + getImageSrc(file) + '\');') : ''">
           <div v-if="!file.isImage">
-            <div class="upload-file-doc" >
+            <div class="upload-file-doc">
               {{ file.isImage }}
               <i class="far fa-file-pdf fa-2x text-danger mb-2"></i>
               10 MB
@@ -39,11 +39,11 @@
 </template>
 <script setup lang="ts">
 
-import {generateUUID} from '~/utils/helpers';
+import {clearObject, generateUUID} from '~/utils/helpers';
 import {type ToastPluginApi, useToast} from 'vue-toast-notification';
-import axios from 'axios';
+import axios, {CanceledError} from 'axios';
 
-const $emit = defineEmits(['filesSelected']);
+const $emit = defineEmits(['filesSelected', 'canceled']);
 
 interface FileData {
   hash: string;
@@ -249,7 +249,7 @@ function upload() {
   const id: string = generateUUID();
   uploadProcesses.value[id] = {progress: 0, controller: new AbortController()};
 
-  files.value.forEach((value) => {
+  Object.values(files.value).forEach((value) => {
     if (!value.uploaded) {
       value.uploadProcess = uploadProcesses.value[id];
     }
@@ -263,7 +263,7 @@ function upload() {
     },
   }).then((response: any) => {
     const uploaded = [];
-    files.value.filter(v => v.uploadProcess?.id === id).forEach((value) => {
+    Object.values(files.value).filter(v => v.uploadProcess?.id === id).forEach((value) => {
 
       if (value.uploaded !== null) {
         return;
@@ -284,6 +284,7 @@ function upload() {
     delete uploadProcesses.value[id];
 
     if (props.clearOnSuccess) {
+      clearObject(files.value);
       files.value.splice(0);
     }
   }).catch((x) => {
@@ -298,10 +299,11 @@ function upload() {
       }
     }
 
-    files.value.forEach((value) => {
+    Object.values(files.value).forEach((value) => {
       value.uploadProcess = null;
       value.uploaded = false;
     });
+
     console.error('upload error', x);
 
     delete uploadProcesses.value[id];
@@ -320,15 +322,16 @@ function blobToDataURL(blob: Blob, callback: (dataUrl: string) => void): void {
 
 const getUploadData = () => {
   const data = new FormData();
-  const hashes = [];
+  const hashes: string[] = [];
+  const i: number = 0;
   data.append('name', 'attachments');
 
-  for (let i = 0; i < files.value.length; i++) {
-    if (files.value[i].uploadProcess !== null && !files.value[i].uploaded) {
-      data.append(i.toString(), files.value[i].fileUpload);
-      hashes.push(files.value[i].hash);
+  Object.values(files.value).forEach((value) => {
+    if (value.uploadProcess !== null && !value.uploaded) {
+      data.append(i.toString(), value.fileUpload);
+      hashes.push(value.hash);
     }
-  }
+  });
 
   data.append('hashes', JSON.stringify(hashes));
 
