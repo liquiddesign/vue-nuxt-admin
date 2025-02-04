@@ -21,7 +21,6 @@
 </template>
 <script setup lang="ts">
 const route = useRoute();
-const { settings } = useUser();
 
 const {data, pending, refresh} = useApiFetch('eshop/currency/' + route.params.id);
 const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/currency', 'currency');

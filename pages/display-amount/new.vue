@@ -1,3 +1,16 @@
+<template>
+  <BaseCard>
+    <template #headerLeft>
+      <BaseButtonBack class="me-2" @click="navigateTo({name: 'display-amount'})" />
+      <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
+      <BaseLanguageList :langs="langs" :lang="lang" @select="lang = $event" />
+    </template>
+    <template #body>
+      <DisplayAmountForm ref="form" :lang="lang" :data="formData" @success="redirect" />
+    </template>
+  </BaseCard>
+</template>
+
 <script setup lang="ts">
 
 const lang = ref('cs');
@@ -11,16 +24,3 @@ function redirect(id) {
 }
 
 </script>
-
-<template>
-  <BaseCard>
-    <template #headerLeft>
-      <BaseButtonBack class="me-2" @click="navigateTo({name: 'display-amount'})" />
-      <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
-      <BaseLanguageList :langs="langs" :lang="lang" @select="lang = $event" />
-    </template>
-    <template #body>
-      <DisplayAmountForm ref="form" :lang="lang" :data="formData" @success="redirect" />
-    </template>
-  </BaseCard>
-</template>
