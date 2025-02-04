@@ -15,12 +15,11 @@ const defaultFormData = {
   fullname: '',
   email: '',
   customerGroup: '',
-  pricelists: '',
-  customers: '',
-  extendedPermission: '',
-  customersPermission: '',
-  ordersPermission: '',
-  customerEmailNotification: '',
+  // pricelists: '',
+  // customers: '',
+  customersPermission: false,
+  ordersPermission: false,
+  customerEmailNotification: false,
 };
 const formData:any = ref(Object.assign({}, defaultFormData));
 
