@@ -1,58 +1,3 @@
-<script setup lang="ts">
-import {RouteParamValue} from 'vue-router';
-import {helpers, required} from '@vuelidate/validators';
-
-withDefaults(defineProps<{
-  url: string,
-  data: any,
-  lang: string,
-  loading?: boolean,
-  slug?: string|RouteParamValue[],
-}>(), { loading: false, slug: undefined });
-
-const form = ref(null);
-const goBack: Ref<boolean> = ref(false);
-const suppliers: Ref<any> = ref(null);
-const { currencies } = usePrefetchedData();
-
-const pricesErrors = computed(() => {
-  return form.value?.v$?.paymentTypePrices?.$each?.$response?.$errors;
-});
-
-useApiFetch('eshop/supplier/').then((response) => {
-  if (response?.data.value) {
-    suppliers.value = response.data.value;
-  }
-});
-
-const rules = {
-  priority: {required},
-  code: {required},
-  name: {
-    cs: {required},
-  },
-  paymentTypePrices: {
-    $each: helpers.forEach({
-      price: {
-        required,
-      },
-      priceVat: {
-        required,
-      },
-    }),
-  },
-};
-
-function submit()
-{
-  form.value?.submit();
-}
-
-
-const $emit = defineEmits(['success']);
-defineExpose({ submit } );
-</script>
-
 <template>
   <BaseForm ref="form" :url="url" :lang="lang" :data="data" :slug="slug" :loading="loading" :rules="rules" @success="$refs?.imageBox?.upload($event.result); $emit('success', goBack ? null : $event.result); goBack = false">
     <div class="row">
@@ -142,3 +87,53 @@ defineExpose({ submit } );
     </div>
   </BaseForm>
 </template>
+
+<script setup lang="ts">
+import {RouteParamValue} from 'vue-router';
+import {helpers, required} from '@vuelidate/validators';
+
+withDefaults(defineProps<{
+  url: string,
+  data: any,
+  lang: string,
+  loading?: boolean,
+  slug?: string|RouteParamValue[],
+}>(), { loading: false, slug: undefined });
+
+const form = ref(null);
+const goBack: Ref<boolean> = ref(false);
+const { currencies } = usePrefetchedData();
+
+const pricesErrors = computed(() => {
+  return form.value?.v$?.paymentTypePrices?.$each?.$response?.$errors;
+});
+
+const {data: suppliers} = useApiFetch('eshop/supplier/');
+
+const rules = {
+  priority: {required},
+  code: {required},
+  name: {
+    cs: {required},
+  },
+  paymentTypePrices: {
+    $each: helpers.forEach({
+      price: {
+        required,
+      },
+      priceVat: {
+        required,
+      },
+    }),
+  },
+};
+
+function submit()
+{
+  form.value?.submit();
+}
+
+
+const $emit = defineEmits(['success']);
+defineExpose({ submit } );
+</script>
