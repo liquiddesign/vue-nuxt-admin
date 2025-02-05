@@ -11,8 +11,19 @@
 <script setup lang="ts">
 const defaultFormData = {
   uuid: '',
-
+  name : '',
+  defaultCatalogPermission : '',
+  defaultPricesWithVat : false,
+  defaultPricesWithoutVat : false,
+  defaultPriorityPrice : '',
+  defaultDiscountLevelPct : 0,
+  defaultMaxDiscountProductPct : 100,
+  defaultBuyAllowed : false,
+  defaultViewAllOrders : false,
+  defaultAfterRegistration : false,
+  autoActiveCustomers : false,
 };
+
 const formData:any = ref(Object.assign({}, defaultFormData));
 
 function redirect(id) {
