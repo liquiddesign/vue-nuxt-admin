@@ -12,7 +12,7 @@
           <div v-if="!file.isImage">
             <div class="upload-file-doc">
               {{ file.isImage }}
-              <i class="far fa-file-pdf fa-2x text-danger mb-2"></i>
+              <i class="far fa-file-pdf fa-2x text-danger mb-2" />
               10 MB
             </div>
           </div>
@@ -26,7 +26,7 @@
 
           <div class="upload-file-progress">
             <button v-if="file.uploaded === false" class="btn btn-xs upload-button-control me-1" type="button" @click.prevent.stop="file.uploaded = null; upload()"><i class="fa fa-upload" /></button>
-            <button v-if="file.uploadProcess" class="btn btn-xs upload-button-control" type="button" @click.prevent.stop="stopUpload(file.uploadProcess.id)"><i class="fa fa-stop" /></button>
+            <button v-if="file.uploadProcess" class="btn btn-xs upload-button-control me-1" type="button" @click.prevent.stop="stopUpload(file.uploadProcess.id)"><i class="fa fa-stop" /></button>
             <button v-if="1" :disabled="busy[file.hash]" class="btn btn-xs upload-button-cancel" type="button" @click.prevent.stop="removeFile(file)"><i class="fa fa-times" /></button>
             <button v-if="canDelete && file.uploaded && !file.uploadProcess && file.dbObject?.uuid && !disabled" :disabled="busy[file.hash]" class="btn btn-xs upload-button-cancel" type="button" @click.prevent.stop="deleteFile(file)"><i class="fa fa-times" /></button>
           </div>
@@ -336,6 +336,16 @@ const getUploadData = () => {
   data.append('hashes', JSON.stringify(hashes));
 
   return data;
+};
+
+const stopUpload = (id: string) => {
+  uploadProcesses.value[id].controller?.abort();
+  uploadProcesses.value[id].progress = 0;
+  Object.values(files.value).forEach((value) => {
+    if (value.uploadProcess?.id === id) {
+      value.uploadProcess = null;
+    }
+  });
 };
 
 const getImageSrc = (file: FileData, imgSize = 'medium') => {

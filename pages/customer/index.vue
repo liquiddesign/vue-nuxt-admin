@@ -4,12 +4,12 @@
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">
     <template #header>
-      <CustomerTableFilter v-model="filters" />
+      <CustomerTableFilter v-model="filters" @clear="clearFilters" />
     </template>
-    <CustomerTable :filters="filters" />
+    <CustomerTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
   </BaseCard>
 </template>
 
 <script setup lang="ts">
-const { filters } = useTableVars();
+const { filters, clearFilters, page, onPage, order } = useTableVars();
 </script>

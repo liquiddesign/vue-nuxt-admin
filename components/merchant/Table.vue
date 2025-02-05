@@ -5,10 +5,11 @@
         <BaseGridThSelect />
         <BaseGridTh class="minimal" order-by="id">#</BaseGridTh>
         <BaseGridTh />
-        <BaseGridTh order-by="name">Popisek</BaseGridTh>
-        <BaseGridTh order-by="type">Typ</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="color">Barva textu</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="backgroundColor">Barva pozadí</BaseGridTh>
+        <BaseGridTh order-by="code">Kód</BaseGridTh>
+        <BaseGridTh order-by="fullname">Jméno a příjmení</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="pricelists">Ceníky/Viditelníky</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="email">E-mail</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="customerGroup">Skupina</BaseGridTh>
         <BaseGridTh class="minimal"><BaseGridThSettings /></BaseGridTh>
       </tr>
     </template>
@@ -16,11 +17,12 @@
       <tr :class="{'inactive': item.hidden, 'active': selected}">
         <BaseGridTdSelect :id="item.uuid" />
         <td class="minimal">{{ item.id }}  ☰</td>
-        <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'internal-ribbon-id', params: { id: item.uuid }})" /></td>
-        <td>{{ item.name ?? '-' }}</td>
-        <td>{{ item.type ?? '-' }}</td>
-        <td class="minimal"><BaseColorPicker :model-value="item.color" disabled /></td>
-        <td class="minimal"><BaseColorPicker :model-value="item.backgroundColor" disabled /></td>
+        <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'merchant-id', params: { id: item.uuid }})" /></td>
+        <td>{{ item.code ?? '-' }}</td>
+        <td>{{ item.fullname ?? '-' }}</td>
+        <td class="minimal">{{ item.pricelists }}</td>
+        <td class="minimal">{{ item.email ?? '-' }}</td>
+        <td class="minimal">{{ item.customerGroup.name ?? '-' }}</td>
         <td class="minimal"><BaseButtonDelete class="btn-xs btn-danger" :confirmation="true" @confirm="deleteRow();" /></td>
       </tr>
     </template>
@@ -40,7 +42,6 @@ withDefaults(defineProps<{
   order: GridOrder,
 }>(), { filters: {}  });
 
-const url: string = '/eshop/internal-ribbon';
+const url: string = '/eshop/merchant?expand=customerGroup';
 const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
-
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <BaseGrid ref="grid" :url="url" :page="page" :on-page="onPage" :filters="filters">
+  <BaseGrid ref="grid" :url="url" :page="page" :on-page="onPage" :filters="filters" :order="order" @change-order="emit('update:order', $event)">
     <template #header>
       <tr>
         <BaseGridThSelect />
@@ -53,22 +53,25 @@
       </tr>
     </template>
     <template #footer>
-      <BaseGridPaginator wrap="flex-shrink-0" :url="url" :page="page" :on-page="onPage" :filters="filters" @change-page="page = $event" @change-on-page="onPage = $event; page = 1;" />
+      <BaseGridPaginator wrap="flex-shrink-0" :url="url" :page="page" :on-page="onPage" :filters="filters" @change-page="emit('update:page', $event)" @change-on-page="emit('update:onPage', $event); page = 1;" />
     </template>
   </BaseGrid>
 </template>
 
 <script setup lang="ts">
 import {doubleFormat} from '~/utils/helpers';
+import type {GridOrder} from '~/composables/useTableVars';
 
-const { settings } = useUser();
 withDefaults(defineProps<{
-  filters: object
-}>(), {  });
+  filters?: any,
+  page: number,
+  onPage: number,
+  order: GridOrder,
+}>(), { filters: {}  });
 
 const url: string = '/eshop/customer?expand=group,lastOrder,billAddress,deliveryAddress,parentCustomer';
-const page = ref<number>(1);
-const onPage = ref<number>(settings.value.defaultOnPage);
+const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
+
 
 const registrationDate: string = (currentDate: string) => {
   const newDate = new Date(currentDate);

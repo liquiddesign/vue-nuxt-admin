@@ -4,12 +4,12 @@
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">
     <template #headerLeft>
-      <InternalRibbonTableFilter v-model="filters" />
+      <InternalRibbonTableFilter v-model="filters" @clear="clearFilters" />
     </template>
-    <InternalRibbonTable :filters="filters" />
+    <InternalRibbonTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
   </BaseCard>
 </template>
 
 <script setup lang="ts">
-const { filters } = useTableVars();
+const { filters, clearFilters, page, onPage, order } = useTableVars();
 </script>
