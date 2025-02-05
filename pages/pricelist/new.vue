@@ -11,6 +11,18 @@
 <script setup lang="ts">
 const defaultFormData = {
   uuid: '',
+  name: '',
+  code: '',
+  description: '',
+  currency: '',
+  country: '',
+  discounts: [],
+  priority: 0,
+  allowDiscountLevel: false,
+  isActive: false,
+  customLabel: '',
+  internalRibbons: [],
+  lastUpdateTs: '',
 };
 
 const formData:any = ref(Object.assign({}, defaultFormData));

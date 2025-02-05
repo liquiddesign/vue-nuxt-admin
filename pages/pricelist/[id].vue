@@ -19,6 +19,6 @@
 <script setup lang="ts">
 const route = useRoute();
 
-const {data, pending, refresh} = useApiFetch('eshop/pricelist/' + route.params.id);
+const {data, pending, refresh} = useApiFetch('eshop/pricelist/' + route.params.id + '?expand=supplier,discounts,internalRibbons');
 const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/pricelist/', 'pricelist');
 </script>

@@ -48,7 +48,7 @@ withDefaults(defineProps<{
   order: GridOrder,
 }>(), { filters: {}  });
 
-const url: string = 'eshop/pricelist?expand=supplier,discounts';
+const url: string = 'eshop/pricelist?expand=supplier,discounts,internalRibbons';
 const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
 
 const discounts: string = (dataDiscounts: any[]) => {
