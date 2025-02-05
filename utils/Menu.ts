@@ -96,29 +96,29 @@ const menu: MenuItem[] = [
                 icon: 'pe-7s-box1',
                 name: 'internal-ribbon',
                 route: 'internal-ribbon',
-                items: [
-                    // <MenuItem>{ title: 'Štítky', route: 'internal-ribbon'},
-                ],
+                items: [],
             },
             <MenuItem>{
                 title: 'Zákazníci',
                 icon: 'pe-7s-box1',
                 name: 'customer',
                 route: 'customer',
-                items: [
-                    // <MenuItem>{ title: 'Štítky', route: 'internal-ribbon'},
-                ],
+                items: [],
             },
             <MenuItem>{
                 title: 'Obchodníci',
                 icon: 'pe-7s-box1',
                 name: 'merchant',
                 route: 'merchant',
-                items: [
-                    // <MenuItem>{ title: 'Štítky', route: 'internal-ribbon'},
-                ],
+                items: [],
             },
-
+            <MenuItem>{
+                title: 'Skupiny zákazníků',
+                icon: 'pe-7s-box1',
+                name: 'customer-group',
+                route: 'customer-group',
+                items: [],
+            },
         ],
     },
 ];
