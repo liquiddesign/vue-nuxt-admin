@@ -64,7 +64,7 @@ const menu: MenuItem[] = [
                 icon: 'pe-7s-box1',
                 name: 'contracts',
                 items: [
-                    <MenuItem>{ title: 'Ceníky', route: 'orders1', disabled: true},
+                    <MenuItem>{ title: 'Ceníky', route: 'pricelist' },
                     <MenuItem>{ title: 'Ceny', route: 'orders1', disabled: true},
                     <MenuItem>{ title: 'Akce', route: 'history-orders1', disabled: true},
                 ],
