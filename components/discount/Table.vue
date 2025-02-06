@@ -18,7 +18,7 @@
       <tr :class="{'inactive': item.hidden, 'active': selected}">
         <BaseGridTdSelect :id="item.uuid" />
         <td class="minimal">{{ item.id }}  ☰</td>
-        <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'pricelist-id', params: { id: item.uuid }})" /></td>
+        <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'discount-id', params: { id: item.uuid }})" /></td>
         <td class="minimal">{{ item.validFrom ?? '-' }}</td>
         <td class="minimal">{{ item.validTo ?? '-' }}</td>
         <td>{{ item.name[lang] ?? '-' }}</td>

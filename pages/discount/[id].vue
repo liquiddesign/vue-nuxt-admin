@@ -12,12 +12,14 @@
       </BaseDropdown>
       <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm btn-danger" @confirm="deleteItem()" />
     </template>
-    <DiscountForm ref="form" :data="data" url="eshop/discount" :slug="route.params.id" :loading="pending" @success="redirect" />
+    <DiscountForm ref="form" :data="data" :lang="lang" url="eshop/discount" :slug="route.params.id" :loading="pending" @success="redirect" />
   </BaseCard>
 </template>
 
 <script setup lang="ts">
 const route = useRoute();
+const { settings } = useUser();
+const lang: Ref<string> = ref(settings.value.defaultLang);
 
 const {data, pending, refresh} = useApiFetch('eshop/discount/' + route.params.id + '?expand=pricelists,coupons,ribbons');
 const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/discount/', 'discount');
