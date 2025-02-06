@@ -119,6 +119,13 @@ const menu: MenuItem[] = [
                 route: 'customer-group',
                 items: [],
             },
+            <MenuItem>{
+                title: 'Viditelníky',
+                icon: 'pe-7s-box1',
+                name: 'visibility-list',
+                route: 'visibility-list',
+                items: [],
+            },
         ],
     },
 ];
