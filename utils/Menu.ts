@@ -66,7 +66,7 @@ const menu: MenuItem[] = [
                 items: [
                     <MenuItem>{ title: 'Ceníky', route: 'pricelist' },
                     <MenuItem>{ title: 'Ceny', route: 'orders1', disabled: true},
-                    <MenuItem>{ title: 'Akce', route: 'history-orders1', disabled: true},
+                    <MenuItem>{ title: 'Akce', route: 'discount' },
                 ],
             },
             <MenuItem>{
