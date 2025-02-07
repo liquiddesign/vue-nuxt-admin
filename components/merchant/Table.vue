@@ -20,7 +20,11 @@
         <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'merchant-id', params: { id: item.uuid }})" /></td>
         <td>{{ item.code ?? '-' }}</td>
         <td>{{ item.fullname ?? '-' }}</td>
-        <td class="minimal">{{ item.pricelists }}</td>
+        <td class="minimal">
+          <span> {{ item.pricelists?.map((item: any) => item['name'] || null).join(', ') }} </span>
+          <hr class="m-0">
+          <span> {{ item.visibilityLists?.map((item: any) => item['name'] || null).join(', ') }} </span>
+        </td>
         <td class="minimal">{{ item.email ?? '-' }}</td>
         <td class="minimal">{{ item.customerGroup.name ?? '-' }}</td>
         <td class="minimal"><BaseButtonDelete class="btn-xs btn-danger" :confirmation="true" @confirm="deleteRow();" /></td>
