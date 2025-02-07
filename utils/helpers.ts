@@ -37,3 +37,7 @@ export function generateUUID() {
         return v.toString(16);
     }).replace(/-/g, '');
 }
+
+export function clearObject(obj: Record<string, any>): void {
+    Object.keys(obj).forEach(key => delete obj[key]);
+}

@@ -28,7 +28,6 @@ const props = withDefaults(defineProps<{
   label?: string|null
   lang?: string
   locale?: boolean
-  required?: boolean
   wrap?: string
   type?: string
   nullable?: boolean

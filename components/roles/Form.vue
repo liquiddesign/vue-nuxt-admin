@@ -83,7 +83,6 @@ const toggleAllSubItems = (items: MenuItem[], checked: boolean) => {
 
   items.forEach((item: MenuItem) => {
     if (item.route) {
-      console.log(item.route);
       props.data.permissions[item.route] = checked;
     }
     if (item.items && item.items.length) {

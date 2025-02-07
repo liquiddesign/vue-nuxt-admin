@@ -1,5 +1,6 @@
 import {type Ref, ref } from 'vue';
 import type {LocationQueryValue} from 'vue-router';
+import {clearObject} from '~/utils/helpers';
 
 export interface GridOrder {
     property?: string
@@ -69,8 +70,7 @@ export const useTableVars = (): {
     });
 
     const clearFilters = function () {
-        console.log('clearing filter', filters);
-        Object.keys(filters.value).forEach(key => delete filters.value[key]);
+        clearObject(filters.value);
     };
 
     return { filters, clearFilters, lang, currency, currencies, langs, page, onPage, order };

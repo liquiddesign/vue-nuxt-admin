@@ -314,3 +314,110 @@ textarea.input-required {
     50% { background-color: rgba(245, 245, 245, 0.8); } /* Světle šedá (WhiteSmoke) */
     100% { background-color: rgba(240, 248, 255, 0.5); } /* Zpět na světlou modrou */
 }
+
+
+
+.upload-files {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+}
+
+.upload-file {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #dfdfdf;
+    max-height: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+
+.upload-file img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-file-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    flex: 1 0 0;
+}
+
+.upload-file-doc,
+.upload-file-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: 1px dashed silver;
+}
+
+.upload-file,
+.upload-file-doc,
+.upload-file-label {
+    min-width: 140px;
+    min-height: 140px;
+    max-height: 140px;
+}
+
+.upload-file-doc {
+    line-height: 1;
+    border: none;
+}
+
+.upload-file-doc svg {
+    width: 2em;
+    height: 2em;
+    margin-bottom: 10px;
+}
+
+.upload-file-label i {
+    color: lightgray;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.upload-file-label:hover {
+    color: lightgray;
+}
+
+.upload-file-controls {
+    display: inline-flex;
+    gap: 2px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    z-index: 10;
+}
+
+.upload-file-progress {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 10;
+}
+
+.upload-button-cancel {
+    color: red;
+}
+
+.upload-button-cancel,
+.upload-button-control {
+    border: 0;
+    background-color: #fff;
+    line-height: 1;
+    padding: 6px 8px;
+}
