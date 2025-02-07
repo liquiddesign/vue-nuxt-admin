@@ -48,7 +48,15 @@
 
       <div class="col-lg-8 ps-5">
         <h5 class="card-title">CENY</h5>
-        <ThePriceTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
+        <BaseTabs class="col-xl-6 col-lg-12" :active="activeTab" :tabs="{'price': 'Ceny ceníku', 'quantity-price': 'Množstevní ceny ceníku'}" @select="activeTab = $event" />
+        <PriceTable v-if="activeTab === 'price'" v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
+        <QuantityPriceTable v-if="activeTab === 'quantity-price'" v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
+<!--        <BaseCard wrap="col-lg-12">-->
+<!--          <template #header>-->
+<!--            <PriceTableFilter v-model="filters" @clear="clearFilters" />-->
+<!--          </template>-->
+<!--          <PriceTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />-->
+<!--        </BaseCard>-->
       </div>
     </div>
 
@@ -82,6 +90,8 @@ const rules = {
   code: {required},
   priority: {required},
 };
+
+const activeTab: Ref<string> = ref('price');
 
 function submit()
 {

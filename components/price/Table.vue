@@ -1,8 +1,8 @@
 <template>
   <BaseCard wrap="col-lg-12">
-<!--    <template #header>-->
+    <!--    <template #header>-->
 
-<!--    </template>-->
+    <!--    </template>-->
     <BaseGrid ref="grid" :url="url" :page="page" :on-page="onPage" :filters="filters" :order="order" @change-order="emit('update:order', $event)">
       <!--    <template #header>-->
       <!--      <tr>-->
@@ -43,7 +43,7 @@ withDefaults(defineProps<{
   page: number,
   onPage: number,
   order: GridOrder,
-}>(), { filters: {}  });
+}>(), { filters: {} });
 
 const url: string = 'eshop/price?expand=product';
 const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
