@@ -3,15 +3,20 @@
     <h5 class="card-title">HLAVNÍ ÚDAJE</h5>
     <div class="col-lg-6">
       <div class="row">
-        <BaseTextBox wrap="col-lg-6" name="name" label="Popisek" type="text" />
-        <BaseSelect wrap="col-lg-6" name="type" label="Typ" :options="typeOptions" />
+        <BaseTextBox wrap="col-lg-12" name="name" label="Název" type="text" />
       </div>
+
       <div class="row mt-2">
-        <BaseColorPicker wrap="col-lg-12" name="color" label="Barva textu" />
+        <BaseTextBox wrap="col-lg-8" name="code" label="Kód" type="text" />
+        <BaseTextBox wrap="col-lg-4" name="priority" label="Priorita" type="number" />
+        <div class="col-lg-8 mt-2">
+          <i class="fa fa-info-circle" /> Kód může obsahovat pouze znaky a-z, A-Z, 0-9. Speciální znaky nejsou povoleny!
+        </div>
       </div>
-      <div class="row mt-2">
-        <BaseColorPicker wrap="col-lg-12" name="backgroundColor" label="Barva pozadí" />
-      </div>
+    </div>
+
+    <div class="row mt-3">
+      <BaseCheckBox wrap="col-lg-12" name="hidden" label="Skryto" />
     </div>
 
     <div class="row mt-3">
@@ -24,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-
 import {RouteParamValue} from 'vue-router';
 import {required} from '@vuelidate/validators';
 
@@ -39,14 +43,9 @@ const form = ref(null);
 const goBack: Ref<boolean> = ref(false);
 
 const rules = {
+  code: {required},
   name: {required},
-  type: {required},
-};
-
-const typeOptions = {
-  product: 'product',
-  order: 'order',
-  price_list: 'price_list',
+  priority: {required},
 };
 
 function submit()

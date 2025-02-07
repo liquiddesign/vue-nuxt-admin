@@ -27,24 +27,24 @@
         <i class="fa fa-info-circle" /> Zadejte e-mailové adresy oddělené středníkem (;).
 
         <div class="row mt-2">
-          <BaseTextBox name="" wrap="col-lg-8" label="Ceníky" type="text" />
+          <BaseMultiSelect name="pricelists" wrap="col-lg-8" label="Ceníky" :multiple="true" options-url="eshop/pricelist?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
         </div>
         <div class="row mt-2">
-          <BaseMultiSelect name="" wrap="col-lg-8" label="Oblíbené ceníky" />
+          <BaseMultiSelect name="favouritePriceLists" wrap="col-lg-8" label="Oblíbené ceníky" :multiple="true" options-url="eshop/pricelist?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
         </div>
         <i class="fa fa-info-circle" /> Pokud zvolený ceník není přiřazen jako "Ceníky", <br>bude dodatečně spárován.
 
         <div class="row mt-2">
-          <BaseTextBox name="" wrap="col-lg-8" label="Seznamy viditelnosti" type="text" />
+          <BaseMultiSelect name="visibilityLists" wrap="col-lg-8" label="Seznamy viditelnosti" options-url="eshop/visibility-list?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
         </div>
         <div class="row mt-2">
-          <BaseTextBox name="" wrap="col-lg-8" label="Obchodníci" type="text" />
+          <BaseMultiSelect name="merchants" wrap="col-lg-8" label="Obchodníci" options-url="eshop/merchant?property=fullname" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
         </div>
         <div class="row mt-2">
           <BaseMultiSelect name="group" wrap="col-lg-8" label="Skupina" options-url="eshop/customer-group?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
         </div>
         <div class="row mt-2">
-          <BaseMultiSelect name="" wrap="col-lg-8" label="Oblíbené produkty" />
+          <BaseMultiSelect name="favouriteProducts" wrap="col-lg-8" label="Oblíbené produkty" :multiple="true" options-url="eshop/product?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
         </div>
 
         <div class="form-wrapper-blue mt-2">
@@ -53,28 +53,28 @@
             <BaseMultiSelect name="parentCustomer" wrap="col-lg-8" label="Nadřazený zákazník" options-url="" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
           </div>
           <div class="row mt-2">
-            <BaseMultiSelect name="" wrap="col-lg-8" label="Objednání" options-url="" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
+            <BaseMultiSelect name="orderPermission" wrap="col-lg-8" label="Objednání" :options="optionsOrderPermission" />
           </div>
           <div class="row mt-2">
             <BaseTextBox name="lastOrder" wrap="col-lg-8" label="Poslední objednávka" type="text" />
           </div>
           <div class="row mt-2">
-            <BaseTextBox name="" wrap="col-lg-8" label="Preferovaný jazyk" type="text" />
+            <BaseTextBox name="preferredMutation" wrap="col-lg-8" label="Preferovaný jazyk" type="text" />
           </div>
           <div class="row mt-2">
-            <BaseTextBox name="preferredCurrency" wrap="col-lg-8" label="Preferovaná měna nákupu" type="text" />
+            <BaseMultiSelect name="preferredCurrency" wrap="col-lg-8" label="Preferovaná měna nákupu" options-url="eshop/currency?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
           </div>
           <div class="row mt-2">
-            <BaseTextBox name="preferredPaymentType" wrap="col-lg-8" label="Preferovaná platba" type="text" />
+            <BaseMultiSelect name="preferredPaymentType" wrap="col-lg-8" label="Preferovaná platba" options-url="eshop/payment-type?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
           </div>
           <div class="row mt-2">
-            <BaseTextBox name="preferredDeliveryType" wrap="col-lg-8" label="Preferovaná doprava" type="text" />
+            <BaseMultiSelect name="preferredDeliveryType" wrap="col-lg-8" label="Preferovaná doprava" options-url="eshop/delivery-type?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
           </div>
           <div class="row mt-2">
-            <BaseMultiSelect name="" wrap="col-lg-8" label="Povolené exkluzivní platby" options-url="" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
+            <BaseMultiSelect name="exclusivePaymentTypes" wrap="col-lg-8" label="Povolené exkluzivní platby" :multiple="true" options-url="eshop/payment-type?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
           </div>
           <div class="row mt-2">
-            <BaseMultiSelect name="" wrap="col-lg-8" label="Povolené exkluzivní platby" options-url="" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
+            <BaseMultiSelect name="exclusiveDeliveryTypes" wrap="col-lg-8" label="Povolené exkluzivní dopravy" :multiple="true" options-url="eshop/delivery-type?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
           </div>
           <div class="row mt-2">
             <BaseTextBox name="discountLevelPct" wrap="col-lg-8" label="Sleva (%)" />
@@ -88,10 +88,10 @@
             <BaseTextBox name="productRoundingPct" wrap="col-lg-8" label="Zaokrouhlení od procent (%)" />
           </div>
           <div class="row mt-2">
-            <BaseTextBox name="" wrap="col-lg-8" label="Max. cena objednávky bez DPH" />
+            <BaseTextBox name="maximumOrderPriceWithoutVat" wrap="col-lg-8" label="Max. cena objednávky bez DPH" />
           </div>
           <div class="row mt-2">
-            <BaseTextBox name="" wrap="col-lg-8" label="Max. cena objednávky s DPH" />
+            <BaseTextBox name="maximumOrderPriceWithVat" wrap="col-lg-8" label="Max. cena objednávky s DPH" />
           </div>
         </div>
 
@@ -101,7 +101,6 @@
             <BaseFormButton class="btn-outline-primary me-1 btn-sm" @click="goBack = false;">Uložit a pokračovat</BaseFormButton>
           </div>
         </div>
-
       </div>
 
 
@@ -197,6 +196,11 @@ const optionsAssistants = {
   off: 'Vypnuto',
   personal: 'Vlastní',
   other: 'Ostatní',
+};
+
+const optionsOrderPermission = {
+  fullWithApproval: 'Pouze se schválením',
+  full: 'Povoleno',
 };
 
 function submit()

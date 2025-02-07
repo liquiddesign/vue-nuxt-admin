@@ -11,9 +11,22 @@
           <hr class="m-0">
           <span>Adresa (Fakt., Doruč.)</span>
         </BaseGridTh>
-        <BaseGridTh class="minimal" order-by="email">Email / Telefon</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="parentCustomer">Nadřazený zák.</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="fullname">
+          <span>Email</span>
+          <hr class="m-0">
+          <span>Telefon</span>
+        </BaseGridTh>
+        <BaseGridTh order-by="merchants">
+          <span>Obchodníci</span>
+          <hr class="m-0">
+          <span>Nadřazený zák.</span>
+        </BaseGridTh>
         <BaseGridTh class="minimal" order-by="group">Skupina</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="pricelists">
+          <span>Ceníky</span>
+          <hr class="m-0">
+          <span>Viditelníky</span>
+        </BaseGridTh>
         <BaseGridTh class="minimal" order-by="lastOrder">Poslední obj.</BaseGridTh>
         <BaseGridTh class="minimal" order-by="ordersCount">Počet obj.</BaseGridTh>
         <BaseGridTh class="minimal"><BaseGridThSettings /></BaseGridTh>
@@ -41,8 +54,17 @@
           <br class="m-0">
           <a :href="'tel:' + item.phone"><i v-if="item.phone" class="pe-7s-phone text-center" /> {{ item.phone }}</a>
         </td>
-        <td class="minimal">{{ item.parentCustomer.fullname }}</td>
+        <td class="minimal">
+          <span> {{ item.merchants?.map((item: any) => item['name'] || null).join(', ') }} </span>
+          <hr class="m-0">
+          <span> {{ item.parentCustomer.fullname }} </span>
+        </td>
         <td class="minimal">{{ item.group.name }}</td>
+        <td class="minimal">
+          <span> {{ item.pricelists?.map((item: any) => item['name'] || null).join(', ') }} </span>
+          <hr class="m-0">
+          <span> {{ item.visibilityLists?.map((item: any) => item['name'] || null).join(', ') }} </span>
+        </td>
         <td class="minimal">
           <span>{{ item.lastOrder.code }}</span>
           <br class="m-0">
@@ -69,7 +91,7 @@ withDefaults(defineProps<{
   order: GridOrder,
 }>(), { filters: {}  });
 
-const url: string = '/eshop/customer?expand=group,lastOrder,billAddress,deliveryAddress,parentCustomer';
+const url: string = '/eshop/customer?expand=group,lastOrder,billAddress,deliveryAddress,parentCustomer,merchants,pricelists,visibilityLists,accounts';
 const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
 
 

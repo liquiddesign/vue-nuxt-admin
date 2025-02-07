@@ -1,7 +1,7 @@
 <template>
   <BaseWrapper :wrap="wrap">
     <div class="mb-3 card" v-bind="$attrs">
-      <div v-if="$slots.headerLeft || $slots.headerRight || $slots.header" class="card-header">
+      <div v-if="$slots.headerLeft || $slots.headerRight || $slots.header" class="card-header h-auto py-3">
         <slot name="header">
           <div class="btn-actions-pane-left">
             <slot name="headerLeft" />

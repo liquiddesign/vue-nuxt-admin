@@ -5,28 +5,26 @@
         <BaseGridThSelect />
         <BaseGridTh class="minimal" order-by="id">#</BaseGridTh>
         <BaseGridTh />
-        <BaseGridTh order-by="code">Kód</BaseGridTh>
-        <BaseGridTh order-by="fullname">Jméno a příjmení</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="pricelists">Ceníky/Viditelníky</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="email">E-mail</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="customerGroup">Skupina</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="validFrom">Platnost od</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="validTo">Platnost do</BaseGridTh>
+        <BaseGridTh order-by="name"><BaseFlag :lang="lang" /> Název</BaseGridTh>
+        <BaseGridTh order-by="pricelists">Akční ceníky</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="coupons">Kupóny</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="recommended"><i class="far fa-thumbs-o-up" /></BaseGridTh>
         <BaseGridTh class="minimal"><BaseGridThSettings /></BaseGridTh>
       </tr>
     </template>
-    <template #body="{item, selected, deleteRow}">
+    <template #body="{item, selected, deleteRow, updateRow}">
       <tr :class="{'inactive': item.hidden, 'active': selected}">
         <BaseGridTdSelect :id="item.uuid" />
         <td class="minimal">{{ item.id }}  ☰</td>
-        <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'merchant-id', params: { id: item.uuid }})" /></td>
-        <td>{{ item.code ?? '-' }}</td>
-        <td>{{ item.fullname ?? '-' }}</td>
-        <td class="minimal">
-          <span> {{ item.pricelists?.map((item: any) => item['name'] || null).join(', ') }} </span>
-          <hr class="m-0">
-          <span> {{ item.visibilityLists?.map((item: any) => item['name'] || null).join(', ') }} </span>
-        </td>
-        <td class="minimal">{{ item.email ?? '-' }}</td>
-        <td class="minimal">{{ item.customerGroup.name ?? '-' }}</td>
+        <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'discount-id', params: { id: item.uuid }})" /></td>
+        <td class="minimal">{{ item.validFrom ?? '-' }}</td>
+        <td class="minimal">{{ item.validTo ?? '-' }}</td>
+        <td>{{ item.name[lang] ?? '-' }}</td>
+        <td>{{ item.pricelists?.map((item: any) => item['name'] || null).join(', ') }}</td>
+        <td class="minimal">{{ item.coupons?.map((item: any) => item['label'] || null).join(', ') }}</td>
+        <td class="minimal"><BaseCheckBox v-model="item.recommended" @change="(e) => updateRow(e.target.checked, 'recommended')" /></td>
         <td class="minimal"><BaseButtonDelete class="btn-xs btn-danger" :confirmation="true" @confirm="deleteRow();" /></td>
       </tr>
     </template>
@@ -41,11 +39,12 @@ import type {GridOrder} from '~/composables/useTableVars';
 
 withDefaults(defineProps<{
   filters?: any,
+  lang: string,
   page: number,
   onPage: number,
   order: GridOrder,
 }>(), { filters: {}  });
 
-const url: string = 'eshop/merchant?expand=customerGroup,pricelists,visibilityLists,customers';
+const url: string = 'eshop/discount?expand=pricelists,coupons,ribbons';
 const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
 </script>

@@ -14,24 +14,38 @@
 const defaultFormData = {
   uuid: '',
   fullname: '',
-  company: '',
   ic: '',
   dic: '',
   phone: '',
   email: '',
-  ccEmails: '',
+  ccEmails: [],
+  pricelists: [],
+  favouritePriceLists: [],
+  visibilityLists: [],
+  merchants: [],
   group: '',
+  favouriteProducts: [],
+  parentCustomer: '',
+  orderPermission: '',
+  lastOrder: '',
   preferredCurrency: '',
   preferredDeliveryType: '',
+  preferredMutation: '',
   preferredPaymentType: '',
+  exclusivePaymentTypes: '',
+  exclusiveDeliveryTypes: '',
   discountLevelPct: '',
   maxDiscountProductPct: '',
   productRoundingPct: '',
+  maximumOrderPriceWithoutVat: '',
+  maximumOrderPriceWithVat: '',
   allowExport: false,
   ediCompany: '',
   ediBranch: '',
-
+  externalId: '',
+  externalCode: '',
 };
+
 const formData:any = ref(Object.assign({}, defaultFormData));
 
 function redirect(id) {

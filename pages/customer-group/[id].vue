@@ -1,7 +1,7 @@
 <template>
   <BaseCard>
     <template #headerLeft>
-      <BaseButtonBack class="me-2" @click="navigateTo({name: 'merchant'})" />
+      <BaseButtonBack class="me-2" @click="navigateTo({name: 'customer-group'})" />
       <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
     </template>
     <template #headerRight>
@@ -12,13 +12,13 @@
       </BaseDropdown>
       <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm btn-danger" @confirm="deleteItem()" />
     </template>
-    <MerchantForm ref="form" :data="data" url="eshop/merchant" :slug="route.params.id" :loading="pending" @success="redirect" />
+    <CustomerGroupForm ref="form" :data="data" url="eshop/customer-group" :slug="route.params.id" :loading="pending" @success="redirect" />
   </BaseCard>
 </template>
 
 <script setup lang="ts">
 const route = useRoute();
 
-const {data, pending, refresh} = useApiFetch('eshop/merchant/' + route.params.id + '?expand=customerGroup,pricelists-uuid,visibilityLists,customers');
-const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/merchant/', 'merchant');
+const {data, pending, refresh} = useApiFetch('eshop/customer-group/' + route.params.id);
+const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/customer-group/', 'customer-group');
 </script>

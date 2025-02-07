@@ -6,27 +6,21 @@
         <BaseGridTh class="minimal" order-by="id">#</BaseGridTh>
         <BaseGridTh />
         <BaseGridTh order-by="code">Kód</BaseGridTh>
-        <BaseGridTh order-by="fullname">Jméno a příjmení</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="pricelists">Ceníky/Viditelníky</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="email">E-mail</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="customerGroup">Skupina</BaseGridTh>
+        <BaseGridTh order-by="name">Název</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="hidden"><i class="far fa-eye-slash" /></BaseGridTh>
         <BaseGridTh class="minimal"><BaseGridThSettings /></BaseGridTh>
       </tr>
     </template>
-    <template #body="{item, selected, deleteRow}">
+    <template #body="{item, selected, deleteRow, updateRow}">
       <tr :class="{'inactive': item.hidden, 'active': selected}">
         <BaseGridTdSelect :id="item.uuid" />
         <td class="minimal">{{ item.id }}  ☰</td>
-        <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'merchant-id', params: { id: item.uuid }})" /></td>
+        <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'visibility-list-id', params: { id: item.uuid }})" /></td>
         <td>{{ item.code ?? '-' }}</td>
-        <td>{{ item.fullname ?? '-' }}</td>
-        <td class="minimal">
-          <span> {{ item.pricelists?.map((item: any) => item['name'] || null).join(', ') }} </span>
-          <hr class="m-0">
-          <span> {{ item.visibilityLists?.map((item: any) => item['name'] || null).join(', ') }} </span>
-        </td>
-        <td class="minimal">{{ item.email ?? '-' }}</td>
-        <td class="minimal">{{ item.customerGroup.name ?? '-' }}</td>
+        <td>{{ item.name ?? '-' }}</td>
+        <td class="minimal"><BaseTextBox v-model="item.priority" type="number" class="form-control-xs" style="width: 50px;" @change="(e) => updateRow(parseInt(e.target.value), 'priority')" /></td>
+        <td class="minimal"><BaseCheckBox v-model="item.hidden" @change="(e) => updateRow(e.target.checked, 'hidden')" /></td>
         <td class="minimal"><BaseButtonDelete class="btn-xs btn-danger" :confirmation="true" @confirm="deleteRow();" /></td>
       </tr>
     </template>
@@ -46,6 +40,6 @@ withDefaults(defineProps<{
   order: GridOrder,
 }>(), { filters: {}  });
 
-const url: string = 'eshop/merchant?expand=customerGroup,pricelists,visibilityLists,customers';
+const url: string = '/eshop/visibility-list';
 const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
 </script>
