@@ -58,21 +58,17 @@
         <BaseTabs class="col-xl-6 col-lg-12" :active="activeTab" :tabs="{'price': 'Ceny ceníku', 'quantity-price': 'Množstevní ceny ceníku'}" @select="activeTab = $event" />
 
         <template v-if="activeTab === 'price'">
-          <BaseCard wrap="col-lg-12">
+<!--          <BaseCard wrap="col-lg-12">-->
 <!--            <template #header>-->
 <!--              <PriceTableFilter v-model="filters" @clear="clearFilters" />-->
 <!--            </template>-->
-            <PriceTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
-          </BaseCard>
+          <PriceTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
+<!--          </BaseCard>-->
         </template>
 
         <template v-if="activeTab === 'quantity-price'">
-          <BaseCard wrap="col-lg-12">
-            <template #header>
-              <QuantityPriceTableFilter v-model="filters" @clear="clearFilters" />
-            </template>
-            <QuantityPriceTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
-          </BaseCard>
+          <QuantityPriceTableFilter v-model="filters" class="mb-2" @clear="clearFilters" />
+          <QuantityPriceTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
         </template>
       </div>
     </div>
