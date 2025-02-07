@@ -42,6 +42,7 @@
 import {clearObject, generateUUID} from '~/utils/helpers';
 import {type ToastPluginApi, useToast} from 'vue-toast-notification';
 import axios, {CanceledError} from 'axios';
+import {apiFetch} from '~/utils/apiFetch';
 
 const $emit = defineEmits(['filesSelected', 'canceled']);
 
@@ -52,13 +53,15 @@ interface FileData {
   fileUpload: File;
   uploadProcess: UploadProcess | null;
   isImage: boolean;
-  uploaded: boolean;
+  uploaded: boolean | null;
   dbObject: object;
+  targetFileName: string | null;
   objectSrc?: string;
   dataSrc?: string;
 }
 
 interface UploadProcess {
+  id: string,
   progress: number;
   controller: AbortController;
 }
@@ -206,7 +209,8 @@ function onFileChanged($event: Event) {
         fileUpload,
         uploadProcess: null,
         isImage: !!fileUpload.type?.startsWith('image/'),
-        uploaded: false,
+        uploaded: null,
+        targetFileName: null,
         dbObject: {},
       };
 
@@ -247,7 +251,7 @@ function upload() {
 
   // prepare upload process
   const id: string = generateUUID();
-  uploadProcesses.value[id] = {progress: 0, controller: new AbortController()};
+  uploadProcesses.value[id] = {id: id, progress: 0, controller: new AbortController()};
 
   Object.values(files.value).forEach((value) => {
     if (!value.uploaded) {
@@ -263,6 +267,7 @@ function upload() {
     },
   }).then((response: any) => {
     const uploaded = [];
+
     Object.values(files.value).filter(v => v.uploadProcess?.id === id).forEach((value) => {
 
       if (value.uploaded !== null) {
@@ -271,9 +276,12 @@ function upload() {
 
       value.uploadProcess = null;
 
+      console.log(response.data.result);
+
       if (response.data.result[value.hash]) {
         value.uploaded = true;
-        Object.assign(value.dbObject, response.data.result[value.hash]);
+        value.targetFileName = response.data.result[value.hash];
+        //Object.assign(value.dbObject, response.data.result[value.hash]);
         uploaded.push(value);
       } else {
         console.error('not in result', value.hash, response.data.result);
@@ -307,6 +315,21 @@ function upload() {
     console.error('upload error', x);
 
     delete uploadProcesses.value[id];
+  });
+}
+
+function rotateImage(file: FileData, rotate: number)
+{
+  const url = 'file';
+
+  if (!file.targetFileName) {
+    return;
+  }
+
+  console.log();
+
+  apiFetch(url + '/' + file.hash + '?angle=90', { method: 'POST', body: {'_op': 'rotate'}}).then(() => {
+
   });
 }
 
