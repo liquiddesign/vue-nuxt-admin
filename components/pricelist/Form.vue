@@ -44,27 +44,36 @@
           <BaseMultiSelect wrap="col-lg-12 mt-2" name="internalRibbons" label="Interní štítky" :multiple="true" options-url="eshop/internal-ribbon?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
           <BaseTextBox wrap="col-lg-12 mt-2" name="lastUpdateTs" label="Poslední aktualizace" type="date" />
         </div>
+
+        <div class="row mt-3">
+          <div class="col-lg-6">
+            <BaseFormButton class="btn-success btn-sm me-1" @click="goBack = true;">Uložit</BaseFormButton>
+            <BaseFormButton class="btn-outline-primary me-1 btn-sm" @click="goBack = false;">Uložit a pokračovat</BaseFormButton>
+          </div>
+        </div>
       </div>
 
       <div class="col-lg-8 ps-5">
-        <h5 class="card-title">CENY</h5>
+<!--        <h5 class="card-title">CENY</h5>-->
         <BaseTabs class="col-xl-6 col-lg-12" :active="activeTab" :tabs="{'price': 'Ceny ceníku', 'quantity-price': 'Množstevní ceny ceníku'}" @select="activeTab = $event" />
-        <PriceTable v-if="activeTab === 'price'" v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
-        <QuantityPriceTable v-if="activeTab === 'quantity-price'" v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
-<!--        <BaseCard wrap="col-lg-12">-->
-<!--          <template #header>-->
-<!--            <PriceTableFilter v-model="filters" @clear="clearFilters" />-->
-<!--          </template>-->
-<!--          <PriceTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />-->
-<!--        </BaseCard>-->
-      </div>
-    </div>
 
+        <template v-if="activeTab === 'price'">
+          <BaseCard wrap="col-lg-12">
+<!--            <template #header>-->
+<!--              <PriceTableFilter v-model="filters" @clear="clearFilters" />-->
+<!--            </template>-->
+            <PriceTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
+          </BaseCard>
+        </template>
 
-    <div class="row mt-3">
-      <div class="col-lg-6">
-        <BaseFormButton class="btn-success btn-sm me-1" @click="goBack = true;">Uložit</BaseFormButton>
-        <BaseFormButton class="btn-outline-primary me-1 btn-sm" @click="goBack = false;">Uložit a pokračovat</BaseFormButton>
+        <template v-if="activeTab === 'quantity-price'">
+          <BaseCard wrap="col-lg-12">
+            <template #header>
+              <PriceTableFilter v-model="filters" @clear="clearFilters" />
+            </template>
+            <QuantityPriceTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
+          </BaseCard>
+        </template>
       </div>
     </div>
   </BaseForm>
