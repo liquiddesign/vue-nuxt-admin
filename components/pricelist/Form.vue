@@ -4,8 +4,8 @@
       <div class="col-lg-4">
         <h5 class="card-title">HLAVNÍ ÚDAJE</h5>
         <div class="row">
-          <BaseTextBox wrap="col-lg-8" name="name" label="Název" type="text" required />
-          <BaseTextBox wrap="col-lg-4" name="code" label="Kód" type="text" required />
+          <BaseTextBox wrap="col-lg-8" name="name" label="Název" type="text" />
+          <BaseTextBox wrap="col-lg-4" name="code" label="Kód" type="text" />
         </div>
 
         <div class="row mt-2">
@@ -20,7 +20,7 @@
 
           <div class="row mt-2">
             <BaseMultiSelect wrap="col-lg-8" name="discounts" label="Akce" :multiple="true" options-url="eshop/discount?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
-            <BaseTextBox wrap="col-lg-4" name="priority" label="Priorita" type="number" required />
+            <BaseTextBox wrap="col-lg-4" name="priority" label="Priorita" type="number" />
           </div>
 
           <div class="row mt-3">

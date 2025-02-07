@@ -3,11 +3,11 @@
     <h5 class="card-title">OBCHODNÍK</h5>
     <div class="col-lg-6">
       <div class="row">
-        <BaseTextBox wrap="col-lg-12" name="fullname" label="Jméno a příjmení" type="text" required />
+        <BaseTextBox wrap="col-lg-12" name="fullname" label="Jméno a příjmení" type="text" />
       </div>
 
       <div class="row mt-2">
-        <BaseTextBox wrap="col-lg-8" name="email" label="E-mail" required />
+        <BaseTextBox wrap="col-lg-8" name="email" label="E-mail" />
         <BaseTextBox wrap="col-lg-4" name="code" label="Kód" />
       </div>
 

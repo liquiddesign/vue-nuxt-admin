@@ -3,7 +3,7 @@
     <h5 class="card-title">HLAVNÍ ÚDAJE</h5>
     <div class="col-lg-6">
       <div class="row">
-        <BaseTextBoxLocale wrap="col-lg-12" name="name" label="Název" type="text" required />
+        <BaseTextBoxLocale wrap="col-lg-12" name="name" label="Název" type="text" />
         <BaseTextBox wrap="col-lg-12 mt-2" name="validFrom" label="Platnost od" type="text" />
         <BaseTextBox wrap="col-lg-12 mt-2" name="validTo" label="Platnost do" type="text" />
       </div>

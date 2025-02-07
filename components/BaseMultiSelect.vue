@@ -3,7 +3,7 @@
     <label v-if="label" :for="$attrs['id']">
       <span v-if="((form && form.lang) || lang) && locale" class="pe-1"><flag :iso="form && form.lang ? form.lang : lang" /></span>{{ label }}
     </label>
-    <div style="height: 29.5px; padding: 0" :class="classes">
+    <div style="height: 29.5px;" :class="classes">
       <VueMultiselect
         v-bind="$attrs"
         :options="optionArray"

@@ -3,7 +3,7 @@
     <h5 class="card-title">HLAVNÍ ÚDAJE</h5>
     <div class="col-lg-6">
       <div class="row">
-        <BaseTextBox wrap="col-lg-12" name="name" label="Název" type="text" required />
+        <BaseTextBox wrap="col-lg-12" name="name" label="Název" type="text" />
       </div>
 
       <div class="row mt-2">
@@ -21,8 +21,8 @@
         </div>
 
         <div class="row mt-2">
-          <BaseTextBox wrap="col-lg-5" name="defaultDiscountLevelPct" label="Výchozí sleva (%)" type="number" min="0" max="100" required />
-          <BaseTextBox wrap="col-lg-7" name="defaultMaxDiscountProductPct" label="Výchozí max.sleva u prod. (%)" type="number" min="0" max="100" required />
+          <BaseTextBox wrap="col-lg-5" name="defaultDiscountLevelPct" label="Výchozí sleva (%)" type="number" min="0" max="100" />
+          <BaseTextBox wrap="col-lg-7" name="defaultMaxDiscountProductPct" label="Výchozí max.sleva u prod. (%)" type="number" min="0" max="100" />
         </div>
       </div>
 

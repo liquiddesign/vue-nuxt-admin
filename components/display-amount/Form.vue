@@ -4,7 +4,7 @@
     <div class="col-lg-6">
       <div class="row">
         <BaseTextBoxLocale wrap="col-lg-8" name="label" label="Popisek" type="text" />
-        <BaseTextBox wrap="col-lg-4" name="priority" label="Priorita" type="number" required />
+        <BaseTextBox wrap="col-lg-4" name="priority" label="Priorita" type="number" />
       </div>
 
       <div class="row mt-2">

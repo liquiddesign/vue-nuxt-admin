@@ -3,8 +3,8 @@
     <h5 class="card-title">HLAVNÍ ÚDAJE</h5>
     <div class="col-lg-6">
       <div class="row">
-        <BaseTextBox wrap="col-lg-6" name="name" label="Popisek" type="text" required />
-        <BaseSelect wrap="col-lg-6" name="type" label="Typ" :options="typeOptions" required />
+        <BaseTextBox wrap="col-lg-6" name="name" label="Popisek" type="text" />
+        <BaseSelect wrap="col-lg-6" name="type" label="Typ" :options="typeOptions" />
       </div>
       <div class="row mt-2">
         <BaseColorPicker wrap="col-lg-12" name="color" label="Barva textu" />

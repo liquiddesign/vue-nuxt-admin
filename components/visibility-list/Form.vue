@@ -3,12 +3,12 @@
     <h5 class="card-title">HLAVNÍ ÚDAJE</h5>
     <div class="col-lg-6">
       <div class="row">
-        <BaseTextBox wrap="col-lg-12" name="name" label="Název" type="text" required />
+        <BaseTextBox wrap="col-lg-12" name="name" label="Název" type="text" />
       </div>
 
       <div class="row mt-2">
-        <BaseTextBox wrap="col-lg-8" name="code" label="Kód" type="text" required />
-        <BaseTextBox wrap="col-lg-4" name="priority" label="Priorita" type="number" required />
+        <BaseTextBox wrap="col-lg-8" name="code" label="Kód" type="text" />
+        <BaseTextBox wrap="col-lg-4" name="priority" label="Priorita" type="number" />
         <div class="col-lg-8 mt-2">
           <i class="fa fa-info-circle" /> Kód může obsahovat pouze znaky a-z, A-Z, 0-9. Speciální znaky nejsou povoleny!
         </div>
