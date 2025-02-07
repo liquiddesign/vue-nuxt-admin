@@ -21,6 +21,6 @@ const route = useRoute();
 const { settings } = useUser();
 const lang: Ref<string> = ref(settings.value.defaultLang);
 
-const {data, pending, refresh} = useApiFetch('eshop/discount/' + route.params.id + '?expand=pricelists,coupons,ribbons');
+const {data, pending, refresh} = useApiFetch('eshop/discount/' + route.params.id + '?expand=pricelists-uuid,coupons,ribbons-uuid');
 const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/discount/', 'discount');
 </script>

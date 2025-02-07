@@ -21,6 +21,6 @@
 <script setup lang="ts">
 const route = useRoute();
 
-const {data, pending, refresh} = useApiFetch('eshop/customer/' + route.params.id + '?expand=group,lastOrder,billAddress,deliveryAddress,parentCustomer,merchants,pricelists,visibilityLists,accounts,favouritePriceLists,favouriteProducts,preferredPaymentType,preferredDeliveryType,preferredCurrency,exclusivePaymentTypes,exclusiveDeliveryTypes');
+const {data, pending, refresh} = useApiFetch('eshop/customer/' + route.params.id + '?expand=group,lastOrder,billAddress,deliveryAddress,parentCustomer,merchants,pricelists-uuid,visibilityLists,accounts,favouritePriceLists,favouriteProducts,preferredPaymentType,preferredDeliveryType,preferredCurrency,exclusivePaymentTypes,exclusiveDeliveryTypes');
 const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/customer', 'customer');
 </script>

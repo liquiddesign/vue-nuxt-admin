@@ -19,6 +19,6 @@
 <script setup lang="ts">
 const route = useRoute();
 
-const {data, pending, refresh} = useApiFetch('eshop/merchant/' + route.params.id + '?expand=customerGroup,pricelists,visibilityLists,customers');
+const {data, pending, refresh} = useApiFetch('eshop/merchant/' + route.params.id + '?expand=customerGroup,pricelists-uuid,visibilityLists,customers');
 const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/merchant/', 'merchant');
 </script>
