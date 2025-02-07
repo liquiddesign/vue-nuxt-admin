@@ -42,6 +42,6 @@ withDefaults(defineProps<{
   order: GridOrder,
 }>(), { filters: {}  });
 
-const url: string = '/eshop/merchant?expand=customerGroup';
+const url: string = 'eshop/merchant?expand=customerGroup,pricelists,visibilityLists,customers';
 const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
 </script>

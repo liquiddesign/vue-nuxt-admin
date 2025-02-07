@@ -22,6 +22,8 @@ const defaultFormData = {
   defaultViewAllOrders : false,
   defaultAfterRegistration : false,
   autoActiveCustomers : false,
+  pricelist: [],
+  visibilityList: [],
 };
 
 const formData:any = ref(Object.assign({}, defaultFormData));

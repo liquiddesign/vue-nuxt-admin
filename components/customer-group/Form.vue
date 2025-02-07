@@ -32,8 +32,8 @@
       </div>
 
       <div class="row mt-2">
-        <BaseTextBox wrap="col-lg-6" name="priselists" label="Ceníky" type="text" />
-        <BaseMultiSelect wrap="col-lg-6" name="" label="Seznamy viditelnosti" :multiple="true" />
+        <BaseMultiSelect wrap="col-lg-6" name="pricelist" label="Ceníky" :multiple="true" options-url="eshop/pricelist?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
+        <BaseMultiSelect wrap="col-lg-6" name="visibilityList" label="Seznamy viditelnosti" :multiple="true" options-url="eshop/visibility-list?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
       </div>
 
       <div class="row mt-3">
