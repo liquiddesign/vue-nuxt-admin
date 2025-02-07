@@ -25,7 +25,7 @@
         <td class="minimal">{{ item.currency ?? '-' }}</td>
         <td>{{ item.name ?? '-' }}</td>
         <td>{{ item.description ?? '-' }}</td>
-        <td class="minimal">{{ discounts(item.discounts) }}</td>
+        <td class="minimal">{{ item.discounts?.map((item: any) => item['name'].cs || null).join(', ') }}</td>
         <td class="minimal">{{ item.supplier.name ?? '-' }}</td>
         <td class="minimal"><BaseTextBox v-model="item.priority" type="number" class="form-control-xs" style="width: 50px;" @change="(e) => updateRow(parseInt(e.target.value), 'priority')" /></td>
         <td class="minimal"><BaseCheckBox v-model="item.isActive" @change="(e) => updateRow(e.target.checked, 'isActive')" /></td>
@@ -50,17 +50,4 @@ withDefaults(defineProps<{
 
 const url: string = 'eshop/pricelist?expand=supplier,discounts,internalRibbons';
 const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
-
-const discounts: string = (dataDiscounts: any[]) => {
-  if (dataDiscounts && dataDiscounts?.length > 0) {
-    let discountsNames: any[] = [];
-    for (const itemDiscount of dataDiscounts) {
-      discountsNames.push(itemDiscount.name?.cs);
-    }
-
-    return discountsNames.join(', ');
-  }
-
-  return '-';
-};
 </script>

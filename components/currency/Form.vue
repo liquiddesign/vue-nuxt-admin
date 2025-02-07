@@ -20,13 +20,14 @@
         <div class="form-wrapper-blue mt-3">
           <h5 class="card-title">Formát</h5>
           <div class="row align-items-end">
-            <BaseTextBox name="formatDecimals" wrap="col-lg-3" label="Počet desetinných míst" type="number" :nullable="true" />
-            <BaseTextBox name="formatDecimalSeparator" wrap="col-lg-3" label="Oddělovač desetinných míst" :nullable="true" />
-            <BaseTextBox name="formatThousandsSeparator" wrap="col-lg-3" label="Oddělovač tisícovek" :nullable="true" />
+            <BaseTextBox name="formatDecimals" wrap="col-lg-3" label="Počet desetinných míst" type="number" />
+            <BaseTextBox name="formatDecimalSeparator" wrap="col-lg-3" label="Oddělovač desetinných míst" />
+            <BaseTextBox name="formatThousandsSeparator" wrap="col-lg-3" label="Oddělovač tisícovek" />
             <BaseSelect name="formatSymbolPosition" wrap="col-lg-3" label="Pozice symbolu" :options="{before: 'Před', after: 'Za'}" />
           </div>
           <br>
-          <i class="fa fa-info-circle" /> Ukázka formátování: <span>2 981 543.01 Kč</span>
+          <i class="fa fa-info-circle" /> Ukázka formátování:
+          <span>{{ ('2' + (data?.formatThousandsSeparator ?? '') + '981' + (data?.formatThousandsSeparator ?? '') + '543' + (data?.formatDecimalSeparator ?? '')) + '01  Kč' }}</span>
         </div>
         <h5 class="card-title mt-3">Konverze a přepočet</h5>
         <div class="row align-items-end mt-2">
