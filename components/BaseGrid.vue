@@ -4,6 +4,7 @@
       <table class="mb-0 table table-sm table-striped">
         <thead>
           <slot name="header" :select-page="selectPage" :order-by="(value) => orderBy(value)" :order-by-value="orderByValue" :order-by-asc="orderByAsc" />
+          <slot name="filters" />
         </thead>
         <tbody style="position:relative;">
           <Loading :active="pending" :can-cancel="false" :is-full-page="false" loader="bars" color="gray" />

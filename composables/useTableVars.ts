@@ -10,6 +10,7 @@ export interface GridOrder {
 export const useTableVars = (): {
     filters: Ref<object>;
     clearFilters: () => void;
+    showFilters: Ref<boolean>;
     lang: Ref<string>;
     currency: Ref<string>;
     currencies: Ref<string[]>;
@@ -25,6 +26,7 @@ export const useTableVars = (): {
 
     const { settings } = useUser();
     const filters = ref<Record<string, LocationQueryValue | LocationQueryValue[]>>(filterQuery);
+    const showFilters = ref(false);
     const lang = ref<string>(settings.value.defaultLang);
     const currency = ref<string>(settings.value.defaultCurrency);
     const currencies = ref<string[]>(settings.value.currencies);
@@ -73,5 +75,5 @@ export const useTableVars = (): {
         clearObject(filters.value);
     };
 
-    return { filters, clearFilters, lang, currency, currencies, langs, page, onPage, order };
+    return { filters, clearFilters, showFilters, lang, currency, currencies, langs, page, onPage, order };
 };

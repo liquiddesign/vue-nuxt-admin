@@ -6,10 +6,13 @@
     <template #headerLeft>
       <InternalRibbonTableFilter v-model="filters" @clear="clearFilters" />
     </template>
-    <InternalRibbonTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
+    <template #headerRight>
+      <BaseButtonFilter class="me-3" :show-filters="showFilters" @click="showFilters = !showFilters" />
+    </template>
+    <InternalRibbonTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" :show-filters="showFilters" />
   </BaseCard>
 </template>
 
 <script setup lang="ts">
-const { filters, clearFilters, page, onPage, order } = useTableVars();
+const { filters, clearFilters, showFilters, page, onPage, order } = useTableVars();
 </script>

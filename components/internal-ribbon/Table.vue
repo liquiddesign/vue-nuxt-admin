@@ -3,13 +3,25 @@
     <template #header>
       <tr>
         <BaseGridThSelect />
-        <BaseGridTh class="minimal" order-by="id">#</BaseGridTh>
+        <BaseGridTh order-by="id">#</BaseGridTh>
         <BaseGridTh />
         <BaseGridTh order-by="name">Popisek</BaseGridTh>
         <BaseGridTh order-by="type">Typ</BaseGridTh>
         <BaseGridTh class="minimal" order-by="color">Barva textu</BaseGridTh>
         <BaseGridTh class="minimal" order-by="backgroundColor">Barva pozadí</BaseGridTh>
         <BaseGridTh class="minimal"><BaseGridThSettings /></BaseGridTh>
+      </tr>
+    </template>
+    <template v-if="showFilters" #filters>
+      <tr>
+        <BaseGridTh />
+        <BaseGridTh />
+        <BaseGridTh />
+        <BaseGridTh><BaseHeaderFilter :model-value="filters" name="f-name%" placeholder="Popisek" type="text" /></BaseGridTh>
+        <BaseGridTh><BaseHeaderFilter :model-value="filters" name="f-type" placeholder="Typ" type="select" :options="typeOptions" /></BaseGridTh>
+        <BaseGridTh class="minimal" />
+        <BaseGridTh class="minimal" />
+        <BaseGridTh class="minimal" />
       </tr>
     </template>
     <template #body="{item, selected, deleteRow}">
@@ -32,9 +44,11 @@
 
 <script setup lang="ts">
 import type {GridOrder} from '~/composables/useTableVars';
+import BaseHeaderFilter from '~/components/BaseHeaderFilter.vue';
 
 withDefaults(defineProps<{
   filters?: any,
+  showFilters?: boolean,
   page: number,
   onPage: number,
   order: GridOrder,
@@ -43,4 +57,9 @@ withDefaults(defineProps<{
 const url: string = '/eshop/internal-ribbon';
 const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
 
+const typeOptions = {
+  product: 'product',
+  order: 'order',
+  price_list: 'price_list',
+};
 </script>
