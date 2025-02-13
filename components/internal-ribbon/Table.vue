@@ -16,12 +16,12 @@
       <tr>
         <BaseGridTh />
         <BaseGridTh />
-        <BaseGridTh><BaseButtonFilterDelete class="btn-sm btn-outline-danger" @click="clearFilters" /></BaseGridTh>
-        <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-name%" placeholder="Popisek" field-type="text" /></BaseGridTh>
+        <BaseGridTh />
+        <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-name" placeholder="Popisek" field-type="text" text-type="text" /></BaseGridTh>
         <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-type" placeholder="Typ" field-type="select" :options="typeOptions" /></BaseGridTh>
         <BaseGridTh class="minimal" />
         <BaseGridTh class="minimal" />
-        <BaseGridTh class="minimal" />
+        <BaseGridTh class="minimal"><BaseButtonFilterDelete class="btn-xs btn-outline-danger" @click="clearFilters" /></BaseGridTh>
       </tr>
     </template>
     <template #body="{item, selected, deleteRow}">

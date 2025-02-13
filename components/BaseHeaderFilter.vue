@@ -2,38 +2,53 @@
   <BaseGridTh>
     <div class="d-flex align-items-start gap-1 flex-shrink-0">
       <!-- fields -->
-      <BaseMultiSelect v-if="fieldType === 'select'" v-model="modelValue[name]" :placeholder="placeholder" :options="options" />
-      <BaseTextBox v-else v-model="modelValue[name]" :placeholder="placeholder" :type="fieldType" />
+      <BaseMultiSelect v-if="fieldType === 'select'" v-model="modelValue[name + filterType.request]" :placeholder="placeholder" :options="options" :multiple="multiple" />
+      <BaseCheckBox v-else-if="fieldType === 'checkbox'" v-model="modelValue[name + filterType.request]" />
+      <BaseTextBox v-else v-model="modelValue[name + filterType.request]" :placeholder="placeholder" :type="textType" />
 
       <!-- set filter type -->
-      <BaseDropdown class="btn-sm btn-outline-secondary flex-shrink-0" icon="fa-filter">
+      <BaseDropdown v-if="fieldType === 'text'" class="btn-sm  flex-shrink-0" :class="activeFilter ? 'btn-outline-primary active' : 'btn-outline-secondary'" icon="fa-filter">
         <template v-for="(item, index) of filterTypes" :key="index">
-          <BaseDropdownItem :class="{'active': filterType === item.code}" @click="setFilterType(item.code)">{{ item.name }}</BaseDropdownItem>
+          <BaseDropdownItem :class="{'active': filterType.code === item.code}" @click="updateFilterType(item.code);">{{ item.name }}</BaseDropdownItem>
         </template>
         <BaseDropdownDivider />
-        <BaseDropdownItem @click="setFilterType('starts')">Resetovat</BaseDropdownItem>
+        <BaseDropdownItem @click="setFilterType('starts'); deleteFilter()">Resetovat</BaseDropdownItem>
       </BaseDropdown>
+      <BaseButtonFilter v-else :class="activeFilter ? 'btn-outline-primary active' : 'btn-outline-secondary disabled'" />
 
       <!-- delete filtered data -->
-      <BaseButtonFilterDelete class="btn-sm btn-outline-danger flex-shrink-0" @click="delete(modelValue[name])" />
-      {{ modelValue }}
+      <BaseButtonFilterDelete class="btn-sm btn-outline-danger flex-shrink-0" :disabled="!activeFilter" @click="deleteFilter" />
     </div>
   </BaseGridTh>
 </template>
 
 <script setup lang="ts">
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   name: string,
   placeholder?: string,
   fieldType?: string,
+  textType?: string,
+  multiple?: boolean,
   options?: any,
   modelValue?: any | null,
-}>(), { placeholder: 'Hledejte', fieldType: 'text', options: [], modelValue: undefined });
+}>(), { placeholder: 'Hledejte', fieldType: 'text', textType: 'text', multiple: false, options: [], modelValue: undefined });
 
 const emit = defineEmits(['update:modelValue']);
 const { filterType, filterTypes, setFilterType } = useFilter();
-const activeFilter: Ref<boolean> = ref(false);
 
+const activeFilter: ComputedRef<boolean> = computed(() => {
+  return props.modelValue[props.name + filterType.value.request];
+});
 
+function updateFilterType(code: string): void {
+  const value = props.modelValue[props.name + filterType.value.request];
+  deleteFilter();
+  setFilterType(code);
+  props.modelValue[props.name + filterType.value.request] = value;
+}
+
+function deleteFilter() {
+  delete(props.modelValue[props.name + filterType.value.request]);
+}
 
 </script>

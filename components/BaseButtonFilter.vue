@@ -10,9 +10,5 @@ defineProps({
     type: Boolean,
     default: false,
   },
-  dropDown: {
-    type: Boolean,
-    default: true,
-  },
 });
 </script>
