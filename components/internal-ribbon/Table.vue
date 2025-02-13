@@ -16,9 +16,9 @@
       <tr>
         <BaseGridTh />
         <BaseGridTh />
-        <BaseGridTh />
-        <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-name%" placeholder="Popisek" field-type="text" @clear="clearFilters" /></BaseGridTh>
-        <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-type" placeholder="Typ" field-type="select" :options="typeOptions" @clear="clearFilters" /></BaseGridTh>
+        <BaseGridTh><BaseButtonFilterDelete class="btn-sm btn-outline-danger" @click="clearFilters" /></BaseGridTh>
+        <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-name%" placeholder="Popisek" field-type="text" /></BaseGridTh>
+        <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-type" placeholder="Typ" field-type="select" :options="typeOptions" /></BaseGridTh>
         <BaseGridTh class="minimal" />
         <BaseGridTh class="minimal" />
         <BaseGridTh class="minimal" />

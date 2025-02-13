@@ -5,19 +5,14 @@
 </template>
 
 <script setup lang="ts">
-// const filterType: Ref<string> = '';
-// const filterTypes = {
-//   starts: 'Začíná s',
-//   contains: 'Obsahuje',
-//   notContains: 'Neobsahuje',
-//   ends: 'Končí s',
-//   equals: 'Rovná se',
-//   notEquals: 'Nerovná se',
-// };
 defineProps({
   showFilters: {
     type: Boolean,
     default: false,
+  },
+  dropDown: {
+    type: Boolean,
+    default: true,
   },
 });
 </script>
