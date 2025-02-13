@@ -4,12 +4,13 @@
       <tr>
         <BaseGridThSelect />
         <BaseGridTh order-by="id">#</BaseGridTh>
-        <BaseGridTh class="minimal"><BaseButtonFilter class="btn-xs btn-outline-primary" :show-filters="showFilters" @click="showFilters = !showFilters" /></BaseGridTh>
+        <BaseGridTh class="minimal" />
         <BaseGridTh order-by="name">Popisek</BaseGridTh>
         <BaseGridTh order-by="type" style="width: 400px">Typ</BaseGridTh>
         <BaseGridTh class="minimal" order-by="color">Barva textu</BaseGridTh>
         <BaseGridTh class="minimal" order-by="backgroundColor">Barva pozadí</BaseGridTh>
         <BaseGridTh class="minimal"><BaseGridThSettings /></BaseGridTh>
+        <BaseGridTh class="minimal"><BaseButtonFilter class="btn-xs btn-outline-primary" :show-filters="showFilters" @click="showFilters = !showFilters" /></BaseGridTh>
       </tr>
     </template>
     <template v-if="showFilters" #filters>
@@ -19,6 +20,7 @@
         <BaseGridTh />
         <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-name" placeholder="Popisek" field-type="text" text-type="text" /></BaseGridTh>
         <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-type" placeholder="Typ" field-type="select" :options="typeOptions" /></BaseGridTh>
+        <BaseGridTh class="minimal" />
         <BaseGridTh class="minimal" />
         <BaseGridTh class="minimal" />
         <BaseGridTh class="minimal"><BaseButtonFilterDelete class="btn-xs btn-outline-danger" @click="clearFilters" /></BaseGridTh>
@@ -33,6 +35,7 @@
         <td>{{ item.type ?? '-' }}</td>
         <td class="minimal"><BaseColorPicker :model-value="item.color" disabled /></td>
         <td class="minimal"><BaseColorPicker :model-value="item.backgroundColor" disabled /></td>
+        <td></td>
         <td class="minimal"><BaseButtonDelete class="btn-xs btn-danger" :confirmation="true" @confirm="deleteRow();" /></td>
       </tr>
     </template>
