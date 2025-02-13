@@ -4,9 +4,9 @@
       <tr>
         <BaseGridThSelect />
         <BaseGridTh order-by="id">#</BaseGridTh>
-        <BaseGridTh />
+        <BaseGridTh class="minimal"><BaseButtonFilter :show-filters="showFilters" @click="showFilters = !showFilters" /></BaseGridTh>
         <BaseGridTh order-by="name">Popisek</BaseGridTh>
-        <BaseGridTh order-by="type">Typ</BaseGridTh>
+        <BaseGridTh order-by="type" style="width: 400px">Typ</BaseGridTh>
         <BaseGridTh class="minimal" order-by="color">Barva textu</BaseGridTh>
         <BaseGridTh class="minimal" order-by="backgroundColor">Barva pozadí</BaseGridTh>
         <BaseGridTh class="minimal"><BaseGridThSettings /></BaseGridTh>
@@ -17,8 +17,8 @@
         <BaseGridTh />
         <BaseGridTh />
         <BaseGridTh />
-        <BaseGridTh><BaseHeaderFilter :model-value="filters" name="f-name%" placeholder="Popisek" type="text" /></BaseGridTh>
-        <BaseGridTh><BaseHeaderFilter :model-value="filters" name="f-type" placeholder="Typ" type="select" :options="typeOptions" /></BaseGridTh>
+        <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-name%" placeholder="Popisek" field-type="text" @clear="clearFilters" /></BaseGridTh>
+        <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-type" placeholder="Typ" field-type="select" :options="typeOptions" @clear="clearFilters" /></BaseGridTh>
         <BaseGridTh class="minimal" />
         <BaseGridTh class="minimal" />
         <BaseGridTh class="minimal" />
@@ -44,18 +44,17 @@
 
 <script setup lang="ts">
 import type {GridOrder} from '~/composables/useTableVars';
-import BaseHeaderFilter from '~/components/BaseHeaderFilter.vue';
 
 withDefaults(defineProps<{
-  filters?: any,
-  showFilters?: boolean,
+  filters?: any | null,
   page: number,
   onPage: number,
   order: GridOrder,
-}>(), { filters: {}  });
+}>(), { filters: {} });
 
 const url: string = '/eshop/internal-ribbon';
-const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
+const emit = defineEmits(['update:page', 'update:onPage', 'update:order', 'clear']);
+const { filters, clearFilters, showFilters } = useTableVars();
 
 const typeOptions = {
   product: 'product',
