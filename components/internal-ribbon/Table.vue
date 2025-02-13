@@ -4,7 +4,7 @@
       <tr>
         <BaseGridThSelect />
         <BaseGridTh order-by="id">#</BaseGridTh>
-        <BaseGridTh class="minimal"><BaseButtonFilter :show-filters="showFilters" @click="showFilters = !showFilters" /></BaseGridTh>
+        <BaseGridTh class="minimal"><BaseButtonFilter class="btn-xs btn-outline-primary" :show-filters="showFilters" @click="showFilters = !showFilters" /></BaseGridTh>
         <BaseGridTh order-by="name">Popisek</BaseGridTh>
         <BaseGridTh order-by="type" style="width: 400px">Typ</BaseGridTh>
         <BaseGridTh class="minimal" order-by="color">Barva textu</BaseGridTh>
