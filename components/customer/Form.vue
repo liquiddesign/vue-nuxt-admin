@@ -17,6 +17,7 @@
         </div>
         <div class="row mt-2">
           <BaseTextBox name="phone" wrap="col-lg-8" label="Telefon" type="text" />
+          <BasePhoneInput name="phone" wrap="col-lg-8" label="Telefon" />
         </div>
         <div class="row mt-2">
           <BaseTextBox name="email" wrap="col-lg-8" label="E-mail" type="text" />
