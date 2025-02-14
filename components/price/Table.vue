@@ -1,10 +1,10 @@
 <template>
   <BaseCard wrap="col-lg-12">
     <BaseGrid ref="grid" :url="url" :page="page" :on-page="onPage" :filters="filters" :order="order" @change-order="emit('update:order', $event)">
-<!--      <template #header>-->
+<!--      <template v-if="showFilters" #header>-->
 <!--        <tr>-->
 <!--          <BaseGridTh class="minimal" order-by="id">#</BaseGridTh>-->
-<!--          <BaseGridTh class="minimal" order-by="product">Kód</BaseGridTh>-->
+<!--          <BaseGridTh class="" order-by="product">Kód</BaseGridTh>-->
 <!--          <BaseGridTh order-by="product">Název</BaseGridTh>-->
 <!--          <BaseGridTh class="minimal" order-by="price">Cena</BaseGridTh>-->
 <!--          <BaseGridTh class="minimal" order-by="priceVat">Cena s DPH</BaseGridTh>-->
@@ -13,10 +13,22 @@
 <!--          <BaseGridTh class="minimal" order-by="hidden"><i class="far fa-eye-slash" /></BaseGridTh>-->
 <!--        </tr>-->
 <!--      </template>-->
+      <template v-if="showFilters" #filters>
+        <tr>
+          <BaseGridTh class=""></BaseGridTh>
+          <BaseGridTh class=""><BaseHeaderFilter v-model="filters" name="f-product" placeholder="Kód" field-type="text" text-type="text" /></BaseGridTh>
+          <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-product" placeholder="Název" field-type="text" text-type="text" /></BaseGridTh>
+          <BaseGridTh class=""></BaseGridTh>
+          <BaseGridTh class=""></BaseGridTh>
+          <BaseGridTh class=""></BaseGridTh>
+          <BaseGridTh class=""></BaseGridTh>
+          <BaseGridTh class=""></BaseGridTh>
+        </tr>
+      </template>
       <template #body="{item, updateRow}">
         <tr>
           <td class="minimal">{{ item.id }}  ☰</td>
-          <td class="minimal">{{ item.product.code ?? '-' }}</td>
+          <td class="">{{ item.product.code ?? '-' }}</td>
           <td>{{ item.product.name ?? '-' }}</td>
           <td class="minimal"><BaseTextBox v-model="item.price" type="number" class="form-control-xs" style="width: 50px;" @change="(e) => updateRow(parseInt(e.target.value), 'price')" /></td>
           <td class="minimal"><BaseTextBox v-model="item.priceVat" type="number" class="form-control-xs" style="width: 50px;" @change="(e) => updateRow(parseInt(e.target.value), 'priceVat')" /></td>
@@ -37,6 +49,7 @@ import type {GridOrder} from '~/composables/useTableVars';
 
 withDefaults(defineProps<{
   filters?: any,
+  showFilters?: boolean,
   page: number,
   onPage: number,
   order: GridOrder,
@@ -45,4 +58,5 @@ withDefaults(defineProps<{
 const url: string = 'eshop/price';
 // const url: string = 'eshop/price?expand=product';
 const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
+const { filters } = useTableVars();
 </script>

@@ -55,15 +55,18 @@
 
       <div class="col-lg-8 ps-5">
 <!--        <h5 class="card-title">CENY</h5>-->
-        <BaseTabs class="col-xl-6 col-lg-12" :active="activeTab" :tabs="{'price': 'Ceny ceníku', 'quantity-price': 'Množstevní ceny ceníku'}" @select="activeTab = $event" />
+        <div class="row d-flex justify-content-between">
+          <div class="col-xl-6 col-lg-12">
+            <BaseTabs :active="activeTab" :tabs="{'price': 'Ceny ceníku', 'quantity-price': 'Množstevní ceny ceníku'}" @select="activeTab = $event" />
+          </div>
+          <div class="col-lg-1">
+            <BaseButtonFilter type="button" class="btn-sm btn-outline-primary" :show-filters="showFilters" @click="showFilters = !showFilters" />
+          </div>
+        </div>
+
 
         <template v-if="activeTab === 'price'">
-<!--          <BaseCard wrap="col-lg-12">-->
-<!--            <template #header>-->
-<!--              <PriceTableFilter v-model="filters" @clear="clearFilters" />-->
-<!--            </template>-->
-          <PriceTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" />
-<!--          </BaseCard>-->
+          <PriceTable v-model:page="page" v-model:on-page="onPage" v-model:order="order" :filters="filters" :show-filters="showFilters" />
         </template>
 
         <template v-if="activeTab === 'quantity-price'">
@@ -88,7 +91,7 @@ withDefaults(defineProps<{
 
 const form = ref(null);
 const goBack: Ref<boolean> = ref(false);
-const { filters, clearFilters, page, onPage, order } = useTableVars();
+const { filters, showFilters, clearFilters, page, onPage, order } = useTableVars();
 
 const rules = {
   name: {required},
