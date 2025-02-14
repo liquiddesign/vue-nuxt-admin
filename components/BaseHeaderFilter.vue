@@ -1,23 +1,26 @@
 <template>
   <BaseGridTh>
     <div class="d-flex align-items-start gap-1 flex-shrink-0">
+      <!-- custom fields -->
+      <slot v-if="fieldType === 'custom'" />
+
       <!-- fields -->
-      <BaseMultiSelect v-if="fieldType === 'select'" v-model="modelValue[name + filterType.request]" :placeholder="placeholder" :options="options" :multiple="multiple" />
-      <BaseCheckBox v-else-if="fieldType === 'checkbox'" v-model="modelValue[name + filterType.request]" />
-      <BaseTextBox v-else v-model="modelValue[name + filterType.request]" :placeholder="placeholder" :type="textType" />
+      <template v-else>
+        <BaseMultiSelect v-if="fieldType === 'select'" v-model="modelValue[name + filterType.request]" :placeholder="placeholder" :options="options" :multiple="multiple" />
+        <BaseCheckBox v-else-if="fieldType === 'checkbox'" v-model="modelValue[name + filterType.request]" />
+        <BaseTextBox v-else v-model="modelValue[name + filterType.request]" :placeholder="placeholder" :type="textType" />
 
-      <!-- set filter type -->
-      <BaseDropdown v-if="fieldType === 'text'" class="btn-sm  flex-shrink-0" :class="activeFilter ? 'btn-outline-primary active' : 'btn-outline-secondary'" icon="fa-filter">
-        <template v-for="(item, index) of filterTypes" :key="index">
-          <BaseDropdownItem :class="{'active': filterType.code === item.code}" @click="updateFilterType(item.code);">{{ item.name }}</BaseDropdownItem>
-        </template>
-        <BaseDropdownDivider />
-        <BaseDropdownItem @click="setFilterType('starts'); deleteFilter()">Resetovat</BaseDropdownItem>
-      </BaseDropdown>
-      <BaseButtonFilter v-else :class="activeFilter ? 'btn-outline-primary active' : 'btn-outline-secondary disabled'" />
+        <!-- set filter type -->
+        <BaseDropdown v-if="fieldType === 'text'" class="btn-sm  flex-shrink-0" :class="activeFilter ? 'btn-outline-primary active' : 'btn-outline-secondary'" icon="fa-filter">
+          <template v-for="(item, index) of filterTypes" :key="index">
+            <BaseDropdownItem :class="{'active': filterType.code === item.code}" @click="updateFilterType(item.code);">{{ item.name }}</BaseDropdownItem>
+          </template>
+        </BaseDropdown>
+        <BaseButtonFilter v-else :class="activeFilter ? 'btn-outline-primary active' : 'btn-outline-secondary disabled'" />
 
-      <!-- delete filtered data -->
-      <BaseButtonFilterDelete class="btn-sm btn-outline-danger flex-shrink-0" :disabled="!activeFilter" @click="deleteFilter" />
+        <!-- delete filtered data -->
+        <BaseButtonFilterDelete class="btn-sm btn-outline-danger flex-shrink-0" :disabled="!activeFilter" @click="deleteFilter" />
+      </template>
     </div>
   </BaseGridTh>
 </template>
@@ -26,12 +29,12 @@
 const props = withDefaults(defineProps<{
   name: string,
   placeholder?: string,
-  fieldType?: string,
+  fieldType: string,
   textType?: string,
   multiple?: boolean,
   options?: any,
   modelValue?: any | null,
-}>(), { placeholder: 'Hledejte', fieldType: 'text', textType: 'text', multiple: false, options: [], modelValue: undefined });
+}>(), { placeholder: 'Hledejte', fieldType: 'custom', textType: 'text', multiple: false, options: [], modelValue: undefined });
 
 const emit = defineEmits(['update:modelValue']);
 const { filterType, filterTypes, setFilterType } = useFilter();
@@ -48,6 +51,7 @@ function updateFilterType(code: string): void {
 }
 
 function deleteFilter() {
+  setFilterType('equals');
   delete(props.modelValue[props.name + filterType.value.request]);
 }
 
