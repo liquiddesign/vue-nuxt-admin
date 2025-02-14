@@ -16,7 +16,6 @@
           <BaseTextBox name="dic" wrap="col-lg-8" label="DIČ" type="text" />
         </div>
         <div class="row mt-2">
-          <BaseTextBox name="phone" wrap="col-lg-8" label="Telefon" type="text" />
           <BasePhoneInput name="phone" wrap="col-lg-8" label="Telefon" />
         </div>
         <div class="row mt-2">
