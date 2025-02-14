@@ -4,6 +4,8 @@
       <span v-if="((form && form.lang) || lang) && locale" class="pe-1"><BaseFlag :lang="form && form.lang.value ? form.lang.value : lang" /></span>{{ label }}
     </label>
     <input ref="inputRef" v-bind="$attrs" class="form-control form-control-sm" :class="classes" :value="form && name ? _get(form.data.value, name) : modelValue" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange">
+<!--    <input ref="inputRef" v-bind="$attrs" class="form-control form-control-sm" :class="classes" :value="form && name ? _get(form.data.value, name) : modelValue" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange">-->
+
     <template v-if="validationErrors !== undefined">
       <div v-for="(error, index) in (validationErrors)" :key="index" class="text-danger">
         {{ error.$message }}
@@ -58,7 +60,7 @@ function onChange($event: any) {
     form.updateInput(props.name, numberValue);
   }
 
-  $emit('update:modelValue', value);
+  $emit('update:modelValue', formattedValue);
 }
 
 watch(() => props.currency, (value) => {
