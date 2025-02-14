@@ -58,12 +58,14 @@
         <div v-if="data?.paymentTypePrices" class="form-wrapper-light mt-3">
           <template v-for="(price, index) in data.paymentTypePrices" :key="index">
             <div class="row">
-              <BaseTextBox :name="`paymentTypePrices.${index}.price`" :validation-errors="pricesErrors?.[index].price" wrap="col-lg-3" label="Cena" type="number" @change="price.priceVat = Math.round(parseInt(price.price) * 1.21)" />
-              <BaseTextBox :name="`paymentTypePrices.${index}.priceVat`" :validation-errors="pricesErrors?.[index].priceVat" wrap="col-lg-3" label="Cena s DPH" type="number" />
-              <BaseMultiSelect :name="`paymentTypePrices.${index}.currency`" wrap="col-lg-2" label="Měna" :options="currencies" />
+              <BaseCurrencyInput :name="`paymentTypePrices.${index}.price`" wrap="col-lg-3" label="Cena" :currency="currency" :precision="2" :min="0" />
+              <BaseCurrencyInput :name="`paymentTypePrices.${index}.priceVat`" wrap="col-lg-3" label="Cena s DPH" :currency="currency" :precision="2" :min="0" />
+<!--              <BaseTextBox :name="`paymentTypePrices.${index}.price`" :validation-errors="pricesErrors?.[index].price" wrap="col-lg-3" label="Cena" type="number" @change="price.priceVat = Math.round(parseInt(price.price) * 1.21)" />-->
+<!--              <BaseTextBox :name="`paymentTypePrices.${index}.priceVat`" :validation-errors="pricesErrors?.[index].priceVat" wrap="col-lg-3" label="Cena s DPH" type="number" />-->
+              <BaseMultiSelect v-model="currency" :name="`paymentTypePrices.${index}.currency`" wrap="col-lg-2" label="Měna" options-url="eshop/currency?property=code" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
               <div class="col-lg-1">
                 <label>&nbsp;</label><br>
-                <button class="btn btn-sm btn-outline-danger me-2" @click="data.paymentTypePrices.splice(index, 1);"><i class="fa fa-trash-o" /></button>
+                <button class="btn btn-sm btn-outline-danger me-2" @click="data.paymentTypePrices.splice(index, 1);"><Trash2 :size="16" :stroke-width="2" /></button>
               </div>
             </div>
             <hr class="pt-1" style="color: white">
@@ -91,6 +93,7 @@
 <script setup lang="ts">
 import {RouteParamValue} from 'vue-router';
 import {helpers, required} from '@vuelidate/validators';
+import { Trash2 } from 'lucide-vue-next';
 
 withDefaults(defineProps<{
   url: string,
@@ -102,6 +105,7 @@ withDefaults(defineProps<{
 
 const form = ref(null);
 const goBack: Ref<boolean> = ref(false);
+const currency: Ref<string> = ref('CZK');
 const { currencies } = usePrefetchedData();
 
 const pricesErrors = computed(() => {
