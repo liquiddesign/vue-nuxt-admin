@@ -11,7 +11,7 @@
         <BaseTextBox v-else v-model="modelValue[name + filterType.request]" :placeholder="placeholder" :type="textType" />
 
         <!-- set filter type -->
-        <BaseDropdown v-if="fieldType === 'text'" class="btn-sm  flex-shrink-0" :class="activeFilter ? 'btn-outline-primary active' : 'btn-outline-secondary'" icon="fa-filter">
+        <BaseDropdown v-if="fieldType === 'text'" class="btn-sm  flex-shrink-0" :class="activeFilter ? 'btn-outline-primary active' : 'btn-outline-secondary'" :icon-filter="true">
           <template v-for="(item, index) of filterTypes" :key="index">
             <BaseDropdownItem :class="{'active': filterType.code === item.code}" @click="updateFilterType(item.code);">{{ item.name }}</BaseDropdownItem>
           </template>
@@ -51,8 +51,8 @@ function updateFilterType(code: string): void {
 }
 
 function deleteFilter() {
-  setFilterType('equals');
   delete(props.modelValue[props.name + filterType.value.request]);
+  setFilterType('equals');
 }
 
 </script>
