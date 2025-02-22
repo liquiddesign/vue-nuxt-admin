@@ -3,13 +3,34 @@
     <template #header>
       <tr>
         <BaseGridThSelect />
-        <BaseGridTh class="minimal" order-by="id">#</BaseGridTh>
-        <BaseGridTh />
+        <BaseGridTh order-by="id">#</BaseGridTh>
+        <BaseGridTh class="minimal">
+          <BaseButtonFilter v-if="!showFilters" class="btn-xs btn-outline-primary" :show-filters="showFilters" @click="showFilters = !showFilters" />
+          <BaseButtonFilterDelete v-if="showFilters" class="btn-xs btn-outline-danger" @click="clearFilters(); showFilters = !showFilters;" />
+        </BaseGridTh>
         <BaseGridTh order-by="name">Popisek</BaseGridTh>
-        <BaseGridTh order-by="type">Typ</BaseGridTh>
+        <BaseGridTh order-by="type" style="width: 400px">Typ</BaseGridTh>
         <BaseGridTh class="minimal" order-by="color">Barva textu</BaseGridTh>
         <BaseGridTh class="minimal" order-by="backgroundColor">Barva pozadí</BaseGridTh>
         <BaseGridTh class="minimal"><BaseGridThSettings /></BaseGridTh>
+      </tr>
+    </template>
+    <template v-if="showFilters" #filters>
+      <tr>
+        <BaseGridTh />
+        <BaseGridTh />
+        <BaseGridTh />
+        <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-name" placeholder="Popisek" field-type="text" text-type="text" /></BaseGridTh>
+        <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-type" placeholder="Typ" field-type="select" :options="typeOptions" /></BaseGridTh>
+        <BaseGridTh>
+          <BaseHeaderFilter name="f-color" field-type="custom">
+            <BaseColorPicker v-model="filters['f-color']" name="f-color" style="width: 30px" />
+            <BaseButtonFilter :class="filters['f-color'] ? 'btn-outline-primary active' : 'btn-outline-secondary disabled'" />
+            <BaseButtonFilterDelete class="btn-sm btn-outline-danger flex-shrink-0" :disabled="!filters['f-color']" @click="delete(filters['f-color']);" />
+          </BaseHeaderFilter>
+        </BaseGridTh>
+        <BaseGridTh class="minimal" />
+        <BaseGridTh class="minimal" />
       </tr>
     </template>
     <template #body="{item, selected, deleteRow}">
@@ -34,13 +55,19 @@
 import type {GridOrder} from '~/composables/useTableVars';
 
 withDefaults(defineProps<{
-  filters?: any,
+  filters?: any | null,
   page: number,
   onPage: number,
   order: GridOrder,
-}>(), { filters: {}  });
+}>(), { filters: {} });
 
 const url: string = '/eshop/internal-ribbon';
-const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
+const emit = defineEmits(['update:page', 'update:onPage', 'update:order', 'clear']);
+const { filters, clearFilters, showFilters } = useTableVars();
 
+const typeOptions = {
+  product: 'product',
+  order: 'order',
+  price_list: 'price_list',
+};
 </script>

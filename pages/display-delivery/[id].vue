@@ -1,14 +1,3 @@
-<script setup lang="ts">
-
-const route = useRoute();
-const { settings } = useUser();
-const lang: Ref<string> = ref(settings.value.defaultLang);
-
-const {data, pending, refresh} = useApiFetch('eshop/display-delivery/' + route.params.id);
-const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/display-delivery/', 'display-delivery');
-
-</script>
-
 <template>
   <BaseCard>
     <template #headerLeft>
@@ -27,3 +16,14 @@ const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/display-deliver
     <DisplayDeliveryForm ref="form" :lang="lang" :data="data" url="eshop/display-delivery" :slug="route.params.id" :loading="pending" @success="redirect" />
   </BaseCard>
 </template>
+
+<script setup lang="ts">
+
+const route = useRoute();
+const { settings } = useUser();
+const lang: Ref<string> = ref(settings.value.defaultLang);
+
+const {data, pending, refresh} = useApiFetch('eshop/display-delivery/' + route.params.id);
+const {deleteItem, makeCopy, redirect} = useDetailMethods('eshop/display-delivery/', 'display-delivery');
+
+</script>
