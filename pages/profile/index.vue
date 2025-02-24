@@ -30,6 +30,28 @@
           <div class="row mt-2">
             <BasePhoneInput wrap="col-lg-12" name="phone" label="Telefon" />
           </div>
+
+          <div class="form-wrapper-blue mt-3">
+            <h5 class="card-title">Účet</h5>
+            <div class="row justify-content-between">
+              <BaseTextBox name="account.login" wrap="col-lg-8" label="Login" />
+              <BaseButton class="btn-outline-primary btn-sm col-lg-8 w-auto h-30 mt-auto" style="margin-right: 12px;" @click="navigateTo({ path: 'profile/password' })">
+                <KeyRound class="me-1 text-center" :size="16" /> Změna hesla
+              </BaseButton>
+            </div>
+            <br>
+            <i class="fa fa-info-circle" /> Heslo si změníte pomocí akce změna hesla nebo můžete uživateli resetovat heslo.
+            <div class="row mt-2">
+              <BaseTextBox name="account.activeFrom" wrap="col-lg-6" label="Aktivní od" type="date" :nullable="true" />
+              <BaseTextBox name="account.activeTo" wrap="col-lg-6" label="Aktivní do" type="date" :nullable="true" />
+            </div>
+            <div class="row mt-2">
+              <BaseCheckBox name="account.active" wrap="col-lg-8" label="Účet je aktivní" />
+            </div>
+            <div class="row mt-2">
+              <BaseCheckBox name="google2faEnabled" wrap="col-lg-8" label="Zapnout dvoufaktorové přihlášení" />
+            </div>
+          </div>
         </div>
 
         <div class="row mt-3">
@@ -45,6 +67,7 @@
 
 <script setup lang="ts">
 import {email, maxLength, required} from '@vuelidate/validators';
+import { KeyRound } from 'lucide-vue-next';
 
 const router = useRouter();
 const form = ref(null);
@@ -57,11 +80,9 @@ const rules = {
   surname: { required },
   nickname: { required, maxLength: maxLength(2) },
   email: { email },
-  // account: {
-  //   login: { required },
-  //   password: { requiredIf: requiredIf(() => !props.slug) },
-  //   password2: { requiredIf: requiredIf(() => !props.slug), sameAsPassword: sameAs(props.data?.password) },
-  // },
+  account: {
+    login: { required },
+  },
 };
 
 function submit()
