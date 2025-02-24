@@ -17,6 +17,10 @@ export function formatNumber(value: number | null, suffix: string): string {
     return value === null ? '-' : formatter.format(value) + ' ' + suffix;
 }
 
+export function numberToString(value: number): string {
+    return value.toString().replace('.', ',');
+}
+
 export function doubleFormat(value: any) : string {
     return value.toString().length < 2 ? ('0' + value) : value;
 }

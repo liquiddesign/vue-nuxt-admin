@@ -69,6 +69,11 @@
               </div>
             </div>
             <hr class="pt-1" style="color: white">
+
+            <div class="row mt-3">
+              <BaseNumberInput wrap="col-lg-4" :data="data.paymentTypePrices[index]" name="price" label="Cena" />
+              <BaseNumberInput wrap="col-lg-4" :data="data.paymentTypePrices[index]" name="priceVat" label="Cena s DPH" />
+            </div>
           </template>
           <div class="mt-3">
             <button class="btn btn-sm btn-outline-secondary me-2" @click="data.paymentTypePrices.push({paymentType: slug, price: null,currency: 'CZK', country: 'CZ'});"><i class="fa fa-plus" /></button>
