@@ -40,13 +40,13 @@ const props = withDefaults(defineProps<{
 
 const options = {
   currency: props.currency,
-  hideCurrencySymbolOnFocus: false,
-  hideGroupingSeparatorOnFocus: false,
   precision: props.precision,
   valueRange: { min: props.min, max: props.max },
 };
 
 const { inputRef, numberValue, formattedValue, setValue, setOptions } = useCurrencyInput(options);
+
+setValue(0);
 
 const form: any = inject('form', null) as any;
 const $emit = defineEmits(['update:modelValue']);

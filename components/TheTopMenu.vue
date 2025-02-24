@@ -2,7 +2,7 @@
   <ul class="header-megamenu nav">
     <li v-if="hasPermission('administrators')" class="dropdown nav-item show">
       <a aria-haspopup="true" data-toggle="dropdown" class="nav-link" aria-expanded="true" @click="router.push({name: 'administrators'})">
-        <i class="nav-link-icon pe-7s-users" /> Administratori
+        <IconUsers class="nav-link-icon" size="16" /> Administratori
       </a>
     </li>
     <li v-if="hasPermission('administrators')" class="dropdown nav-item show">
@@ -82,6 +82,8 @@
 </template>
 
 <script setup lang="ts">
+
+import { Users as IconUsers } from 'lucide-vue-next';
 
 const router = useRouter();
 const { identity, hasPermission } = useUser();

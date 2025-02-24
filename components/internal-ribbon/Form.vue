@@ -2,8 +2,9 @@
   <BaseForm ref="form" :url="url" :data="data" :slug="slug" :rules="rules" :loading="loading" @success="$emit('success', goBack ? null : $event.result); goBack = false">
     <h5 class="card-title">HLAVNÍ ÚDAJE</h5>
     <div class="col-lg-6">
+      {{ data }}
       <div class="row">
-        <BaseTextBox wrap="col-lg-6" name="name" label="Popisek" type="text" />
+        <BasePhoneInput wrap="col-lg-6" name="name" label="Popisek" type="text" />
         <BaseSelect wrap="col-lg-6" name="type" label="Typ" :options="typeOptions" />
       </div>
       <div class="row mt-2">

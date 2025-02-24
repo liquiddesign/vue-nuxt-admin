@@ -4,7 +4,10 @@
       <div class="col-lg-6">
         <h5 class="card-title">HLAVNÍ ÚDAJE</h5>
         <div class="row">
+          {{ data }}
           <BaseTextBoxLocale name="name" wrap="col-lg-8" label="Název" type="text" />
+         <BasePhoneInput name="test" wrap="col-lg-8" />
+         <BaseCurrencyInput name="priority" wrap="col-lg-8" />
           <div class="col-lg-4">
             <label>Kód</label>
             <div class="input-group">

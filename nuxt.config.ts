@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['nuxt-lodash'],
+  modules: ['nuxt-lodash', 'nuxt-lucide-icons'],
 
   typescript: {
       strict: true,

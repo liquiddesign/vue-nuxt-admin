@@ -14,7 +14,7 @@ defineProps({
   },
   size: {
     type: Number,
-    default: 16,
+    default: 13,
   },
   strokeWidth: {
     type: Number,

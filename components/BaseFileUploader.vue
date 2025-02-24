@@ -2,7 +2,7 @@
   <div class="upload-files">
     <label :for="id + 'file'" class="btn btn-outline-secondary btn-sm upload-file-label bg-white" :class="{'btn-outline-light pointer-none': maxFilesExceeded, disabled: !canUpload}">
       <i class="fa fa-paperclip" />
-      {{ labelUpload }}
+      <span>{{ labelUpload }}</span>
     </label>
     <input :id="id + 'file'" class="d-none" type="file" :accept="props.acceptedFileTypes" :disabled="!canUpload" :multiple="multiple" @change="onFileChanged">
 
