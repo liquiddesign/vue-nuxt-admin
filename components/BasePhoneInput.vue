@@ -46,7 +46,7 @@ const dropdownOptions = {
   showDialCodeInSelection: true,
 };
 
-const {validationObject, classes} = useFormValidation(form, props);
+const { validationObject } = useFormValidation(form, props);
 
 function onChange($event: any) {
   const value: string|number|null = $event.target.value;
@@ -58,7 +58,7 @@ function onChange($event: any) {
   $emit('update:modelValue', value);
 }
 
-function validate(objInfo) {
+function validate(objInfo: any) {
   isValid.value = objInfo.valid;
 }
 
