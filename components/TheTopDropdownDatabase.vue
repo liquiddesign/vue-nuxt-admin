@@ -3,7 +3,7 @@
     <button type="button" aria-haspopup="true" data-bs-toggle="dropdown" aria-expanded="false" class="p-0 btn btn-link dd-chart-btn me-2">
       <span class="icon-wrapper icon-wrapper-alt rounded-circle bg-light-subtle">
         <span class="icon-wrapper-bg" />
-        <LucideDatabase color="black" stroke-width="1" />
+        <BaseIcon icon-name="Database" :size="24" />
       </span>
     </button>
     <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu dropdown-menu-right" style="">

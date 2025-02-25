@@ -2,18 +2,18 @@
   <ul class="header-megamenu nav">
     <li v-if="hasPermission('administrators')" class="dropdown nav-item show">
       <a aria-haspopup="true" data-toggle="dropdown" class="nav-link" aria-expanded="true" @click="router.push({name: 'administrators'})">
-        <IconUsers class="nav-link-icon" size="16" /> Administratori
+        <BaseIcon icon-name="Users" class="nav-link-icon" /> Administratori
       </a>
     </li>
     <li v-if="hasPermission('administrators')" class="dropdown nav-item show">
       <a aria-haspopup="true" data-toggle="dropdown" class="nav-link" aria-expanded="true" @click="router.push({name: 'settings'})">
-        <i class="nav-link-icon pe-7s-settings" /> Nastavení
+        <BaseIcon icon-name="Settings" class="nav-link-icon" /> Nastavení
       </a>
     </li>
     <li v-if="identity?.admin" class="dropdown nav-item">
       <a aria-haspopup="true" data-bs-toggle="dropdown" class="nav-link" aria-expanded="false">
-        <i class="nav-link-icon pe-7s-plugin" /> Vývojář
-        <i class="fa fa-angle-down ms-2 opacity-5" />
+        <BaseIcon icon-name="ToyBrick" class="nav-link-icon" /> Vývojář
+        <BaseIcon icon-name="ChevronDown" class="ms-2 opacity-5" />
       </a>
       <div tabindex="-1" role="menu" aria-hidden="false" class="dropdown-menu-rounded dropdown-menu-lg rm-pointers dropdown-menu">
         <div class="dropdown-menu-header">
@@ -24,57 +24,57 @@
           </div>
         </div>
         <button type="button" tabindex="0" class="dropdown-item" @click="router.push({name: 'developer-basic'})">
-          <i class="dropdown-icon text-danger fa fa-circle" />Struktura a navigace
+          <BaseIcon icon-name="Circle" fill="#d92550" class="dropdown-icon text-danger" :size="18" /> Struktura a navigace
         </button>
         <button type="button" tabindex="0" class="dropdown-item" @click="router.push({name: 'developer-basic'})">
-          <i class="dropdown-icon text-danger fa fa-circle" />Základní UI
+          <BaseIcon icon-name="Circle" fill="#d92550" class="dropdown-icon text-danger" :size="18" /> Základní UI
         </button>
         <button type="button" tabindex="0" class="dropdown-item" @click="router.push({name: 'developer-button'})">
-          <i class="dropdown-icon text-black fa fa-circle" />Tlačítka
+          <BaseIcon icon-name="Circle" fill="black" class="dropdown-icon text-black" :size="18" /> Tlačítka
         </button>
         <button type="button" tabindex="0" class="dropdown-item" @click="router.push({name: 'developer-flags'})">
-          <i class="dropdown-icon text-warning fa fa-circle" />Ikony, avataři a vlajky
+          <BaseIcon icon-name="Circle" fill="#f7b924" class="dropdown-icon text-warning" :size="18" /> Ikony, avataři a vlajky
         </button>
         <div tabindex="0" class="text-center mt-2 mb-1">
           Formuláře
         </div>
 
         <button type="button" tabindex="0" class="dropdown-item" @click="router.push({name: 'developer-form'})">
-          <i class="dropdown-icon lnr-file-empty" />Formulář
+          <BaseIcon icon-name="File" class="dropdown-icon" /> Formulář
         </button>
         <button type="button" tabindex="0" class="dropdown-item" @click="router.push({name: 'developer-controls'})">
-          <i class="dropdown-icon lnr-file-empty" />Formulářové komponenty
+          <BaseIcon icon-name="File" class="dropdown-icon" /> Formulářové komponenty
         </button>
         <button type="button" tabindex="0" class="dropdown-item" @click="router.push({name: 'developer-button'})">
-          <i class="dropdown-icon lnr-file-empty" />Tabulky
+          <BaseIcon icon-name="File" class="dropdown-icon" /> Tabulky
         </button>
         <div tabindex="0" class="text-center mt-2 mb-1">
           Tabulky
         </div>
         <button type="button" tabindex="0" class="dropdown-item" @click="router.push({name: 'developer-button'})">
-          <i class="dropdown-icon lnr-file-empty" />Komentáře
+          <BaseIcon icon-name="File" class="dropdown-icon" /> Komentáře
         </button>
         <div tabindex="-1" class="dropdown-divider" />
         <button type="button" tabindex="0" class="dropdown-item">
-          <i class="dropdown-icon lnr-file-empty" />Helpery
+          <BaseIcon icon-name="File" class="dropdown-icon" /> Helpery
         </button>
         <button type="button" tabindex="0" class="dropdown-item">
-          <i class="dropdown-icon lnr-file-empty" />Uživatel
+          <BaseIcon icon-name="File" class="dropdown-icon" /> Uživatel
         </button>
         <button type="button" tabindex="0" class="dropdown-item">
-          <i class="dropdown-icon lnr-file-empty" />Oprávnění
+          <BaseIcon icon-name="File" class="dropdown-icon" /> Oprávnění
         </button>
         <button type="button" tabindex="0" class="dropdown-item">
-          <i class="dropdown-icon lnr-file-empty" />Bezpečnost
+          <BaseIcon icon-name="File" class="dropdown-icon" /> Bezpečnost
         </button>
         <button type="button" tabindex="0" class="dropdown-item">
-          <i class="dropdown-icon lnr-file-empty" />Live-feed (notifikace, akce)
+          <BaseIcon icon-name="File" class="dropdown-icon" /> Live-feed (notifikace, akce)
         </button>
         <button type="button" tabindex="0" class="dropdown-item">
-          <i class="dropdown-icon lnr-file-empty" />Jazyky
+          <BaseIcon icon-name="File" class="dropdown-icon" /> Jazyky
         </button>
         <button type="button" tabindex="0" class="dropdown-item">
-          <i class="dropdown-icon lnr-file-empty" />Debug
+          <BaseIcon icon-name="File" class="dropdown-icon" /> Debug
         </button>
       </div>
     </li>
@@ -82,10 +82,6 @@
 </template>
 
 <script setup lang="ts">
-
-import { Users as IconUsers } from 'lucide-vue-next';
-
 const router = useRouter();
 const { identity, hasPermission } = useUser();
-
 </script>

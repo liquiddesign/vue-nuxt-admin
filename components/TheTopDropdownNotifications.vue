@@ -3,11 +3,11 @@
     <button type="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" class="p-0 me-2 btn btn-link">
       <span class="icon-wrapper icon-wrapper-alt rounded-circle">
         <span class="icon-wrapper-bg bg-danger" style="padding-top: 10px;">
-          <i class="fa fa-bell-o" style="" />
+          <BaseIcon icon-name="Bell" :size="24" color="white" />
           <flag v-if="0" style="font-size:17px" iso="cz" class="mt-1" />
         </span>
-        <i v-if="0" class="icon text-danger  ion-android-notifications" :class="{'icon-anim-pulse': false}" />
-        <i v-else class=" text-danger fa fas fa-bell" :class="{'icon-anim-pulse': false}" />
+        <BaseIcon v-if="0" icon-name="Bell" :size="24" class="ion-android-notifications" :class="{'icon-anim-pulse': false}" />
+        <BaseIcon v-else icon-name="Bell" :size="24" class="text-danger" :class="{'icon-anim-pulse': false}" />
         <span v-if="1" class="badge badge-dot badge-dot-sm bg-danger">Notifikace</span>
       </span>
     </button>

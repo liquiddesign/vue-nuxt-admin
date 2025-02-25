@@ -2,7 +2,7 @@
   <div>
     <div v-if="isUpdate" class="alert alert-dismissible fade show alert-primary py-2" style="display: flex" role="alert">
       Záznam byl změněn. Chcete jej znovu načíst?
-      <button class="btn btn-outline-secondary btn-xs ms-2 btn" @click="isUpdate = false;$emit('refresh')"><!--v-if--><i class="fa fa-refresh" /> </button>
+      <button class="btn btn-outline-secondary btn-xs ms-2 btn" @click="isUpdate = false;$emit('refresh')"><!--v-if--><BaseIcon icon-name="RefreshCw" /> </button>
     </div>
     <div v-if="isDelete" class="alert alert-dismissible fade show alert-danger py-2" style="display: flex" role="alert">Záznam byl smazán</div>
     <div v-if="isTyping" class="alert alert-dismissible fade show alert-alternate py-2" style="display: flex" role="alert">

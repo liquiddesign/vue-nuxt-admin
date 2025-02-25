@@ -1,13 +1,12 @@
 <template>
-  <component :is="iconComponent" :size="size" :stroke-width="strokeWidth" :color="color" />
+  <component :is="iconComponent" :size="size" :stroke-width="strokeWidth" />
 </template>
 
 <script setup>
 const props = defineProps({
       iconName: { type: String, default: null },
-      size: { type: Number, default: 24 },
-      strokeWidth: { type: Number, default: 1 },
-      color: { type: String, default: '' },
+      size: { type: Number, default: 16 },
+      strokeWidth: { type: Number, default: 1.5 },
     });
 
 

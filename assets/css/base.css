@@ -241,7 +241,7 @@ figure {
 
 img,
 svg {
-    vertical-align: middle; }
+    vertical-align: sub; }
 
 table {
     caption-side: bottom;

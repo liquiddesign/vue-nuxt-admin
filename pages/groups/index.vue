@@ -13,7 +13,7 @@
     </template>
     <template #headerRight>
       <BaseLiveUsers class="me-2" />
-      <BaseDropdown class="btn-outline-primary btn-sm me-2" icon="fa-bolt">
+      <BaseDropdown class="btn-outline-primary btn-sm me-2" icon-name="Zap">
         <BaseDropdownItem>Hromadná akce</BaseDropdownItem>
       </BaseDropdown>
     </template>

@@ -5,8 +5,8 @@
         <BaseGridThSelect />
         <BaseGridTh order-by="id">#</BaseGridTh>
         <BaseGridTh class="minimal">
-          <BaseButtonFilter v-if="!showFilters" class="btn-xs btn-outline-primary" :show-filters="showFilters" @click="showFilters = !showFilters" />
-          <BaseButtonFilterDelete v-if="showFilters" class="btn-xs btn-outline-danger" @click="clearFilters(); showFilters = !showFilters;" />
+          <BaseButtonFilter v-if="!showFilters" class="btn-xs" :show-filters="showFilters" @click="showFilters = !showFilters" />
+          <BaseButtonFilterDelete v-if="showFilters" class="btn-xs" @click="clearFilters(); showFilters = !showFilters;" />
         </BaseGridTh>
         <BaseGridTh order-by="name">Popisek</BaseGridTh>
         <BaseGridTh order-by="type" style="width: 400px">Typ</BaseGridTh>
@@ -25,8 +25,8 @@
         <BaseGridTh>
           <BaseHeaderFilter name="f-color" field-type="custom">
             <BaseColorPicker v-model="filters['f-color']" name="f-color" style="width: 30px" />
-            <BaseButtonFilter :class="filters['f-color'] ? 'btn-outline-primary active' : 'btn-outline-secondary disabled'" />
-            <BaseButtonFilterDelete class="btn-sm btn-outline-danger flex-shrink-0" :disabled="!filters['f-color']" @click="delete(filters['f-color']);" />
+            <BaseButtonFilter :class="filters['f-color'] ? 'active' : 'btn-outline-secondary disabled'" />
+            <BaseButtonFilterDelete class="flex-shrink-0" :disabled="!filters['f-color']" @click="delete(filters['f-color']);" />
           </BaseHeaderFilter>
         </BaseGridTh>
         <BaseGridTh class="minimal" />

@@ -1,7 +1,7 @@
 <template>
   <th class="minimal">
     <button type="button" class="btn btn-xs btn-outline-secondary me-1" @click="grid.refresh()">
-      <i class="fa fa-refresh" />
+      <BaseIcon icon-name="RefreshCw" />
     </button>
   </th>
 </template>

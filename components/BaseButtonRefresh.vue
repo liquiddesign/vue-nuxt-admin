@@ -1,5 +1,5 @@
 <template>
-  <BaseButton class="btn btn-outline-secondary"><i class="fa fa-refresh" /> <slot /></BaseButton>
+  <BaseButton class="btn btn-outline-secondary"><BaseIcon icon-name="RefreshCw" /> <slot /></BaseButton>
 </template>
 
 <script setup lang="ts">

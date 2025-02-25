@@ -1,5 +1,5 @@
 <template>
-  <BaseButton class="btn btn-success"><i class="fa fa-plus" /> <slot /></BaseButton>
+  <BaseButton class="btn btn-success"><BaseIcon icon-name="Plus" /> <slot /></BaseButton>
 </template>
 
 <script setup lang="ts">

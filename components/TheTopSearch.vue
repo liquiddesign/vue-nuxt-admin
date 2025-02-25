@@ -3,7 +3,7 @@
     <div class="input-holder">
       <input ref="searchBox" type="text" class="search-input" placeholder="Vyhledejte klienta, nemovitost">
       <button class="search-icon">
-        <span />
+        <BaseIcon icon-name="Search" color="white" :size="24" />
       </button>
     </div>
     <button class="bg-transparent border-0 btn-close">

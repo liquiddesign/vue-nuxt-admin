@@ -1,5 +1,5 @@
 <template>
-  <a class="btn btn-outline-alternate btn-sm"><i class="fa fa-external-link" /></a>
+  <a class="btn btn-outline-alternate btn-sm"><BaseIcon icon-name="ExternalLink" /></a>
 </template>
 
 <script setup lang="ts">

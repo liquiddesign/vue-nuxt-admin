@@ -18,8 +18,8 @@
         <br>
         <div class="text-center">
           <small>{{ file.name }}</small>
-          <span v-if="uploading" class="btn btn-xs btn-light disabled"><i class="fa fa-circle-o-notch fa-spin" /></span>
-          <span v-if="!uploading" :title="file.width + 'px /' + file.height + 'px (' + Math.round(file.size / 1024 / 1024) + 'MB)'" class="px-1" style="position: relative; top: 2px;"><i class="fa fa-info-circle" /></span>
+          <span v-if="uploading" class="btn btn-xs btn-light disabled"><BaseIcon icon-name="LoaderCircle" /></span>
+          <span v-if="!uploading" :title="file.width + 'px /' + file.height + 'px (' + Math.round(file.size / 1024 / 1024) + 'MB)'" class="px-1" style="position: relative; top: 2px;"><BaseIcon icon-name="Info" /></span>
           <BaseButtonDelete class="btn-xs btn-light" @click.prevent="removeUpload(i)" />
         </div>
       </div>

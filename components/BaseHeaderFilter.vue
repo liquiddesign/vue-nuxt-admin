@@ -11,15 +11,15 @@
         <BaseTextBox v-else v-model="modelValue[name + filterType.request]" :placeholder="placeholder" :type="textType" />
 
         <!-- set filter type -->
-        <BaseDropdown v-if="fieldType === 'text'" class="btn-sm  flex-shrink-0" :class="activeFilter ? 'btn-outline-primary active' : 'btn-outline-secondary'" :icon-filter="true">
+        <BaseDropdown v-if="fieldType === 'text'" class="btn-sm  flex-shrink-0" :class="activeFilter ? 'btn-outline-primary active' : 'btn-outline-secondary'" icon-name="Filter">
           <template v-for="(item, index) of filterTypes" :key="index">
             <BaseDropdownItem :class="{'active': filterType.code === item.code}" @click="updateFilterType(item.code);">{{ item.name }}</BaseDropdownItem>
           </template>
         </BaseDropdown>
-        <BaseButtonFilter v-else :class="activeFilter ? 'btn-outline-primary active' : 'btn-outline-secondary disabled'" />
+        <BaseButtonFilter v-else :class="activeFilter ? 'active' : 'btn-outline-secondary disabled'" />
 
         <!-- delete filtered data -->
-        <BaseButtonFilterDelete class="btn-sm btn-outline-danger flex-shrink-0" :disabled="!activeFilter" @click="deleteFilter" />
+        <BaseButtonFilterDelete class="flex-shrink-0" :disabled="!activeFilter" @click="deleteFilter" />
       </template>
     </div>
   </BaseGridTh>

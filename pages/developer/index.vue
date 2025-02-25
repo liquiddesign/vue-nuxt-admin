@@ -37,15 +37,15 @@
             <BaseButtonEdit class="ms-2" />
             <BaseButtonEdit class="btn-sm ms-2" />
             <BaseButtonEdit class="btn-xs ms-2" />
-            <BaseDropdown icon="fa-trash-o" class="btn-outline-danger">
+            <BaseDropdown icon-name="Trash2" class="btn-outline-danger">
               <BaseDropdownItem>asdasd</BaseDropdownItem>
               <BaseDropdownItem :disabled="true">asdasd</BaseDropdownItem>
               <BaseDropdownDivider />
               <BaseDropdownItem>asdasd</BaseDropdownItem>
             </BaseDropdown>
-            <BaseDropdown icon="fa fa-bolt" class="btn-outline-primary btn-xs" />
-            <BaseDropdown icon="fa fa-bolt" :loading="true" class="btn-outline-primary btn-xs" />
-            <BaseDropdown icon="fa fa-bolt" :label="'cokoliv <strong>html</strong>'" class="btn-outline-secondary" />
+            <BaseDropdown icon-name="Zap" class="btn-outline-primary btn-xs" />
+            <BaseDropdown icon-name="Zap" :loading="true" class="btn-outline-primary btn-xs" />
+            <BaseDropdown icon-name="Zap" :label="'cokoliv <strong>html</strong>'" class="btn-outline-secondary" />
           </div>
           <BaseButton wrap="col-lg-2" class="btn-primary">Wrapované tlačítko</BaseButton>
         </div>

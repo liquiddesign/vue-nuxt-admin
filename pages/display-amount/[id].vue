@@ -8,7 +8,7 @@
     <template #headerRight>
       <BaseButtonExternalLink v-if="0" class="me-1" />
       <BaseButtonRefresh class="btn-sm me-1" @click="refresh();" />
-      <BaseDropdown class="btn-outline-primary me-1" icon="fa-bolt">
+      <BaseDropdown class="btn-outline-primary me-1" icon-name="Zap">
         <BaseDropdownItem @click="makeCopy()">Vytvořit kopii</BaseDropdownItem>
       </BaseDropdown>
       <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm btn-danger" @confirm="deleteItem()" />

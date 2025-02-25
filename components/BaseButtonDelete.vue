@@ -1,6 +1,6 @@
 <template>
   <Popper v-if="confirmation" arrow :placement="confirmationPlacement">
-    <BaseButton v-bind="$attrs" class="btn"><i class="fas fa-trash-alt" /> <slot /></BaseButton>
+    <BaseButton v-bind="$attrs" class="btn"><BaseIcon icon-name="Trash2" /> <slot /></BaseButton>
     <template #content="{close}">
       Opravdu smazat?<br>
       <div class="text-center">
@@ -9,11 +9,10 @@
       </div>
     </template>
   </Popper>
-  <BaseButton v-else v-bind="$attrs" class="btn"><i class="fa fa-trash-o" /> <slot /></BaseButton>
+  <BaseButton v-else v-bind="$attrs" class="btn"><BaseIcon icon-name="Trash2" /> <slot /></BaseButton>
 </template>
 
 <script setup lang="ts">
-
 withDefaults(defineProps<{
   confirmation?: boolean
   confirmationPlacement?: string
@@ -24,9 +23,4 @@ defineOptions({
 });
 
 const $emit = defineEmits(['confirm']);
-
-
-
-
-
 </script>

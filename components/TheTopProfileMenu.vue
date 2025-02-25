@@ -4,7 +4,7 @@
       <div class="btn-group">
         <a data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn" style="border: 0; cursor: pointer;">
           <BaseAvatar :user-id="identity?.uuid ?? null" style="width: 45px; font-size: 18px;" />
-          <i class="fa fa-angle-down ms-2 opacity-8" />
+          <BaseIcon icon-name="ChevronDown" class="ms-2 opacity-8" />
         </a>
         <div tabindex="-1" role="menu" class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
           <div class="dropdown-menu-header">
@@ -35,7 +35,7 @@
           <ul class="nav flex-column">
             <li class="nav-item-divider nav-item" />
             <li class="nav-item-btn text-center nav-item">
-              <button class="btn-wide btn btn-success btn-sm" @click="navigateTo({name: 'profile'})"><i class="fa fa-edit" /> Editovat profil </button>
+              <button class="btn-wide btn btn-success btn-sm" @click="navigateTo({name: 'profile'})"><BaseIcon icon-name="SquarePen" /> Editovat profil </button>
             </li>
           </ul>
         </div>

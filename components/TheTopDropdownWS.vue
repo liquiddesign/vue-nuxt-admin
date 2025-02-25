@@ -3,7 +3,7 @@
     <button type="button" aria-haspopup="true" data-bs-toggle="dropdown" aria-expanded="false" class="p-0 btn btn-link dd-chart-btn me-2">
       <span class="icon-wrapper icon-wrapper-alt rounded-circle" :class="{'bg-danger-subtle': !isConnected, 'bg-success-subtle': isConnected}">
         <span class="icon-wrapper-bg" />
-        <i class="fa fa-rss" style="color: black !important;" />
+        <BaseIcon icon-name="Wifi" color="black" :size="24" :stroke-width="2" />
       </span>
     </button>
     <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu dropdown-menu-left">

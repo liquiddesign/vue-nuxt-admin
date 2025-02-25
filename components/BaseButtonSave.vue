@@ -1,5 +1,5 @@
 <template>
-  <BaseButton class="btn btn-outline-primary"><i class="fa fa-save" /><slot /></BaseButton>
+  <BaseButton class="btn btn-outline-primary"><BaseIcon icon-name="Save" /> <slot /></BaseButton>
 </template>
 
 <script setup lang="ts">

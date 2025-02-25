@@ -1,5 +1,5 @@
 <template>
-  <BaseButton class="btn btn-light btn-sm"><i class="fa fa-long-arrow-left" /></BaseButton>
+  <BaseButton class="btn btn-light btn-sm"><BaseIcon icon-name="ArrowLeft" /></BaseButton>
 </template>
 
 <script setup lang="ts">

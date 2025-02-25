@@ -7,7 +7,7 @@
     <BaseMultiSelect v-model="modelValue['f-allowedPaymentTypes']" placeholder="Platby" :multiple="true" wrap="flex-shrink-0" options-url="eshop/payment-type?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
 
     <!-- Tenhle kód bude implementován v budoucnu -->
-    <BaseDropdown class="btn-outline-secondary btn-sm me-1 text-primary " icon="fa-save" title="TODO">
+    <BaseDropdown class="btn-outline-secondary btn-sm me-1" icon-name="Save" title="TODO">
       <BaseDropdownItem>TODO <i class="ms-1 fa fa-globe text-black-50" style="top: 1px; position: relative" /> <button class="btn-xs btn btn" style="position: absolute; right: 10px; z-index: 0" @click.stop.prevent="console.log('áa');"><!--v-if--><i class="fa fa-trash-o" /> </button></BaseDropdownItem>
       <BaseDropdownItem>TODO <i class="child ms-2 fa fa-globe text-black-50" style="top: 1px; padding: 2px; border: 1px solid gray; position: relative" />
 
