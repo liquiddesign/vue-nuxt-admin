@@ -1,7 +1,7 @@
 <template>
   <BaseForm ref="form" :url="url" :data="data" :slug="slug" :loading="loading" :rules="rules" @success="$emit('success', goBack ? null : $event.result); goBack = false">
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-8">
         <slot name="top" />
         <div class="row">
           <BaseTextBox name="name" wrap="col-lg-8" label="Název" type="text" />
@@ -11,11 +11,19 @@
           <BaseTextBox name="symbol" wrap="col-lg-4" label="Symbol" type="text" />
         </div>
         <div class="row mt-3">
-          <BaseCheckBox name="isVirtual">Virtuální měna <small class="ps-1 text-secondary"><i class="fa fa-info-circle" /> Jako měnu můžete přidat například kredity nebo jiné alternativní jednotky</small></BaseCheckBox>
+          <BaseCheckBox name="isVirtual">Virtuální měna
+            <small class="ps-1 text-secondary">
+              <BaseFormRowInfo :size="18">Jako měnu můžete přidat například kredity nebo jiné alternativní jednotky</BaseFormRowInfo>
+            </small>
+          </BaseCheckBox>
         </div>
 
         <div class="row mt-3">
-          <BaseCheckBox name="cashback">Povolit odměny <small class="ps-1 text-secondary"><i class="fa fa-info-circle" /> U produktů budete moci nastavit výši odměny v této měně</small></BaseCheckBox>
+          <BaseCheckBox name="cashback">Povolit odměny
+            <small class="ps-1 text-secondary">
+              <BaseFormRowInfo :size="18">U produktů budete moci nastavit výši odměny v této měně</BaseFormRowInfo>
+            </small>
+          </BaseCheckBox>
         </div>
         <div class="form-wrapper-blue mt-3">
           <h5 class="card-title">Formát</h5>
@@ -26,8 +34,10 @@
             <BaseSelect name="formatSymbolPosition" wrap="col-lg-3" label="Pozice symbolu" :options="{before: 'Před', after: 'Za'}" />
           </div>
           <br>
-          <i class="fa fa-info-circle" /> Ukázka formátování:
-          <span>{{ ('2' + (data?.formatThousandsSeparator ?? '') + '981' + (data?.formatThousandsSeparator ?? '') + '543' + (data?.formatDecimalSeparator ?? '')) + '01  Kč' }}</span>
+          <BaseFormRowInfo>
+            Ukázka formátování:
+            <span class="ps-1">{{ ('2' + (data?.formatThousandsSeparator ?? '') + '981' + (data?.formatThousandsSeparator ?? '') + '543' + (data?.formatDecimalSeparator ?? '')) + '01  Kč' }}</span>
+          </BaseFormRowInfo>
         </div>
         <h5 class="card-title mt-3">Konverze a přepočet</h5>
         <div class="row align-items-end mt-2">
@@ -41,8 +51,10 @@
         <div class="row mt-3">
           <BaseCheckBox name="enableConversion">Povolit dynamickou konverzi </BaseCheckBox>
         </div>
-        <div class="row ps-3">
-          <small class="text-secondary"><i class="fa fa-info-circle" /> Produkt nemusí být v ceníku dané měny, stačí když se bude vyskytovat v konverzní měně</small>
+        <div class="row">
+          <small class="text-secondary">
+            <BaseFormRowInfo :size="18">Produkt nemusí být v ceníku dané měny, stačí když se bude vyskytovat v konverzní měně</BaseFormRowInfo>
+          </small>
         </div>
         <div class="row mt-3">
           <div class="col-lg-6">

@@ -28,7 +28,7 @@
           <BaseMultiSelect wrap="col-lg-12" name="catalogPermission" label="Zdroj oprávnení" :options="catalogPermissionOptions" />
         </div>
         <div class="col-lg-12 mt-2">
-          <i class="fa fa-info-circle" /> Pokud se obchodník přihlásí na źakazníka, tak určuje, jestli použít oprávnění zákazníka nebo obchodníka.
+          <BaseFormRowInfo>Pokud se obchodník přihlásí na źakazníka, tak určuje, jestli použít oprávnění zákazníka nebo obchodníka.</BaseFormRowInfo>
         </div>
 
         <div class="row mt-3">

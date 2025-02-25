@@ -1,5 +1,5 @@
 <template>
-  <TestIcon icon-name="ListFilter" />
+  <BaseIcon icon-name="ListFilter" />
 </template>
 <script setup lang="ts">
 

@@ -12,7 +12,7 @@
         <BaseCheckBox name="isSold" wrap="col-lg-4 mt-auto"> Označit jako vyprodáno </BaseCheckBox>
       </div>
       <div class="col-lg-8 mt-2">
-        <i class="fa fa-info-circle" /> Pokud nastavíte "Přednastavené doručení", tak u productů s nastaveným doručením na "Automaticky" bude zvoleno toto doručení.
+        <BaseFormRowInfo>Pokud nastavíte "Přednastavené doručení", tak u productů s nastaveným doručením na "Automaticky" bude zvoleno toto doručení.</BaseFormRowInfo>
       </div>
     </div>
 

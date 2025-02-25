@@ -24,7 +24,7 @@
         <div class="row mt-2">
           <BaseTextBox name="ccEmails" wrap="col-lg-8" label="Kopie e-mailů" type="text" />
         </div>
-        <i class="fa fa-info-circle" /> Zadejte e-mailové adresy oddělené středníkem (;).
+        <BaseFormRowInfo wrap="mt-1">Zadejte e-mailové adresy oddělené středníkem (;).</BaseFormRowInfo>
 
         <div class="row mt-2">
           <BaseMultiSelect name="pricelists" wrap="col-lg-8" label="Ceníky" :multiple="true" options-url="eshop/pricelist?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
@@ -32,7 +32,7 @@
         <div class="row mt-2">
           <BaseMultiSelect name="favouritePriceLists" wrap="col-lg-8" label="Oblíbené ceníky" :multiple="true" options-url="eshop/pricelist?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
         </div>
-        <i class="fa fa-info-circle" /> Pokud zvolený ceník není přiřazen jako "Ceníky", <br>bude dodatečně spárován.
+        <BaseFormRowInfo wrap="mt-1">Pokud zvolený ceník není přiřazen jako "Ceníky", bude dodatečně spárován.</BaseFormRowInfo>
 
         <div class="row mt-2">
           <BaseMultiSelect name="visibilityLists" wrap="col-lg-8" label="Seznamy viditelnosti" options-url="eshop/visibility-list?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
@@ -79,11 +79,16 @@
           <div class="row mt-2">
             <BaseTextBox name="discountLevelPct" wrap="col-lg-8" label="Sleva (%)" />
           </div>
-          <i class="fa fa-info-circle" /> Aplikuje se vždy největší z čtveřice: procentuální slevy produktu, procentuální slevy zákazníka, slevy věrnostního programu zákazníka nebo slevového kupónu. <br>Platí jen pokud má ceník povoleno "Povolit procentuální slevy"
+          <div class="row mt-1">
+            <BaseFormRowInfo wrap="col-lg-8">
+              Aplikuje se vždy největší z čtveřice: procentuální slevy produktu, procentuální slevy zákazníka, slevy věrnostního programu zákazníka nebo slevového kupónu.
+              <br>Platí jen pokud má ceník povoleno "Povolit procentuální slevy"
+            </BaseFormRowInfo>
+          </div>
           <div class="row mt-2">
             <BaseTextBox name="maxDiscountProductPct" wrap="col-lg-8" label="Max. sleva produktů (%)" />
           </div>
-          <i class="fa fa-info-circle" /> Omezuje maximální slevu z dvojice uživatel - produkt.
+          <BaseFormRowInfo wrap="mt-1">Omezuje maximální slevu z dvojice uživatel - produkt.</BaseFormRowInfo>
           <div class="row mt-2">
             <BaseTextBox name="productRoundingPct" wrap="col-lg-8" label="Zaokrouhlení od procent (%)" />
           </div>

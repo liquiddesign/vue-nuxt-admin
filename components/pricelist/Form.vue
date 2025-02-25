@@ -27,8 +27,10 @@
             <BaseCheckBox name="allowDiscountLevel" wrap="col-lg-6"> Povolit procentuální slevy </BaseCheckBox>
           </div>
           <div class="col-lg-12 mt-2">
-            <i class="fa fa-info-circle" /> Aplikuje se vždy největší z čtveřice: procentuální slevy produktu, procentuální slevy zákazníka, slevy věrnostního programu zákazníka nebo slevového kupónu.
-            <br> Pokud je povoleno, aplikuje zmíněnou procentuální slevu. Jinak aplikuje pouze slevu v rámci cen v aktivních ceníkách.
+            <BaseFormRowInfo>
+              Aplikuje se vždy největší z čtveřice: procentuální slevy produktu, procentuální slevy zákazníka, slevy věrnostního programu zákazníka nebo slevového kupónu.
+              <br> Pokud je povoleno, aplikuje zmíněnou procentuální slevu. Jinak aplikuje pouze slevu v rámci cen v aktivních ceníkách.
+            </BaseFormRowInfo>
           </div>
 
           <div class="row mt-3">
@@ -39,14 +41,14 @@
         <div class="row mt-3">
           <BaseTextBox wrap="col-lg-12" name="customLabel" label="Vlastní štítek" type="text" />
           <div class="col-lg-12 mt-2">
-            <i class="fa fa-info-circle" /> Použitý při exportu XML produktů pro Google jako "custom_label_1".
+            <BaseFormRowInfo>Použitý při exportu XML produktů pro Google jako "custom_label_1".</BaseFormRowInfo>
           </div>
           <BaseMultiSelect wrap="col-lg-12 mt-2" name="internalRibbons" label="Interní štítky" :multiple="true" options-url="eshop/internal-ribbon?property=name" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
           <BaseTextBox wrap="col-lg-12 mt-2" name="lastUpdateTs" label="Poslední aktualizace" type="date" />
         </div>
 
         <div class="row mt-3">
-          <div class="col-lg-6">
+          <div class="">
             <BaseFormButton class="btn-success btn-sm me-1" @click="goBack = true;">Uložit</BaseFormButton>
             <BaseFormButton class="btn-outline-primary me-1 btn-sm" @click="goBack = false;">Uložit a pokračovat</BaseFormButton>
           </div>

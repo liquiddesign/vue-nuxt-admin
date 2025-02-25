@@ -10,7 +10,7 @@
         <BaseTextBox wrap="col-lg-8" name="code" label="Kód" type="text" />
         <BaseTextBox wrap="col-lg-4" name="priority" label="Priorita" type="number" />
         <div class="col-lg-8 mt-2">
-          <i class="fa fa-info-circle" /> Kód může obsahovat pouze znaky a-z, A-Z, 0-9. Speciální znaky nejsou povoleny!
+          <BaseFormRowInfo>Kód může obsahovat pouze znaky a-z, A-Z, 0-9. Speciální znaky nejsou povoleny!</BaseFormRowInfo>
         </div>
       </div>
     </div>

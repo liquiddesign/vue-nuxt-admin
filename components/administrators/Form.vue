@@ -41,7 +41,7 @@
             <BaseCheckBox name="google2faEnabled" wrap="col-lg-8" label="Zapnout dvoufaktorové přihlášení" />
           </div>
           <br>
-          <i class="fa fa-info-circle" /> Heslo si změníte pomocí akce změna hesla nebo můžete uživateli resetovat heslo.
+          <BaseFormRowInfo>Heslo si změníte pomocí akce změna hesla nebo můžete uživateli resetovat heslo.</BaseFormRowInfo>
         </div>
         <div class="row mt-3">
           <div class="col-lg-6">

@@ -1,7 +1,7 @@
 <template>
   <BaseForm ref="form" :url="url" :lang="lang" :data="data" :slug="slug" :loading="loading" :rules="rules" @success="$refs?.imageBox?.upload($event.result); $emit('success', goBack ? null : $event.result); goBack = false">
     <div class="row">
-      <BaseAlert v-if="data?.prices?.length === 0" wrap="col-lg-12" type="warning" icon="fa-exclamation-circle">
+      <BaseAlert v-if="data?.prices?.length === 0" wrap="col-lg-12" type="warning" icon="CircleAlert">
         K této dopravě neexistuje žádný ceník. Doprava tedy nebude zobrazena
       </BaseAlert>
       <div class="col-lg-6">
@@ -12,7 +12,7 @@
             <label>Kód</label>
             <div class="input-group">
               <BaseTextBox name="code" />
-              <BaseButton wrap="input-group-append" type="button" class="btn-sm btn-outline-primary"><i class="fa fa-refresh" /></BaseButton>
+              <BaseButton wrap="input-group-append" type="button" class="btn-sm btn-outline-primary text-center"><BaseIcon icon-name="RefreshCw" :size="16" :stroke-width="2" style="vertical-align: sub;" /></BaseButton>
             </div>
           </div>
         </div>
@@ -48,7 +48,7 @@
             <BaseTextBox name="maxWeight" wrap="col-lg-4" :label="`Váha ()`" placeholder="nelimitovat" type="number" :nullable="true" />
           </div>
           <br>
-          <i class="fa fa-info-circle" /> Pokud bude některá z jednotek překročena. Bude zásilka rozdělena na více balíků.
+          <BaseFormRowInfo>Pokud bude některá z jednotek překročena. Bude zásilka rozdělena na více balíků.</BaseFormRowInfo>
         </div>
         <div class="row mt-2">
           <BaseMultiSelect name="defaultDisplayDelivery" wrap="col-lg-6" label="Výchozí zobrazované doručení" options-url="eshop/display-delivery?property=label" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />

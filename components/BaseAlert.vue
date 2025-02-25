@@ -1,7 +1,7 @@
 <template>
   <BaseWrapper :wrap="wrap">
     <div class="mbg-3 alert alert-dismissible fade show" :class="'alert-' + type" role="alert">
-      <span v-if="icon"><i :class="'fa ' + icon" /></span>
+      <span v-if="icon"><BaseIcon :icon-name="icon" :size="14" /></span>
       <slot />
     </div>
   </BaseWrapper>
