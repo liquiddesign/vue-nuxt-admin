@@ -1,5 +1,5 @@
 <template>
-  <BasePageHeader title="Skupiny zákazníků" description="Administrace skupin zákazníků" icon="pe-7s-users">
+  <BasePageHeader title="Skupiny zákazníků" description="Administrace skupin zákazníků" icon="Users">
     <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'customer-group-new'})">Přidat skupinu zákazníků</BaseButtonNew>
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">

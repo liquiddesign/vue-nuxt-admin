@@ -9,7 +9,7 @@
         <BaseGridTh order-by="name">Výše DPH</BaseGridTh>
         <BaseGridTh class="minimal" order-by="recommended">Doprava</BaseGridTh>
         <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="hidden"><i class="fa fa-eye-slash" /></BaseGridTh>
+        <BaseGridTh class="minimal" order-by="hidden"><BaseIcon icon-name="EyeOff" /></BaseGridTh>
         <BaseGridTh><BaseGridThSettings /></BaseGridTh>
       </tr>
     </template>

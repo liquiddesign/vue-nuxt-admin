@@ -9,8 +9,8 @@
         <BaseGridTh order-by="name"><BaseFlag :lang="lang" /> Název</BaseGridTh>
         <BaseGridTh order-by="name">Celková cena (CZK)</BaseGridTh>
         <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="recommended"><i class="fa fa-thumbs-o-up" /></BaseGridTh>
-        <BaseGridTh class="minimal" order-by="hidden"><i class="far fa-eye-slash" /></BaseGridTh>
+        <BaseGridTh class="minimal" order-by="recommended"><BaseIcon icon-name="ThumbsUp" /></BaseGridTh>
+        <BaseGridTh class="minimal" order-by="hidden"><BaseIcon icon-name="EyeOff" /></BaseGridTh>
         <BaseGridTh class="minimal"><BaseGridThSettings /></BaseGridTh>
       </tr>
     </template>

@@ -17,7 +17,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('avatarExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('avatarExample', el)">
                     {{ `<BaseAvatar :userId="'user123'" />` }}
@@ -73,7 +73,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('flagExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('flagExample', el)">
                     {{ `<BaseFlag lang="cs" />` }}
@@ -129,7 +129,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('flagExample2')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('flagExample2', el)">
                     {{ `<i class="pe-7s-users " />` }}
@@ -140,7 +140,7 @@
           </div>
         </div>
         <div class="card-footer py-3">
-          <i class="fa fa-lightbulb-o me-2" /> Odkaz na ikony: &nbsp;<a target="_blank" href="https://themes-pixeden.com/font-demos/7-stroke">https://themes-pixeden.com/font-demos/7-stroke</a>
+          <BaseIcon icon-name="Lightbulb" class="me-2" /> Odkaz na ikony: &nbsp;<a target="_blank" href="https://themes-pixeden.com/font-demos/7-stroke">https://themes-pixeden.com/font-demos/7-stroke</a>
         </div>
       </div>
     </div>
@@ -164,7 +164,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('flagExample3')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('flagExample3', el)">
                     {{ `<i class="fa fa-user " />` }}
@@ -175,7 +175,7 @@
           </div>
         </div>
         <div class="card-footer py-3">
-          <i class="fa fa-lightbulb-o me-2" /> Odkaz na ikony: &nbsp;<a target="_blank" href="https://fontawesome.com/v4/icons/">https://fontawesome.com/v4/icons/</a>
+          <BaseIcon icon-name="Lightbulb" class="me-2" /> Odkaz na ikony: &nbsp;<a target="_blank" href="https://fontawesome.com/v4/icons/">https://fontawesome.com/v4/icons/</a>
         </div>
       </div>
     </div>

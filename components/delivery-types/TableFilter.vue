@@ -8,28 +8,28 @@
 
     <!-- Tenhle kód bude implementován v budoucnu -->
     <BaseDropdown class="btn-outline-secondary btn-sm me-1" icon-name="Save" title="TODO">
-      <BaseDropdownItem>TODO <i class="ms-1 fa fa-globe text-black-50" style="top: 1px; position: relative" /> <button class="btn-xs btn btn" style="position: absolute; right: 10px; z-index: 0" @click.stop.prevent="console.log('áa');"><!--v-if--><i class="fa fa-trash-o" /> </button></BaseDropdownItem>
-      <BaseDropdownItem>TODO <i class="child ms-2 fa fa-globe text-black-50" style="top: 1px; padding: 2px; border: 1px solid gray; position: relative" />
-
-        <button class="btn-xs btn btn" style="position: absolute; right: 10px; z-index: 0" @click.stop.prevent="console.log('áa');"><!--v-if--><i class="fa fa-trash-o" /> </button></BaseDropdownItem>
-      <BaseDropdownItem>TODO <button class="btn-xs btn btn" style="position: absolute; right: 10px; z-index: 0" @click.stop.prevent="console.log('áa');"><!--v-if--><i class="fa fa-trash-o" /> </button></BaseDropdownItem>
-      <BaseDropdownItem class="bg-success-subtle">TODO <button class="btn-xs btn btn" style="position: absolute; right: 10px; z-index: 0" @click.stop.prevent="console.log('áa');"><!--v-if--><i class="fa fa-trash-o" /> </button></BaseDropdownItem>
+      <BaseDropdownItem>TODO <BaseIcon icon-name="Globe" class="ms-1 text-black-50" />
+        <BaseButtonDelete class="btn-xs btn btn" style="position: absolute; right: 10px; z-index: 0" @click.stop.prevent="console.log('áa');" />
+      </BaseDropdownItem>
+      <BaseDropdownItem>TODO <BaseIcon icon-name="Globe" class="ms-1 text-black-50" style="top: 1px; padding: 2px; border: 1px solid gray; position: relative" />
+        <BaseButtonDelete class="btn-xs btn btn" style="position: absolute; right: 10px; z-index: 0" @click.stop.prevent="console.log('áa');" />
+      </BaseDropdownItem>
+      <BaseDropdownItem>TODO <BaseButtonDelete class="btn-xs btn btn" style="position: absolute; right: 10px; z-index: 0" @click.stop.prevent="console.log('áa');" /></BaseDropdownItem>
+      <BaseDropdownItem class="bg-success-subtle">TODO <BaseButtonDelete class="btn-xs btn btn" style="position: absolute; right: 10px; z-index: 0" @click.stop.prevent="console.log('áa');" /></BaseDropdownItem>
       <BaseDropdownItem>TODO
-
         <div style="position: absolute; right: 10px; z-index: 0">
-        <button class="btn-xs btn-outline-secondary btn me-2" @click.stop.prevent="console.log('áa');"><!--v-if--><i class="fa fa-globe" /> </button>
-        <button class="btn-xs btn-outline-secondary btn" @click.stop.prevent="console.log('áa');"><!--v-if--><i class="fa fa-trash-o" /> </button>
+          <button class="btn-xs btn-outline-secondary btn me-2" @click.stop.prevent="console.log('áa');"><!--v-if--><BaseIcon icon-name="Globe" class="text-black-50" /> </button>
+          <BaseButtonDelete class="btn-xs btn-outline-secondary btn" @click.stop.prevent="console.log('áa');" />
         </div>
       </BaseDropdownItem>
       <BaseDropdownDivider />
       <div class="px-2">
         <div class="input-group">
-        <BaseTextBox class="form-control-xs" placehoder="uložit filtr" />
+          <BaseTextBox class="form-control-xs" placehoder="uložit filtr" />
           <BaseButtonSave class="btn-xs" @click.stop="console.log('a')" />
         </div>
-
       </div>
-      <BaseDropdownItem><i class="fa fa-save me-2" /> Uložit filtr (TODO)</BaseDropdownItem>
+      <BaseDropdownItem><BaseIcon icon-name="Save" class="me-2" /> Uložit filtr (TODO)</BaseDropdownItem>
     </BaseDropdown>
   </BaseFilter>
 </template>

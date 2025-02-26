@@ -23,8 +23,8 @@
             <BaseMultiSelect name="defaultCurrency" wrap="col-lg-2" label="Hlavní měna" options-url="eshop/currency?property=code" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
             <h5 class="card-title mt-3">Pořadí jazyků</h5>
             <div ref="el">
-              <div v-for="l in data.langs" :key="l" class="bg-light text-black p-2 mt-3 rounded-3" style="width: 200px; cursor: move">
-                <i class="fa fa-bars text-black-50 pe-2" /> {{ l.toUpperCase() }}
+              <div v-for="l in data.langs" :key="l" class="bg-light text-black p-2 mt-3 rounded-3 d-flex align-items-center" style="width: 200px; cursor: move">
+                <BaseIcon icon-name="Menu" :size="24" class="text-black-50 pe-2" /> {{ l.toUpperCase() }}
               </div>
             </div>
           </div>

@@ -10,7 +10,7 @@
         <BaseGridTh order-by="name"><BaseFlag :lang="lang" /> Název</BaseGridTh>
         <BaseGridTh order-by="pricelists">Akční ceníky</BaseGridTh>
         <BaseGridTh class="minimal" order-by="coupons">Kupóny</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="recommended"><i class="far fa-thumbs-o-up" /></BaseGridTh>
+        <BaseGridTh class="minimal" order-by="recommended"><BaseIcon icon-name="ThumbsUp" /></BaseGridTh>
         <BaseGridTh class="minimal"><BaseGridThSettings /></BaseGridTh>
       </tr>
     </template>

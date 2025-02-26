@@ -50,9 +50,9 @@
           </span>
         </td>
         <td class="minimal">
-          <a :href="'mailto:' + item.email"><i v-if="item.email" class="pe-7s-mail text-center" /> {{ item.email }}</a>
+          <a :href="'mailto:' + item.email"><BaseIcon v-if="item.email" icon-name="Mail" class="text-center" /> {{ item.email }}</a>
           <br class="m-0">
-          <a :href="'tel:' + item.phone"><i v-if="item.phone" class="pe-7s-phone text-center" /> {{ item.phone }}</a>
+          <a :href="'tel:' + item.phone"><BaseIcon v-if="item.phone" icon-name="Phone" class="text-center" /> {{ item.phone }}</a>
         </td>
         <td class="minimal">
           <span> {{ item.merchants?.map((item: any) => item['name'] || null).join(', ') }} </span>

@@ -6,13 +6,13 @@
         <div class="row">
           {{ data }}
           <BaseTextBoxLocale name="name" wrap="col-lg-8" label="Název" type="text" />
-         <BasePhoneInput name="test" wrap="col-lg-8" />
-         <BaseCurrencyInput name="priority" wrap="col-lg-8" />
+          <BasePhoneInput name="test" wrap="col-lg-8" />
+          <BaseCurrencyInput name="priority" wrap="col-lg-8" />
           <div class="col-lg-4">
             <label>Kód</label>
             <div class="input-group">
               <BaseTextBox name="code" />
-              <BaseButton wrap="input-group-append" type="button" class="btn-sm btn-outline-primary"><i class="fa fa-refresh" /></BaseButton>
+              <BaseButton wrap="input-group-append" type="button" class="btn-sm btn-outline-primary"><BaseIcon icon-name="RefreshCw" /></BaseButton>
             </div>
           </div>
         </div>
@@ -68,13 +68,13 @@
               <BaseMultiSelect v-model="currency" :name="`paymentTypePrices.${index}.currency`" wrap="col-lg-2" label="Měna" options-url="eshop/currency?property=code" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
               <div class="col-lg-1">
                 <label>&nbsp;</label><br>
-                <button class="btn btn-sm btn-outline-danger me-2" @click="data.paymentTypePrices.splice(index, 1);"><Trash2 :size="16" :stroke-width="2" /></button>
+                <BaseButtonDelete class="btn btn-sm btn-outline-danger me-2" @click="data.paymentTypePrices.splice(index, 1);" />
               </div>
             </div>
             <hr class="pt-1" style="color: white">
           </template>
           <div class="mt-3">
-            <button class="btn btn-sm btn-outline-secondary me-2" @click="data.paymentTypePrices.push({paymentType: slug, price: null,currency: 'CZK', country: 'CZ'});"><i class="fa fa-plus" /></button>
+            <button class="btn btn-sm btn-outline-secondary me-2" @click="data.paymentTypePrices.push({paymentType: slug, price: null,currency: 'CZK', country: 'CZ'});"><BaseIcon icon-name="Plus" /></button>
           </div>
         </div>
         <div class="row form-wrapper-blue mt-3">

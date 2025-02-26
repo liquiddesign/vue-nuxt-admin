@@ -2,9 +2,8 @@
   <div class="app-page-title">
     <div class="page-title-wrapper">
       <div class="page-title-heading">
-        <div class="page-title-icon">
-          <BaseIcon :icon-name="icon" class="icon-gradient bg-ripe-malin" />
-<!--          <i class="icon-gradient bg-ripe-malin" :class="icon" />-->
+        <div class="page-title-icon w-auto">
+          <BaseIcon :icon-name="icon" :size="24" />
         </div>
         <div>
           {{ title }} <div class="user-avatar bg-secondary ms-1" style="display: inline-flex; height: 20px; width: 20px; position: relative; top: -2px;">

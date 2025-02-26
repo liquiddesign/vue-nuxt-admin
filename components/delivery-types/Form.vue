@@ -96,7 +96,7 @@
               <BaseMultiSelect :name="`deliveryTypePrices.${index}.currency`" wrap="col-lg-2" label="Měna" :options="currencies" />
               <div class="col-lg-1">
                 <label>&nbsp;</label><br>
-                <button class="btn btn-sm btn-outline-danger me-2" @click="data.deliveryTypePrices.splice(index, 1);"><i class="fa fa-trash-o" /></button>
+                <BaseButtonDelete class="btn btn-sm btn-outline-danger me-2" @click="data.deliveryTypePrices.splice(index, 1);" />
               </div>
             </div>
             <div class="row mt-2">
@@ -109,7 +109,7 @@
             <hr class="pt-1" style="color: white">
           </template>
           <div class="mt-3">
-            <button class="btn btn-sm btn-outline-secondary me-2" @click="data.deliveryTypePrices.push({deliveryType: slug, price: null,currency: 'CZK', country: 'CZ'});"><i class="fa fa-plus" /></button>
+            <button class="btn btn-sm btn-outline-secondary me-2" @click="data.deliveryTypePrices.push({deliveryType: slug, price: null,currency: 'CZK', country: 'CZ'});"><BaseIcon icon-name="Plus" /></button>
           </div>
         </div>
       </div>

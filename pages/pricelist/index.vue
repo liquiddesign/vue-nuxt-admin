@@ -1,5 +1,5 @@
 <template>
-  <BasePageHeader title="Ceníky" description="Administrace ceníků" icon="pe-7s-note2">
+  <BasePageHeader title="Ceníky" description="Administrace ceníků" icon="NotepadText">
     <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'pricelist-new'})">Přidat ceník</BaseButtonNew>
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">

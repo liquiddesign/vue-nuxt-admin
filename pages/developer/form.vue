@@ -25,7 +25,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('formExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('formExample', el)">
                     {{ `<BaseForm :name="'myForm'" :rules="{ field: { required: true } }" :data="{ field: '' }">
@@ -134,7 +134,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('formExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('formExample', el)">
                     {{ `<BaseForm :name="'myForm'" :rules="{ field: { required: true } }" :data="{ field: '' }">

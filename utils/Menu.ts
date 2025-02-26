@@ -2,7 +2,7 @@ export interface MenuItem {
     title: string
     name: string
     route: string|undefined
-    icon: string|undefined
+    icon: string
     disabled: boolean|undefined
     hidden: boolean|undefined
     items: MenuItem[]|never[]
@@ -18,7 +18,7 @@ const menu: MenuItem[] = [
                 title: 'Můj přehled',
                 name: 'dashboards',
                 route: 'dashboards',
-                icon: 'pe-7s-graph',
+                icon: 'CircleGauge',
                 items: [],
             },
         ],
@@ -29,7 +29,7 @@ const menu: MenuItem[] = [
         items: [
             <MenuItem>{
                 title: 'Doprava a platby',
-                icon: 'pe-7s-box1',
+                icon: 'Archive',
                 name: 'delivery-payments',
                 items: [
                     <MenuItem>{ title: 'Typy dopravy', route: 'delivery-types'},
@@ -38,7 +38,7 @@ const menu: MenuItem[] = [
             },
             <MenuItem>{
                 title: 'Sklady a dostupnost',
-                icon: 'pe-7s-box1',
+                icon: 'Archive',
                 name: 'stores-availability',
                 items: [
                     <MenuItem>{ title: 'Sklady a množství', route: 'orders2', disabled: true},
@@ -49,7 +49,7 @@ const menu: MenuItem[] = [
             },
             // <MenuItem>{
             //     title: 'Doručení',
-            //     icon: 'pe-7s-box1',
+            //     icon: 'Archive',
             //     name: 'contracts3',
             //     items: [],
             // },
@@ -61,7 +61,7 @@ const menu: MenuItem[] = [
         items: [
             <MenuItem>{
                 title: 'Ceníky a slevy',
-                icon: 'pe-7s-box1',
+                icon: 'Archive',
                 name: 'contracts',
                 items: [
                     <MenuItem>{ title: 'Ceníky', route: 'pricelist' },
@@ -71,7 +71,7 @@ const menu: MenuItem[] = [
             },
             <MenuItem>{
                 title: 'Měny a DPH',
-                icon: 'pe-7s-box1',
+                icon: 'Archive',
                 name: 'contracts2',
                 items: [
                     <MenuItem>{ title: 'Země a DPH', route: 'orders2', disabled: true},
@@ -81,7 +81,7 @@ const menu: MenuItem[] = [
             },
             <MenuItem>{
                 title: 'Věrnostní programy',
-                icon: 'pe-7s-box1',
+                icon: 'Archive',
                 name: 'contracts3',
                 items: [],
             },
@@ -93,35 +93,35 @@ const menu: MenuItem[] = [
         items: [
             <MenuItem>{
                 title: 'Štítky',
-                icon: 'pe-7s-box1',
+                icon: 'Archive',
                 name: 'internal-ribbon',
                 route: 'internal-ribbon',
                 items: [],
             },
             <MenuItem>{
                 title: 'Zákazníci',
-                icon: 'pe-7s-box1',
+                icon: 'Archive',
                 name: 'customer',
                 route: 'customer',
                 items: [],
             },
             <MenuItem>{
                 title: 'Obchodníci',
-                icon: 'pe-7s-box1',
+                icon: 'Archive',
                 name: 'merchant',
                 route: 'merchant',
                 items: [],
             },
             <MenuItem>{
                 title: 'Skupiny zákazníků',
-                icon: 'pe-7s-box1',
+                icon: 'Archive',
                 name: 'customer-group',
                 route: 'customer-group',
                 items: [],
             },
             <MenuItem>{
                 title: 'Viditelníky',
-                icon: 'pe-7s-box1',
+                icon: 'Archive',
                 name: 'visibility-list',
                 route: 'visibility-list',
                 items: [],

@@ -1,5 +1,5 @@
 <template>
-  <BasePageHeader title="Obchodníci" description="Administrace obchodníků" icon="pe-7s-home">
+  <BasePageHeader title="Obchodníci" description="Administrace obchodníků" icon="Store">
     <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'merchant-new' })">Přidat obchodníka</BaseButtonNew>
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">

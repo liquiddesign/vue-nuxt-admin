@@ -31,7 +31,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('cardExample1')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('cardExample1', el)">
                     {{ `<BaseCard>
@@ -44,7 +44,7 @@
                 <br>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('cardExample2')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('cardExample2', el)">
                     {{ `<BaseCard>
@@ -142,7 +142,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('alertExample1')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('alertExample1', el)">
                     {{ `<BaseAlert type="primary">Toto je základní upozornění.</BaseAlert>` }}
@@ -151,7 +151,7 @@
                 <br>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('alertExample2')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('alertExample2', el)">
                     {{ `<BaseAlert type="success" icon="fa-check-circle">Úspěšně uloženo!</BaseAlert>` }}
@@ -226,7 +226,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('highlightExample1')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('highlightExample1', el)">
                     {{ `<BaseHighlight class="bg-warning" heading="Počet uživatelů" subheading="Aktivních" icon="pe-7s-users">
@@ -237,7 +237,7 @@
                 <br>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('highlightExample2')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('highlightExample2', el)">
                     {{ `<BaseHighlight class="bg-light"  heading="Obrat" subheading="v milionech">
@@ -324,7 +324,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('tabExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('tabExample', el)">
                     {{ `<BaseTabs :active="activeTab" :tabs="{'accepted': 'Přijaté', 'sent': 'Odeslané', 'canceled': 'Stornované'}" @select="activeTab=$event">
@@ -338,7 +338,7 @@
 
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('tabExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('tabExample', el)">
                     {{ `<BaseTabs :active="activeTab" :tabs="{'accepted': 'Přijaté', 'sent': 'Odeslané', 'canceled': 'Stornované'}" @select="activeTab=$event">
@@ -350,7 +350,7 @@
 
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('tabExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('tabExample', el)">
                     {{ `  <BaseTabs :active="$route.name" :tabs="{'customers': 'Zakaznici', 'producers': 'Výrobci', 'developer': 'Developer'}" @select="navigateTo($event)" />
@@ -455,7 +455,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('modalExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('modalExample', el)" class="html">
                     {{ `<BaseModal title="My Modal" :displayFooter="true">

@@ -14,8 +14,8 @@
         <BaseGridTh class="number">Min. cena</BaseGridTh>
         <BaseGridTh class="number">Max. cena</BaseGridTh>
         <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
-        <BaseGridTh class="minimal" order-by="recommended"><i class="fa fa-thumbs-o-up" /></BaseGridTh>
-        <BaseGridTh class="minimal" order-by="hidden"><i class="far fa-eye-slash" /></BaseGridTh>
+        <BaseGridTh class="minimal" order-by="recommended"><BaseIcon icon-name="ThumbsUp" /></BaseGridTh>
+        <BaseGridTh class="minimal" order-by="hidden"><BaseIcon icon-name="EyeOff" /></BaseGridTh>
         <BaseGridTh><BaseGridThSettings /></BaseGridTh>
       </tr>
     </template>

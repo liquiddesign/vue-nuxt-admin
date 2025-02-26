@@ -1,5 +1,5 @@
 <template>
-  <BasePageHeader title="Doručení" description="" icon="pe-7s-date">
+  <BasePageHeader title="Doručení" description="" icon="CalendarClock">
     <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'display-delivery-new'})">Přidat doručení</BaseButtonNew>
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">

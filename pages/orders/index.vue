@@ -1,12 +1,12 @@
 <template>
-  <BaseCardHeader title="Přijaté objednávky" icon="pe-7s-box1" description="Objednávky předfiltrované dle stavů">
+  <BasePageHeader title="Přijaté objednávky" icon="Box" description="Objednávky předfiltrované dle stavů">
     <button type="button" class="me-2 btn btn-sm btn-outline-alternate">
-      <i class="fa fa-ban" /> Blokováno (0)
+      <BaseIcon icon-name="Ban" /> Blokováno (0)
     </button>
     <button type="button" class="me-2 btn btn-sm btn-outline-secondary">
-      <i class="fa fa-cogs" />
+      <BaseIcon icon-name="Cog" />
     </button>
-  </BaseCardHeader>
+  </BasePageHeader>
   <div class="row">
     <div class="col-lg-6">
       <ul class="tabs-animated-shadow tabs-animated nav nav-justified">

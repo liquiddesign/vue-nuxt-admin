@@ -10,7 +10,7 @@
 <!--          <BaseGridTh class="minimal" order-by="priceVat">Cena s DPH</BaseGridTh>-->
 <!--          <BaseGridTh class="minimal" order-by="priceBefore">Cena před slevou</BaseGridTh>-->
 <!--          <BaseGridTh class="minimal" order-by="priceVatBefore">Cena s DPH před slevou</BaseGridTh>-->
-<!--          <BaseGridTh class="minimal" order-by="hidden"><i class="far fa-eye-slash" /></BaseGridTh>-->
+<!--          <BaseGridTh class="minimal" order-by="hidden"><BaseIcon icon-name="EyeOff" /></BaseGridTh>-->
 <!--        </tr>-->
 <!--      </template>-->
       <template v-if="showFilters" #filters>

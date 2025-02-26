@@ -23,14 +23,14 @@
                 <h6>Použití</h6>
                 <div class="pb-2" style="display: block; width: 100%;">
                   <div class="code-example">
-                    <BaseButton class="btn-light btn-xs" @click="select('button1')"><i class="fa fa-copy" /></BaseButton>
+                    <BaseButton class="btn-light btn-xs" @click="select('button1')"><BaseIcon icon-name="Copy" /></BaseButton>
                     <code :ref="el => setRef('button1', el)">
                       {{ '<BaseButton>Velké tlačítko</BaseButton>' }}
                     </code>
                   </div>
                   <br>
                   <div class="code-example">
-                    <BaseButton class="btn-light btn-xs" @click="select('button2')"><i class="fa fa-copy" /></BaseButton>
+                    <BaseButton class="btn-light btn-xs" @click="select('button2')"><BaseIcon icon-name="Copy" /></BaseButton>
                     <code :ref="el => setRef('button2', el)">
                       {{ '<BaseButton class="btn-sm">Malé tlačítko</BaseButton>' }}
                     </code>
@@ -93,7 +93,7 @@
               <div id="pouziti" class="mt-4">
                 <h6>Použití</h6>
                 <div class="code-example">
-                  <BaseButton class="btn-light btn-xs" @click="select('button3')"><i class="fa fa-copy" /></BaseButton>
+                  <BaseButton class="btn-light btn-xs" @click="select('button3')"><BaseIcon icon-name="Copy" /></BaseButton>
                   <code :ref="el => setRef('button3', el)">
                     {{ `<BaseButtonBack />` }}
                   </code>
@@ -124,7 +124,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('closeButtonExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('closeButtonExample', el)">
                     {{ `<BaseButtonCancel>` }}
@@ -160,7 +160,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('deleteButtonExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('deleteButtonExample', el)">
                     {{ `<BaseButtonDelete confirmation>Opravdu smazat?</BaseButtonDelete>` }}
@@ -243,7 +243,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('editButtonExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('editButtonExample', el)">
                     {{ `<BaseButtonEdit class="btn-primary" />` }}
@@ -275,7 +275,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('exportButtonExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('exportButtonExample', el)">
                     {{ `<BaseButtonExport />` }}
@@ -307,7 +307,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('externalLinkExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('externalLinkExample', el)">
                     {{ `<BaseButtonExternalLink />` }}
@@ -339,7 +339,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('newButtonExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('newButtonExample', el)">
                     {{ `<BaseButtonNew />` }}
@@ -371,7 +371,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('refreshButtonExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('refreshButtonExample', el)">
                     {{ `<BaseButtonRefresh />` }}
@@ -403,7 +403,7 @@
                 <h6>Použití</h6>
                 <div class="code-example">
                   <BaseButton class="btn-light btn-xs" @click="select('saveButtonExample')">
-                    <i class="fa fa-copy" />
+                    <BaseIcon icon-name="Copy" />
                   </BaseButton>
                   <code :ref="el => setRef('saveButtonExample', el)">
                     {{ `<BaseButtonSave />` }}

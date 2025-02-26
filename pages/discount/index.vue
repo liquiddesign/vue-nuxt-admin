@@ -1,5 +1,5 @@
 <template>
-  <BasePageHeader title="Slevy" description="Administrace slev" icon="pe-7s-ticket">
+  <BasePageHeader title="Slevy" description="Administrace slev" icon="TicketPercent">
     <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'discount-new'})">Přidat ceník</BaseButtonNew>
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">

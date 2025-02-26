@@ -1,5 +1,5 @@
 <template>
-  <BasePageHeader title="Viditelníky" description="Administrace viditelníků" icon="pe-7s-home">
+  <BasePageHeader title="Viditelníky" description="Administrace viditelníků" icon="Store">
     <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'visibility-list-new' })">Přidat viditelník</BaseButtonNew>
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">

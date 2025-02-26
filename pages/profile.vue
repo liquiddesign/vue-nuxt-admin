@@ -13,7 +13,7 @@
         <div style="display: inline-block; position: relative">
           <button class="btn dropdown-toggle btn btn-sm me-1 btn-outline-primary" type="button" aria-haspopup="true" data-bs-toggle="dropdown" data-bs-boundary="body" data-boundary="body"><i class="fa fa-bolt" /></button>
           <div class="dropdown-menu dropdown-menu-end" tabindex="-1" role="menu" style="display: block; right: 0; ">
-            <button type="button" class="dropdown-item"><i class="fa fa-copy pe-1" /> Vytvořit kopii</button>
+            <button type="button" class="dropdown-item"><BaseIcon icon-name="Copy" class="pe-1" /> Vytvořit kopii</button>
             <button type="button" class="dropdown-item"><i class="fa fa-arrow-right pe-1" /> Zkopírovat obsah</button>
             <div tabindex="-1" class="dropdown-divider" />
             <button type="button" class="dropdown-item"><i class="fa fa-remove pe-1" /> Vypnout ve feedech</button>

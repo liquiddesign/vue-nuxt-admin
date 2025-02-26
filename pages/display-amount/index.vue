@@ -1,5 +1,5 @@
 <template>
-  <BasePageHeader title="Dostupnost" description="Administrace dostupnosti" icon="pe-7s-box1">
+  <BasePageHeader title="Dostupnost" description="Administrace dostupnosti" icon="PackageOpen">
     <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'display-amount-new'})">Přidat dostupnost</BaseButtonNew>
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">

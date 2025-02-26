@@ -1,5 +1,5 @@
 <template>
-  <BasePageHeader title="Typy plateb" description="Administrace typů plateb" icon="pe-7s-cash">
+  <BasePageHeader title="Typy plateb" description="Administrace typů plateb" icon="HandCoins">
     <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'payment-type-new'})">Přidat typ platby</BaseButtonNew>
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">

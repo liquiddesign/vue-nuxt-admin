@@ -1,5 +1,5 @@
 <template>
-  <BasePageHeader title="Hlavička" icon="pe-7s-users" description="Cokoliv si zamantene">
+  <BasePageHeader title="Hlavička" icon="Users" description="Cokoliv si zamantene">
     <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'customers-new'})">Přidat cokoliv</BaseButtonNew>
   </BasePageHeader>
   <div class="row">

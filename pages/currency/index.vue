@@ -1,5 +1,5 @@
 <template>
-  <BasePageHeader title="Měny" description="" icon="pe-7s-date">
+  <BasePageHeader title="Měny" description="" icon="CircleDollarSign">
     <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'currency-new'})">Přidat měnu</BaseButtonNew>
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">

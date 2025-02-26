@@ -1,5 +1,5 @@
 <template>
-  <BasePageHeader title="Administratoři" icon="pe-7s-users" description="Správa administrátorů">
+  <BasePageHeader title="Administratoři" icon="Users" description="Správa administrátorů">
     <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'administrators-new'})">Přidat administrátora</BaseButtonNew>
   </BasePageHeader>
   <BaseTabs class="col-xl-6 col-lg-12" :active="$route.name" :tabs="{'administrators': 'Administratoři', 'roles': 'Role', 'groups': 'Skupiny'}" @select="navigateTo($event)" />

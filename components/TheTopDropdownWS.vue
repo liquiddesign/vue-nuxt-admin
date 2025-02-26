@@ -38,10 +38,10 @@
         <li v-if="0" class="nav-item-divider mt-0 nav-item" />
         <li class="nav-item-btn text-center nav-item">
           <BaseButton v-if="!isConnected" class="btn-success" @click="open">
-            <i class="fa fa-cog fa-rss-square mr-2" /> Připojit se
+            <BaseIcon icon-name="Settings" /> Připojit se
           </BaseButton>
           <BaseButton v-else class="btn-outline-dark" @click="close(1000)">
-            <i class="fa fa-cog fa-times-circle" /> Odpojit
+            <BaseIcon icon-name="CircleX" /> Odpojit
           </BaseButton>
         </li>
       </ul>
