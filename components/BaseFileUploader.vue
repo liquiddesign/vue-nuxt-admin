@@ -1,10 +1,21 @@
 <template>
   <div class="upload-files">
-    <label :for="id + 'file'" class="btn btn-outline-secondary btn-sm upload-file-label bg-white" :class="{'btn-outline-light pointer-none': maxFilesExceeded, disabled: !canUpload}">
-      <i class="fa fa-paperclip" />
-      <span>{{ labelUpload }}</span>
-    </label>
-    <input :id="id + 'file'" class="d-none" type="file" :accept="props.acceptedFileTypes" :disabled="!canUpload" :multiple="multiple" @change="onFileChanged">
+    <div class="btn btn-outline-secondary btn-sm upload-file-label bg-white h-100">
+      <div class="m-auto">
+        <label :for="id + 'file'" class="btn btn-xs bg-white upload-file-label" :class="{'btn-outline-light pointer-none': maxFilesExceeded, disabled: !canUpload}" style="border: none; min-height: auto; min-width: auto;">
+          <BaseIcon icon-name="Paperclip" />
+          <span>{{ labelUploadDisk }}</span>
+        </label>
+        <input :id="id + 'file'" class="d-none" type="file" :accept="props.acceptedFileTypes" :disabled="!canUpload" :multiple="multiple" @change="onFileChanged">
+      </div>
+      <hr class="m-0 opacity-1 w-100 bg-transparent" style="border-top: 1px dashed black;">
+      <div class="m-auto">
+        <BaseButton class="btn btn-xs bg-white upload-file-label" style="border: none; min-height: auto; min-width: auto;" @click="$refs.my_vuefinder1.open();">
+          <BaseIcon icon-name="CloudUpload" :size="20" />
+          <span>{{ labelUploadCloud }}</span>
+        </BaseButton>
+      </div>
+    </div>
 
     <template v-for="(file) in files" :key="file.hash">
       <div>
@@ -36,9 +47,15 @@
       </div>
     </template>
   </div>
-</template>
-<script setup lang="ts">
 
+  <BaseModal ref="my_vuefinder1" title="Nahrát soubor z cloudu" :display-footer="true">
+    <template #body>
+      <BaseCloudPicker />
+    </template>
+  </BaseModal>
+</template>
+
+<script setup lang="ts">
 import {clearObject, generateUUID} from '~/utils/helpers';
 import {type ToastPluginApi, useToast} from 'vue-toast-notification';
 import axios, {CanceledError} from 'axios';
@@ -71,9 +88,13 @@ const props = defineProps({
     type: String,
     default: null,
   },
-  labelUpload: {
+  labelUploadDisk: {
     type: String,
-    default: 'Nahrát soubor',
+    default: 'Nahrát z disku',
+  },
+  labelUploadCloud: {
+    type: String,
+    default: 'Nahrát z cloudu',
   },
   labelCamera: {
     type: String,
@@ -379,8 +400,4 @@ const removeFile = (file: FileData) => {
   delete files.value[file.hash];
 };
 
-
-
-</script>
-<script setup lang="ts">
 </script>
