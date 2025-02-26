@@ -1,10 +1,10 @@
 <template>
   <BaseCard>
     <div>
-      <vue-finder id="my_vuefinder" :request="request" theme="light" :select-button="handleSelectButton"></vue-finder>
+<!--      <vue-finder id="my_vuefinder" :request="request" theme="light" :select-button="handleSelectButton"></vue-finder>-->
+      <vue-finder id="my_vuefinder1" :request="request" theme="light" :select-button="handleSelectButton"></vue-finder>
     </div>
   </BaseCard>
-
 </template>
 
 <script setup lang="ts">
