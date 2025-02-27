@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <div ref="modal" class="modal fade">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-xl ">
         <div class="modal-content">
           <div v-if="$slots.header" class="modal-header">
             <slot name="header" />

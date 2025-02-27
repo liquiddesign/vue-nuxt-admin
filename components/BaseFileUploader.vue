@@ -48,7 +48,7 @@
     </template>
   </div>
 
-  <BaseModal ref="my_vuefinder1" title="Nahrát soubor z cloudu" :display-footer="true">
+  <BaseModal ref="my_vuefinder1" title="Nahrát soubor z cloudu" :display-footer="false">
     <template #body>
       <BaseCloudPicker />
     </template>

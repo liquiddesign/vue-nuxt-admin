@@ -1,9 +1,7 @@
 <template>
-  <BaseCard>
-    <div>
-      <vue-finder id="my_vuefinder1" :request="request" theme="light" :select-button="handleSelectButton"></vue-finder>
-    </div>
-  </BaseCard>
+  <div>
+    <vue-finder id="my_vuefinder1" :request="request" theme="light" :select-button="handleSelectButton"></vue-finder>
+  </div>
 </template>
 
 <script setup lang="ts">
