@@ -7,7 +7,7 @@
         </div>
         <div>
           {{ title }} <div class="user-avatar bg-secondary ms-1" style="display: inline-flex; height: 20px; width: 20px; position: relative; top: -2px;">
-            <span class="initials"><BaseIcon icon-name="LockKeyhole" :size="14" :stroke-width="2" /></span>
+            <span class="initials"><BaseIcon icon-name="LockKeyhole" :size="10" :stroke-width="2" /></span>
           </div>
           <div v-if="description" class="page-title-subheading">{{ description }}</div>
         </div>

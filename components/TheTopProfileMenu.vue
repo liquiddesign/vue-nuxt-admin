@@ -35,7 +35,12 @@
           <ul class="nav flex-column">
             <li class="nav-item-divider nav-item" />
             <li class="nav-item-btn text-center nav-item">
-              <button class="btn-wide btn btn-success btn-sm" @click="navigateTo({name: 'profile'})"><BaseIcon icon-name="SquarePen" /> Editovat profil </button>
+              <button class="btn-wide btn btn-success btn-sm" @click="navigateTo({name: 'profile'})">
+                <i class="fa fa-edit" /> Editovat profil
+              </button>
+              <button class="btn-outline-primary btn btn-sm ms-3" @click="navigateTo({path: 'profile/password'})">
+                <KeyRound class="me-1 text-center" :size="16" /> Změna hesla
+              </button>
             </li>
           </ul>
         </div>
@@ -52,6 +57,8 @@
   </div>
 </template>
 <script setup lang="ts">
+
+import {KeyRound} from 'lucide-vue-next';
 
 const { identity, logout } = useUser();
 

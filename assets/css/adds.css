@@ -120,7 +120,7 @@ label {
 }
 
 .tabs-animated .nav-link::before {
-    background-color: #ff6464 !important;
+    background-color: #3f6ad8 !important;
 }
 
 .form-control-file, .form-control-range {
@@ -393,6 +393,7 @@ textarea.input-required {
 .upload-file-label:hover {
     color: lightgray;
 }
+
 
 .upload-file-controls {
     display: inline-flex;
