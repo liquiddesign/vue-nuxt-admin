@@ -1,5 +1,5 @@
 <template>
-  <input ref="inputRef" :value="formattedValue" />
+  <input ref="inputRef" :value="formattedValue">
 </template>
 
 <script setup lang="ts">

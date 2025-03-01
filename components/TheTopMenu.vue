@@ -39,42 +39,42 @@
           Formuláře
         </div>
 
-        <button type="button" tabindex="0" class="dropdown-item" @click="router.push({name: 'developer-form'})">
-          <BaseIcon icon-name="File" class="dropdown-icon" /> Formulář
+        <button type="button" tabindex="0" class="dropdown-item" :disabled="true" @click="router.push({name: 'developer-form'})">
+          <BaseIcon icon-name="Circle" fill="black" class="dropdown-icon text-black" :size="18" /> Formulář
         </button>
-        <button type="button" tabindex="0" class="dropdown-item" @click="router.push({name: 'developer-controls'})">
-          <BaseIcon icon-name="File" class="dropdown-icon" /> Formulářové komponenty
+        <button type="button" tabindex="0" class="dropdown-item" :disabled="true" @click="router.push({name: 'developer-controls'})">
+          <BaseIcon icon-name="Circle" class="dropdown-icon" /> Formulářové komponenty
         </button>
-        <button type="button" tabindex="0" class="dropdown-item" @click="router.push({name: 'developer-button'})">
-          <BaseIcon icon-name="File" class="dropdown-icon" /> Tabulky
+        <button type="button" tabindex="0" class="dropdown-item" :disabled="true" @click="router.push({name: 'developer-button'})">
+          <BaseIcon icon-name="Circle" class="dropdown-icon" /> Tabulky
         </button>
         <div tabindex="0" class="text-center mt-2 mb-1">
           Tabulky
         </div>
-        <button type="button" tabindex="0" class="dropdown-item" @click="router.push({name: 'developer-button'})">
-          <BaseIcon icon-name="File" class="dropdown-icon" /> Komentáře
+        <button type="button" tabindex="0" class="dropdown-item" :disabled="true" @click="router.push({name: 'developer-button'})">
+          <BaseIcon icon-name="Circle" class="dropdown-icon" /> Komentáře
         </button>
         <div tabindex="-1" class="dropdown-divider" />
-        <button type="button" tabindex="0" class="dropdown-item">
-          <BaseIcon icon-name="File" class="dropdown-icon" /> Helpery
+        <button type="button" tabindex="0" class="dropdown-item" :disabled="true">
+          <BaseIcon icon-name="Circle" class="dropdown-icon" /> Helpery
         </button>
-        <button type="button" tabindex="0" class="dropdown-item">
-          <BaseIcon icon-name="File" class="dropdown-icon" /> Uživatel
+        <button type="button" tabindex="0" class="dropdown-item" :disabled="true">
+          <BaseIcon icon-name="Circle" class="dropdown-icon" /> Uživatel
         </button>
-        <button type="button" tabindex="0" class="dropdown-item">
-          <BaseIcon icon-name="File" class="dropdown-icon" /> Oprávnění
+        <button type="button" tabindex="0" class="dropdown-item" :disabled="true">
+          <BaseIcon icon-name="Circle" class="dropdown-icon" /> Oprávnění
         </button>
-        <button type="button" tabindex="0" class="dropdown-item">
-          <BaseIcon icon-name="File" class="dropdown-icon" /> Bezpečnost
+        <button type="button" tabindex="0" class="dropdown-item" :disabled="true">
+          <BaseIcon icon-name="Circle" class="dropdown-icon" /> Bezpečnost
         </button>
-        <button type="button" tabindex="0" class="dropdown-item">
-          <BaseIcon icon-name="File" class="dropdown-icon" /> Live-feed (notifikace, akce)
+        <button type="button" tabindex="0" class="dropdown-item" :disabled="true">
+          <BaseIcon icon-name="Circle" class="dropdown-icon" /> Live-feed (notifikace, akce)
         </button>
-        <button type="button" tabindex="0" class="dropdown-item">
-          <BaseIcon icon-name="File" class="dropdown-icon" /> Jazyky
+        <button type="button" tabindex="0" class="dropdown-item" :disabled="true">
+          <BaseIcon icon-name="Circle" class="dropdown-icon" /> Jazyky
         </button>
-        <button type="button" tabindex="0" class="dropdown-item">
-          <BaseIcon icon-name="File" class="dropdown-icon" /> Debug
+        <button type="button" tabindex="0" class="dropdown-item" :disabled="true">
+          <BaseIcon icon-name="Circle" class="dropdown-icon" /> Debug
         </button>
       </div>
     </li>

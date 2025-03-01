@@ -145,7 +145,7 @@ provide('form', {
   updateInput,
 });
 
-defineExpose({ submit, disabled, pending, dirty, v$, getDynamicErrors });
+defineExpose({ submit, disabled, pending, dirty, validation: v$, getDynamicErrors });
 
 const emit = defineEmits(['success', 'error']);
 </script>

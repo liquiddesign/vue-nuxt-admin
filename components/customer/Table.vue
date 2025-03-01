@@ -101,7 +101,7 @@ const registrationDate: string = (currentDate: string) => {
 };
 
 const fullAddress: string = (dataAddress: any) => {
-  let address: any[] = [];
+  const address: any[] = [];
   if (dataAddress.street) { address.push(dataAddress.street); }
   if (dataAddress.zipcode) { address.push(dataAddress.zipcode); }
   if (dataAddress.city) { address.push(dataAddress.city); }

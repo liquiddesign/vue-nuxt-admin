@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   },
 
   ssr: false,
-  css: ['bootstrap/dist/css/bootstrap.min.css', '@/assets/css/base.css', '@/assets/css/adds.css', '@/assets/css/toaster.css', '@/assets/css/popper.css', '@/assets/css/multiselect.css', 'pe7-icon/dist/dist/pe-icon-7-stroke.css', '@fortawesome/fontawesome-free/css/all.min.css'],
+  css: ['bootstrap/dist/css/bootstrap.min.css', '@/assets/css/base.css', '@/assets/css/adds.css', '@/assets/css/toaster.css', '@/assets/css/popper.css', '@/assets/css/multiselect.css'],
 
   app: {
       head: {
@@ -19,11 +19,16 @@ export default defineNuxtConfig({
       },
   },
 
+  lucide: {
+    namePrefix: 'Icon',
+  },
+
   runtimeConfig: {
       public: {
           baseURL: process.env.NUXT_BASE_URL,
           wsURL: process.env.NUXT_WS_URL,
           userFilesURL: process.env.NUXT_USERFILES_URL,
+          cloudManager: process.env.NUXT_CLOUDMANAGER,
       },
   },
 

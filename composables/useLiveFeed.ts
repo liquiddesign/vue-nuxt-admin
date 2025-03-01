@@ -42,7 +42,7 @@ export function useLiveFeed() {
     const route = useRoute();
     const { identity } = useUser();
 
-    const sendAction = (action: string, recordId: string | null = null, replyWithTable: boolean = false) => {
+    const sendAction = (action: string, recordId: string | null = null, replyWithTable: boolean = false, message: string | null = null) => {
         const msg = {
             action: action,
             routePath: route.path,
@@ -50,6 +50,9 @@ export function useLiveFeed() {
             recordId: recordId ?? route.params?.id ?? null,
             user: identity.value ? identity.value.uuid : null,
             replyWithTable: replyWithTable,
+            message: message,
+            messageType: null,
+            tags: null,
         };
 
         ws.send(JSON.stringify(msg));
@@ -65,6 +68,10 @@ export function useLiveFeed() {
 
     const sendCreated = () => {
         sendAction('create');
+    };
+
+    const sendNotify = (msg: string) => {
+        sendAction('notify', null, false, msg);
     };
 
     const sendDelete = (recordId: string) => {
@@ -110,6 +117,7 @@ export function useLiveFeed() {
         sendVisit,
         sendCreated,
         sendTyping,
+        sendNotify,
         isConnected,
         onDelete: (callback: (message: string) => void) => {
             addEventListener('delete', callback);

@@ -6,8 +6,9 @@
           <BaseIcon :icon-name="icon" :size="24" />
         </div>
         <div>
-          {{ title }} <div class="user-avatar bg-secondary ms-1" style="display: inline-flex; height: 20px; width: 20px; position: relative; top: -2px;">
-            <span class="initials"><BaseIcon icon-name="LockKeyhole" :size="10" :stroke-width="2" /></span>
+          {{ title }}
+          <div class="user-avatar bg-secondary" style="display: inline-flex; width: 20px; position: relative;">
+            <BaseIcon icon-name="LockKeyhole" :size="11" :stroke-width="2" />
           </div>
           <div v-if="description" class="page-title-subheading">{{ description }}</div>
         </div>

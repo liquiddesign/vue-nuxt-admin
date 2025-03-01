@@ -19,7 +19,7 @@
         <BaseButtonFilter v-else :class="activeFilter ? 'active' : 'btn-outline-secondary disabled'" />
 
         <!-- delete filtered data -->
-        <BaseButtonFilterDelete class="flex-shrink-0" :disabled="!activeFilter" @click="deleteFilter" />
+        <BaseButtonFilterCancel class="flex-shrink-0" :disabled="!activeFilter" @click="deleteFilter" />
       </template>
     </div>
   </BaseGridTh>

@@ -38,7 +38,7 @@
         </div>
         <div class="app-header-right">
           <div class="header-dots">
-            <TheTopDropdownDatabase />
+            <TheTopCloudPicker />
             <TheTopDropdownDatabase />
             <TheTopDropdownWS />
             <TheTopDropdownLanguage />

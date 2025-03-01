@@ -5,15 +5,15 @@
       <BaseButtonSave class="btn-sm me-2" @click="$refs?.form.submit()" />
     </template>
 
-<!--    <template #headerRight>-->
-<!--      <BaseLiveUsers class="me-2" />-->
-<!--      <BaseButtonExternalLink v-if="0" />-->
-<!--      <BaseButtonRefresh class="btn-sm me-1" @click="refresh();" />-->
-<!--      <BaseDropdown class="btn-outline-primary me-1" icon="fa-bolt">-->
-<!--        <BaseDropdownItem @click="makeCopy()">Vytvořit kopii</BaseDropdownItem>-->
-<!--      </BaseDropdown>-->
-<!--      <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm btn-danger" @confirm="deleteItem()" />-->
-<!--    </template>-->
+    <!--    <template #headerRight>-->
+    <!--      <BaseLiveUsers class="me-2" />-->
+    <!--      <BaseButtonExternalLink v-if="0" />-->
+    <!--      <BaseButtonRefresh class="btn-sm me-1" @click="refresh();" />-->
+    <!--      <BaseDropdown class="btn-outline-primary me-1" icon="fa-bolt">-->
+    <!--        <BaseDropdownItem @click="makeCopy()">Vytvořit kopii</BaseDropdownItem>-->
+    <!--      </BaseDropdown>-->
+    <!--      <BaseButtonDelete :confirmation="true" :outline="true" class="btn-sm btn-danger" @confirm="deleteItem()" />-->
+    <!--    </template>-->
 
     <template #body>
       <BaseForm ref="form" :url="'profile'" :data="identity" :rules="rules" @success="$emit('success', goBack ? null : $event.result); goBack = false">

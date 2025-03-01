@@ -2,9 +2,9 @@
   <th :style="orderBy ? 'cursor:pointer;' : ''" @click="() => props.orderBy ? $parent.orderBy(props.orderBy) : null">
     <slot />
     <template v-if="orderBy">
-      <BaseIcon v-if="$parent.orderByValue !== orderBy" icon-name="ArrowDownUp" size="14" class="ms-1" />
-      <BaseIcon v-else-if="$parent.orderByValue === orderBy && !$parent.orderByAsc" icon-name="ArrowDownWideNarrow" class="ms-1" size="14" />
-      <BaseIcon v-else-if="$parent.orderByValue === orderBy && $parent.orderByAsc" icon-name="ArrowUpNarrowWide" class="ms-1" size="14" />
+      <BaseIcon v-if="$parent.orderByValue !== orderBy" icon-name="ArrowDownUp" :size="14" class="ms-1" />
+      <BaseIcon v-else-if="$parent.orderByValue === orderBy && !$parent.orderByAsc" icon-name="ArrowDownWideNarrow" class="ms-1" :size="14" />
+      <BaseIcon v-else-if="$parent.orderByValue === orderBy && $parent.orderByAsc" icon-name="ArrowUpNarrowWide" class="ms-1" :size="14" />
     </template>
   </th>
 </template>

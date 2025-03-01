@@ -63,8 +63,8 @@
             <div class="row">
               <BaseCurrencyInput :name="`paymentTypePrices.${index}.price`" wrap="col-lg-3" label="Cena" :currency="currency" :precision="2" :min="0" />
               <BaseCurrencyInput :name="`paymentTypePrices.${index}.priceVat`" wrap="col-lg-3" label="Cena s DPH" :currency="currency" :precision="2" :min="0" />
-<!--              <BaseTextBox :name="`paymentTypePrices.${index}.price`" :validation-errors="pricesErrors?.[index].price" wrap="col-lg-3" label="Cena" type="number" @change="price.priceVat = Math.round(parseInt(price.price) * 1.21)" />-->
-<!--              <BaseTextBox :name="`paymentTypePrices.${index}.priceVat`" :validation-errors="pricesErrors?.[index].priceVat" wrap="col-lg-3" label="Cena s DPH" type="number" />-->
+              <!--              <BaseTextBox :name="`paymentTypePrices.${index}.price`" :validation-errors="pricesErrors?.[index].price" wrap="col-lg-3" label="Cena" type="number" @change="price.priceVat = Math.round(parseInt(price.price) * 1.21)" />-->
+              <!--              <BaseTextBox :name="`paymentTypePrices.${index}.priceVat`" :validation-errors="pricesErrors?.[index].priceVat" wrap="col-lg-3" label="Cena s DPH" type="number" />-->
               <BaseMultiSelect v-model="currency" :name="`paymentTypePrices.${index}.currency`" wrap="col-lg-2" label="Měna" options-url="eshop/currency?property=code" :options-url-params="{method: 'POST', body: {'_op': 'list'}}" />
               <div class="col-lg-1">
                 <label>&nbsp;</label><br>

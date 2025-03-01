@@ -1,5 +1,4 @@
 <template>
-
   <LucideRocket />
   <LucideFolderGit2 color="red" />
   <LucideGithub :size="32" stroke-width="1" />

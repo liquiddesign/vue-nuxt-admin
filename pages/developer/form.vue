@@ -11,124 +11,15 @@
             <!-- Ukázka -->
             <div class="col-md-6">
               <h6>Ukázka formuláře</h6>
-              <BaseForm :name="'exampleForm'" :rules="{ field: { required: true } }" :data="data" @submit.stop="toast.info('Odesilam.')">
-                {{ data }}
-
-                <label for="field" class="form-label">Pole</label>
-                <input v-model="data.field" type="text" class="form-control">
-
-                <button type="submit" class="btn btn-primary">Odeslat</button>
-              </BaseForm>
-
-              <!-- Použití -->
-              <div id="pouziti" class="mt-4">
-                <h6>Použití</h6>
-                <div class="code-example">
-                  <BaseButton class="btn-light btn-xs" @click="select('formExample')">
-                    <BaseIcon icon-name="Copy" />
-                  </BaseButton>
-                  <code :ref="el => setRef('formExample', el)">
-                    {{ `<BaseForm :name="'myForm'" :rules="{ field: { required: true } }" :data="{ field: '' }">
-                    <template>
-                      <div class="mb-3">
-                        <label for="field" class="form-label">Pole</label>
-                        <input id="field" type="text" v-model="field" class="form-control" />
-                      </div>
-                      <button type="submit" class="btn btn-primary">Odeslat</button>
-                    </template>
-                  </BaseForm>` }}
-                  </code>
-                </div>
-              </div>
-            </div>
-
-            <!-- Props -->
-            <div class="col-md-6">
-              <h6>Props</h6>
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Název</th>
-                    <th>Typ</th>
-                    <th>Výchozí hodnota</th>
-                    <th>Popis</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><code>name</code></td>
-                    <td><code>string</code></td>
-                    <td><code>'frm'</code></td>
-                    <td>Název formuláře.</td>
-                  </tr>
-                  <tr>
-                    <td><code>rules</code></td>
-                    <td><code>object</code></td>
-                    <td><code>{}</code></td>
-                    <td>Pravidla pro validaci formuláře.</td>
-                  </tr>
-                  <tr>
-                    <td><code>data</code></td>
-                    <td><code>any</code></td>
-                    <td><code>null</code></td>
-                    <td>Vstupní data formuláře.</td>
-                  </tr>
-                  <tr>
-                    <td><code>wrap</code></td>
-                    <td><code>string</code></td>
-                    <td><code>undefined</code></td>
-                    <td>CSS třída obalu formuláře.</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <!-- Eventy -->
-              <h6 class="mt-4">Eventy</h6>
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Název</th>
-                    <th>Popis</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><code>success</code></td>
-                    <td>Vyvoláno při úspěšném odeslání formuláře.</td>
-                  </tr>
-                  <tr>
-                    <td><code>error</code></td>
-                    <td>Vyvoláno při chybě při odesílání formuláře.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Sekce: BaseForm -->
-  <div id="base-form" class="row mb-4">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="card-title mb-0">BaseForm <small class="ps-1">komponenta pro obal formulářů</small></h5>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <!-- Ukázka -->
-            <div class="col-md-6">
-              <h6>Ukázka formuláře</h6>
-              <BaseForm :name="'exampleForm'" :rules="{ field: { required: true } }" :data="{ field: '' }">
+              <BaseForm ref="form" :name="'exampleForm'" :rules="{ field: { required: true } }" :data="data" @success="alert('a')">
                 <div class="mb-3">
                   <label for="field" class="form-label">Pole</label>
-                  <input id="field" v-model="field" type="text" class="form-control">
+                  <input id="field" v-model="data.field" type="text" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-primary">Odeslat</button>
               </BaseForm>
 
+              DATA: {{ data }}
               <!-- Použití -->
               <div id="pouziti" class="mt-4">
                 <h6>Použití</h6>
@@ -257,7 +148,7 @@
                 </tbody>
               </table>
               <!-- Provide -->
-              <h6 class="mt-4">Provide</h6>
+              <h6 class="mt-4">Provide and expose</h6>
               <table class="table table-striped">
                 <thead>
                   <tr>
@@ -313,11 +204,10 @@
 </template>
 <script setup lang="ts">
 
-import {ToastPluginApi, useToast} from 'vue-toast-notification';
 
 const {select, setRef} = useCopyPaste();
-const toast: ToastPluginApi = inject('toast', useToast());
 
+const form = ref(null);
 const defaultFormData = { field: 'default hodnota'};
 const data:any = ref(Object.assign({}, defaultFormData));
 
