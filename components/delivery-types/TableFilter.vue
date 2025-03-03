@@ -8,15 +8,18 @@
 
     <!-- Tenhle kód bude implementován v budoucnu -->
     <BaseDropdown class="btn-outline-secondary btn-sm me-1" icon-name="Save" title="TODO">
-      <BaseDropdownItem>TODO <BaseIcon icon-name="Globe" class="ms-1 text-black-50" />
+      <BaseDropdownItem>
+        TODO <BaseIcon icon-name="Globe" class="ms-1 text-black-50" />
         <BaseButtonDelete class="btn-xs btn btn" style="position: absolute; right: 10px; z-index: 0" @click.stop.prevent="console.log('áa');" />
       </BaseDropdownItem>
-      <BaseDropdownItem>TODO <BaseIcon icon-name="Globe" class="ms-1 text-black-50" style="top: 1px; padding: 2px; border: 1px solid gray; position: relative" />
+      <BaseDropdownItem>
+        TODO <BaseIcon icon-name="Globe" class="ms-1 text-black-50" style="top: 1px; padding: 2px; border: 1px solid gray; position: relative" />
         <BaseButtonDelete class="btn-xs btn btn" style="position: absolute; right: 10px; z-index: 0" @click.stop.prevent="console.log('áa');" />
       </BaseDropdownItem>
       <BaseDropdownItem>TODO <BaseButtonDelete class="btn-xs btn btn" style="position: absolute; right: 10px; z-index: 0" @click.stop.prevent="console.log('áa');" /></BaseDropdownItem>
       <BaseDropdownItem class="bg-success-subtle">TODO <BaseButtonDelete class="btn-xs btn btn" style="position: absolute; right: 10px; z-index: 0" @click.stop.prevent="console.log('áa');" /></BaseDropdownItem>
-      <BaseDropdownItem>TODO
+      <BaseDropdownItem>
+        TODO
         <div style="position: absolute; right: 10px; z-index: 0">
           <button class="btn-xs btn-outline-secondary btn me-2" @click.stop.prevent="console.log('áa');"><!--v-if--><BaseIcon icon-name="Globe" class="text-black-50" /> </button>
           <BaseButtonDelete class="btn-xs btn-outline-secondary btn" @click.stop.prevent="console.log('áa');" />

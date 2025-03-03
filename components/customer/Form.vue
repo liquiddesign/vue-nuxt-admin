@@ -172,7 +172,6 @@
           <div class="row mt-2">
             <BaseCheckBox name="" wrap="col-lg-8" label="Individuální dodací adresa" />
           </div>
-
         </div>
       </div>
     </div>

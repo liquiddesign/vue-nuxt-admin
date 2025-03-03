@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vue-finder id="my_vuefinder1" :request="request" theme="light" :select-button="handleSelectButton"></vue-finder>
+    <vue-finder id="my_vuefinder1" :request="request" theme="light" :select-button="handleSelectButton" />
   </div>
 </template>
 

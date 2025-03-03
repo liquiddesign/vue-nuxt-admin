@@ -1,9 +1,9 @@
 <template>
   <input ref="el"> {{ unmasked }} | {{ masked }}
 
-  <Save stroke-width="1" size="20" />
+  <Save stroke-width="1" :size="20" />
   <vue-tel-input v-model="test" @on-input="updatePhone" />
-{{ test }} | {{ full }}
+  {{ test }} | {{ full }}
 </template>
 
 <script setup lang="ts">

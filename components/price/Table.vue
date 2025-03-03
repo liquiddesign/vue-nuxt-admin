@@ -1,28 +1,28 @@
 <template>
   <BaseCard wrap="col-lg-12">
     <BaseGrid ref="grid" :url="url" :page="page" :on-page="onPage" :filters="filters" :order="order" @change-order="emit('update:order', $event)">
-<!--      <template v-if="showFilters" #header>-->
-<!--        <tr>-->
-<!--          <BaseGridTh class="minimal" order-by="id">#</BaseGridTh>-->
-<!--          <BaseGridTh class="" order-by="product">Kód</BaseGridTh>-->
-<!--          <BaseGridTh order-by="product">Název</BaseGridTh>-->
-<!--          <BaseGridTh class="minimal" order-by="price">Cena</BaseGridTh>-->
-<!--          <BaseGridTh class="minimal" order-by="priceVat">Cena s DPH</BaseGridTh>-->
-<!--          <BaseGridTh class="minimal" order-by="priceBefore">Cena před slevou</BaseGridTh>-->
-<!--          <BaseGridTh class="minimal" order-by="priceVatBefore">Cena s DPH před slevou</BaseGridTh>-->
-<!--          <BaseGridTh class="minimal" order-by="hidden"><BaseIcon icon-name="EyeOff" /></BaseGridTh>-->
-<!--        </tr>-->
-<!--      </template>-->
+      <!--      <template v-if="showFilters" #header>-->
+      <!--        <tr>-->
+      <!--          <BaseGridTh class="minimal" order-by="id">#</BaseGridTh>-->
+      <!--          <BaseGridTh class="" order-by="product">Kód</BaseGridTh>-->
+      <!--          <BaseGridTh order-by="product">Název</BaseGridTh>-->
+      <!--          <BaseGridTh class="minimal" order-by="price">Cena</BaseGridTh>-->
+      <!--          <BaseGridTh class="minimal" order-by="priceVat">Cena s DPH</BaseGridTh>-->
+      <!--          <BaseGridTh class="minimal" order-by="priceBefore">Cena před slevou</BaseGridTh>-->
+      <!--          <BaseGridTh class="minimal" order-by="priceVatBefore">Cena s DPH před slevou</BaseGridTh>-->
+      <!--          <BaseGridTh class="minimal" order-by="hidden"><BaseIcon icon-name="EyeOff" /></BaseGridTh>-->
+      <!--        </tr>-->
+      <!--      </template>-->
       <template v-if="showFilters" #filters>
         <tr>
-          <BaseGridTh class=""></BaseGridTh>
+          <BaseGridTh class="" />
           <BaseGridTh class=""><BaseHeaderFilter v-model="filters" name="f-product" placeholder="Kód" field-type="text" text-type="text" /></BaseGridTh>
           <BaseGridTh><BaseHeaderFilter v-model="filters" name="f-product" placeholder="Název" field-type="text" text-type="text" /></BaseGridTh>
-          <BaseGridTh class=""></BaseGridTh>
-          <BaseGridTh class=""></BaseGridTh>
-          <BaseGridTh class=""></BaseGridTh>
-          <BaseGridTh class=""></BaseGridTh>
-          <BaseGridTh class=""></BaseGridTh>
+          <BaseGridTh class="" />
+          <BaseGridTh class="" />
+          <BaseGridTh class="" />
+          <BaseGridTh class="" />
+          <BaseGridTh class="" />
         </tr>
       </template>
       <template #body="{item, updateRow}">
@@ -37,9 +37,9 @@
           <td class="minimal"><BaseCheckBox v-model="item.hidden" @change="(e) => updateRow(e.target.checked, 'hidden')" /></td>
         </tr>
       </template>
-<!--      <template #footer>-->
-<!--        <BaseGridPaginator wrap="flex-shrink-0" :url="url" :page="page" :on-page="onPage" :filters="filters" @change-page="emit('update:page', $event)" @change-on-page="emit('update:onPage', $event); page = 1;" />-->
-<!--      </template>-->
+      <!--      <template #footer>-->
+      <!--        <BaseGridPaginator wrap="flex-shrink-0" :url="url" :page="page" :on-page="onPage" :filters="filters" @change-page="emit('update:page', $event)" @change-on-page="emit('update:onPage', $event); page = 1;" />-->
+      <!--      </template>-->
     </BaseGrid>
   </BaseCard>
 </template>

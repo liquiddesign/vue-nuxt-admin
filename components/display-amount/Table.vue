@@ -4,7 +4,7 @@
       <tr>
         <BaseGridThSelect />
         <BaseGridTh />
-        <BaseGridTh order-by="label"><BaseFlag :lang="lang"/> Popisek</BaseGridTh>
+        <BaseGridTh order-by="label"><BaseFlag :lang="lang" /> Popisek</BaseGridTh>
         <BaseGridTh order-by="isSold">Vyprodáno</BaseGridTh>
         <BaseGridTh class="minimal" order-by="priority">Priorita</BaseGridTh>
         <BaseGridTh><BaseGridThSettings /></BaseGridTh>

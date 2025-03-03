@@ -14,7 +14,7 @@
     </template>
     <template #headerRight>
       <BaseLiveUsers class="me-2" />
-      <BaseDropdown class="btn-outline-primary btn-sm me-1" icon-name="Zap">
+      <BaseDropdown class="btn-outline-primary btn-sm me-1" icon-name="SquareMenu">
         <BaseDropdownItem>Hromadná akce</BaseDropdownItem>
       </BaseDropdown>
     </template>

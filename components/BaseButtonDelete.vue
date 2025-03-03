@@ -9,7 +9,7 @@
       </div>
     </template>
   </Popper>
-  <BaseButton v-else v-bind="$attrs" class="btn"><BaseIcon icon-name="Trash2" /> <slot /></BaseButton>
+  <BaseButton v-else v-bind="$attrs" class="btn"><BaseIcon icon-name="Trash2" :size="14" /> <slot /></BaseButton>
 </template>
 
 <script setup lang="ts">

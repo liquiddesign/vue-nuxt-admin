@@ -56,7 +56,7 @@
       </div>
 
       <div class="col-lg-8 ps-5">
-<!--        <h5 class="card-title">CENY</h5>-->
+        <!--        <h5 class="card-title">CENY</h5>-->
         <div class="row d-flex justify-content-between">
           <div class="col-xl-6 col-lg-12">
             <BaseTabs :active="activeTab" :tabs="{'price': 'Ceny ceníku', 'quantity-price': 'Množstevní ceny ceníku'}" @select="activeTab = $event" />

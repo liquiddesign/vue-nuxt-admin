@@ -1,5 +1,5 @@
 <template>
-  <BasePageHeader title="Štítky" description="Administrace štítků" icon="Tags">
+  <BasePageHeader title="Interní štítky" description="Slouží k označování položek v administraci pro jednuduší filtrace a přehlednost" icon="Tags">
     <BaseButtonNew class="btn-sm" @click="navigateTo({ name: 'internal-ribbon-new'})">Přidat štítek</BaseButtonNew>
   </BasePageHeader>
   <BaseCard wrap="col-lg-12">

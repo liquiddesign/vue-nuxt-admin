@@ -11,7 +11,8 @@
           <BaseTextBox name="symbol" wrap="col-lg-4" label="Symbol" type="text" />
         </div>
         <div class="row mt-3">
-          <BaseCheckBox name="isVirtual">Virtuální měna
+          <BaseCheckBox name="isVirtual">
+            Virtuální měna
             <small class="ps-1 text-secondary">
               <BaseFormRowInfo :size="18">Jako měnu můžete přidat například kredity nebo jiné alternativní jednotky</BaseFormRowInfo>
             </small>
@@ -19,7 +20,8 @@
         </div>
 
         <div class="row mt-3">
-          <BaseCheckBox name="cashback">Povolit odměny
+          <BaseCheckBox name="cashback">
+            Povolit odměny
             <small class="ps-1 text-secondary">
               <BaseFormRowInfo :size="18">U produktů budete moci nastavit výši odměny v této měně</BaseFormRowInfo>
             </small>

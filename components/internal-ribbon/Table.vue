@@ -3,7 +3,7 @@
     <template #header>
       <tr>
         <BaseGridThSelect />
-        <BaseGridTh order-by="id">#</BaseGridTh>
+        <BaseGridTh class="minimal" order-by="id">#</BaseGridTh>
         <BaseGridTh class="minimal">
           <BaseButtonFilter v-if="!showFilters" class="btn-xs" :show-filters="showFilters" @click="showFilters = !showFilters" />
           <BaseButtonFilterDelete v-if="showFilters" class="btn-xs" @click="clearFilters(); showFilters = !showFilters;" />
@@ -26,7 +26,7 @@
           <BaseHeaderFilter name="f-color" field-type="custom">
             <BaseColorPicker v-model="filters['f-color']" name="f-color" style="width: 30px" />
             <BaseButtonFilter :class="filters['f-color'] ? 'active' : 'btn-outline-secondary disabled'" />
-            <BaseButtonFilterDelete class="flex-shrink-0" :disabled="!filters['f-color']" @click="delete(filters['f-color']);" />
+            <BaseButtonFilterCancel class="flex-shrink-0" :disabled="!filters['f-color']" @click="delete(filters['f-color']);" />
           </BaseHeaderFilter>
         </BaseGridTh>
         <BaseGridTh class="minimal" />
@@ -40,8 +40,8 @@
         <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'internal-ribbon-id', params: { id: item.uuid }})" /></td>
         <td>{{ item.name ?? '-' }}</td>
         <td>{{ item.type ?? '-' }}</td>
-        <td class="minimal"><BaseColorPicker :model-value="item.color" disabled /></td>
-        <td class="minimal"><BaseColorPicker :model-value="item.backgroundColor" disabled /></td>
+        <td class="minimal"><BaseColorPicker :model-value="item.color" /></td>
+        <td class="minimal"><BaseColorPicker :model-value="item.backgroundColor" /></td>
         <td class="minimal"><BaseButtonDelete class="btn-xs btn-danger" :confirmation="true" @confirm="deleteRow();" /></td>
       </tr>
     </template>
