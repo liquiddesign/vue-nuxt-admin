@@ -29,6 +29,7 @@ export default defineNuxtConfig({
           wsURL: process.env.NUXT_WS_URL,
           userFilesURL: process.env.NUXT_USERFILES_URL,
           cloudManager: process.env.NUXT_CLOUDMANAGER,
+          googleApiKey: process.env.GOOGLE_API_KEY,
       },
   },
 

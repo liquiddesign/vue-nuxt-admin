@@ -11,7 +11,7 @@
 <!--    </Draggable>-->
     <div class="base-grid">
       <div class="table-responsive" style="overflow: initial;" v-bind="$attrs">
-        <Draggable v-model="newCategoriesData" class="mtl-tree" table>
+        <Draggable v-model="newCategoriesData" class="table table-sm table-striped" table>
           <template #prepend>
             <thead>
               <tr>
@@ -24,7 +24,7 @@
             </thead>
           </template>
           <template #default="{ node, stat }">
-            <td>
+            <td class="minimal">
               <OpenIcon v-if="stat.children.length" :open="stat.open" class="mtl-mr" @click.native="stat.open = !stat.open" />
             </td>
             <td>
@@ -33,11 +33,11 @@
             <td>
               <span class="mtl-ml">{{ node.name.cs }}</span>
             </td>
-            <td>
+            <td class="minimal">
               <BaseButtonEdit />
             </td>
-            <td>
-              <BaseButtonDelete />
+            <td class="minimal">
+              <BaseButtonDelete class="btn-sm btn-danger" />
             </td>
           </template>
         </Draggable>
@@ -49,6 +49,7 @@
 <script setup lang='ts'>
 import { Draggable, OpenIcon } from '@he-tree/vue';
 import '@he-tree/vue/style/default.css';
+import '@he-tree/vue/style/material-design.css';
 
 const newCategoriesData: Ref<any[]> = ref([]);
 

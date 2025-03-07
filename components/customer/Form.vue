@@ -10,6 +10,12 @@
           <BaseTextBox name="company" wrap="col-lg-8" label="Firma" type="text" />
         </div>
         <div class="row mt-2">
+          <BaseAddress wrap="col-lg-8" name="billAddress" label="Adresa Fakt." el-id="billStreet" />
+        </div>
+        <div class="row mt-2">
+          <BaseAddress wrap="col-lg-8" name="deliveryAddress" label="Adresa Doruč." el-id="deliveryStreet" />
+        </div>
+        <div class="row mt-2">
           <BaseTextBox name="ic" wrap="col-lg-8" label="IČ" type="text" />
         </div>
         <div class="row mt-2">

@@ -3,7 +3,7 @@
     <label v-if="label !== null" :for="$attrs['id']">
       <span v-if="((form && form.lang) || lang) && locale" class="pe-1"><BaseFlag :lang="form && form.lang.value ? form.lang.value : lang" /></span>{{ label }}
     </label>
-    <input v-bind="$attrs" class="form-control form-control-sm" :class="classes" :type="type === 'float' ? 'number' : type" :step="type === 'float' ? 0.01 : 1" :value="form && name ? _get(form.data.value, name) : modelValue" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange">
+    <input v-bind="$attrs" :id="id" class="form-control form-control-sm" :class="classes" :type="type === 'float' ? 'number' : type" :step="type === 'float' ? 0.01 : 1" :value="form && name ? _get(form.data.value, name) : modelValue" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange">
 
     <template v-if="validationErrors !== undefined">
       <div v-for="(error, index) in (validationErrors)" :key="index" class="text-danger">
@@ -26,6 +26,7 @@ const form: any = inject('form', null) as any;
 
 const props = withDefaults(defineProps<{
   label?: string|null
+  id?: string|undefined,
   lang?: string
   locale?: boolean
   wrap?: string
@@ -35,7 +36,7 @@ const props = withDefaults(defineProps<{
   modelValue?: string|number|null,
   validation?: BaseValidation
   validationErrors?: ErrorObject[]
-}>(), { type: 'text', wrap: undefined, label: null, lang: undefined, locale: false, nullable: false, name: undefined, modelValue: undefined, validation: undefined, validationErrors: undefined });
+}>(), { type: 'text', wrap: undefined, label: null, id: '', lang: undefined, locale: false, nullable: false, name: undefined, modelValue: undefined, validation: undefined, validationErrors: undefined });
 
 defineOptions({
   inheritAttrs: false,
