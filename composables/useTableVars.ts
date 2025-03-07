@@ -26,7 +26,7 @@ export const useTableVars = (): {
 
     const { settings } = useUser();
     const filters = ref<Record<string, LocationQueryValue | LocationQueryValue[]>>(filterQuery);
-    const showFilters = ref(false);
+    const showFilters = ref(!isEmpty(filters.value));
     const lang = ref<string>(settings.value.defaultLang);
     const currency = ref<string>(settings.value.defaultCurrency);
     const currencies = ref<string[]>(settings.value.currencies);
