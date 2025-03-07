@@ -1,11 +1,11 @@
 <template>
-  <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
+  <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar" :class="{'closed-sidebar': isClosed}">
     <div class="app-header header-shadow bg-night-sky header-text-light">
       <div class="app-header__logo">
         <img src="https://www.lqd.cz/public/images/logo-white.svg" alt="" loading="lazy" height="33">
         <div class="header__pane ms-auto">
           <div>
-            <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+            <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" :class="{'is-active': isClosed}" data-class="closed-sidebar" @click="isClosed = !isClosed">
               <span class="hamburger-box">
                 <span class="hamburger-inner" />
               </span>
@@ -100,5 +100,5 @@
   </div>
 </template>
 <script setup lang="ts">
-
+const isClosed: Ref<boolean> = ref(false);
 </script>
