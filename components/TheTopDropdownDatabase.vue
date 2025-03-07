@@ -1,9 +1,10 @@
 <template>
   <div class="dropdown">
     <button type="button" aria-haspopup="true" data-bs-toggle="dropdown" aria-expanded="false" class="p-0 btn btn-link dd-chart-btn me-2">
-      <span class="icon-wrapper icon-wrapper-alt rounded-circle bg-light-subtle">
-        <span class="icon-wrapper-bg" />
-        <BaseIcon icon-name="Database" :size="24" />
+      <span class="icon-wrapper icon-wrapper-alt rounded-circle">
+        <span class="icon-wrapper-bg bg-danger" style="padding-top: 10px;">
+          <BaseIcon icon-name="Database" color="white" :size="24" />
+        </span>
       </span>
     </button>
     <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu dropdown-menu-right" style="">
