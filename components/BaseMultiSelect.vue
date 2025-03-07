@@ -127,4 +127,9 @@ function customLabel(key: string)
 
 const {validationObject, classes} = useFormValidation(form, props);
 
+watch(() => props.options,
+    (newVal) => {
+      options.value = newVal;
+    }
+);
 </script>

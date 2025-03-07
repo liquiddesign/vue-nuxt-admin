@@ -5,5 +5,10 @@
   "nested": {
     "pes": "ves",
     "test": "test2"
+  },
+  "internalRibbonTypes": {
+    "product": "produkt",
+    "order": "objednávka",
+    "price_list": "ceník"
   }
 }

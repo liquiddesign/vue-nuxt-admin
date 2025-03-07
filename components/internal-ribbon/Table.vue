@@ -39,7 +39,7 @@
         <td class="minimal">{{ item.id }}  ☰</td>
         <td class="minimal"><BaseButtonEdit class="btn-xs" @click="navigateTo({name: 'internal-ribbon-id', params: { id: item.uuid }})" /></td>
         <td>{{ item.name ?? '-' }}</td>
-        <td>{{ item.type ?? '-' }}</td>
+        <td>{{ $t(`internalRibbonTypes.${item.type}`, {name: 'vue-i18n'}) ?? '-' }}</td>
         <td class="minimal"><BaseColorPicker :model-value="item.color" /></td>
         <td class="minimal"><BaseColorPicker :model-value="item.backgroundColor" /></td>
         <td class="minimal"><BaseButtonDelete class="btn-xs btn-danger" :confirmation="true" @confirm="deleteRow();" /></td>
@@ -53,6 +53,7 @@
 
 <script setup lang="ts">
 import type {GridOrder} from '~/composables/useTableVars';
+import {useI18n} from 'vue-i18n';
 
 withDefaults(defineProps<{
   filters?: any | null,
@@ -64,10 +65,11 @@ withDefaults(defineProps<{
 const url: string = '/eshop/internal-ribbon';
 const emit = defineEmits(['update:page', 'update:onPage', 'update:order', 'clear']);
 const { filters, clearFilters, showFilters } = useTableVars();
+const { t } = useI18n();
 
-const typeOptions = {
-  product: 'product',
-  order: 'order',
-  price_list: 'price_list',
-};
+const typeOptions: ComputedRef<any> = computed(() => ({
+  product: t('internalRibbonTypes.product', { name: 'vue-i18n' }),
+  order: t('internalRibbonTypes.order', { name: 'vue-i18n' }),
+  price_list: t('internalRibbonTypes.price_list', { name: 'vue-i18n' }),
+}));
 </script>
