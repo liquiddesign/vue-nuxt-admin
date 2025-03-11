@@ -1,14 +1,5 @@
 <template>
   <div>
-<!--    <Draggable class="mtl-tree" v-model="newCategoriesData" tree-line>-->
-<!--      <template #default="{ node, stat }">-->
-<!--        <OpenIcon v-if="stat.children.length" :open="stat.open" class="mtl-mr" @click.native="stat.open = !stat.open" />-->
-<!--        <input class="mtl-checkbox mtl-mr" type="checkbox" v-model="stat.checked">-->
-<!--        <span class="mtl-ml">{{ node.name.cs }}</span>-->
-<!--        <BaseButtonEdit />-->
-<!--        <BaseButtonDelete />-->
-<!--      </template>-->
-<!--    </Draggable>-->
     <BasePageHeader title="Tree Manager Test" icon="ListTree" description="Tree Manager Test" />
 
     <BaseCard v-if="newCategoriesData.length > 0" wrap="col-lg-12">
@@ -21,37 +12,42 @@
       <template #body>
         <div class="base-grid">
           <div class="table-responsive" style="overflow: initial;" v-bind="$attrs">
-            <Draggable v-model="newCategoriesData" table class="table table-sm table-striped">
-              <template #prepend>
-                <thead>
-                  <tr>
-                    <BaseGridTh class="minimal" />
-                    <BaseGridThSelect />
-                    <BaseGridTh />
-                    <BaseGridTh class="minimal">Edit</BaseGridTh>
-                    <BaseGridTh class="minimal">Delete</BaseGridTh>
-                  </tr>
-                </thead>
-              </template>
+            <table class="table table-sm table-striped">
+              <Draggable v-model="newCategoriesData" tree-line>
+                <template #prepend>
+                  <thead class="p-0">
+                    <tr>
+                      <BaseGridTh style="width: 25px" />
+                      <BaseGridThSelect />
+                      <BaseGridTh class="ps-2">Název</BaseGridTh>
+                      <BaseGridTh class="minimal">Edit</BaseGridTh>
+                      <BaseGridTh class="minimal">Delete</BaseGridTh>
+                    </tr>
+                  </thead>
+                </template>
 
-              <template #default="{ node, stat }">
-                <td>
-                  <OpenIcon v-if="stat.children.length" :open="stat.open" class="mtl-mr" @click="() => {stat.open = !stat.open; console.log('stat - node', stat, node)}" />
-                </td>
-                <td :style="{ paddingLeft: `${stat.level * 20}px` }">
-                  <input v-model="stat.checked" class="mtl-checkbox mtl-mr" type="checkbox">
-                </td>
-                <td>
-                  {{ node.name[lang] }}
-                </td>
-                <td class="minimal">
-                  <BaseButtonEdit />
-                </td>
-                <td class="minimal">
-                  <BaseButtonDelete class="btn-sm btn-danger" />
-                </td>
-              </template>
-            </Draggable>
+                <template #default="{ node, stat }">
+                  <tbody>
+                    <tr>
+                      <td style="width: 25px">
+                        <OpenIcon v-if="stat.children.length" :open="stat.open" class="mtl-mr disabled" @click="() => {stat.open = !stat.open; console.log('stat - node', stat, node)}" />
+                      </td>
+                      <td>
+<!--                      <td :style="{ paddingLeft: `${stat.level * 20}px` }">-->
+                        <input v-model="stat.checked" class="mtl-checkbox mtl-mr" type="checkbox">
+                        {{ node.name[lang] }}
+                      </td>
+                      <td class="minimal">
+                        <BaseButtonEdit class="btn btn-xs" />
+                      </td>
+                      <td class="minimal">
+                        <BaseButtonDelete class="btn-xs btn-danger" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </Draggable>
+            </table>
           </div>
         </div>
       </template>
