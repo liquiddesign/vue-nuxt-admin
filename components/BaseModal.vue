@@ -46,5 +46,5 @@
     myModal?.hide();
   }
 
-  defineExpose({ open } );
+  defineExpose({ open, close } );
 </script>

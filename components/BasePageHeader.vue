@@ -7,9 +7,9 @@
         </div>
         <div>
           {{ title }}
-          <div class="user-avatar bg-secondary" style="display: inline-flex; width: 20px; position: relative;">
+          <button type="button" class="p-0 btn btn-sm btn-secondary user-avatar" style="display: inline-flex; width: 20px; position: relative;" @click="$refs.allRoles.open();">
             <BaseIcon icon-name="LockKeyhole" :size="11" :stroke-width="2" />
-          </div>
+          </button>
           <div v-if="description" class="page-title-subheading">{{ description }}</div>
         </div>
       </div>
@@ -18,9 +18,43 @@
       </div>
     </div>
   </div>
+
+  <BaseModal ref="allRoles" :title="`Nastevení přístupu k modulu ${title}`" :display-footer="false">
+    <template #body>
+      <span class="mx-5">
+        Vyberte role, které mají přístup k modulu
+      </span>
+      <br>
+      <template v-if="error">
+        <span class="text-danger">{{ error.message }}</span>
+      </template>
+      <template v-else>
+        <div class="form-wrapper-light mt-2 mx-5">
+          <div class="p-3">
+            <h5><BaseCheckBox label="Vyberte vše" :model-value="isAllRolesChecked()" @change="toggleAllRoles($event.target.checked)" /></h5>
+            <div v-for="role in roles" :key="role.uuid">
+              <h6 class="ms-3"><BaseCheckBox v-model="role.permissions[currentRoute]" :label="role.name" /></h6>
+            </div>
+            <div class="mt-5">
+              <BaseButton class="btn-success btn-lg me-1" @click="savePermissions(); $refs.allRoles.close();">Uložit</BaseButton>
+            </div>
+          </div>
+        </div>
+      </template>
+    </template>
+  </BaseModal>
 </template>
 
 <script setup lang="ts">
+import {inject, ref} from 'vue';
+import {ToastPluginApi, useToast} from 'vue-toast-notification';
+
+const url = 'roles';
+const router = useRouter();
+const toast: ToastPluginApi = inject('toast', useToast());
+const { data, pending, error } = useApiFetch(url);
+const currentRoute = router.currentRoute.value.name ?? '';
+const roles: Ref<any[]> = ref([]);
 
 defineProps<{
   title: string
@@ -28,4 +62,51 @@ defineProps<{
   icon: string
 }>();
 
+
+watch(data, (newData: any) => {
+  roles.value = newData.items;
+  setPermissionType();
+});
+
+function setPermissionType() {
+  if (!error.value && roles?.value) {
+    for (const uuid in roles.value) {
+      const role: any = roles.value[uuid];
+      if (!role?.permissions) {
+        role.permissions = { [currentRoute] : false };
+      } else if (role?.permissions && !role?.permissions?.[currentRoute]) {
+        role.permissions[currentRoute] = false;
+      }
+    }
+  }
+}
+
+function toggleAllRoles(checked: boolean) {
+  for (const uuid in roles.value) {
+    roles.value[uuid].permissions[currentRoute] = checked;
+  }
+}
+
+const isAllRolesChecked = (): boolean => {
+  for (const uuid in roles.value) {
+    if (!roles.value[uuid].permissions[currentRoute]) {
+      return false;
+    }
+  }
+  return true;
+};
+
+function savePermissions() {
+  apiFetch(url, {body: roles.value, method: 'PATCH'})
+      .then(() => {
+        toast.success('Uloženo');
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(error.message);
+      })
+      .finally(() => {
+        pending.value = false;
+      });
+}
 </script>
