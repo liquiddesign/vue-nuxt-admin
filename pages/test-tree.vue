@@ -13,7 +13,7 @@
         <div class="base-grid">
           <div class="table-responsive" style="overflow: initial;" v-bind="$attrs">
             <table class="table table-sm table-striped">
-              <Draggable v-model="newCategoriesData" tree-line>
+              <Draggable v-model="newCategoriesData" tree-line :tree-line-offset="30">
                 <template #prepend>
                   <thead class="p-0">
                     <tr>
@@ -33,7 +33,6 @@
                         <OpenIcon v-if="stat.children.length" :open="stat.open" class="mtl-mr disabled" @click="() => {stat.open = !stat.open; console.log('stat - node', stat, node)}" />
                       </td>
                       <td>
-<!--                      <td :style="{ paddingLeft: `${stat.level * 20}px` }">-->
                         <input v-model="stat.checked" class="mtl-checkbox mtl-mr" type="checkbox">
                         {{ node.name[lang] }}
                       </td>
@@ -115,3 +114,8 @@ watch(categories, (newValue) => {
 });
 
 </script>
+<style>
+.vtlist-inner div.tree-node:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+</style>
