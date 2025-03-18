@@ -21,26 +21,27 @@
 
   <BaseModal ref="allRoles" :title="`Nastevení přístupu k modulu ${title}`" :display-footer="false">
     <template #body>
-      <span class="mx-5">
-        Vyberte role, které mají přístup k modulu
-      </span>
-      <br>
-      <template v-if="error">
-        <span class="text-danger">{{ error.message }}</span>
-      </template>
-      <template v-else>
-        <div class="form-wrapper-light mt-2 mx-5">
-          <div class="p-3">
-            <h5><BaseCheckBox label="Vyberte vše" :model-value="isAllRolesChecked()" @change="toggleAllRoles($event.target.checked)" /></h5>
+      <div class="mx-5">
+        <span>
+          Vyberte role, které mají přístup k modulu
+        </span>
+        <br>
+        <template v-if="error">
+          <span class="text-danger">{{ error.message }}</span>
+        </template>
+        <template v-else>
+          <div class="row mt-3">
             <div v-for="role in roles" :key="role.uuid">
-              <h6 class="ms-3"><BaseCheckBox v-model="role.permissions[currentRoute]" :label="role.name" /></h6>
+              <h6 class=""><BaseCheckBox v-model="role.permissions[currentRoute]" :label="role.name" /></h6>
             </div>
-            <div class="mt-5">
+          </div>
+          <div class="row mt-5">
+            <div class="col-lg-6">
               <BaseButton class="btn-success btn-lg me-1" @click="savePermissions(); $refs.allRoles.close();">Uložit</BaseButton>
             </div>
           </div>
-        </div>
-      </template>
+        </template>
+      </div>
     </template>
   </BaseModal>
 </template>
