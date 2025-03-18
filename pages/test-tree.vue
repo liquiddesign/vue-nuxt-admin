@@ -115,7 +115,7 @@ watch(categories, (newValue) => {
 
 </script>
 <style>
-.vtlist-inner div.tree-node:nth-child(odd) {
+.vtlist-inner div.tree-node:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.05);
 }
 </style>
