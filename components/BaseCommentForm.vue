@@ -1,5 +1,4 @@
 <template>
-  <h5 class="card-title">KOMUNIKACE</h5>
   <div class="row">
     <BaseTextArea v-model="newComment.content" wrap="col-lg-12" label="" />
   </div>

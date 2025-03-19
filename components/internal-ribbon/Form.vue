@@ -17,6 +17,7 @@
       </div>
 
       <div class="col-lg-6 ps-5">
+        <h5 class="card-title">KOMUNIKACE</h5>
         <BaseCommentForm :comments="comments" />
       </div>
     </div>
