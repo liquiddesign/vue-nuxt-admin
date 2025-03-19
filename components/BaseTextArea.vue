@@ -3,7 +3,7 @@
     <label v-if="label !== null" :for="$attrs['id']">
       <span v-if="((form && form.lang.value) || lang) && locale" class="pe-1"><BaseFlag :lang="form && form.lang.value ? form.lang.value : lang" /></span>{{ label }}
     </label>
-    <textarea v-bind="$attrs" class="form-control form-control-sm" :class="classes" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" v-html="form && name ? _get(form.data.value, name) : modelValue" />
+    <textarea v-bind="$attrs" class="form-control form-control-sm" :class="classes" :disabled="form?.disabled.value || $attrs['disabled']" @input="onChange" :value="form && name ? _get(form.data.value, name) : modelValue" />
     <template v-if="validationObject?.$errors">
       <div v-for="(error, index) in validationObject?.$errors" :key="index" class="text-danger">
         {{ error.$message }}
