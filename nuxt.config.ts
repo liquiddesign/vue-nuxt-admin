@@ -1,13 +1,21 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['nuxt-lodash', 'nuxt-lucide-icons'],
+  modules: ['nuxt-lodash', 'nuxt-lucide-icons', 'floating-vue/nuxt'],
 
   typescript: {
       strict: true,
   },
 
   ssr: false,
-  css: ['bootstrap/dist/css/bootstrap.min.css', '@/assets/css/base.css', '@/assets/css/adds.css', '@/assets/css/toaster.css', '@/assets/css/popper.css', '@/assets/css/multiselect.css'],
+  css: [
+    'bootstrap/dist/css/bootstrap.min.css',
+    '@/assets/css/base.css',
+    '@/assets/css/adds.css',
+    '@/assets/css/toaster.css',
+    '@/assets/css/popper.css',
+    '@/assets/css/multiselect.css',
+    'floating-vue/dist/style.css',
+  ],
 
   app: {
       head: {

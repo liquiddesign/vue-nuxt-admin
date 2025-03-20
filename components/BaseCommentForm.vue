@@ -1,6 +1,19 @@
 <template>
   <div class="row">
-    <BaseTextArea v-model="newComment.content" wrap="col-lg-12" label="" />
+    <Mentionable :keys="['@']" :items="admins" :offset="6" insert-space dropdown-class="mention-dropdown" @apply="onMentionApply">
+      <BaseTextArea v-model="newComment.content" class="form-control form-control-sm" placeholder="Pro zmínění administrátora použijte znak @ spolu s přezdívkou" />
+      <template #no-result>
+        <div class="dim">
+          Nenalezeno
+        </div>
+      </template>
+      <template #item="{ item }">
+        <div class="mention-user">
+          {{ item.firstName }} {{ item.surname }}
+          <span class="fs-sm">&nbsp;({{ item.nickname }})</span>
+        </div>
+      </template>
+    </Mentionable>
   </div>
   <div class="row mt-3 justify-content-between">
     <div class="w-auto">
@@ -48,7 +61,8 @@
 </template>
 
 <script setup lang="ts">
-import {doubleFormat} from '~/utils/helpers';
+import { doubleFormat } from '~/utils/helpers';
+import { Mentionable } from 'vue-mention';
 
 const props = defineProps({
   comments: {type: Object, default: null},
@@ -73,12 +87,54 @@ const newCommentDefault: Ref<any> = ref({
 });
 
 const newComment: Ref<any> = ref(Object.assign({}, newCommentDefault.value));
+const newMentions: Ref<any[]> = ref([]);
+
+const { administrators } = usePrefetchedData();
+const admins: ComputedRef = computed(() => {
+  const items: Ref<any[]> = ref([]);
+  const newAdmins = Object.values(administrators ?? {});
+  newAdmins.forEach((administrator: any) => items.value.push({
+    uuid: administrator.uuid,
+    value: administrator.nickname,
+    firstName: administrator.name,
+    surname: administrator.surname,
+    nickname: administrator.nickname,
+    image: administrator.imageName,
+  }));
+
+  items.value.push({
+    uuid: '624aee9b4217111591666294',
+    value: 'OP-ak',
+    firstName: 'account',
+    surname: 'admin',
+    nickname: 'OP-ak',
+    image: null,
+  });
+
+  return items.value;
+});
+
+const onMentionApply = (item: any) => {
+  const mentionLink = `<a href="/administrators/${item.uuid}">${item.firstName} ${item.surname}</a>`;
+  newMentions.value.push({
+    item: item,
+    link: mentionLink,
+  });
+};
 
 function saveComment() {
-  if (newComment.value.content) {
+  if (newComment.value.content.trim()) {
     const newDate = new Date();
     newComment.value.created = newDate.getFullYear() + '-' + doubleFormat(newDate.getMonth() + 1) + '-' + doubleFormat(newDate.getDate()) +
         ' ' + doubleFormat(newDate.getHours()) + ':' + doubleFormat(newDate.getMinutes()) + ':' + doubleFormat(newDate.getSeconds());
+
+    if (newMentions.value?.length > 0) {
+      for (const mentionIndex in newMentions.value) {
+        const mention = newMentions.value[mentionIndex];
+        newComment.value.content = newComment.value.content.replace(`@${mention.item.nickname}`, mention.link);
+      }
+      newMentions.value = [];
+    }
 
     props.comments.push(newComment.value);
     resetNewComment();
