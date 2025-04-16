@@ -1,6 +1,5 @@
 <template>
   <BaseForm ref="form" :data="mainData" :lang="lang" @success="() => {console.log(mainData)}">
-    {{ mainData }}
     <div class="row">
       <div class="col-lg-6">
         <h5 class="card-title">Slevy a daně</h5>

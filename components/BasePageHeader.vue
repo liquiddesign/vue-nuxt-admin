@@ -21,7 +21,7 @@
 
   <BaseModal ref="allRoles" :title="`Nastevení přístupu k modulu ${title}`" :display-footer="false">
     <template #body>
-      <div class="mx-5">
+      <div>
         <span>
           Vyberte role, které mají přístup k modulu
         </span>
@@ -35,7 +35,7 @@
               <h6 class=""><BaseCheckBox v-model="role.permissions[currentRoute]" :label="role.name" /></h6>
             </div>
           </div>
-          <div class="row mt-5">
+          <div class="row mt-3">
             <div class="col-lg-6">
               <BaseButton class="btn-success btn-lg me-1" @click="savePermissions(); $refs.allRoles.close();">Uložit</BaseButton>
             </div>
