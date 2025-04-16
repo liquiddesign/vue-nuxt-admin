@@ -55,7 +55,7 @@ withDefaults(defineProps<{
   order: GridOrder,
 }>(), {  });
 
-const url: string = 'eshop/price';
+const url: string = 'eshop/price?expand=pricelist';
 // const url: string = 'eshop/price?expand=product';
 const emit = defineEmits(['update:page', 'update:onPage', 'update:order']);
 const { filters } = useTableVars();
