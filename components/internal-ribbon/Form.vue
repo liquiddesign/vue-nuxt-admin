@@ -14,6 +14,9 @@
         <div class="row mt-2">
           <BaseColorPicker wrap="col-lg-12" name="backgroundColor" label="Barva pozadí" />
         </div>
+        <div class="row mt-2">
+          <BaseTreePicker wrap="col-lg-12" name="category" label="Kategorie" />
+        </div>
       </div>
 
       <div class="col-lg-6 ps-5">
@@ -34,6 +37,7 @@
 
 import {RouteParamValue} from 'vue-router';
 import {required} from '@vuelidate/validators';
+import BaseTreePicker from '~/components/BaseTreePicker.vue';
 
 withDefaults(defineProps<{
   url: string,
