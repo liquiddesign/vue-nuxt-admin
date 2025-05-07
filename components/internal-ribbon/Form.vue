@@ -15,7 +15,7 @@
           <BaseColorPicker wrap="col-lg-12" name="backgroundColor" label="Barva pozadí" />
         </div>
         <div class="row mt-2">
-          <BaseTreePicker wrap="col-lg-12" name="category" label="Kategorie" />
+          <BaseTreePicker wrap="col-lg-12" name="category" label="Kategorie" url-tree="eshop/category/?expand=ancestor&onpage=200" />
         </div>
       </div>
 

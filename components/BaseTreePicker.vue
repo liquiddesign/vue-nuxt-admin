@@ -24,7 +24,7 @@
 
   <BaseModal ref="treePicker" :title="label" :display-footer="false">
     <template #body>
-      12345
+      <BaseTreeTable :url-tree="urlTree" />
     </template>
   </BaseModal>
 </template>
@@ -42,7 +42,8 @@ const props = defineProps({
   required: {type: Boolean, default: false},
   nullable: {type: Boolean, default: false},
   name: {type: String, default: null},
-  modelValue: {type: String, Number, default: null},
+  modelValue: {type: [String, Number], default: null},
+  urlTree: {type: String, default: null},
 });
 
 const $emit = defineEmits(['update:modelValue']);

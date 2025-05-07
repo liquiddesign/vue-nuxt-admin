@@ -1,0 +1,90 @@
+<template>
+  <div class="base-grid">
+    <div class="table-responsive" style="overflow: initial;" v-bind="$attrs">
+      <table class="table table-sm table-striped">
+        <Draggable v-model="dataTree" tree-line :tree-line-offset="30">
+          <template #prepend>
+            <thead class="p-0">
+              <tr>
+                <BaseGridTh style="width: 25px" />
+                <BaseGridThSelect />
+                <BaseGridTh class="ps-4">Název</BaseGridTh>
+              </tr>
+            </thead>
+          </template>
+
+          <template #default="{ node, stat }">
+            <tbody>
+              <tr>
+                <td style="width: 25px">
+                  <OpenIcon v-if="stat.children.length" :open="stat.open" class="mtl-mr disabled" @click="() => {stat.open = !stat.open;}" />
+                </td>
+                <td>
+                  <input v-model="stat.checked" class="mtl-checkbox mtl-mr" type="checkbox" @change="() => {console.log('stat - node', stat, node)}">
+                  <span class="ps-4">{{ node.name[lang] }}</span>
+                </td>
+              </tr>
+            </tbody>
+          </template>
+        </Draggable>
+      </table>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { Draggable, OpenIcon } from '@he-tree/vue';
+import '@he-tree/vue/style/default.css';
+import '@he-tree/vue/style/material-design.css';
+
+const props = defineProps({
+  urlTree: {type: String, default: null},
+});
+
+const dataTree: Ref<any> = ref([]);
+const {data: data} = useApiFetch(props.urlTree);
+const { lang } = useTableVars();
+
+function buildTreeFromAncestors(data: any[], keysToInclude: string[]): any[] {
+  const map = new Map();
+  const tree: any[] = [];
+
+  data.forEach(item => {
+    const filteredItem = keysToInclude.reduce((acc, key) => {
+      if (key in item) {
+        acc[key] = item[key];
+      }
+      return acc;
+    }, {} as any);
+
+    filteredItem.children = [];
+    map.set(item.uuid, filteredItem);
+  });
+
+  data.forEach(item => {
+    if (item.ancestor && map.has(item.ancestor.uuid)) {
+      const parent = map.get(item.ancestor.uuid);
+      parent.children.push(map.get(item.uuid));
+    } else {
+      tree.push(map.get(item.uuid));
+    }
+  });
+
+  return tree;
+}
+
+watch(data, (newData: any) => {
+  if (newData?.items) {
+    const keysToInclude = ['uuid', 'name', 'code', 'type', 'ancestor'];
+    dataTree.value = buildTreeFromAncestors(Object.values(newData.items), keysToInclude);
+    console.log(dataTree.value);
+  }
+});
+
+</script>
+
+<style>
+.vtlist-inner div.tree-node:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+</style>
