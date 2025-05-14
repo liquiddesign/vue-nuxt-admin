@@ -19,7 +19,7 @@
       </div>
     </template>
 
-    <BaseButton class="btn btn-sm btn-outline-dark mt-2" @click.prevent="() => {inputs.push({})}"><BaseIcon icon-name="Plus" />Pridat</BaseButton>
+    <BaseButton class="btn btn-sm btn-outline-dark mt-2" @click.prevent="() => {inputs.push({})}"><BaseIcon icon-name="Plus" />Přidat</BaseButton>
   </BaseWrapper>
 
   <BaseModal ref="treePicker" :title="label" :display-footer="false">

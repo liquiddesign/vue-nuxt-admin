@@ -1,8 +1,13 @@
 <template>
   <div class="base-grid">
+    <div class="d-flex align-items-top gap-3 mb-3">
+      <BaseButton class="btn btn-sm btn-primary" @click="saveTreeData()">Uložit</BaseButton>
+      <BaseCheckBox v-model="autoCheckChild" @change="() => {checkedTreeData = [];}" label="Povolit automatický výběr potomků" />
+    </div>
+
     <div class="table-responsive" style="overflow: initial;" v-bind="$attrs">
       <table class="table table-sm table-striped">
-        <Draggable v-model="dataTree" tree-line :tree-line-offset="30">
+        <Draggable ref="tree" v-model="dataTree" class="mtl-tree" disable-drag disable-drop tree-line :tree-line-offset="30" :indent="40">
           <template #prepend>
             <thead class="p-0">
               <tr>
@@ -17,11 +22,12 @@
             <tbody>
               <tr>
                 <td style="width: 25px">
-                  <OpenIcon v-if="stat.children.length" :open="stat.open" class="mtl-mr disabled" @click="() => {stat.open = !stat.open;}" />
+                  <OpenIcon v-if="stat.children.length" :open="stat.open" class="mtl-mr" @click="stat.open = !stat.open" />
                 </td>
                 <td>
-                  <input v-model="stat.checked" class="mtl-checkbox mtl-mr" type="checkbox" @change="() => {console.log('stat - node', stat, node)}">
-                  <span class="ps-4">{{ node.name[lang] }}</span>
+                  <input v-if="autoCheckChild" v-model="stat.checked" class="mtl-checkbox mtl-mr" type="checkbox" @change="checkData(stat, node)">
+                  <input v-else v-model="node.checked" class="mtl-checkbox mtl-mr" type="checkbox" @change="manualCheckUpdate(stat, node, $event)">
+                  <span class="mtl-ml ps-2">{{ node.name[lang] }}</span>
                 </td>
               </tr>
             </tbody>
@@ -29,6 +35,7 @@
         </Draggable>
       </table>
     </div>
+    <BaseButton class="btn btn-sm btn-primary mt-3" @click="saveTreeData()">Uložit</BaseButton>
   </div>
 </template>
 
@@ -41,9 +48,26 @@ const props = defineProps({
   urlTree: {type: String, default: null},
 });
 
+const tree = useTemplateRef('tree');
+const autoCheckChild: Ref<boolean> = ref(false);
 const dataTree: Ref<any> = ref([]);
+const checkedTreeData: Ref<any[]> = ref([]);
 const {data: data} = useApiFetch(props.urlTree);
 const { lang } = useTableVars();
+
+function manualCheckUpdate(stat: any, node: any, $event: any): void {
+
+}
+
+function checkData(stat: any, node: any): void {
+  console.log('stat --- node', stat, node);
+  checkedTreeData.value = tree?.value ? tree.value.getChecked() : [];
+  console.log(checkedTreeData.value);
+}
+
+function saveTreeData(): void {
+  console.log(dataTree);
+}
 
 function buildTreeFromAncestors(data: any[], keysToInclude: string[]): any[] {
   const map = new Map();
@@ -58,6 +82,7 @@ function buildTreeFromAncestors(data: any[], keysToInclude: string[]): any[] {
     }, {} as any);
 
     filteredItem.children = [];
+    filteredItem.checked = false;
     map.set(item.uuid, filteredItem);
   });
 
