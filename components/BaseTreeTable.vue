@@ -26,7 +26,7 @@
                 </td>
                 <td>
                   <input v-if="autoCheckChild" v-model="stat.checked" class="mtl-checkbox mtl-mr" type="checkbox" @change="checkData(stat, node)">
-                  <input v-else v-model="node.checked" class="mtl-checkbox mtl-mr" type="checkbox" @change="manualCheckUpdate(node, stat)">
+                  <input v-else v-model="node.checked" class="mtl-checkbox mtl-mr" type="checkbox" @change="manualCheckUpdate(node)">
                   <span class="mtl-ml ps-2">{{ node.name[lang] }}</span>
                 </td>
               </tr>
@@ -46,6 +46,7 @@ import '@he-tree/vue/style/material-design.css';
 
 const props = defineProps({
   urlTree: {type: String, default: null},
+  data: {type: Array, default: undefined},
   modelValue: {type: Object, default: null},
 });
 
@@ -57,11 +58,14 @@ const tree = useTemplateRef('tree');
 const autoCheckChild: Ref<boolean> = ref(false);
 const dataTree: Ref<any> = ref([]);
 const checkedTreeData: Ref<any[]> = ref([]);
-const {data: data} = useApiFetch(props.urlTree);
 const { lang } = useTableVars();
 
 const checkedData: ComputedRef<any> = computed(() => {
   return props.modelValue;
+});
+
+const data: ComputedRef<any> = computed(() => {
+  return props.data;
 });
 
 function saveData() {
@@ -73,7 +77,7 @@ function saveData() {
   emits('modal-close', checkedData);
 }
 
-function manualCheckUpdate(node: any, stat: any): void {
+function manualCheckUpdate(node: any): void {
   let dataItem = null;
 
   for (const index in data?.value?.items) {
@@ -81,8 +85,6 @@ function manualCheckUpdate(node: any, stat: any): void {
       dataItem = data?.value?.items[index];
     }
   }
-
-  console.log('stat', stat);
 
   if (node.checked) {
     checkedData.value[node.uuid] = dataItem;

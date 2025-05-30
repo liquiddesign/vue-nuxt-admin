@@ -24,7 +24,7 @@
 
   <BaseModal ref="treePicker" :title="label" :display-footer="false">
     <template #body>
-      <BaseTreeTable v-model="inputs" :url-tree="urlTree" @modal-close="() => {console.log('inputs', inputs); $refs.treePicker.close();}" />
+      <BaseTreeTable v-model="inputs" :data="dataNew" :url-tree="urlTree" @modal-close="() => {console.log('inputs', inputs); $refs.treePicker.close();}" />
     </template>
   </BaseModal>
 </template>
@@ -46,13 +46,15 @@ const props = defineProps({
   urlTree: {type: String, default: null},
 });
 
+const {data: data} = useApiFetch(props.urlTree);
+const dataNew: Ref<any> = ref([]);
 const $emit = defineEmits(['update:modelValue']);
 const inputs: Ref<any> = ref({});
+
 const itemTree = (value: any): string => {
-  console.log('vatringlue', value);
+  console.log('data - value', data, value);
   return value?.name?.cs;
 };
-
 
 function onChange($event: any) {
   let value: string|number|null = $event.target.value;
@@ -67,6 +69,12 @@ function onChange($event: any) {
 
   $emit('update:modelValue', value);
 }
+
+watch(data, (newData: any) => {
+  if (newData?.items) {
+    dataNew.value = newData;
+  }
+});
 </script>
 
 <style>
