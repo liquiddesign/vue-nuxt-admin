@@ -1,8 +1,8 @@
 <template>
   <div class="base-grid">
     <div class="d-flex align-items-top gap-3 mb-3">
-      <BaseButton class="btn btn-sm btn-primary" @click="saveTreeData()">Uložit</BaseButton>
-      <BaseCheckBox v-model="autoCheckChild" @change="() => {checkedTreeData = [];}" label="Povolit automatický výběr potomků" />
+      <BaseButton class="btn btn-sm btn-primary" @click="saveData()">Uložit</BaseButton>
+      <BaseCheckBox v-model="autoCheckChild" label="Povolit automatický výběr potomků" @change="() => {checkedTreeData = [];}" />
     </div>
 
     <div class="table-responsive" style="overflow: initial;" v-bind="$attrs">
@@ -26,7 +26,7 @@
                 </td>
                 <td>
                   <input v-if="autoCheckChild" v-model="stat.checked" class="mtl-checkbox mtl-mr" type="checkbox" @change="checkData(stat, node)">
-                  <input v-else v-model="node.checked" class="mtl-checkbox mtl-mr" type="checkbox" @change="manualCheckUpdate(stat, node, $event)">
+                  <input v-else v-model="node.checked" class="mtl-checkbox mtl-mr" type="checkbox" @change="manualCheckUpdate(node, stat)">
                   <span class="mtl-ml ps-2">{{ node.name[lang] }}</span>
                 </td>
               </tr>
@@ -35,7 +35,7 @@
         </Draggable>
       </table>
     </div>
-    <BaseButton class="btn btn-sm btn-primary mt-3" @click="saveTreeData()">Uložit</BaseButton>
+    <BaseButton class="btn btn-sm btn-primary mt-3" @click="emits('modal-close');">Uložit</BaseButton>
   </div>
 </template>
 
@@ -46,7 +46,12 @@ import '@he-tree/vue/style/material-design.css';
 
 const props = defineProps({
   urlTree: {type: String, default: null},
+  modelValue: {type: Object, default: null},
 });
+
+const emits = defineEmits([
+    'modal-close', 'update:inputs',
+]);
 
 const tree = useTemplateRef('tree');
 const autoCheckChild: Ref<boolean> = ref(false);
@@ -55,18 +60,43 @@ const checkedTreeData: Ref<any[]> = ref([]);
 const {data: data} = useApiFetch(props.urlTree);
 const { lang } = useTableVars();
 
-function manualCheckUpdate(stat: any, node: any, $event: any): void {
+const checkedData: ComputedRef<any> = computed(() => {
+  return props.modelValue;
+});
 
+function saveData() {
+  if (checkedData.value) {
+    if (checkedData.value.new) {
+      delete checkedData.value.new;
+    }
+  }
+  emits('modal-close', checkedData);
+}
+
+function manualCheckUpdate(node: any, stat: any): void {
+  let dataItem = null;
+
+  for (const index in data?.value?.items) {
+    if (data?.value?.items[index].uuid === node.uuid) {
+      dataItem = data?.value?.items[index];
+    }
+  }
+
+  console.log('stat', stat);
+
+  if (node.checked) {
+    checkedData.value[node.uuid] = dataItem;
+  } else {
+    delete checkedData.value[node.uuid];
+  }
+
+  console.log('checkedData', checkedData);
 }
 
 function checkData(stat: any, node: any): void {
   console.log('stat --- node', stat, node);
   checkedTreeData.value = tree?.value ? tree.value.getChecked() : [];
   console.log(checkedTreeData.value);
-}
-
-function saveTreeData(): void {
-  console.log(dataTree);
 }
 
 function buildTreeFromAncestors(data: any[], keysToInclude: string[]): any[] {
@@ -102,7 +132,7 @@ watch(data, (newData: any) => {
   if (newData?.items) {
     const keysToInclude = ['uuid', 'name', 'code', 'type', 'ancestor'];
     dataTree.value = buildTreeFromAncestors(Object.values(newData.items), keysToInclude);
-    console.log(dataTree.value);
+    console.log('data-tree', dataTree.value);
   }
 });
 

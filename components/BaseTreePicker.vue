@@ -13,18 +13,18 @@
     <template v-for="(item, key) in inputs" :key="key">
       <div class="d-flex gap-3 mb-2">
         <div class="input-wrapper" @click="() => {$refs.treePicker.open();}">
-          <input v-bind="$attrs" class="form-control form-control-sm" :value="form && name ? _get(form.data.value, name) : modelValue" disabled @change="onChange">
+          <input v-bind="$attrs" class="form-control form-control-sm" :value="itemTree(item)" disabled @change="onChange">
         </div>
         <BaseButtonCancel wrap="flex-shrink-0" class="btn btn-sm" @click.prevent="() => {inputs.splice(key, 1);}" />
       </div>
     </template>
 
-    <BaseButton class="btn btn-sm btn-outline-dark mt-2" @click.prevent="() => {inputs.push({})}"><BaseIcon icon-name="Plus" />Přidat</BaseButton>
+    <BaseButton class="btn btn-sm btn-outline-dark mt-2" @click.prevent="() => {inputs['new'] = {}}"><BaseIcon icon-name="Plus" />Přidat</BaseButton>
   </BaseWrapper>
 
   <BaseModal ref="treePicker" :title="label" :display-footer="false">
     <template #body>
-      <BaseTreeTable :url-tree="urlTree" />
+      <BaseTreeTable v-model="inputs" :url-tree="urlTree" @modal-close="() => {console.log('inputs', inputs); $refs.treePicker.close();}" />
     </template>
   </BaseModal>
 </template>
@@ -47,7 +47,11 @@ const props = defineProps({
 });
 
 const $emit = defineEmits(['update:modelValue']);
-const inputs: Ref<any[]> = ref([{id: 1}]);
+const inputs: Ref<any> = ref({});
+const itemTree = (value: any): string => {
+  console.log('vatringlue', value);
+  return value?.name?.cs;
+};
 
 
 function onChange($event: any) {
