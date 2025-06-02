@@ -47,34 +47,27 @@ import '@he-tree/vue/style/material-design.css';
 const props = defineProps({
   urlTree: {type: String, default: null},
   data: {type: Array, default: undefined},
-  modelValue: {type: Object, default: null},
 });
 
 const emits = defineEmits([
-    'modal-close', 'update:inputs',
+    'modal-close', 'save', 'update:inputs',
 ]);
 
 const tree = useTemplateRef('tree');
 const autoCheckChild: Ref<boolean> = ref(false);
 const dataTree: Ref<any> = ref([]);
 const checkedTreeData: Ref<any[]> = ref([]);
+const addedData: Ref<any> = ref({});
 const { lang } = useTableVars();
-
-const checkedData: ComputedRef<any> = computed(() => {
-  return props.modelValue;
-});
 
 const data: ComputedRef<any> = computed(() => {
   return props.data;
 });
 
 function saveData() {
-  if (checkedData.value) {
-    if (checkedData.value.new) {
-      delete checkedData.value.new;
-    }
-  }
-  emits('modal-close', checkedData);
+  emits('save', addedData.value);
+  emits('modal-close');
+  addedData.value = {};
 }
 
 function manualCheckUpdate(node: any): void {
@@ -87,12 +80,10 @@ function manualCheckUpdate(node: any): void {
   }
 
   if (node.checked) {
-    checkedData.value[node.uuid] = dataItem;
+    addedData.value[node.uuid] = dataItem;
   } else {
-    delete checkedData.value[node.uuid];
+    delete addedData.value[node.uuid];
   }
-
-  console.log('checkedData', checkedData);
 }
 
 function checkData(stat: any, node: any): void {

@@ -39,7 +39,7 @@ import {RouteParamValue} from 'vue-router';
 import {required} from '@vuelidate/validators';
 import BaseTreePicker from '~/components/BaseTreePicker.vue';
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   url: string,
   data: any,
   loading?: boolean,
@@ -59,6 +59,12 @@ const typeOptions = {
   order: 'order',
   price_list: 'price_list',
 };
+
+const category: Ref<any> = ref([
+    '2a44e99df136bdc91dd16f1ad8573aa2',
+    '5a4c1f1395e27996ede767cd7cf9ee29',
+    '6076908a2212745033796846',
+]);
 
 const comments: Ref<any> = ref([
   {
@@ -125,4 +131,11 @@ function submit()
 
 const $emit = defineEmits(['success']);
 defineExpose({ submit } );
+
+watch(props.data, (newData: any) => {
+  if (newData?.items) {
+    newData.category = category;
+    props.data.value = newData;
+  }
+});
 </script>
