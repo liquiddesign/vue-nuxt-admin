@@ -13,9 +13,9 @@
     <template v-for="(item, key) in treePickerInputs" :key="key">
       <div class="d-flex gap-3 mb-2">
         <div class="input-wrapper" @click="() => {$refs.treePicker.open();}">
-          <input v-bind="$attrs" class="form-control form-control-sm" :value="itemTree(item)" disabled @change="onChange">
+          <input v-bind="$attrs" class="form-control form-control-sm" :value="fullName(item)" disabled @change="onChange">
         </div>
-        <BaseButtonCancel wrap="flex-shrink-0" class="btn btn-sm" @click.prevent="() => {treePickerInputs.splice(key, 1);}" />
+        <BaseButtonCancel wrap="flex-shrink-0" class="btn btn-sm" @click.prevent="() => {delete treePickerInputs[key];}" />
       </div>
     </template>
 
@@ -49,11 +49,17 @@ const props = defineProps({
 const {data: data} = useApiFetch(props.urlTree);
 const dataNew: Ref<any> = ref([]);
 const $emit = defineEmits(['update:modelValue']);
-const treePickerInputs: Ref<any> = ref({});
+const treePickerInputs: Ref<any> = ref(form && props.name ? _get(form.data.value, props.name) : props.modelValue);
 
-const itemTree = (value: any): string => {
-  console.log('data - value', data, value);
-  return value?.name?.cs;
+const fullName = (item: any): string => {
+  console.log('item', item);
+  let fullName = item?.name?.cs;
+
+  if (item?.ancestor) {
+    fullName = item.ancestor.name_cs + ' > ' + fullName;
+  }
+
+  return fullName;
 };
 
 function saveTree(addedData: any) {

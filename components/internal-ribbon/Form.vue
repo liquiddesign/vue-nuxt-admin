@@ -15,7 +15,8 @@
           <BaseColorPicker wrap="col-lg-12" name="backgroundColor" label="Barva pozadí" />
         </div>
         <div class="row mt-2">
-          <BaseTreePicker wrap="col-lg-12" name="category" label="Kategorie" url-tree="eshop/category/?expand=ancestor&onpage=200" />
+<!--          <BaseTreePicker wrap="col-lg-12" name="category" label="Kategorie" url-tree="eshop/category/?expand=ancestor&onpage=200" />-->
+          <BaseTreePicker v-model="category" wrap="col-lg-12" label="Kategorie" url-tree="eshop/category?expand=ancestor&onpage=500" />
         </div>
       </div>
 
@@ -60,11 +61,29 @@ const typeOptions = {
   price_list: 'price_list',
 };
 
-const category: Ref<any> = ref([
-    '2a44e99df136bdc91dd16f1ad8573aa2',
-    '5a4c1f1395e27996ede767cd7cf9ee29',
-    '6076908a2212745033796846',
-]);
+const category: Ref<any> = ref({
+  '2a44e99df136bdc91dd16f1ad8573aa2': {
+    uuid: '2a44e99df136bdc91dd16f1ad8573aa2',
+    name: {cs: 'Kyocera', en: null},
+    code: 'NAPLNKYO',
+    ancestor: null,
+  },
+  '5a4c1f1395e27996ede767cd7cf9ee29': {
+    uuid: '5a4c1f1395e27996ede767cd7cf9ee29',
+    name: {cs: 'Lexmark', en: null},
+    code: 'NAPLNLEX',
+    ancestor: null,
+  },
+  '6076908a2212745033796846': {
+    uuid: '6076908a2212745033796846',
+    name: {cs: 'Etikety', en: null},
+    code: 'PFEETI',
+    ancestor: {
+      uuid: '60768ddbc5a9940375081775',
+      name_cs: 'Papíry, fólie, etikety',
+    },
+  },
+});
 
 const comments: Ref<any> = ref([
   {
