@@ -7,7 +7,7 @@
 
     <div class="table-responsive" style="overflow: initial;" v-bind="$attrs">
       <table class="table table-sm table-striped">
-        <Draggable ref="tree" v-model="dataTree" class="mtl-tree" disable-drag disable-drop tree-line :tree-line-offset="30" :indent="40">
+        <Draggable ref="tree" v-model="treeItems" class="mtl-tree" disable-drag disable-drop tree-line :tree-line-offset="30" :indent="40">
           <template #prepend>
             <thead class="p-0">
               <tr>
@@ -46,6 +46,7 @@ import '@he-tree/vue/style/material-design.css';
 
 const props = defineProps({
   urlTree: {type: String, default: null},
+  dataTree: {type: Object, default: undefined},
   data: {type: Array, default: undefined},
 });
 
@@ -54,14 +55,20 @@ const emits = defineEmits([
 ]);
 
 const autoCheckChild: Ref<boolean> = ref(false);
-const dataTree: Ref<any> = ref([]);
+const treeItems: Ref<any> = ref([]);
 const checkedTreeData: Ref<any[]> = ref([]);
 const addedData: Ref<any> = ref({});
 const { lang } = useTableVars();
 
+const dataTree: ComputedRef<any> = computed(() => {
+  return props.dataTree;
+});
+
 const data: ComputedRef<any> = computed(() => {
   return props.data;
 });
+
+const {data: tree} = useApiFetch(props.urlTree);
 
 function saveData() {
   emits('save', addedData.value);
@@ -87,8 +94,8 @@ function manualCheckUpdate(node: any): void {
 
 function checkData(stat: any, node: any): void {
   console.log('stat --- node', stat, node);
-  checkedTreeData.value = tree?.value ? tree.value.getChecked() : [];
-  console.log(checkedTreeData.value);
+  // checkedTreeData.value = tree?.value ? tree.value.getChecked() : [];
+  // console.log(checkedTreeData.value);
 }
 
 function buildTreeFromAncestors(data: any[], keysToInclude: string[]): any[] {
@@ -120,11 +127,24 @@ function buildTreeFromAncestors(data: any[], keysToInclude: string[]): any[] {
   return tree;
 }
 
-watch(data, (newData: any) => {
+watch(tree, (newData: any) => {
   if (newData?.items) {
     const keysToInclude = ['uuid', 'name', 'code', 'type', 'ancestor'];
-    dataTree.value = buildTreeFromAncestors(Object.values(newData.items), keysToInclude);
-    console.log('data-tree', dataTree.value);
+    treeItems.value = buildTreeFromAncestors(Object.values(newData.items), keysToInclude);
+
+    for (const checked in dataTree?.value) {
+      console.log('checked item', checked);
+
+      const item = treeItems.value.find((el: any) => {
+        return el.uuid === checked;
+      });
+
+      if (item) {
+        item.checked = true;
+      }
+    }
+
+    console.log('treeItems', treeItems.value);
   }
 });
 
