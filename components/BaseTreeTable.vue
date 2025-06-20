@@ -53,7 +53,6 @@ const emits = defineEmits([
     'modal-close', 'save', 'update:inputs',
 ]);
 
-const tree = useTemplateRef('tree');
 const autoCheckChild: Ref<boolean> = ref(false);
 const dataTree: Ref<any> = ref([]);
 const checkedTreeData: Ref<any[]> = ref([]);

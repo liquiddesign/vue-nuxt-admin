@@ -25,7 +25,7 @@
         <BaseCommentForm :comments="comments" />
       </div>
     </div>
-    <div class="row mt-3">
+    <div class="row mt-5">
       <div class="col-lg-6">
         <BaseFormButton class="btn-success btn-sm me-1" @click="goBack = true;">Uložit</BaseFormButton>
         <BaseFormButton class="btn-outline-primary me-1 btn-sm" @click="goBack = false;">Uložit a pokračovat</BaseFormButton>

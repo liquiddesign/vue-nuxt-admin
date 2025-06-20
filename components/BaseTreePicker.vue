@@ -12,14 +12,14 @@
 
     <template v-for="(item, key) in treePickerInputs" :key="key">
       <div class="d-flex gap-3 mb-2">
-        <div class="input-wrapper" @click="() => {$refs.treePicker.open();}">
+        <div class="input-wrapper">
           <input v-bind="$attrs" class="form-control form-control-sm" :value="fullName(item)" disabled @change="onChange">
         </div>
         <BaseButtonCancel wrap="flex-shrink-0" class="btn btn-sm" @click.prevent="() => {delete treePickerInputs[key];}" />
       </div>
     </template>
 
-    <BaseButton class="btn btn-sm btn-outline-dark mt-2" @click.prevent="() => {treePickerInputs['new'] = {}; console.log('treePickerInputs NEW', treePickerInputs)}"><BaseIcon icon-name="Plus" />Přidat</BaseButton>
+    <BaseButton class="btn btn-sm btn-outline-dark mt-2" @click.prevent="() => {$refs.treePicker.open();}">Upravit</BaseButton>
   </BaseWrapper>
 
   <BaseModal ref="treePicker" :title="label" :display-footer="false">
