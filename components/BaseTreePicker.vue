@@ -24,7 +24,7 @@
 
   <BaseModal ref="treePicker" :title="label" :display-footer="false">
     <template #body>
-      <BaseTreeTable :data-tree="treePickerInputs" :url-tree="urlTree" @save="saveTree" @modal-close="() => {$refs.treePicker.close();}" />
+      <BaseTreeTable :data-tree="treePickerInputs" :options-tree="dataNew" @save="saveTree" @modal-close="() => {$refs.treePicker.close();}" />
     </template>
   </BaseModal>
 </template>
@@ -46,6 +46,8 @@ const props = defineProps({
   urlTree: {type: String, default: null},
 });
 
+const {data: data} = useApiFetch(props.urlTree);
+const dataNew: Ref<any> = ref([]);
 const $emit = defineEmits(['update:modelValue']);
 const treePickerInputs: Ref<any> = ref(form && props.name ? _get(form.data.value, props.name) : props.modelValue);
 
@@ -86,8 +88,10 @@ function onChange($event: any) {
 
   $emit('update:modelValue', value);
 }
+
+watch(data, (newData: any) => {
+  if (newData?.items) {
+    dataNew.value = newData;
+  }
+});
 </script>
-
-<style>
-
-</style>

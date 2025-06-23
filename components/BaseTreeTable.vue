@@ -7,7 +7,7 @@
 
     <div class="table-responsive" style="overflow: initial;" v-bind="$attrs">
       <table class="table table-sm table-striped">
-        <Draggable ref="tree" v-model="treeItems" class="mtl-tree" disable-drag disable-drop tree-line :tree-line-offset="30" :indent="40">
+        <Draggable ref="tree" v-model="treeItems" class="mtl-tree" disable-drag disable-drop tree-line :tree-line-offset="30" :indent="40" :default-open="false">
           <template #prepend>
             <thead class="p-0">
               <tr>
@@ -45,9 +45,8 @@ import '@he-tree/vue/style/default.css';
 import '@he-tree/vue/style/material-design.css';
 
 const props = defineProps({
-  urlTree: {type: String, default: null},
   dataTree: {type: Object, default: undefined},
-  data: {type: Array, default: undefined},
+  optionsTree: {type: Object, default: undefined},
 });
 
 const emits = defineEmits([
@@ -64,11 +63,9 @@ const dataTree: ComputedRef<any> = computed(() => {
   return props.dataTree;
 });
 
-const data: ComputedRef<any> = computed(() => {
-  return props.data;
+const optionsTree: ComputedRef<any> = computed(() => {
+  return props.optionsTree;
 });
-
-const {data: tree} = useApiFetch(props.urlTree);
 
 function saveData() {
   emits('save', addedData.value);
@@ -79,9 +76,9 @@ function saveData() {
 function manualCheckUpdate(node: any): void {
   let dataItem = null;
 
-  for (const index in data?.value?.items) {
-    if (data?.value?.items[index].uuid === node.uuid) {
-      dataItem = data?.value?.items[index];
+  for (const index in optionsTree?.value?.items) {
+    if (optionsTree?.value?.items[index].uuid === node.uuid) {
+      dataItem = optionsTree?.value?.items[index];
     }
   }
 
@@ -127,7 +124,7 @@ function buildTreeFromAncestors(data: any[], keysToInclude: string[]): any[] {
   return tree;
 }
 
-watch(tree, (newData: any) => {
+watch(optionsTree, (newData: any) => {
   if (newData?.items) {
     const keysToInclude = ['uuid', 'name', 'code', 'type', 'ancestor'];
     treeItems.value = buildTreeFromAncestors(Object.values(newData.items), keysToInclude);
