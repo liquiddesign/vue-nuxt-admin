@@ -19,12 +19,12 @@
       </div>
     </template>
 
-    <BaseButton class="btn btn-sm btn-outline-dark mt-2" @click.prevent="() => {$refs.treePicker.open();}">Upravit</BaseButton>
+    <BaseButton class="btn btn-sm btn-outline-dark mt-2" @click.prevent="open($refs)">Upravit</BaseButton>
   </BaseWrapper>
 
   <BaseModal ref="treePicker" :title="label" :display-footer="false">
     <template #body>
-      <BaseTreeTable :data-tree="treePickerInputs" :options-tree="dataNew" @save="saveTree" @modal-close="() => {$refs.treePicker.close();}" />
+      <BaseTreeTable :data-tree="treePickerInputs" :options-tree="dataNew" @save="saveTree" @modal-close="close($refs)" />
     </template>
   </BaseModal>
 </template>
@@ -61,6 +61,15 @@ const fullName = (item: any): string => {
 
   return fullName;
 };
+
+function open(refs: any) {
+  refs.treePicker.open();
+}
+
+function close(refs: any) {
+  document.activeElement?.blur();
+  refs.treePicker.close();
+}
 
 function saveTree(addedData: any) {
   // treePickerInputs.value = addedData;

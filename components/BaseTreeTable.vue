@@ -39,7 +39,7 @@
         </Draggable>
       </table>
     </div>
-    <BaseButton class="btn btn-sm btn-primary mt-3" @click="emits('modal-close');">Uložit</BaseButton>
+    <BaseButton class="btn btn-sm btn-primary mt-3" @click="saveData()">Uložit</BaseButton>
   </div>
 </template>
 
