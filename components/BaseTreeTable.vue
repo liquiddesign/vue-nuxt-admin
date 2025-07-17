@@ -113,7 +113,14 @@ function buildTreeFromAncestors(data: any[], keysToInclude: string[]): any[] {
     }, {} as any);
 
     filteredItem.children = [];
-    filteredItem.checked = false;
+
+    for (const checked in dataTree?.value) {
+      if (filteredItem.uuid === checked) {
+        filteredItem.checked = true;
+        break;
+      }
+    }
+
     map.set(item.uuid, filteredItem);
   });
 
@@ -133,19 +140,6 @@ watch(optionsTree, (newData: any) => {
   if (newData?.items) {
     const keysToInclude = ['uuid', 'name', 'code', 'type', 'ancestor'];
     treeItems.value = buildTreeFromAncestors(Object.values(newData.items), keysToInclude);
-
-    for (const checked in dataTree?.value) {
-      console.log('checked item', checked);
-
-      const item = treeItems.value.find((el: any) => {
-        return el.uuid === checked;
-      });
-
-      if (item) {
-        item.checked = true;
-      }
-    }
-
     console.log('treeItems', treeItems.value);
   }
 });

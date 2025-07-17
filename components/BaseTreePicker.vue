@@ -52,7 +52,6 @@ const $emit = defineEmits(['update:modelValue']);
 const treePickerInputs: Ref<any> = ref(form && props.name ? _get(form.data.value, props.name) : props.modelValue);
 
 const fullName = (item: any): string => {
-  console.log('item', item);
   let fullName = item?.name?.cs;
 
   if (item?.ancestor) {
@@ -72,16 +71,8 @@ function close(refs: any) {
 }
 
 function saveTree(addedData: any) {
-  // treePickerInputs.value = addedData;
   treePickerInputs.value = Object.assign(treePickerInputs.value, addedData);
   console.log('treePickerInputs', treePickerInputs);
-
-  if (treePickerInputs?.value) {
-    if (treePickerInputs.value?.new) {
-      delete treePickerInputs.value.new;
-    }
-  }
-
 }
 
 function onChange($event: any) {
