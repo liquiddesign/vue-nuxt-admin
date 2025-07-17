@@ -15,7 +15,7 @@
         <div class="input-wrapper">
           <input v-bind="$attrs" class="form-control form-control-sm" :value="fullName(item)" disabled @change="onChange">
         </div>
-        <BaseButtonCancel wrap="flex-shrink-0" class="btn btn-sm" @click.prevent="() => {delete treePickerInputs[key];}" />
+        <BaseButtonCancel wrap="flex-shrink-0" class="btn btn-sm" @click.prevent="deleteItem(item)" />
       </div>
     </template>
 
@@ -24,7 +24,7 @@
 
   <BaseModal ref="treePicker" :title="label" :display-footer="false">
     <template #body>
-      <BaseTreeTable :data-tree="treePickerInputs" :options-tree="dataNew" @save="saveTree" @modal-close="close($refs)" />
+      <BaseTreeTable ref="treeTable" :data-tree="treePickerInputs" :options-tree="dataNew" @save="saveTree" @modal-close="close($refs)" />
     </template>
   </BaseModal>
 </template>
@@ -62,6 +62,7 @@ const fullName = (item: any): string => {
 };
 
 function open(refs: any) {
+  refs.treeTable?.setCheckedItems(Object.values(dataNew?.value?.items));
   refs.treePicker.open();
 }
 
@@ -70,9 +71,29 @@ function close(refs: any) {
   refs.treePicker.close();
 }
 
+function addItem(item: any) {
+  if (!treePickerInputs.value[item.uuid]) {
+    treePickerInputs.value[item.uuid] = item;
+  }
+}
+
+function deleteItem(item: any) {
+  if (treePickerInputs.value[item.uuid]) {
+    delete treePickerInputs.value[item.uuid];
+  }
+}
+
 function saveTree(addedData: any) {
-  treePickerInputs.value = Object.assign(treePickerInputs.value, addedData);
-  console.log('treePickerInputs', treePickerInputs);
+  if (addedData.add?.length > 0) {
+    for (const item of addedData.add) {
+      addItem(item);
+    }
+  }
+  if (addedData.delete?.length > 0) {
+    for (const item of addedData.delete) {
+      deleteItem(item);
+    }
+  }
 }
 
 function onChange($event: any) {

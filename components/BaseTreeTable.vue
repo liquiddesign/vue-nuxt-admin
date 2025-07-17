@@ -54,14 +54,15 @@ const props = defineProps({
 });
 
 const emits = defineEmits([
-    'modal-close', 'save', 'update:inputs',
+    'modal-close', 'save',
 ]);
 
+const tree = useTemplateRef('tree');
 const autoCheckChild: Ref<boolean> = ref(false);
 const treeItems: Ref<any> = ref([]);
 const treeItemsByPage: Ref<any> = ref([]);
 const checkedTreeData: Ref<any[]> = ref([]);
-const addedData: Ref<any> = ref({});
+const updatedData: Ref<any> = ref({add: [], delete: []});
 const { lang } = useTableVars();
 
 const dataTree: ComputedRef<any> = computed(() => {
@@ -73,25 +74,28 @@ const optionsTree: ComputedRef<any> = computed(() => {
 });
 
 function saveData() {
-  emits('save', addedData.value);
+  emits('save', updatedData.value);
   emits('modal-close');
-  addedData.value = {};
+  updatedData.value = {add: [], delete: []};
 }
 
 function manualCheckUpdate(node: any): void {
-  let dataItem = null;
-
-  for (const index in optionsTree?.value?.items) {
-    if (optionsTree?.value?.items[index].uuid === node.uuid) {
-      dataItem = optionsTree?.value?.items[index];
+  if (node.checked) {
+    if (updatedData.value.delete.includes(node)) {
+      updatedData.value.delete.splice(updatedData.value.delete.indexOf(node), 1);
+    }
+    if (!updatedData.value.add.includes(node)) {
+      updatedData.value.add.push(node);
+    }
+  } else {
+    if (updatedData.value.add.includes(node)) {
+      updatedData.value.add.splice(updatedData.value.add.indexOf(node), 1);
+    }
+    if (!updatedData.value.delete.includes(node)) {
+      updatedData.value.delete.push(node);
     }
   }
-
-  if (node.checked) {
-    addedData.value[node.uuid] = dataItem;
-  } else {
-    delete addedData.value[node.uuid];
-  }
+  console.log('updatedData', updatedData.value);
 }
 
 function checkData(stat: any, node: any): void {
@@ -100,28 +104,48 @@ function checkData(stat: any, node: any): void {
   // console.log(checkedTreeData.value);
 }
 
-function buildTreeFromAncestors(data: any[], keysToInclude: string[]): any[] {
+function setCheckedItems(data: any[]) {
+  const map = new Map();
+
+  data.forEach(item => {
+    item.checked = false;
+    for (const checked in dataTree?.value) {
+      if (item.uuid === checked) {
+        item.checked = true;
+        openParentsForCheckedNodes(treeItems.value);
+        break;
+      }
+    }
+    map.set(item.uuid, item);
+  });
+}
+
+function openParentsForCheckedNodes(nodes: any, ancestors = []) {
+  for (const node of nodes) {
+    if (node.checked) {
+      console.log('ancestors', ancestors);
+      for (const ancestor of ancestors) {
+        const ancestorStat = tree.value?.getStat(ancestor);
+        if (ancestorStat) {
+          ancestorStat.open = true;
+        }
+      }
+    }
+
+    if (node.children?.length) {
+      openParentsForCheckedNodes(node.children, [...ancestors, node]);
+    }
+  }
+}
+
+// zmenit endpoind a smazat tento method
+function buildTreeFromAncestors(data: any[]): any[] {
   const map = new Map();
   const tree: any[] = [];
 
   data.forEach(item => {
-    const filteredItem = keysToInclude.reduce((acc, key) => {
-      if (key in item) {
-        acc[key] = item[key];
-      }
-      return acc;
-    }, {} as any);
-
-    filteredItem.children = [];
-
-    for (const checked in dataTree?.value) {
-      if (filteredItem.uuid === checked) {
-        filteredItem.checked = true;
-        break;
-      }
-    }
-
-    map.set(item.uuid, filteredItem);
+    item.children = [];
+    map.set(item.uuid, item);
   });
 
   data.forEach(item => {
@@ -138,10 +162,15 @@ function buildTreeFromAncestors(data: any[], keysToInclude: string[]): any[] {
 
 watch(optionsTree, (newData: any) => {
   if (newData?.items) {
-    const keysToInclude = ['uuid', 'name', 'code', 'type', 'ancestor'];
-    treeItems.value = buildTreeFromAncestors(Object.values(newData.items), keysToInclude);
+    const options = Object.values(newData.items);
+    setCheckedItems(options);
+    treeItems.value = buildTreeFromAncestors(options); // zmenit endpoind a smazat tento method
     console.log('treeItems', treeItems.value);
   }
+});
+
+defineExpose({
+  setCheckedItems,
 });
 
 </script>
