@@ -9,12 +9,12 @@
               <span class="sr-only">Předchozí</span>
             </a>
           </li>
-          <li v-for="index in pageNumber" :key="index" class="page-item" :class="{active: index === currentPage}">
-            <a v-if="index === 1 || index === pageNumber || (currentPage <= index + 2 && currentPage >= index - 2)" class="page-link" @click.prevent.stop="updateTable(index)">{{ index }}</a>
+          <li v-for="index in currentPageNumber" :key="index" class="page-item" :class="{active: index === currentPage}">
+            <a v-if="index === 1 || index === currentPageNumber || (currentPage <= index + 2 && currentPage >= index - 2)" class="page-link" @click.prevent.stop="updateTable(index)">{{ index }}</a>
             <span v-else-if="index === currentPage - 3 || index === currentPage + 3 " class="page-link" style="pointer-events: none;"> ... </span>
           </li>
-          <li class="page-item" :class="{disabled: currentPage === pageNumber}">
-            <a class="page-link" aria-label="Next" @click.prevent="updateTable(currentPage < pageNumber ? currentPage + 1 : pageNumber)">
+          <li class="page-item" :class="{disabled: currentPage === currentPageNumber}">
+            <a class="page-link" aria-label="Next" @click.prevent="updateTable(currentPage < currentPageNumber ? currentPage + 1 : currentPageNumber)">
               <span aria-hidden="true"><BaseIcon icon-name="ChevronRight" /></span>
               <span class="sr-only">Další</span>
             </a>
@@ -25,9 +25,13 @@
               <BaseIcon v-else icon-name="Ellipsis" class="text-black-50" />
             </span>
           </li>
-          <li class="page-item" style=""><a class="page-link text-black" :class="{'bg-light' : onPage === 20, 'bg-white' : onPage !== 20}" @click.prevent.stop="emit('changeOnPage', 20)">20</a></li>
-          <li class="page-item" style=""><a class="page-link text-black" :class="{'bg-light' : onPage === 40, 'bg-white' : onPage !== 40}" @click.prevent.stop="emit('changeOnPage', 40)">40</a></li>
-          <li class="page-item" style=""><a class="page-link text-black" :class="{'bg-light' : onPage === 80, 'bg-white' : onPage !== 80}" @click.prevent.stop="emit('changeOnPage', 80)">80</a></li>
+          <template v-for="option in onPageOptions" :key="option">
+            <li class="page-item" style="">
+              <a class="page-link text-black" :class="{'bg-light' : currentOnPage === option, 'bg-white' : currentOnPage !== option}" @click.prevent.stop="updateOnPage(option)">
+                {{ option }}
+              </a>
+            </li>
+          </template>
         </ul>
       </nav>
     </div>
@@ -40,6 +44,7 @@ import {computed} from 'vue';
 const props = defineProps({
   page: {type: Number, default: 1},
   onPage: {type: Number, default: 10},
+  onPageOptions: {type: Array, default: () => [20, 40, 80]},
   dataTable: {type: Object, default: undefined},
   dataByPage: {type: Object, default: undefined},
   wrap: {type: String, default: ''},
@@ -49,25 +54,30 @@ const data: ComputedRef<any> = computed(() => {
   return props.dataTable;
 });
 
-const pageNumber = computed(function () {
-  return data?.value ? Math.ceil(data?.value.length / props.onPage) : 1;
-});
-
 const currentPage: Ref<number> = ref(1);
+const currentOnPage: Ref<number> = ref(10);
+const currentPageNumber: Ref<number> = ref(1);
 
-function updateTable(index: number) {
+const emit = defineEmits(['update:data-by-page']);
+
+function updateTable(index: number): void {
   if (data?.value && index) {
-    const start = (index - 1) * props.onPage;
-    const sliced = data.value.slice(start, start + props.onPage);
+    const start = (index - 1) * currentOnPage.value;
+    const sliced = data.value.slice(start, start + currentOnPage.value);
 
     currentPage.value = index;
     emit('update:data-by-page', sliced);
   }
 }
 
-const emit = defineEmits(['changeOnPage', 'update:data-by-page']);
+function updateOnPage(onPage: number): void {
+  currentOnPage.value = onPage;
+  currentPageNumber.value = data?.value ? Math.ceil(data?.value.length / currentOnPage.value) : 1;
+  currentPage.value = 1;
+  updateTable(currentPage.value);
+}
 
 watch(() => props.dataTable, () => {
-  updateTable(props.page);
+  updateOnPage(props.onPage);
 });
 </script>

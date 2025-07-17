@@ -34,7 +34,7 @@
           </template>
 
           <template #append>
-            <BaseGridManualPaginator v-model:data-by-page="treeItemsByPage" :data-table="treeItems" wrap="flex-shrink-0" />
+            <BaseGridManualPaginator v-model:data-by-page="treeItemsByPage" :data-table="treeItems" :on-page-options="[10, 20, 40, 80]" wrap="flex-shrink-0" />
           </template>
         </Draggable>
       </table>
