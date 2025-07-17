@@ -42,7 +42,7 @@ const props = defineProps({
   required: {type: Boolean, default: false},
   nullable: {type: Boolean, default: false},
   name: {type: String, default: null},
-  modelValue: {type: [String, Number], default: null},
+  modelValue: {type: [Object, Array], default: null},
   urlTree: {type: String, default: null},
 });
 

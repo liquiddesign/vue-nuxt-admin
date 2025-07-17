@@ -151,7 +151,7 @@ function submit()
 const $emit = defineEmits(['success']);
 defineExpose({ submit } );
 
-watch(props.data, (newData: any) => {
+watch(() => props.data, (newData: any) => {
   if (newData?.items) {
     newData.category = category;
     props.data.value = newData;

@@ -7,7 +7,7 @@
 
     <div class="table-responsive" style="overflow: initial;" v-bind="$attrs">
       <table class="table table-sm table-striped">
-        <Draggable ref="tree" v-model="treeItems" class="mtl-tree" disable-drag disable-drop tree-line :tree-line-offset="30" :indent="40" :default-open="false">
+        <Draggable ref="tree" v-model="treeItemsByPage" class="mtl-tree" disable-drag disable-drop tree-line :tree-line-offset="30" :indent="40" :default-open="false">
           <template #prepend>
             <thead class="p-0">
               <tr>
@@ -32,6 +32,10 @@
               </tr>
             </tbody>
           </template>
+
+          <template #append>
+            <BaseGridManualPaginator v-model:data-by-page="treeItemsByPage" :data-table="treeItems" wrap="flex-shrink-0" />
+          </template>
         </Draggable>
       </table>
     </div>
@@ -55,6 +59,7 @@ const emits = defineEmits([
 
 const autoCheckChild: Ref<boolean> = ref(false);
 const treeItems: Ref<any> = ref([]);
+const treeItemsByPage: Ref<any> = ref([]);
 const checkedTreeData: Ref<any[]> = ref([]);
 const addedData: Ref<any> = ref({});
 const { lang } = useTableVars();
