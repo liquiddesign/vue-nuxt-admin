@@ -73,10 +73,13 @@ const optionsTree: ComputedRef<any> = computed(() => {
   return props.optionsTree;
 });
 
+function resetUpdatedData(): void {
+  updatedData.value = {add: [], delete: []};
+}
+
 function saveData() {
   emits('save', updatedData.value);
   emits('modal-close');
-  updatedData.value = {add: [], delete: []};
 }
 
 function manualCheckUpdate(node: any): void {
@@ -171,6 +174,7 @@ watch(optionsTree, (newData: any) => {
 
 defineExpose({
   setCheckedItems,
+  resetUpdatedData,
 });
 
 </script>

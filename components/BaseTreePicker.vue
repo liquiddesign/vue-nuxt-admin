@@ -22,7 +22,7 @@
     <BaseButton class="btn btn-sm btn-outline-dark mt-2" @click.prevent="open($refs)">Upravit</BaseButton>
   </BaseWrapper>
 
-  <BaseModal ref="treePicker" :title="label" :display-footer="false">
+  <BaseModal ref="treePicker" :title="label" :display-footer="false" @closed="onModalClose($refs)">
     <template #body>
       <BaseTreeTable ref="treeTable" :data-tree="treePickerInputs" :options-tree="dataNew" @save="saveTree" @modal-close="close($refs)" />
     </template>
@@ -61,14 +61,17 @@ const fullName = (item: any): string => {
   return fullName;
 };
 
-function open(refs: any) {
+function open(refs: any): void {
   refs.treeTable?.setCheckedItems(Object.values(dataNew?.value?.items));
   refs.treePicker.open();
 }
 
-function close(refs: any) {
-  document.activeElement?.blur();
+function close(refs: any): void {
   refs.treePicker.close();
+}
+
+function onModalClose(refs: any): void {
+  refs.treeTable?.resetUpdatedData();
 }
 
 function addItem(item: any) {

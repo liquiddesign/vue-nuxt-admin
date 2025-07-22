@@ -83,6 +83,15 @@ const category: Ref<any> = ref({
       name_cs: 'Papíry, fólie, etikety',
     },
   },
+  '2401c82da9c2a0e7ae3d9453cbb4eab6': {
+    uuid: '2401c82da9c2a0e7ae3d9453cbb4eab6',
+    name: {cs: 'HP', en: null},
+    code: 'TISKLASHP',
+    ancestor: {
+      uuid: '6076900432ae764293062621',
+      name_cs: 'Laserové',
+    },
+  },
 });
 
 const comments: Ref<any> = ref([
