@@ -56,7 +56,9 @@ const data: ComputedRef<any> = computed(() => {
 
 const currentPage: Ref<number> = ref(1);
 const currentOnPage: Ref<number> = ref(10);
-const currentPageNumber: Ref<number> = ref(1);
+const currentPageNumber: ComputedRef<number> = computed(() => {
+  return data?.value ? Math.ceil(data?.value.length / currentOnPage.value) : 1;
+});
 
 const emit = defineEmits(['update:data-by-page']);
 
@@ -72,12 +74,21 @@ function updateTable(index: number): void {
 
 function updateOnPage(onPage: number): void {
   currentOnPage.value = onPage;
-  currentPageNumber.value = data?.value ? Math.ceil(data?.value.length / currentOnPage.value) : 1;
   currentPage.value = 1;
   updateTable(currentPage.value);
 }
 
+function resetSettings() {
+  currentPage.value = props.page;
+  currentOnPage.value = props.onPage;
+  updateOnPage(currentOnPage.value);
+}
+
 watch(() => props.dataTable, () => {
   updateOnPage(props.onPage);
+});
+
+defineExpose({
+  resetSettings,
 });
 </script>

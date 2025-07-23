@@ -83,15 +83,15 @@ const category: Ref<any> = ref({
       name_cs: 'Papíry, fólie, etikety',
     },
   },
-  '2401c82da9c2a0e7ae3d9453cbb4eab6': {
-    uuid: '2401c82da9c2a0e7ae3d9453cbb4eab6',
-    name: {cs: 'HP', en: null},
-    code: 'TISKLASHP',
-    ancestor: {
-      uuid: '6076900432ae764293062621',
-      name_cs: 'Laserové',
-    },
-  },
+  // '239ec26991996b157d33fe9967cb1b25': {
+  //   uuid: '239ec26991996b157d33fe9967cb1b25',
+  //   name: {cs: 'Příslušenství pro tiskárny Ricoh', en: null},
+  //   code: 'TISKPRIRIC',
+  //   ancestor: {
+  //     uuid: '61373c73c33bf78595137491',
+  //     name_cs: 'Příslušenství',
+  //   },
+  // },
 });
 
 const comments: Ref<any> = ref([

@@ -34,7 +34,7 @@
           </template>
 
           <template #append>
-            <BaseGridManualPaginator v-model:data-by-page="treeItemsByPage" :data-table="treeItems" :on-page-options="[10, 20, 40, 80]" wrap="flex-shrink-0" />
+            <BaseGridManualPaginator ref="treePaginator" v-model:data-by-page="treeItemsByPage" :data-table="treeItems" :on-page-options="[10, 20, 40, 80]" wrap="flex-shrink-0" />
           </template>
         </Draggable>
       </table>
@@ -58,6 +58,7 @@ const emits = defineEmits([
 ]);
 
 const tree = useTemplateRef('tree');
+const treePaginator = useTemplateRef('treePaginator');
 const autoCheckChild: Ref<boolean> = ref(false);
 const treeItems: Ref<any> = ref([]);
 const treeItemsByPage: Ref<any> = ref([]);
@@ -124,19 +125,20 @@ function setCheckedItems(data: any[]) {
 }
 
 function openParentsForCheckedNodes(nodes: any, ancestors = []) {
-  for (const node of nodes) {
-    if (node.checked) {
-      console.log('ancestors', ancestors);
-      for (const ancestor of ancestors) {
-        const ancestorStat = tree.value?.getStat(ancestor);
-        if (ancestorStat) {
-          ancestorStat.open = true;
+  if (nodes.length > 0) {
+    for (const node of nodes) {
+      if (node.checked) {
+        for (const ancestor of ancestors) {
+          const ancestorStat = tree.value?.getStat(ancestor);
+          if (ancestorStat) {
+            ancestorStat.open = true;
+          }
         }
       }
-    }
 
-    if (node.children?.length) {
-      openParentsForCheckedNodes(node.children, [...ancestors, node]);
+      if (node.children?.length) {
+        openParentsForCheckedNodes(node.children, [...ancestors, node]);
+      }
     }
   }
 }
@@ -163,6 +165,10 @@ function buildTreeFromAncestors(data: any[]): any[] {
   return tree;
 }
 
+function resetSettings() {
+  treePaginator?.value?.resetSettings();
+}
+
 watch(optionsTree, (newData: any) => {
   if (newData?.items) {
     const options = Object.values(newData.items);
@@ -175,6 +181,7 @@ watch(optionsTree, (newData: any) => {
 defineExpose({
   setCheckedItems,
   resetUpdatedData,
+  resetSettings,
 });
 
 </script>

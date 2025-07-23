@@ -72,6 +72,7 @@ function close(refs: any): void {
 
 function onModalClose(refs: any): void {
   refs.treeTable?.resetUpdatedData();
+  refs.treeTable?.resetSettings();
 }
 
 function addItem(item: any) {
