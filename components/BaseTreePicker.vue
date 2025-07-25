@@ -71,7 +71,6 @@ function close(refs: any): void {
 }
 
 function onModalClose(refs: any): void {
-  refs.treeTable?.resetUpdatedData();
   refs.treeTable?.resetSettings();
 }
 
@@ -88,14 +87,25 @@ function deleteItem(item: any) {
 }
 
 function saveTree(addedData: any) {
-  if (addedData.add?.length > 0) {
-    for (const item of addedData.add) {
+  if (addedData.checked?.length > 0) {
+
+    treePickerInputs.value = {};
+    for (const item of addedData.checked) {
       addItem(item);
     }
-  }
-  if (addedData.delete?.length > 0) {
-    for (const item of addedData.delete) {
-      deleteItem(item);
+
+  } else {
+
+    if (addedData.add?.length > 0) {
+      for (const item of addedData.add) {
+        addItem(item);
+      }
+    }
+
+    if (addedData.delete?.length > 0) {
+      for (const item of addedData.delete) {
+        deleteItem(item);
+      }
     }
   }
 }

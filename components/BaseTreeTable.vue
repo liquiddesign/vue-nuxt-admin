@@ -2,7 +2,7 @@
   <div class="base-grid">
     <div class="d-flex align-items-top gap-3 mb-3">
       <BaseButton class="btn btn-sm btn-primary" @click="saveData()">Uložit</BaseButton>
-      <BaseCheckBox v-model="autoCheckChild" label="Povolit automatický výběr potomků" @change="() => {checkedTreeData = [];}" />
+      <BaseCheckBox v-model="autoCheckChild" label="Povolit automatický výběr potomků" @change="checkData()" />
     </div>
 
     <div class="table-responsive" style="overflow: initial;" v-bind="$attrs">
@@ -25,7 +25,7 @@
                   <OpenIcon v-if="stat.children.length" :open="stat.open" class="mtl-mr" @click="stat.open = !stat.open" />
                 </td>
                 <td>
-                  <input v-if="autoCheckChild" v-model="stat.checked" class="mtl-checkbox mtl-mr" type="checkbox" @change="checkData(stat, node)">
+                  <input v-if="autoCheckChild" v-model="stat.checked" class="mtl-checkbox mtl-mr" type="checkbox" @change="checkData()">
                   <input v-else v-model="node.checked" class="mtl-checkbox mtl-mr" type="checkbox" @change="manualCheckUpdate(node)">
                   <span class="mtl-ml ps-2">{{ node.name[lang] }}</span>
                 </td>
@@ -62,8 +62,7 @@ const treePaginator = useTemplateRef('treePaginator');
 const autoCheckChild: Ref<boolean> = ref(false);
 const treeItems: Ref<any> = ref([]);
 const treeItemsByPage: Ref<any> = ref([]);
-const checkedTreeData: Ref<any[]> = ref([]);
-const updatedData: Ref<any> = ref({add: [], delete: []});
+const updatedData: Ref<any> = ref({add: [], delete: [], checked: []});
 const { lang } = useTableVars();
 
 const dataTree: ComputedRef<any> = computed(() => {
@@ -75,7 +74,7 @@ const optionsTree: ComputedRef<any> = computed(() => {
 });
 
 function resetUpdatedData(): void {
-  updatedData.value = {add: [], delete: []};
+  updatedData.value = {add: [], delete: [], checked: []};
 }
 
 function saveData() {
@@ -102,10 +101,18 @@ function manualCheckUpdate(node: any): void {
   console.log('updatedData', updatedData.value);
 }
 
-function checkData(stat: any, node: any): void {
-  console.log('stat --- node', stat, node);
-  // checkedTreeData.value = tree?.value ? tree.value.getChecked() : [];
-  // console.log(checkedTreeData.value);
+function checkData(): void {
+  resetUpdatedData();
+
+  const checked = tree?.value?.getChecked();
+
+  if (checked && checked?.length > 0) {
+    for (const item of checked) {
+      updatedData.value.checked.push(item.data);
+    }
+  }
+
+  console.log('updatedData', updatedData.value);
 }
 
 function setCheckedItems(data: any[]) {
@@ -114,20 +121,27 @@ function setCheckedItems(data: any[]) {
   data.forEach(item => {
     item.checked = false;
     for (const checked in dataTree?.value) {
+
       if (item.uuid === checked) {
         item.checked = true;
-        openParentsForCheckedNodes(treeItems.value);
         break;
       }
     }
     map.set(item.uuid, item);
   });
+
+  openParentsForCheckedNodes(treeItems.value);
 }
 
 function openParentsForCheckedNodes(nodes: any, ancestors = []) {
   if (nodes.length > 0) {
     for (const node of nodes) {
+
       if (node.checked) {
+        const stat = tree.value?.getStat(node);
+        if (stat) {
+          stat.checked = true;
+        }
         for (const ancestor of ancestors) {
           const ancestorStat = tree.value?.getStat(ancestor);
           if (ancestorStat) {
@@ -167,6 +181,8 @@ function buildTreeFromAncestors(data: any[]): any[] {
 
 function resetSettings() {
   treePaginator?.value?.resetSettings();
+  autoCheckChild.value = false;
+  resetUpdatedData();
 }
 
 watch(optionsTree, (newData: any) => {
@@ -180,7 +196,6 @@ watch(optionsTree, (newData: any) => {
 
 defineExpose({
   setCheckedItems,
-  resetUpdatedData,
   resetSettings,
 });
 
